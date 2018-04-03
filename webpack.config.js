@@ -24,13 +24,13 @@ module.exports = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			filename: 'index.html',
+			filename: './megaman-proto/index.html',
 			template: 'template.hbs',
 			cdn
 		}),
 		new FeelesWebpackPlugin({
-			paths: ['src'],
-			output: 'make-rpg.json',
+			paths: ['./megaman-proto/src'],
+			output: 'index.json',
 			ignore: /\.DS_Store$/
 		}),
 
@@ -38,7 +38,7 @@ module.exports = {
 		new webpack.optimize.ModuleConcatenationPlugin(),
 
 		new OpenBrowserPlugin({
-			url: `http://localhost:${port}`
+			url: `http://localhost:${port}/megaman-proto`
 		}),
 
 		// Cache and proxy this whole site
