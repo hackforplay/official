@@ -1,0 +1,38 @@
+{
+	"name": "make-rpg",
+	"version": "1.0.0",
+	"description": "The kit to create new game in HackforPlay",
+	"main": "index.js",
+	"scripts": {
+		"start": "webpack-dev-server",
+		"build": "NODE_ENV=production webpack -p",
+		"test": "npm start"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/hackforplay/make-rpg.git"
+	},
+	"keywords": [
+		"HackforPlay"
+	],
+	"author": "teramotodaiki",
+	"license": "MIT",
+	"bugs": {
+		"url": "https://github.com/hackforplay/make-rpg/issues"
+	},
+	"homepage": "https://github.com/hackforplay/make-rpg#readme",
+	"devDependencies": {
+		"es6-promisify": "^5.0.0",
+		"handlebars": "^4.0.11",
+		"handlebars-loader": "^1.7.0",
+		"html-webpack-plugin": "^2.30.1",
+		"offline-plugin": "^4.9.0",
+		"open-browser-webpack-plugin": "0.0.5",
+		"unorm": "^1.4.1",
+		"webpack": "^3.11.0",
+		"webpack-dev-server": "^2.11.2"
+	},
+	"dependencies": {
+		"feeles-ide": "^0.2.1"
+	}
+}
