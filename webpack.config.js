@@ -25,7 +25,7 @@ module.exports = {
 	plugins: [
 		new HtmlWebpackPlugin({
 			filename: './megaman-proto/index.html',
-			template: 'template.hbs',
+			template: './megaman-proto/template.hbs',
 			cdn
 		}),
 		new FeelesWebpackPlugin({
