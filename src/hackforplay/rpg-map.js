@@ -145,6 +145,16 @@ class RPGMap extends EventTarget {
 	get tileHeight() {
 		return this.bmap.tileHeight;
 	}
+
+	set background(value) {
+		this.bmap.overwrite = value;
+		this.bmap.redraw();
+	}
+
+	set foreground(value) {
+		this.fmap.overwrite = value;
+		this.fmap.redraw();
+	}
 }
 
 export default RPGMap;

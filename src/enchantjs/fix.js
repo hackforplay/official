@@ -190,6 +190,9 @@ enchant.Map.prototype.redraw = function redraw(x, y, width, height) {
 		}
 	}
 
+	if (this.overwrite) {
+		surface.draw(this.overwrite, x, y, width, height);
+	}
 }
 
 
