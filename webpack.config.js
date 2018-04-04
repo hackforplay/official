@@ -26,7 +26,7 @@ module.exports = {
 			template: './megaman-proto/template.hbs'
 		}),
 		new FeelesWebpackPlugin({
-			paths: ['./megaman-proto/src'],
+			paths: ['./megaman-proto/src', './common/src'],
 			output: './megaman-proto/index.json',
 			ignore: /\.DS_Store$/
 		}),
