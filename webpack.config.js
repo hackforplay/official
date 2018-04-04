@@ -5,8 +5,6 @@ const FeelesWebpackPlugin = require('./feeles-webpack-plugin');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
 
-const cdn = 'https://assets.feeles.com/public/v1152/h4p.js';
-// const cdn = 'http://localhost:8081/h4p.js';
 const port = process.env.PORT || 8083;
 const dist = 'public/';
 
@@ -25,12 +23,11 @@ module.exports = {
 	plugins: [
 		new HtmlWebpackPlugin({
 			filename: './megaman-proto/index.html',
-			template: './megaman-proto/template.hbs',
-			cdn
+			template: './megaman-proto/template.hbs'
 		}),
 		new FeelesWebpackPlugin({
 			paths: ['./megaman-proto/src'],
-			output: 'index.json',
+			output: './megaman-proto/index.json',
 			ignore: /\.DS_Store$/
 		}),
 
@@ -38,7 +35,7 @@ module.exports = {
 		new webpack.optimize.ModuleConcatenationPlugin(),
 
 		new OpenBrowserPlugin({
-			url: `http://localhost:${port}/megaman-proto`
+			url: `http://localhost:${port}/megaman-proto/`
 		}),
 
 		// Cache and proxy this whole site
