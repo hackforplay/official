@@ -191,6 +191,7 @@ enchant.Map.prototype.redraw = function redraw(x, y, width, height) {
 	}
 
 	if (this.overwrite) {
+		// RPGMap の background or foreground に画像が指定されている場合、その画像で上書きする
 		surface.draw(this.overwrite, x, y, width, height);
 	}
 }
