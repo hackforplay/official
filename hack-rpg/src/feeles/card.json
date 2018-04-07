@@ -1,0 +1,55 @@
+{
+    "MonitorCard": {
+        "visible": true,
+        "order": 0,
+        "frame": {
+            "size": [
+                480,
+                320
+            ]
+        }
+    },
+    "ShotCard": {
+        "visible": false,
+        "order": 1,
+        "init": {
+            "fileName": "main.js"
+        }
+    },
+    "MediaCard": {
+        "visible": false,
+        "order": 3
+    },
+    "EditorCard": {
+        "visible": false,
+        "order": 5
+    },
+    "ReadmeCard": {
+        "visible": false,
+        "order": 7
+    },
+    "ScreenShotCard": {
+        "visible": false,
+        "order": 6
+    },
+    "PaletteCard": {
+        "visible": false,
+        "order": 9
+    },
+    "EnvCard": {
+        "visible": false,
+        "order": 8
+    },
+    "HierarchyCard": {
+        "visible": false,
+        "order": 11
+    },
+    "CustomizeCard": {
+        "visible": false,
+        "order": 10
+    },
+    "CreditsCard": {
+        "visible": false,
+        "order": 13
+    }
+}
