@@ -22,12 +22,12 @@ module.exports = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			filename: './megaman-proto/index.html',
-			template: './megaman-proto/template.hbs'
+			filename: './rockman-proto/index.html',
+			template: './rockman-proto/template.hbs'
 		}),
 		new FeelesWebpackPlugin({
-			paths: ['./megaman-proto/src', './common/src'],
-			output: './megaman-proto/index.json',
+			paths: ['./rockman-proto/src', './common/src'],
+			output: './rockman-proto/index.json',
 			ignore: /\.DS_Store$/
 		}),
 
@@ -35,7 +35,7 @@ module.exports = {
 		new webpack.optimize.ModuleConcatenationPlugin(),
 
 		new OpenBrowserPlugin({
-			url: `http://localhost:${port}/megaman-proto/`
+			url: `http://localhost:${port}/rockman-proto/`
 		}),
 
 		// Cache and proxy this whole site
