@@ -31,6 +31,18 @@ module.exports = {
 			ignore: /\.DS_Store$/
 		}),
 
+
+		new HtmlWebpackPlugin({
+			filename: './hack-rpg/index.html',
+			template: './hack-rpg/template.hbs'
+		}),
+		new FeelesWebpackPlugin({
+			paths: ['./hack-rpg/src', './common/src'],
+			output: './hack-rpg/index.json',
+			ignore: /\.DS_Store$/,
+			debug: true
+		}),
+
 		// https://medium.com/webpack/webpack-3-official-release-15fd2dd8f07b
 		new webpack.optimize.ModuleConcatenationPlugin(),
 
