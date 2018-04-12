@@ -33,6 +33,6 @@
 		"webpack-dev-server": "^2.11.2"
 	},
 	"dependencies": {
-		"feeles-ide": "^0.2.1"
+		"feeles-ide": "^0.3.7"
 	}
 }
