@@ -35,7 +35,7 @@ game.onload = async() => {
 	// update 関数を開始
 	game.on('enterframe', update);
 
-	// ゲームクリアの投票（まだクリアしてない人だけ）
+	// ゲームクリアの投票（まだクリアしてない人だけ）（feeles.com の旧仕様）
 	if (await vote('GAME') !== 'CLEAR') {
 
 		vote('GAME', 'START'); // ゲーム「スタート」
@@ -45,6 +45,16 @@ game.onload = async() => {
 		});
 
 	}
+
+	// ゲームクリアの測定（hackforplay.xyz の新仕様）
+	Hack.on('gameclear', () => {
+		if (feeles.dispatchOnMessage) {
+			feeles.dispatchOnMessage({
+				labelName: 'gameclear',
+				labelValue: 'gameclear'
+			});
+		}
+	});
 };
 
 // マップをつくる
