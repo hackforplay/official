@@ -320,5 +320,5 @@ EventEmitter.EventEmitter = EventEmitter;
 // Expose the module.
 //
 // if ('undefined' !== typeof module) {
-	module.exports = EventEmitter;
+module.exports = EventEmitter;
 // }
