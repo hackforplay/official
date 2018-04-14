@@ -6,6 +6,17 @@ import 'hackforplay/hack';
 import 'hackforplay/rpg-kit-rpgobjects';
 import 'hackforplay/rpg-kit-color';
 
+import { Group } from 'enchantjs/enchant';
+import Camera from 'hackforplay/camera';
+
+import { CanvasRenderer } from 'enchantjs/enchant';
+import { KeyClass } from 'mod/key';
+
+import Keyboard from 'hackforplay/keyboard';
+import { stringToArray, dakuten, handakuten } from 'hackforplay/utils/string-utils';
+
+import RPGMap from './rpg-map';
+
 const game = enchant.Core.instance;
 
 
@@ -53,16 +64,6 @@ Hack.on('load', function() {
 		});
 	}
 });
-
-import { Group } from 'enchantjs/enchant';
-import Camera from 'hackforplay/camera';
-
-
-import { CanvasRenderer } from 'enchantjs/enchant';
-import { KeyClass } from 'mod/key';
-
-import Keyboard from 'hackforplay/keyboard';
-import { stringToArray, dakuten, handakuten } from 'hackforplay/utils/string-utils';
 
 /**
  * デフォルトのキーボードを生成する
@@ -431,10 +432,6 @@ Object.keys(MapObject.dictionary).forEach(function(name) {
 		this.forward = [0, -1];
 	};
 });
-
-
-import RPGMap from './rpg-map';
-
 
 Object.defineProperty(window, 'RPGMap', {
 	get: function() {

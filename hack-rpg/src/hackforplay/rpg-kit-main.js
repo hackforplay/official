@@ -4,6 +4,18 @@ import 'hackforplay/rpg-kit-rpgobjects';
 import 'hackforplay/rpg-kit-color';
 import 'mod/coordinate';
 
+import { Group } from 'enchantjs/enchant';
+import Camera from 'hackforplay/camera';
+
+import { CanvasRenderer } from 'enchantjs/enchant';
+import { KeyClass } from 'mod/key';
+
+import Keyboard from 'hackforplay/keyboard';
+import { stringToArray, dakuten, handakuten } from 'hackforplay/utils/string-utils';
+
+import RPGMap from './rpg-map';
+
+
 
 var game = enchant.Core.instance;
 game.preload('enchantjs/monster1.gif', 'enchantjs/monster2.gif', 'enchantjs/monster3.gif', 'enchantjs/monster4.gif', 'enchantjs/bigmonster1.gif', 'enchantjs/bigmonster2.gif', 'enchantjs/x2/map1.gif', 'enchantjs/x2/dotmat.gif', 'enchantjs/x1.5/chara0.png', 'enchantjs/x1.5/chara5.png', 'hackforplay/enchantbook.png', 'enchantjs/icon0.png', 'enchantjs/x2/effect0.png', 'hackforplay/madosyo_small.png', 'enchantjs/shadow.gif', 'enchantjs/x1.5/chara7.png',
@@ -232,10 +244,6 @@ Object.keys(MapObject.dictionary).forEach(function(name) {
 		this.forward = [0, -1];
 	};
 });
-
-
-import RPGMap from './rpg-map';
-
 
 Object.defineProperty(window, 'RPGMap', {
 	get: function() {
