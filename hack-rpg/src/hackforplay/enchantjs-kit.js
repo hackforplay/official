@@ -1,11 +1,9 @@
 import 'enchantjs/enchant';
 import 'enchantjs/ui.enchant';
-
-
+import 'enchantjs/fix';
 
 // enchant.js wrapper for HackforPlay
 // v1.0
-
 
 // すべてのenchantモジュールをグローバルにエクスポート
 enchant();
@@ -24,16 +22,13 @@ window.game = new Core(feeles.env.VIEW.width, feeles.env.VIEW.height);
 
 // Hack.start
 Hack.start = function() {
+
 	// game start
 	Hack.maps = Hack.maps || {};
 	Hack.dispatchEvent(new Event('load'));
 	game.start();
 	window.focus();
 
-	// player をグローバルに
-	if (!window.player && Hack.player) {
-		window.player = Hack.player;
-	}
 };
 
 
