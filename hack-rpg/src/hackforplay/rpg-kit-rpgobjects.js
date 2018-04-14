@@ -54,22 +54,54 @@ var _def = function(name, getter) {
 	});
 };
 
-_def('BehaviorTypes', function() { return __BehaviorTypes; });
-_def('RPGObject', function() { return __RPGObject; });
-_def('HumanBase', function() { return __HumanBase; });
-_def('Player', function() { return __Player; });
-_def('EnemyBase', function() { return __EnemyBase; });
-_def('BlueSlime', function() { return __BlueSlime; });
-_def('Insect', function() { return __Insect; });
-_def('Spider', function() { return __Spider; });
-_def('Bat', function() { return __Bat; });
-_def('Dragon', function() { return __Dragon; });
-_def('Minotaur', function() { return __Minotaur; });
-_def('Boy', function() { return __Boy; });
-_def('Girl', function() { return __Girl; });
-_def('Woman', function() { return __Woman; });
-_def('MapObject', function() { return __MapObject; });
-_def('Effect', function() { return __Effect; });
+_def('BehaviorTypes', function() {
+	return __BehaviorTypes;
+});
+_def('RPGObject', function() {
+	return __RPGObject;
+});
+_def('HumanBase', function() {
+	return __HumanBase;
+});
+_def('Player', function() {
+	return __Player;
+});
+_def('EnemyBase', function() {
+	return __EnemyBase;
+});
+_def('BlueSlime', function() {
+	return __BlueSlime;
+});
+_def('Insect', function() {
+	return __Insect;
+});
+_def('Spider', function() {
+	return __Spider;
+});
+_def('Bat', function() {
+	return __Bat;
+});
+_def('Dragon', function() {
+	return __Dragon;
+});
+_def('Minotaur', function() {
+	return __Minotaur;
+});
+_def('Boy', function() {
+	return __Boy;
+});
+_def('Girl', function() {
+	return __Girl;
+});
+_def('Woman', function() {
+	return __Woman;
+});
+_def('MapObject', function() {
+	return __MapObject;
+});
+_def('Effect', function() {
+	return __Effect;
+});
 
 var game = enchant.Core.instance;
 
@@ -86,499 +118,20 @@ var __BehaviorTypes = {
 	Dead: 'dead' // 死亡状態
 };
 
-var __RPGObject = enchant.Class(enchant.Sprite, {
-	initialize: function(width, height, offsetX, offsetY) {
-		Sprite.call(this, width || 0, height || 0);
-		this.offset = { x: offsetX || 0, y: offsetY || 0 };
-		this.moveTo(game.width, game.height);
-		Object.defineProperty(this, 'mapX', {
-			configurable: true,
-			enumerable: true,
-			get: function() { return (this.x - this.offset.x + 16) / 32 >> 0; }
-		});
-		Object.defineProperty(this, 'mapY', {
-			configurable: true,
-			enumerable: true,
-			get: function() { return (this.y - this.offset.y + 16) / 32 >> 0; }
-		});
-		Object.defineProperty(this, 'map', {
-			configurable: true,
-			enumerable: true,
-			get: function() {
-				return this.parentNode ? this.parentNode.ref : null;
-			}
-		});
-		var collisionFlag = null; // this.collisionFlag (Default:true)
-		var noCollisionEvents = ['playerenter', 'playerstay', 'playerexit'];
-		Object.defineProperty(this, 'collisionFlag', {
-			configurable: true,
-			enumerable: true,
-			get: function() {
-				if (collisionFlag !== null) return collisionFlag;
-				for (var i = 0; i < noCollisionEvents.length; i++) {
-					if (this.isListening(noCollisionEvents[i])) {
-						return false;
-					}
-				}
-				return true;
-			},
-			set: function(value) { collisionFlag = value; }
-		});
-		var isKinematic = null; // this.isKinematic (Default: true)
-		Object.defineProperty(this, 'isKinematic', {
-			configurable: true,
-			enumerable: true,
-			get: function() {
-				return isKinematic !== null ? isKinematic :
-					!(this.velocityX || this.velocityY ||
-						this.accelerationX || this.accelerationY);
-			},
-			set: function(value) { isKinematic = value; }
-		});
-		// Destroy when dead
-		this.on('becomedead', function() {
-			this.setTimeout(function() {
-				this.destroy();
-			}, this.getFrame().length);
-		});
-		this.on('hpchange', function() {
-			if (this.hp <= 0) {
-				this.behavior = BehaviorTypes.Dead;
-			}
-		});
 
-		// direction
-		this._forward = { x: 0, y: 0 };
-		this.directionType = null;
-		Object.defineProperty(this, 'direction', {
-			configurable: true,
-			enumerable: true,
-			get: this.getDirection,
-			set: this.setDirection
-		});
-		Object.defineProperty(this, 'forward', {
-			configurable: true,
-			enumerable: true,
-			get: this.getForward,
-			set: this.setForward
-		});
-
-		// 初期化
-		this.velocityX = this.velocityY = this.accelerationX = this.accelerationY = 0;
-		this.mass = 1;
-		this.damageTime = 0;
-		this.attackedDamageTime = 30; // * 1/30sec
-		this.hpchangeFlag = false;
-		this.on('enterframe', this.geneticUpdate);
-		this.getFrameOfBehavior = {}; // BehaviorTypesをキーとしたgetterのオブジェクト
-		this.behavior = BehaviorTypes.Idle; // call this.onbecomeidle
-		this._layer = RPGMap.Layer.Middle;
-
-		Hack.defaultParentNode.addChild(this);
-	},
-	geneticUpdate: function() {
-		if (!Hack.isPlaying) return;
-		// enter frame
-		if (typeof this.hp === 'number') {
-			this.damageTime = Math.max(0, this.damageTime - 1);
-			if (this.damageTime > 0) {
-				this.opacity = (this.damageTime / 2 + 1 | 0) % 2; // 点滅
-			}
-		}
-		if (this.hpchangeFlag) {
-			this.dispatchEvent(new Event('hpchange'));
-			this.hpchangeFlag = false;
-		}
-		if (this.isBehaviorChanged) {
-			// begin animation
-			var routine = this.getFrameOfBehavior[this.behavior];
-			if (routine) this.frame = routine.call(this);
-			// becomeイベント内でbehaviorが変更された場合、
-			// 次のフレームで１度だけbecomeイベントが発火します。
-			this.isBehaviorChanged = false;
-			this.dispatchEvent(new Event('become' + this.behavior));
-		}
-	},
-	locate: function(fromLeft, fromTop, mapName) {
-		if (mapName in Hack.maps &&
-			Hack.maps[mapName] instanceof RPGMap &&
-			this.map !== Hack.maps[mapName]) {
-			// this.destroy();
-			Hack.maps[mapName].scene.addChild(this);
-		}
-		this.moveTo(
-			fromLeft * 32 + this.offset.x,
-			fromTop * 32 + this.offset.y);
-	},
-	destroy: function(delay) {
-		if (delay > 0) this.setTimeout(_remove.bind(this), delay);
-		else _remove.call(this);
-
-		function _remove() {
-			this.remove();
-			if (this.shadow) this.shadow.remove();
-		}
-	},
-	setFrame: function(behavior, frame) {
-		// behavior is Type:string
-		// frame is Frames:array or Getter:function
-		(function(_local) {
-			if (typeof frame === 'function') {
-				this.getFrameOfBehavior[behavior] = _local;
-			} else {
-				this.getFrameOfBehavior[behavior] = function() {
-					return _local;
-				};
-			}
-		}).call(this, frame);
-	},
-	getFrame: function() {
-		if (this.getFrameOfBehavior[this.behavior] instanceof Function) {
-			return this.getFrameOfBehavior[this.behavior].call(this);
-		}
-		return [];
-	},
-	setTimeout: function(callback, wait) {
-		var target = this.age + Math.max(1, wait),
-			flag = true;
-
-		function task() {
-			if (this.age === target && flag) {
-				callback.call(this);
-				stopTimeout.call(this);
-			}
-		}
-
-		function stopTimeout() {
-			flag = false;
-			this.removeEventListener(task);
-		}
-		this.on('enterframe', task);
-		return stopTimeout.bind(this);
-	},
-	setInterval: function(callback, interval) {
-		var current = this.age,
-			flag = true;
-
-		function task() {
-			if ((this.age - current) % interval === 0 && flag) {
-				callback.call(this);
-			}
-		}
-
-		function stopInterval() {
-			flag = false;
-			this.removeEventListener(task);
-		}
-		this.on('enterframe', task);
-		return stopInterval.bind(this);
-	},
-	attack: function() {
-		if (this.behavior !== BehaviorTypes.Idle || !Hack.isPlaying) return;
-		var f = this.forward;
-		this.behavior = BehaviorTypes.Attack;
-		Hack.Attack.call(this, this.mapX + f.x, this.mapY + f.y, this.atk, f.x, f.y);
-		this.setTimeout(function() {
-			this.behavior = BehaviorTypes.Idle;
-		}, this.getFrame().length);
-	},
-	onattacked: function(event) {
-		if (!this.damageTime && typeof this.hp === 'number') {
-			this.damageTime = this.attackedDamageTime;
-			this.hp -= event.damage;
-		}
-	},
-	walk: function(distance, continuous) {
-		if (!this.isKinematic || !continuous && this.behavior !== BehaviorTypes.Idle || !Hack.isPlaying) return;
-		this.behavior = BehaviorTypes.Walk;
-		var f = this.forward,
-			d = typeof distance === 'number' ? distance >> 0 : 1,
-			s = Math.sign(d);
-		var _x = this.mapX + f.x * s,
-			_y = this.mapY + f.y * s,
-			tw = Hack.map.tileWidth,
-			th = Hack.map.tileHeight;
-		// Map Collision
-		var mapR = Hack.map.width / tw - 1,
-			mapB = Hack.map.height / th - 1;
-		var mapHit = Hack.map.hitTest(_x * tw, _y * th) || 0 > _x || _x > mapR || 0 > _y || _y > mapB;
-		// RPGObject(s) Collision
-		var hits = RPGObject.collection.filter(function(item) {
-			return item.isKinematic && item.collisionFlag && item.mapX === _x && item.mapY === _y;
-		});
-		if (!mapHit && !hits.length) {
-			if (continuous) {
-				this.frame = [];
-				this.frame = this.getFrame();
-			} else this.behavior = BehaviorTypes.Walk;
-			this.dispatchEvent(new Event('walkstart'));
-			var move = { x: Math.round(f.x * tw * s), y: Math.round(f.y * th * s) };
-			var target = { x: this.x + move.x, y: this.y + move.y };
-			var frame = this.getFrame().length;
-			var stopInterval = this.setInterval(function() {
-				this.moveBy(move.x / frame, move.y / frame);
-				this.moveTo(Math.round(this.x), Math.round(this.y));
-				this.dispatchEvent(new Event('walkmove'));
-			}, 1);
-			this.setTimeout(function() {
-				this.moveTo(target.x, target.y);
-				stopInterval();
-				this.dispatchEvent(new Event('walkend'));
-				// next step
-				if (Math.abs(d) > 1) this.walk(Math.sign(d) * (Math.abs(d) - 1), true);
-				else this.behavior = BehaviorTypes.Idle;
-			}, frame - 1);
-		} else {
-			// 直前のフレームで collided していたオブジェクトを除外
-			var e = new Event('collided');
-			e.map = mapHit;
-			e.hits = hits.filter(function(item) {
-				return !this._preventFrameHits || this._preventFrameHits.indexOf(item) < 0;
-			}, this);
-			e.hit = e.hits.length > 0 ? e.hits[0] : undefined;
-			if (e.hit || e.map) {
-				var e2 = new Event('collided');
-				e2.map = false;
-				e2.hits = [e2.hit = this];
-				this.dispatchEvent(e);
-				e.hits.forEach(function(item) {
-					item.dispatchEvent(e2);
-				});
-			}
-			this.behavior = BehaviorTypes.Idle;
-		}
-		this._preventFrameHits = hits;
-	},
-	velocity: function(x, y) {
-		this.velocityX = x;
-		this.velocityY = y;
-	},
-	force: function(x, y) {
-		this.accelerationX = x / this.mass;
-		this.accelerationY = y / this.mass;
-	},
-	hp: {
-		get: function() {
-			return this._hp;
-		},
-		set: function(value) {
-			if (typeof value === 'number' && !isNaN(value) && value !== this._hp) {
-				this.hpchangeFlag = true;
-				this._hp = value;
-			}
-		}
-	},
-	behavior: {
-		get: function() { return this._behavior; },
-		set: function(value) {
-			if (typeof value === 'string') {
-				this.isBehaviorChanged = true;
-				this._behavior = value;
-			}
-		}
-	},
-	layer: {
-		get: function() { return this._layer; },
-		set: function(value) {
-			if (this === Hack.player) return this._layer; // プレイヤーのレイヤー移動を禁止
-			if (value === this._layer) return this._layer;
-
-			// Range of layer
-			var sortingOrder = Object.keys(RPGMap.Layer).map(function(key) {
-				return RPGMap.Layer[key];
-			});
-			var max = Math.max.apply(null, sortingOrder);
-			var min = Math.min.apply(null, sortingOrder);
-			this._layer = Math.max(Math.min(value, max), min);
-
-			// 他オブジェクトはプレイヤーレイヤーに干渉できないようにする
-			if (this._layer === RPGMap.Layer.Player) {
-				switch (Math.sign(value - this._layer)) {
-					case 1:
-						return this.bringOver();
-					case -1:
-						return this.bringUnder();
-					default:
-						break;
-				}
-			}
-
-			this.map.layerChangeFlag = true; // レイヤーをソートする
-		}
-	},
-	bringOver: function() {
-		// 現在のレイヤーより大きいレイヤーのうち最も小さいもの
-		var uppers = Object.keys(RPGMap.Layer).map(function(key) {
-			return RPGMap.Layer[key];
-		}, this).filter(function(layer) {
-			return layer > this.layer;
-		}, this);
-		this.layer = uppers.length > 0 ? Math.min.apply(null, uppers) : this.layer;
-		return this.layer;
-	},
-	bringUnder: function() {
-		// 現在のレイヤーより小さいレイヤーのうち最も大きいもの
-		var unders = Object.keys(RPGMap.Layer).map(function(key) {
-			return RPGMap.Layer[key];
-		}, this).filter(function(layer) {
-			return layer < this.layer;
-		}, this);
-		this.layer = unders.length > 0 ? Math.max.apply(null, unders) : this.layer;
-		return this.layer;
-	},
-	shoot: function(node, vector, speed) {
-		node.collisionFlag = false;
-
-		// 置くだけ
-		if (arguments.length === 1) {
-			return node.locate(this.mapX, this.mapY);
-		}
-
-		// 配列ならベクトル化
-		if (Array.isArray(vector)) {
-			vector = { x: vector[0], y: vector[1] };
-		}
-
-		// 正規化
-		var length = Math.pow(vector.x, 2) + Math.pow(vector.y, 2);
-		if (length > 0) length = 1 / length;
-		vector = {
-			x: vector.x * length,
-			y: vector.y * length
-		};
-
-		node.locate(Math.round(this.mapX + vector.x), Math.round(this.mapY + vector.y));
-
-		// 速度をかける
-		speed = arguments.length < 3 ? 1 : speed;
-		vector.x *= speed;
-		vector.y *= speed;
-		node.velocity(vector.x, vector.y);
-
-		var angle = 0;
-
-		// 対象が MapObject かつベクトルの長さが 0.0 より大きいなら
-		if ((node instanceof MapObject || node.directionType === 'single') &&
-			!(vector.x === 0 && vector.y === 0)) {
-			angle = 90 - Math.atan2(-vector.y, vector.x) * 180 / Math.PI;
-		}
-
-		// 速度がマイナスなら角度はそのままにする
-		if (speed < 0) angle += 180;
-
-		node._rotation = angle;
-
-		return this;
-	},
-	mod: function(func) {
-		func.call(this);
-	},
-	getForward: function() {
-		return { x: this._forward.x, y: this._forward.y };
-	},
-	setForward: function(value) {
-		var vec =
-			value instanceof Array ? { x: value[0], y: value[1] } :
-			'x' in value && 'y' in value ? { x: value.x, y: value.y } :
-			this._forward;
-		var norm = Math.sqrt(vec.x * vec.x + vec.y * vec.y);
-		if (norm > 0) {
-			this._forward = { x: vec.x / norm, y: vec.y / norm };
-		}
-		switch (this.directionType) {
-			case 'single':
-				var rad = Math.atan2(this._forward.y, this._forward.x);
-				var enchantRot = rad / Math.PI * 180 + 90; // 基準は上,時計回りの度数法
-				this.rotation = (enchantRot + 360) % 360;
-				break;
-			case 'double':
-				if (this._forward.x !== 0) {
-					this.scaleX = -Math.sign(this._forward.x) * Math.abs(this.scaleX);
-				}
-				break;
-			case 'quadruple':
-				var dir = Hack.Vec2Dir(this._forward);
-				this.frame = [dir * 9 + (this.frame % 9)];
-				break;
-		}
-	},
-	getDirection: function() {
-		switch (this.directionType) {
-			case 'double':
-				return this.forward.x;
-			case 'quadruple':
-				return Hack.Vec2Dir(this.forward);
-		}
-	},
-	setDirection: function(value) {
-		switch (this.directionType) {
-			case 'double':
-				this.forward = [Math.sign(value) || -1, 0];
-				return;
-			case 'quadruple':
-				this.forward = Hack.Dir2Vec(value);
-				break;
-		}
-	},
-	setFrameD9: function(behavior, frame) {
-		var array = typeof frame === 'function' ? frame() : frame;
-
-		this.setFrame(behavior, function() {
-			var _array = [];
-			array.forEach(function(item, index) {
-				_array[index] = item !== null && item >= 0 ? item + this.direction * 9 : item;
-			}, this);
-			return _array;
-		});
-	},
-	turn: function(count) {
-		var c, i;
-		switch (this.directionType) {
-			case 'double':
-				c = typeof count === 'number' ? Math.ceil(Math.abs(count / 2)) : 1;
-				i = { '-1': 1, '1': 0 }[this.direction] + c; // direction to turn index
-				this.direction = [1, -1, -1, 1][i % 2]; // turn index to direction
-				break;
-			case 'quadruple':
-				c = typeof count === 'number' ? count % 4 + 4 : 1;
-				i = [3, 2, 0, 1][this.direction] + c; // direction to turn index
-				this.direction = [2, 3, 1, 0][i % 4]; // turn index to direction
-				break;
-		}
-	},
-	dispatchEvent: function (event) {
-		EventTarget.prototype.dispatchEvent.call(this, event);
-		// Synonym Event を発火
-		var synonym = synonyms.events[event.type];
-		if (synonym) {
-			var clone = Object.assign({}, event, { type: synonym });
-			EventTarget.prototype.dispatchEvent.call(this, clone);
-		}
-	},
-	isListening: function (eventType) {
-		// eventType のリスナーを持っているか
-		var synonym = synonyms.events[eventType];
-		return this['on' + eventType] || this._listeners[eventType] ||
-			synonym && (this['on' + synonym] || this._listeners[synonym]);
-	}
-});
-
-var __HumanBase = enchant.Class(RPGObject, {
-	initialize: function(width, height, offsetX, offsetY) {
-		RPGObject.call(this, width, height, offsetX, offsetY);
-		this.hp = 3;
-		this.atk = 1;
-
-		this.directionType = 'quadruple';
-		this.forward = [0, 1];
-	}
-});
+import __RPGObject from './object/object';
+import __Player from './object/player';
+import __EnemyBase from './object/enemy-base';
+import __HumanBase from './object/human-base';
 
 Hack.assets.knight = function() {
 	this.image = game.assets['enchantjs/x1.5/chara5.png'];
 	this.width = 48;
 	this.height = 48;
-	this.offset = { x: -8, y: -12 };
+	this.offset = {
+		x: -8,
+		y: -12
+	};
 	this.setFrameD9(BehaviorTypes.Idle, [1]);
 	this.setFrameD9(BehaviorTypes.Walk, [0, 0, 0, 1, 1, 1, 2, 2, 2, 1, null]);
 	this.setFrameD9(BehaviorTypes.Attack, [6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, null]);
@@ -591,75 +144,32 @@ Hack.assets.darkKnight = function() {
 	this.mod(Hack.assets.knight);
 	this.image = game.assets['enchantjs/x1.5/chara7.png'];
 };
-var __Player = enchant.Class(RPGObject, {
-	initialize: function() {
-		RPGObject.call(this);
-		this.mod(Hack.assets.knight);
 
-		this.enteredStack = [];
-		this.on('enterframe', this.stayCheck);
-		this.on('walkend', this.enterCheck);
-		this._layer = RPGMap.Layer.Player;
-
-		this.hp = 3;
-		this.atk = 1;
-	},
-	onenterframe: function() {
-		if (!Hack.isPlaying) return;
-		if (this.behavior === BehaviorTypes.Idle) {
-			if (game.input.a) {
-				this.attack();
-			}
-		}
-		if (this.behavior === BehaviorTypes.Idle) {
-			var hor = game.input.right - game.input.left;
-			var ver = hor ? 0 : game.input.down - game.input.up;
-			if (hor || ver) {
-				// Turn
-				this.forward = [hor, ver];
-				this.walk(1);
-			}
-		}
-	},
-	enterCheck: function() {
-		// Dispatch playerenter Event
-		RPGObject.collection.filter(function(item) {
-			return item.mapX === this.mapX && item.mapY === this.mapY;
-		}, this).forEach(function(item) {
-			item.dispatchEvent(new Event('playerenter'));
-			this.enteredStack.push(item);
-		}, this);
-	},
-	stayCheck: function() {
-		// Dispatch playerstay/playerexit Event
-		this.enteredStack.forEach(function(item) {
-			if (item.mapX === this.mapX && item.mapY === this.mapY) {
-				item.dispatchEvent(new Event('playerstay'));
-			} else {
-				item.dispatchEvent(new Event('playerexit'));
-				var index = this.enteredStack.indexOf(item);
-				this.enteredStack.splice(index, 1);
-			}
-		}, this);
-	}
-});
-
-var __EnemyBase = enchant.Class(RPGObject, {
-	initialize: function(width, height, offsetX, offsetY) {
-		RPGObject.call(this, width, height, offsetX, offsetY);
-
-		this.directionType = 'double';
-		this.forward = [-1, 0];
-		this.hp = 3;
-		this.atk = 1;
-	}
-});
+Hack.assets.magician = function() {
+	this.image = game.assets['hackforplay/magician_girl.png'];
+	this.width = 48;
+	this.height = 48;
+	this.offset = {
+		x: -8,
+		y: -12
+	};
+	this.setFrameD9(BehaviorTypes.Idle, [1]);
+	this.setFrameD9(BehaviorTypes.Walk, [0, 0, 0, 1, 1, 1, 2, 2, 2, 1, null]);
+	this.setFrameD9(BehaviorTypes.Attack, [6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, null]);
+	this.setFrameD9(BehaviorTypes.Damaged, [2, -1, -1, -1, 2, 2, 2, -1, -1, -1]);
+	this.setFrameD9(BehaviorTypes.Dead, [1, null]);
+	this.directionType = 'quadruple';
+	this.forward = [0, 1];
+};
 
 Hack.assets.slime = function() {
 	this.image = game.assets['enchantjs/monster4.gif'];
 	this.width = 48;
 	this.height = 48;
-	this.offset = { x: -8, y: -10 };
+	this.offset = {
+		x: -8,
+		y: -10
+	};
 	this.setFrame(BehaviorTypes.Idle, [2, 2, 2, 2, 3, 3, 3, 3]);
 	this.setFrame(BehaviorTypes.Walk, [2, 2, 2, 2, 3, 3, 3, 3]);
 	this.setFrame(BehaviorTypes.Attack, [6, 6, 6, 6, 4, 4, 4, 4, 5, 5, 5, 5, 4, 4, 4, 4, null]);
@@ -681,7 +191,10 @@ Hack.assets.insect = function() {
 	this.image = game.assets['enchantjs/monster1.gif'];
 	this.width = 48;
 	this.height = 48;
-	this.offset = { x: -8, y: -16 };
+	this.offset = {
+		x: -8,
+		y: -16
+	};
 	this.setFrame(BehaviorTypes.Idle, [2, 2, 2, 2, 3, 3, 3, 3]);
 	this.setFrame(BehaviorTypes.Walk, [2, 2, 2, 2, 3, 3, 3, 3]);
 	this.setFrame(BehaviorTypes.Attack, [7, 7, 7, 6, 6, 6, 6, 6, 5, 5, 5, 5, 4, 4, 4, 4, null]);
@@ -703,7 +216,10 @@ Hack.assets.spider = function() {
 	this.image = game.assets['enchantjs/monster2.gif'];
 	this.width = 64;
 	this.height = 64;
-	this.offset = { x: -16, y: -24 };
+	this.offset = {
+		x: -16,
+		y: -24
+	};
 	this.setFrame(BehaviorTypes.Idle, [2, 2, 2, 2, 3, 3, 3, 3]);
 	this.setFrame(BehaviorTypes.Walk, [2, 2, 2, 2, 3, 3, 3, 3]);
 	this.setFrame(BehaviorTypes.Attack, [6, 6, 6, 7, 7, 7, 7, 7, 5, 5, 5, 5, 4, 4, 4, 4, null]);
@@ -725,7 +241,10 @@ Hack.assets.bat = function() {
 	this.image = game.assets['enchantjs/monster3.gif'];
 	this.width = 48;
 	this.height = 48;
-	this.offset = { x: -8, y: -18 };
+	this.offset = {
+		x: -8,
+		y: -18
+	};
 	this.setFrame(BehaviorTypes.Idle, [2, 2, 2, 2, 3, 3, 3, 3]);
 	this.setFrame(BehaviorTypes.Walk, [2, 2, 2, 4, 4, 4, 4, 4, 3, 3, 3, 3]);
 	this.setFrame(BehaviorTypes.Attack, [9, 9, 9, 9, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 3, 3, 4, 4, 4, 4, null]);
@@ -740,7 +259,10 @@ Hack.assets.shadowMod = function() {
 	this.shadow.ref = this;
 	this.shadow.layer = RPGMap.Layer.Shadow;
 	this.shadow.image = game.assets['enchantjs/shadow.gif'];
-	this.shadow.offset = { x: (this.width - this.shadow.width) / 2, y: this.height - this.shadow.height };
+	this.shadow.offset = {
+		x: (this.width - this.shadow.width) / 2,
+		y: this.height - this.shadow.height
+	};
 	this.shadow.scale(this.width / 64, this.height / 64);
 	this.parentNode.addChild(this.shadow);
 	this.map.layerChangeFlag = true;
@@ -767,7 +289,10 @@ Hack.assets.dragon = function() {
 	this.image = game.assets['enchantjs/bigmonster1.gif'];
 	this.width = 80;
 	this.height = 80;
-	this.offset = { x: -24, y: -42 };
+	this.offset = {
+		x: -24,
+		y: -42
+	};
 	this.setFrame(BehaviorTypes.Idle, [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]);
 	this.setFrame(BehaviorTypes.Walk, [2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3]);
 	this.setFrame(BehaviorTypes.Attack, [8, 8, 8, 8, 8, 8, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, null]);
@@ -789,7 +314,10 @@ Hack.assets.minotaur = function() {
 	this.image = game.assets['enchantjs/bigmonster2.gif'];
 	this.width = 80;
 	this.height = 80;
-	this.offset = { x: -40, y: -48 };
+	this.offset = {
+		x: -40,
+		y: -48
+	};
 	this.setFrame(BehaviorTypes.Idle, [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9]);
 	this.setFrame(BehaviorTypes.Walk, [2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3]);
 	this.setFrame(BehaviorTypes.Attack, [3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, null]);
@@ -811,7 +339,10 @@ Hack.assets.boy = function() {
 	this.image = game.assets['enchantjs/x1.5/chara0.png'];
 	this.width = 48;
 	this.height = 48;
-	this.offset = { x: -8, y: -18 };
+	this.offset = {
+		x: -8,
+		y: -18
+	};
 	var _0 = 0,
 		_1 = _0 + 1,
 		_2 = _0 + 2;
@@ -836,7 +367,10 @@ Hack.assets.girl = function() {
 	this.image = game.assets['enchantjs/x1.5/chara0.png'];
 	this.width = 48;
 	this.height = 48;
-	this.offset = { x: -8, y: -18 };
+	this.offset = {
+		x: -8,
+		y: -18
+	};
 	var _0 = 6,
 		_1 = _0 + 1,
 		_2 = _0 + 2;
@@ -861,7 +395,10 @@ Hack.assets.woman = function() {
 	this.image = game.assets['enchantjs/x1.5/chara0.png'];
 	this.width = 48;
 	this.height = 48;
-	this.offset = { x: -8, y: -18 };
+	this.offset = {
+		x: -8,
+		y: -18
+	};
 	var _0 = 3,
 		_1 = _0 + 1,
 		_2 = _0 + 2;
@@ -919,7 +456,10 @@ Hack.assets.enchantBookItem = function() {
 	this.image = game.assets['hackforplay/madosyo_small.png'];
 	this.width = 32;
 	this.height = 32;
-	this.offset = { x: 0, y: 0 };
+	this.offset = {
+		x: 0,
+		y: 0
+	};
 	this.directionType = 'single';
 	this.forward = [0, -1];
 };
@@ -927,7 +467,10 @@ Hack.assets.enchantBookItem = function() {
 Hack.assets.explosion = function() {
 	this.image = game.assets['enchantjs/x2/effect0.png'];
 	this.width = this.height = 32;
-	this.offset = { x: 0, y: 0 };
+	this.offset = {
+		x: 0,
+		y: 0
+	};
 	this.directionType = 'single';
 	this.forward = [0, -1];
 	this.frame = [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4];
@@ -938,7 +481,10 @@ Hack.assets.ouroboros = function() {
 	this.image = game.assets['enchantjs/monster5.gif'];
 	this.width = 80;
 	this.height = 80;
-	this.offset = { x: -24, y: -36 };
+	this.offset = {
+		x: -24,
+		y: -36
+	};
 	this.directionType = 'double';
 	this.setFrame(BehaviorTypes.Idle, new Array(40).fill(0).concat(new Array(12).fill(1)));
 	this.setFrame(BehaviorTypes.Walk, [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, null]);
@@ -1125,7 +671,12 @@ function __physicsUpdateOnFrame(tick, frame, physics) {
 		var self = item.self;
 		var event = item.event = new Event('collided');
 		var hits = event.hits = item.hits;
-		var calc = item.calc = { x: self.x, y: self.y, vx: self.velocityX, vy: self.velocityY };
+		var calc = item.calc = {
+			x: self.x,
+			y: self.y,
+			vx: self.velocityX,
+			vy: self.velocityY
+		};
 		if (hits.length > 0) {
 			// Hit objects
 			event.hit = hits[0];
