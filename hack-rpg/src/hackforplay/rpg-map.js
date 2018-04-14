@@ -51,8 +51,8 @@ class RPGMap extends EventTarget {
 	load() {
 		if (!this.image && this.imagePath) this.image = game.assets[this.imagePath];
 		var a = function (n) {
-			// Hack.world.addChild(n);
-			game.rootScene.addChild(n);
+			Hack.world.addChild(n);
+			// game.rootScene.addChild(n);
 		};
 		a(this.bmap);
 		a(this.scene);
