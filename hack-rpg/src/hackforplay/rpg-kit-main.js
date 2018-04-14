@@ -113,6 +113,18 @@ game.on('load', () => {
 		if (!camera.target) camera.target = Hack.player;
 	});
 
+
+	// コントローラーグループ
+	const controllerGroup = new enchant.Group();
+	controllerGroup.name = 'ControllerGroup';
+	controllerGroup.order = 300;
+
+
+	Hack.controllerGroup = controllerGroup;
+
+	game.rootScene.addChild(controllerGroup);
+
+
 	var pad = new Pad();
 	pad.moveTo(20, 200);
 	pad.onenterframe = function() {
