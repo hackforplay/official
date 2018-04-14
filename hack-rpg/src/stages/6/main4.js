@@ -1,7 +1,4 @@
 import 'hackforplay/core';
-import {
-	gameclear
-} from 'utils';
 import extra from '../extra';
 
 
@@ -29,11 +26,10 @@ function gameStartLazy() {
 
 	// ゲームクリアのコード　（　関数 )
 	function gameclear() {
-
 		// 画面を暗くする
 		const dark = Hack.overlay('rgb(0,0,0,1)');
 		dark.opacity = 0;
-		game.rootScene.addChild(dark);
+		Hack.overlayGroup.addChild(dark);
 		dark.tl.delay(30).then(function() {
 			Hack.menuGroup.parentNode.removeChild(Hack.menuGroup);
 		}).fadeIn(90, enchant.Easing.CUBIC_EASEOUT).then(function() {
@@ -46,7 +42,7 @@ function gameStartLazy() {
 			label.textAlign = 'center';
 			label.opacity = 0;
 			label.tl.fadeIn(20);
-			game.rootScene.addChild(label);
+			Hack.overlayGroup.addChild(label);
 
 			// ハートを表示する
 			const treasure = new Sprite(32, 32);
@@ -55,10 +51,11 @@ function gameStartLazy() {
 			treasure.frame = 563;
 			treasure.opacity = 0;
 			treasure.tl.delay(40).fadeIn(20).then(() => {
+				feeles.closeCode();
 				// 最後の説明書を表示する
 				feeles.openReadme('THANKS.md');
 			});
-			game.rootScene.addChild(treasure);
+			Hack.overlayGroup.addChild(treasure);
 
 		});
 
