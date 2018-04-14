@@ -111,6 +111,16 @@ class RPGObject extends Sprite {
 		this._layer = RPGMap.Layer.Middle;
 
 		Hack.defaultParentNode.addChild(this);
+
+		// HPLabel
+		this.showHpLabel = true; // デフォルトで表示
+		this.on('hpchange', e => {
+			if (typeof this.hp === 'number' && this.showHpLabel) {
+				this.hpLabel = this.hpLabel || makeHpLabel(this);
+				this.hpLabel.score = this.hp;
+				this.hpLabel.opacity = 1;
+			}
+		});
 	}
 
 	get map() {
@@ -725,6 +735,21 @@ class RPGObject extends Sprite {
 		});
 	}
 }
+
+
+function makeHpLabel (self) {
+	const label = new ScoreLabel();
+	label.label = 'HP:';
+	label.opacity = 0;
+	self.parentNode.addChild(label);
+	label.on('enterframe', e => {
+		label.x = self.x;
+		label.y = self.y;
+		const diff = 1.01 - label.opacity;
+		label.opacity = Math.max(0, label.opacity - diff / 10);
+	});
+	return label;
+};
 
 
 // RPGObject.collection に必要な初期化
