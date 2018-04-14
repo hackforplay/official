@@ -1,5 +1,5 @@
 import 'hackforplay/rpg-kit-main';
-import 'hackforplay/CameraV2';
+import 'hackforplay/camera';
 import 'hackforplay/loader';
 import 'hackforplay/hplabel';
 import * as synonyms from './synonyms';
