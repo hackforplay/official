@@ -141,7 +141,7 @@ function createDefaultKeyboard() {
 	});
 }
 
-game.on('awake', () => {
+game.onawake = () => {
 
 	// マウス座標
 	let mouseX = null;
@@ -320,7 +320,7 @@ game.on('awake', () => {
 
 	feeles.setAlias('Hack', Hack);
 	feeles.setAlias('game', game);
-});
+};
 
 // 互換性維持
 MapObject._dictionary = {};
