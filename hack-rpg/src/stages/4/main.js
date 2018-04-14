@@ -5,7 +5,7 @@ import './main2';
 import extra from '../extra';
 
 
-function gameStart() {
+function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 
 	// map1 を読み込む
 	Hack.changeMap('map1');
