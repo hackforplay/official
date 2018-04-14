@@ -20,13 +20,11 @@ import {
 	Shpere
 } from 'mod/3d/primitive';
 
-
 import 'mod/3d/player-input';
-
 import 'mod/3d/extension';
-import { VertexShader, FragmentShader } from 'mod/3d/shader';
 import 'mod/3d/ui';
 
+import { VertexShader, FragmentShader } from 'mod/3d/shader';
 
 import defineShader from 'mod/3d/defineShader';
 import defineModel3D from 'mod/3d/defineModel3D';
@@ -42,9 +40,6 @@ import { plane2, plane, model2d, sky } from 'mod/3d/definePrimitive';
 
 import renderSky from 'mod/3d/renderSky';
 
-console.clear();
-
-
 window.RPG3D = {};
 
 
@@ -59,37 +54,15 @@ import Texture from 'mod/3d/texture';
 import { resize2 } from 'mod/3d/texture';
 
 game.preload('enchantjs/avatarBg2.png');
-game.preload('mod/3d/ui.png');
 
 const main = async function() {
 
 
-	// UI 
-	(function() {
-		var a = new Sprite(300, 320);
-		a.image = game.assets['mod/3d/ui.png'];
-		a.x = 455;
-		Hack.menuGroup.addChild(a);
-		const b = new Button("", '', 70, 5)
-		game.rootScene.addChild(b);
-		a.onenterframe = () => {
-			b.x = a.x + 8;
-			b.y = 122.5;
-			if (b._domManager) {
-				b._domManager.element.style.opacity = 0.0;
-			}
-		};
-		let bc = 0;
-		b.ontouchstart = function() {
-			var a2 = bc++ % 2 ? 180 : 455;
-			a.tl.moveTo(a2, 0, 30, enchant.Easing.QUAD_EASEINOUT);
-		};
-	})();
 
 
 
 
-	game.fps = 60;
+	game.fps = 30;
 
 	resize2('enchantjs/avatarBg2.png', 320, 50);
 	resize2('enchantjs/x2/dotmat.gif', 32, 32);
@@ -132,10 +105,6 @@ const main = async function() {
 
 
 
-
-
-
-
 	var cameraMain = new Camera3D('main');
 
 	cameraMain.viewport.perspective(70, 480 / 320, 10.0, 800);
@@ -143,7 +112,6 @@ const main = async function() {
 	var cameraLight = new Camera3D('light');
 
 	cameraLight.viewport.perspective(100, 1 / 1, 10.0, 800);
-
 
 
 	// カメラを向く行列
@@ -178,26 +146,26 @@ const main = async function() {
 		0.5, 0.5, 0.0, 1.0
 	]);
 
-	var render2 = function() {
+	function renderObjects(camera2D) {
+
+		const { w, h } = camera2D;
+
+
 
 		var B = ObjectRenderer.nodes[ObjectType.MODEL];
 		var D = ObjectRenderer.nodes[ObjectType.OBJ_MODEL];
 		var blocks = ObjectRenderer.nodes[ObjectType.BLOCK];
 
-
 		const nodes_GROUND = ObjectRenderer.nodes[ObjectType.GROUND];
-
 
 		gl.enable(gl.DEPTH_TEST);
 
 		var cameraPos = cameraMain.position;
 
-
-
+		// console.warn(cameraPos);
 
 
 		var models = (B).concat(D).concat(blocks);
-
 
 
 		models.forEach((node) => {
@@ -207,7 +175,6 @@ const main = async function() {
 			node._cameraDistance = Vec3.sub(pos, cameraPos).length();
 
 		});
-
 
 
 		models.sort((a, b) => {
@@ -222,8 +189,6 @@ const main = async function() {
 		});
 
 
-
-
 		models.forEach((node) => {
 
 			gl.depthMask(!node.alpha);
@@ -235,27 +200,30 @@ const main = async function() {
 
 		gl.depthMask(true);
 
-
-
 	};
 
 	window.Camera3D = Camera3D;
 
 
-	const render = function() {
+	game.on('enterframe', () => ++count);
+
+
+	function render(x, y, w, h, camera2D) {
+
+		canvas.width = w;
+		canvas.height = h;
 
 		// 深度描画パス
 		ObjectRenderer.pass = RenderPass.DEPTH;
 
 		// フレームバッファをバインド
 		Renderer.setFrameBuffer(depthBuffer.frameBuffer);
-		Renderer.clear(1, 1, 1, 1);
+		Renderer.clear(0, 0, 0, 0);
 		gl.viewport(0, 0, depthBuffer.width, depthBuffer.height);
 
 		Program.use('shadow');
 
 
-		++count;
 		var _x = Math.sin(count * 0.005) * 200;
 		var _y = Math.cos(count * 0.005) * 200;
 
@@ -274,6 +242,7 @@ const main = async function() {
 		cameraMain.update();
 
 
+
 		// カメラを向く行列
 		matrixIV = Matrix.inverse(cameraMain.matrix);
 		matrixIV[12] = 0;
@@ -283,12 +252,14 @@ const main = async function() {
 		Camera3D.IV = matrixIV;
 
 
-		render2();
+		renderObjects(camera2D);
 
 		// フレームバッファのバインドを解除
 		Renderer.setFrameBuffer(null);
-		Renderer.clear(0, 0.7, 0.7, 1);
-		gl.viewport(0, 0, 480, 320);
+		Renderer.clear(1, 0, 1, 1);
+
+
+		gl.viewport(0, 0, w, h);
 
 		// メインパス
 		ObjectRenderer.pass = RenderPass.MAIN;
@@ -313,18 +284,10 @@ const main = async function() {
 		Program.uniform('mat4', 'matrixTex', false, matrixTexProj);
 
 
-
-
-
-
 		gl.enable(gl.DEPTH_TEST);
 
 
-		render2();
-
-
-
-
+		renderObjects(camera2D);
 
 
 		// 反映
@@ -334,58 +297,51 @@ const main = async function() {
 	};
 
 
+	const Camera2D = Camera;
 
-	// ノードのレンダリングに割り込む機能
-
-	const InterruptRenderer = {
-		observe(target, render, type) {
-			var renderer = enchant.CanvasRenderer.instance;
-			// addEventListener == unshift
-			renderer.listener.on(type, (node) => {
-				if (target() !== node) return;
-				render(renderer.override || enchant.Core.instance.rootScene._layers.Canvas.context);
-			});
-		}
+	// 2D のレンダリングを停止する
+	const renderCamera2D = Camera2D.prototype.render;
+	Camera2D.prototype.render = function() {
+		if (this.dimension !== 2) return;
+		renderCamera2D.call(this);
 	};
 
 
-	InterruptRenderer.observe(() => Hack.map.scene, (context) => {
+	Hack.world.on('postrender', () => {
 
-
-
-		context.fillStyle = '#19b7ff';
-		context.fillRect(0, 0, game.width, game.height);
-
-
+		const context = game.rootScene._layers.Canvas.context;
 
 		context.setTransform(1, 0, 0, 1, 0, 0);
 
-
-
 		// WebGL の canvas を描画
-
 		ObjectRenderer.update();
 
 
+		for (const camera of Camera.collection) {
 
-		// ObjectRenderer.render();
+			// 3D カメラではない
+			if (camera.dimension !== 3) continue;
+
+			const { x, y, w, h } = camera;
+
+			const context = camera.image.context;
+
+			updateCameraPos(camera);
+
+			render(x, y, w, h, camera);
+
+			context.drawImage(canvas,
+				0, 0, w, h,
+				0, 0, w, h
+			);
+
+			camera.drawBorder();
+
+		}
 
 
-		render();
+	});
 
-
-		context.drawImage(canvas, 0, 0, game.width, game.height);
-
-
-	}, 'renderEnd');
-
-
-
-
-	// 2D のレンダリングを行わない
-	if (!RPG3D.render2D) {
-		RPGObject.prototype.cvsRender = function() {};
-	}
 
 	var sp = 3;
 	var an = 0;
@@ -405,7 +361,10 @@ const main = async function() {
 	let pCameraDistance = 100;
 	let pCameraHeight = 30;
 
-	game.on('enterframe', function() {
+	function updateCameraPos(camera2D) {
+
+		cameraMain.viewport.perspective(70, camera2D.w / camera2D.h, 10.0, 800);
+
 
 		if (Key.q.pressed) {
 			an -= sa;
@@ -435,12 +394,14 @@ const main = async function() {
 				pCameraHeight -= 3;
 			}
 
-			
+
 			pCameraDistance = Math.max(10, pCameraDistance);
 			pCameraHeight = Math.max(0, pCameraHeight);
 
-			
-			CPOS = Hack.player.position.toArray();
+
+			CPOS = camera2D.target.position.toArray();
+
+
 			CPOS[1] += 50;
 
 
@@ -497,9 +458,9 @@ const main = async function() {
 
 
 
-		(function() {
+		(() => {
 
-			if (!Hack.player) return;
+			if (!camera2D.target) return;
 
 
 			const { position, target } = Camera3D.get('main');
@@ -511,7 +472,7 @@ const main = async function() {
 
 
 
-			Hack.player.cameraDirection = (vv + Math.PI) / (Math.PI * 2);
+			camera2D.target.cameraDirection = (vv + Math.PI) / (Math.PI * 2);
 
 
 
@@ -522,60 +483,23 @@ const main = async function() {
 
 
 
-	});
+	}
 
 
 };
 
-game.on('load', function() {
-
-
-
-	Hack.player.input.left = ['left'];
-	Hack.player.input.up = ['up'];
-	Hack.player.input.down = ['down'];
-	Hack.player.input.right = ['right'];
-
-	// Hack.player.visible = false;
-
-
-	/*　移動方法
-
-	左: q キー
-	右: e キー
-	前: w キー
-	後: s キー
-	左: a キー
-	右: d キー
-	上: r キー
-	下: f キー
-	*/
-
-
-});
-
 
 Hack.on('load', function() {
-
-	console.log('Hack.onload');
 
 	var start = game.onload;
 	game.onload = function() {
 
-
-
 		main();
-
-
 
 		start.apply(this, arguments);
 
-
-
 		// map object 3d
 		defineModel3D(MapObject3D);
-
-
 
 	};
 });
