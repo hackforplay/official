@@ -1,8 +1,10 @@
 import 'hackforplay/enchantjs-kit';
+import 'mod/stop';
+import 'mod/coordinate';
+
 import 'hackforplay/hack';
 import 'hackforplay/rpg-kit-rpgobjects';
 import 'hackforplay/rpg-kit-color';
-import 'mod/coordinate';
 
 import { Group } from 'enchantjs/enchant';
 import Camera from 'hackforplay/camera';
