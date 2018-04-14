@@ -3,21 +3,6 @@ import 'mod/key';
 
 import { Vec2 } from 'mod/3d/math';
 
-Player.prototype.input = {
-	up: ['up', 'w'],
-	down: ['down', 's'],
-	left: ['left', 'a'],
-	right: ['right', 'd'],
-	attack: ['space']
-};
-
-Player.prototype.checkInput = function(type) {
-	return this.input[type].map(function(name) {
-		return Key[name].pressed;
-	}).reduce(function(a, b) {
-		return a + b;
-	});
-};
 
 Player.prototype.onenterframe = function() {
 
@@ -121,5 +106,3 @@ Player.prototype.frameOverride = function frameOverride() {
 	return this.simNode;
 
 };
-
-
