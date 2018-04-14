@@ -9,7 +9,7 @@ import extra from '../extra';
 game.preload('hackforplay/bar_green.png', 'hackforplay/bar_red.png');
 
 
-function gameStart() { //game.dispatchEvent(new enchant.Event('awake'));
+function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 
 	// map1 を読み込む
 	Hack.changeMap('map1');
