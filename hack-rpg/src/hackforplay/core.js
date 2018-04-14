@@ -4,16 +4,16 @@ import 'hackforplay/loader';
 
 import * as synonyms from './synonyms';
 
+
 // Assign synonyms
 for (const [from, to] of synonyms.assets) {
-  self[to] = Hack.assets[from];
+	self[to] = Hack.assets[from];
 }
 
 
 // Game start
 game.onload = function() {
 
-	
 	var map = Hack.maps['map1'];
 	map.load(); // Load Map;  Hack.defaultParentNode == map.scene
 
@@ -96,5 +96,7 @@ Hack.onload = function() {
 	Hack.maps['map1'].type = 'grassland';
 
 };
+
+
 
 //Hack.start();
