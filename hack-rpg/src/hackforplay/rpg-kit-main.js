@@ -62,11 +62,56 @@ Hack.on('load', function() {
 	}
 });
 
-game.on('load', function() {
+game.on('load', () => {
 	// Hack.player がないとき self.player を代わりに入れる
 	if (self.player && !Hack.player) {
 		Hack.player = self.player;
 	}
+
+	// マウス座標
+	let mouseX = null;
+	let mouseY = null;
+	// 正規化されたマウス座標
+	let normalizedMouseX = null;
+	let normalizedMouseY = null;
+
+	game._element.onmousemove = function({ x, y }) {
+		const rect = this.getBoundingClientRect();
+		mouseX = x;
+		mouseY = y;
+		normalizedMouseX = x / rect.width;
+		normalizedMouseY = y / rect.height;
+	};
+
+	Object.defineProperties(Hack, {
+		mouseX: { get: () => mouseX },
+		mouseY: { get: () => mouseY },
+		normalizedMouseX: { get: () => normalizedMouseX },
+		normalizedMouseY: { get: () => normalizedMouseY }
+	});
+
+	// マウスの入力状態
+	Hack.mouseInput = new KeyClass();
+	let mousePressed = false;
+	game.rootScene.on('touchstart', () => mousePressed = true);
+	game.rootScene.on('touchend', () => mousePressed = false);
+	game.on('enterframe', () => Hack.mouseInput.update(mousePressed));
+
+	// カメラグループ
+	const cameraGroup = new Group();
+	cameraGroup.name = 'CameraGroup';
+	cameraGroup.order = 100;
+
+	Hack.cameraGroup = cameraGroup;
+	game.rootScene.addChild(cameraGroup);
+
+	// デフォルトのカメラを作成する
+	const camera = Hack.camera = Camera.main = new Camera();
+
+	// ゲーム開始時にデフォルトのカメラのターゲットが存在しないならプレイヤーを割り当てる
+	game.on('load', () => {
+		if (!camera.target) camera.target = Hack.player;
+	});
 
 	var pad = new Pad();
 	pad.moveTo(20, 200);
