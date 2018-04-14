@@ -124,23 +124,50 @@ game.on('load', () => {
 	game.rootScene.addChild(controllerGroup);
 
 
-	var pad = new Pad();
+
+	const overlayGroup = new Group();
+	overlayGroup.name = 'OverlayGroup';
+	overlayGroup.order = 1000;
+	Hack.overlayGroup = overlayGroup;
+	game.rootScene.addChild(overlayGroup);
+
+
+	// DOMGroup
+	const domGroup = new Group();
+	domGroup.name = 'DOMGroup';
+	domGroup.order = 500;
+	Hack.domGroup = domGroup;
+	// _element が存在すると DOM layer に追加される
+	domGroup._element = {};
+	game.rootScene.addChild(domGroup);
+
+	// PopupGroup
+	const popupGroup = new Group();
+	popupGroup.name = 'PopupGroup';
+	popupGroup.order = 1500;
+	Hack.popupGroup = popupGroup;
+	game.rootScene.addChild(popupGroup);
+
+
+	const pad = new Pad();
 	pad.moveTo(20, 200);
-	pad.onenterframe = function() {
-		game.rootScene.addChild(this);
-	};
-	game.rootScene.addChild(pad);
+
+	controllerGroup.addChild(pad);
+
 	Hack.pad = pad;
 
-	var apad = new Sprite(64, 64);
+	const apad = new Sprite(64, 64);
 	apad.image = game.assets['hackforplay/attack.png'];
 	apad.buttonMode = 'a';
 	apad.moveTo(400, 250);
-	apad.onenterframe = function() {
-		game.rootScene.addChild(this);
-	};
-	game.rootScene.addChild(apad);
+
+
+	controllerGroup.addChild(apad);
 	Hack.apad = apad;
+
+
+	Hack.pad.name = 'Pad';
+	Hack.apad.name = 'APad';
 
 	// Enchant book
 	Hack.enchantBookIcon = Hack.createSprite(64, 64, {
@@ -162,7 +189,12 @@ game.on('load', () => {
 	Hack.textarea.height = 32;
 
 	// Life label
-	Hack.lifeLabel = Hack.player && (function() {
+	const lifeLabel = new LifeLabel(Hack.menuGroup.x + 10, Hack.menuGroup.y + 72, 0);
+	Hack.lifeLabel = lifeLabel;
+	Hack.menuGroup.addChild(lifeLabel);
+	lifeLabel.onenterframe = function enterframe() {
+		if (!Hack.player) return;
+
 		var maxhp, hp;
 		maxhp = hp = this.life = Hack.player.hp;
 		Hack.player.on('hpchange', function() {
@@ -170,10 +202,9 @@ game.on('load', () => {
 			maxhp = Math.max(maxhp, hp);
 			Hack.lifeLabel.life = maxhp < Hack.lifeLabel._maxlife ? hp : (hp / maxhp) * Hack.lifeLabel._maxlife;
 		});
-		Hack.menuGroup.addChild(this);
-		return this;
 
-	}).call(new LifeLabel(Hack.menuGroup.x + 10, Hack.menuGroup.y + 72, 9));
+		this.removeEventListener('enterframe', enterframe);
+	};
 
 	Hack.scoreLabel = (function(self, source) {
 		Object.keys(source).filter(function(key) {
