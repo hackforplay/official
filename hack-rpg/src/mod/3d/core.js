@@ -25,6 +25,7 @@ import 'mod/3d/player-input';
 
 import 'mod/3d/extension';
 import { VertexShader, FragmentShader } from 'mod/3d/shader';
+import 'mod/3d/ui';
 
 
 import defineShader from 'mod/3d/defineShader';
