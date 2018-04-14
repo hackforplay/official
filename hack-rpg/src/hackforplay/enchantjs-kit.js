@@ -25,6 +25,7 @@ window.game = new Core(feeles.env.VIEW.width, feeles.env.VIEW.height);
 // Hack.start
 Hack.start = function() {
 	// game start
+	Hack.maps = Hack.maps || {};
 	Hack.dispatchEvent(new Event('load'));
 	game.start();
 	window.focus();
