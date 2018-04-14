@@ -1,4 +1,4 @@
-import 'hackforplay/Assets';
+import 'hackforplay/core';
 
 /*
 function blobToDataURL(blob, callback) {

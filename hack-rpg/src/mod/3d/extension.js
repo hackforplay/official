@@ -1,4 +1,4 @@
-import 'hackforplay/Assets';
+import 'hackforplay/core';
 
 import 'mod/3d/player-input';
 

@@ -13,7 +13,7 @@ for (const [from, to] of synonyms.assets) {
 // Game start
 game.onload = function() {
 
-
+	
 	var map = Hack.maps['map1'];
 	map.load(); // Load Map;  Hack.defaultParentNode == map.scene
 

@@ -1,4 +1,4 @@
-import 'hackforplay/Assets';
+import 'hackforplay/core';
 
 
 import gl from 'mod/3d/gl';

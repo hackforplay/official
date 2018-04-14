@@ -1,4 +1,4 @@
-import Assets from 'hackforplay/Assets';
+import 'hackforplay/core';
 import './maps';
 
 import extra, {
