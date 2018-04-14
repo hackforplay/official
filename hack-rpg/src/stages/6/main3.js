@@ -8,7 +8,7 @@ import extra from '../extra';
 function gameStartLazy() {
 
 
-	/*+ ゲーム */
+	
 	
 
 	// プレイヤーが map3 に入ったら

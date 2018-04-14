@@ -9,7 +9,7 @@ import extra from '../extra';
 function gameStartLazy() {
 
 
-	/*+ ゲーム */
+	
 
 
 	// ドラゴン

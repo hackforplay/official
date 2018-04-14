@@ -30,7 +30,7 @@ function gameStart() {
 
 
 
-	/*+ ゲーム */
+	
 
 
 	// 神官

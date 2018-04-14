@@ -50,7 +50,7 @@ function gameStart() {
 	feeles.setAlias('player', player);
 
 
-	/*+ ゲーム */
+	
 
 
 	// ATK Label

@@ -56,7 +56,7 @@ function gameStart() {
 	feeles.setAlias('player', player);
 
 
-	/*+ ゲーム */
+	
 
 
 	// 	HP Gage

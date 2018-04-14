@@ -46,7 +46,7 @@ function gameStart() {
 
 
 
-	/*+ ゲーム */
+	
 
 
 	// スライム
