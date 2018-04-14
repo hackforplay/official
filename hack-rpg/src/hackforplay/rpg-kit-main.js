@@ -66,10 +66,6 @@ Hack.on('load', function() {
 });
 
 game.on('load', () => {
-	// Hack.player がないとき self.player を代わりに入れる
-	if (self.player && !Hack.player) {
-		Hack.player = self.player;
-	}
 
 	// マウス座標
 	let mouseX = null;
