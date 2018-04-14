@@ -1,3 +1,4 @@
+import Hack from 'hackforplay/hack';
 
 /**
  * @param next String 次に読み込むHTMLのパス
@@ -14,8 +15,9 @@ export function gameclear(next) {
 	};
 	button.tl
 		.delay(20)
-		.moveBy(0, -100, 30);
-	game.rootScene.addChild(button);
+		.moveBy(0, -100, 10);
+	Hack.overlayGroup.addChild(button);
 
+	Hack.player.destroy();
 }
 
