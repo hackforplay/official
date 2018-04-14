@@ -1,3 +1,4 @@
+import enchant from '../enchantjs/enchant';
 import Hack from '../hackforplay/hack';
 
 export default function(code) {
@@ -7,6 +8,7 @@ export default function(code) {
 		eval(code);
 	} catch (error) {
 		// Hack.onerror を発火
+		const Event = enchant.Event;
 		const errorEvent = new Event('error');
 		errorEvent.target = Hack;
 		errorEvent.error = error;
