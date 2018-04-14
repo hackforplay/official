@@ -306,7 +306,7 @@ Hack.overlay = function() {
 		lay.tl.fadeIn(30, enchant.Easing.LINEAR).then(function() {
 			// [RETRY]
 			Hack.createSprite(165, 69, {
-				x: 157 - game.rootScene.x,
+				x: 314 - game.rootScene.x,
 				y: 320 - game.rootScene.y,
 				image: game.assets['hackforplay/new_button_retry.png'],
 				defaultParentNode: Hack.overlayGroup,
@@ -314,7 +314,7 @@ Hack.overlay = function() {
 					// [RETRY] がクリックされたとき
 					feeles.reload(false);
 				}
-			}).tl.moveTo(157 - game.rootScene.x, 240 - game.rootScene.y, 20, enchant.Easing.CUBIC_EASEOUT);
+			}).tl.moveTo(314 - game.rootScene.x, 0 - game.rootScene.y, 40, enchant.Easing.CUBIC_EASEOUT);
 		});;
 	};
 
