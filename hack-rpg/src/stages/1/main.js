@@ -75,35 +75,31 @@ function gameStart() {
   };
 
   // そうさせつめい (1)
-  log(`
+  log(() => player.mapX === 3 && player.mapY === 5 ? `
 やじるしキーを おして
 キャラクターを
-うごしてみよう`);
+うごしてみよう` : '');
 
   // そうさせつめい (2)
-  player.onwalkend = () => {
-    // 歩いたら
-    log(item1.hp > 0 ? `
+  let attacked = false;
+  player.once('becomeattack', () => {
+    attacked = true;
+  });
+  log(() => attacked ? '' : `
 スペースキーを おして
-こうげき してみよう` : '');
-    player.onwalkend = null;
-  };
+こうげき してみよう`);
 
   // そうさせつめい (3)
-  player.onbecomeattack = () => {
-    log(() => item1.hp > 0 ? `
+  log(() => item1.hp >= 3 ? `
 スライムに ちかづいて
 こうげき してみよう！` : '');
-    player.onbecomeattack = null;
-  };
 
   // そうさせつめい (4)
-  item1.onbecomedead = () => {
+  item1.once('becomedead', () => {
     log(`
 スライムは たおれた！
 かいだんを おりよう`);
-    item1.onbecomedead = null;
-  };
+  });
 
   // このステージを改造
   extra(6, 9, 'map1', 'stages/1/main.js');

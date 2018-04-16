@@ -61,9 +61,9 @@ function gameStart() {
     feeles.openCode('stages/3/code.js');
     // 魔道書を削除
     item1.destroy();
-    log(() => `
+    log(() => item2.hp > 900 ? `
 マドウショが あらわれた！
-じっくりと よんでみよう`);
+じっくりと よんでみよう` : '');
   };
 
   // スライム
