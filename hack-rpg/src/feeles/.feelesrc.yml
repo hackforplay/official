@@ -1,0 +1,5 @@
+homeURL: 'https://www.feeles.com'
+kitIdentifier: com.feeles.hack-rpg
+disableReloadButton: false
+disableFullScreenButton: true
+sendCodeOnEnter: true

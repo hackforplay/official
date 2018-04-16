@@ -32,6 +32,16 @@ module.exports = {
 		}),
 
 		new HtmlWebpackPlugin({
+			filename: './hack-rpg/index.html',
+			template: './hack-rpg/template.hbs'
+		}),
+		new FeelesWebpackPlugin({
+			paths: ['./hack-rpg/src', './common/src'],
+			output: './hack-rpg/index.json',
+			ignore: /\.DS_Store$/
+		}),
+
+		new HtmlWebpackPlugin({
 			filename: './make-rpg/index.html',
 			template: './make-rpg/template.hbs'
 		}),

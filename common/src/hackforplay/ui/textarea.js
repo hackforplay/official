@@ -322,7 +322,7 @@ class TextArea extends Sprite {
         const rubyStyle = Object.assign(Object.assign({}, this.defaultStyle), this.rubyStyle);
 
         // 描画範囲が狭いと空の行が含まれる場合がある
-        const checkedLines = lines.filter((line) => line);
+        const checkedLines = lines.filter((line) => line && line.length);
 
         this.values = [];
 
@@ -335,7 +335,7 @@ class TextArea extends Sprite {
 
             let addX = 0;
             // 行の横幅
-            const lineWidth = line.map((char) => char.w).reduce((a, b) => a + b);
+            const lineWidth = line.map((char) => char.w).reduce((a, b) => a + b, 0);
             // 余白
             const space = this.drawAreaW - lineWidth;
 
@@ -384,8 +384,8 @@ class TextArea extends Sprite {
             const rubysWidth = stringToArray(ruby).map((char) => {
                 return context.measureText(char).width + rubyStyle.space;
             });
-
-            const rubyWidth = rubysWidth.reduce((a, b) => a + b);
+            
+            const rubyWidth = rubysWidth.reduce((a, b) => a + b, 0);
             const unit = (right - left - rubyWidth) / (ruby.length - 1);
             let currentX = left;
 

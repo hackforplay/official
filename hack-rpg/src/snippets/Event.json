@@ -1,0 +1,81 @@
+{
+    ".source.js": {
+        "onbecomeidle": {
+            "prefix": "onbecomeidle",
+            "body": "item.onbecomeidle = () => {\n\t\n};",
+            "leftLabel": "止まったとき",
+            "description": "item.walk() や item.attack() などが終わって、動きが止まったときに発生するイベント",
+            "descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/止まったとき"
+        },
+        "onbecomewalk": {
+            "prefix": "onbecomewalk",
+            "body": "item.onbecomewalk = () => {\n\t\n};",
+            "leftLabel": "歩くとき",
+            "description": "item.walk() をコールした後、歩き始めたときに発生するイベント",
+            "descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/歩くとき"
+        },
+        "onbecomeattack": {
+            "prefix": "onbecomeattack",
+            "body": "item.onbecomeattack = () => {\n\t\n};",
+            "leftLabel": "攻撃するとき",
+            "description": "item.attack() をコールした後、攻撃し始めるときに発生するイベント",
+            "descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/攻撃するとき"
+        },
+        "onbecomedead": {
+            "prefix": "onbecomedead",
+            "body": "item.onbecomedead = () => {\n\t\n};",
+            "leftLabel": "倒れたとき",
+            "description": "item.hp が0以下になったときに発生するイベント",
+            "descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/倒れたとき"
+        },
+        "onattacked": {
+            "prefix": "onattacked",
+            "body": "item.onattacked = () => {\n\t\n};",
+            "leftLabel": "攻撃されたとき",
+            "description": "他のモンスターなどから攻撃されたときに発生するイベント",
+            "descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/攻撃されたとき"
+        },
+        "ontriggerenter": {
+            "prefix": "ontriggerenter",
+            "body": "item.ontriggerenter = () => {\n\t\n};",
+            "leftLabel": "触れたとき",
+            "description": "collisionFlag が false のとき、他のものと触れたときに発生するイベント",
+            "descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/触れたとき"
+        },
+        "oncollided": {
+            "prefix": "oncollided",
+            "body": "item.oncollided = () => {\n\t\n};",
+            "leftLabel": "ぶつかったとき",
+            "description": "collisionFlag が true のとき、他のものとぶつかったときに発生するイベント",
+            "descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/ぶつかったとき"
+        },
+        "onhpchange": {
+            "prefix": "onhpchange",
+            "body": "item.onhpchange = () => {\n\t\n};",
+            "leftLabel": "体力が変わったとき",
+            "description": "item.hp が変化したときに発生するイベント",
+            "descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/体力が変わったとき"
+        },
+        "onscorechange": {
+            "prefix": "onscorechange",
+            "body": "Hack.onscorechange = () => {\n\t\n};",
+            "leftLabel": "スコアが変わったとき",
+            "description": "Hack.score が変化したときに発生するイベント",
+            "descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/スコアが変わったとき"
+        },
+        "ongameclear": {
+            "prefix": "ongameclear",
+            "body": "Hack.ongameclear = () => {\n\t\n};",
+            "leftLabel": "ゲームクリアしたとき",
+            "description": "ゲームクリアしたときに発生するイベント",
+            "descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/ゲームクリアしたとき"
+        },
+        "ongameover": {
+            "prefix": "ongameover",
+            "body": "Hack.ongameover = () => {\n\t\n};",
+            "leftLabel": "ゲームオーバーになったとき",
+            "description": "ゲームオーバーになったときに発生するイベント",
+            "descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/ゲームオーバーになったとき"
+        }
+    }
+}
