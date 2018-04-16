@@ -1,5 +1,6 @@
 import 'hackforplay/core';
 import extra from '../extra';
+import TextArea from 'hackforplay/ui/textarea';
 
 
 function gameStartLazy() {
@@ -34,31 +35,60 @@ function gameStartLazy() {
 			Hack.menuGroup.parentNode.removeChild(Hack.menuGroup);
 		}).fadeIn(90, enchant.Easing.CUBIC_EASEOUT).then(function() {
 
-			// ALL CLEAR と表示する
-			const label = new Label('ALL CLEAR');
-			label.width = 480;
-			label.moveTo(0, 100);
-			label.color = 'white';
-			label.textAlign = 'center';
-			label.opacity = 0;
-			label.tl.fadeIn(20);
-			Hack.overlayGroup.addChild(label);
+			const textArea = new TextArea(480, 320);
+			textArea.x = (480 - textArea.w) / 2;
+			textArea.y = 0;
+			textArea.margin = 20;
+			textArea.defaultStyle = {
+				color: '#fff',
+				size: '32',
+				family: 'PixelMplus, sans-serif',
+				weight: 'bold',
+				align: 'center',
+				space: 0,
+				ruby: null,
+				rubyId: null
+			};
+			Hack.overlayGroup.addChild(textArea);
+			textArea.push(`
+ゲームクリア おめでとう！
+つぎは なにをしますか？`);
+			textArea.show();
 
-			// ハートを表示する
-			const treasure = new Sprite(32, 32);
-			treasure.image = game.assets['enchantjs/x2/map1.gif'];
-			treasure.moveTo(224, 150);
-			treasure.frame = 563;
-			treasure.opacity = 0;
-			treasure.tl.delay(40).fadeIn(20).then(() => {
-				feeles.closeCode();
-				// 最後の説明書を表示する
-				feeles.openReadme('THANKS.md');
-			});
-			Hack.overlayGroup.addChild(treasure);
+			button('ほかのステージであそぶ', 130).ontouchend = () => {
+				window.open('https://www.hackforplay.xyz/lists/trending');
+			};
+			button('自分のステージをつくる', 180).ontouchend = () => {
+				window.open('https://www.hackforplay.xyz/officials/make-rpg');
+			};
+			button('もういちどあそぶ', 230).ontouchend = () => {
+				feeles.replace('stages/1/index.html');
+			};
 
 		});
 
+		function button(text, y) {
+			const btn = new TextArea(300, 38);
+			btn.x = (480 - btn.w) / 2;
+			btn.y = y;
+			btn.margin = 0;
+			btn.padding = 8;
+			btn.background = 'rgb(251, 147, 36)';
+			btn.defaultStyle = {
+				color: '#fff',
+				size: '20',
+				family: 'PixelMplus, sans-serif',
+				weight: 'bold',
+				align: 'center',
+				space: 0,
+				ruby: null,
+				rubyId: null
+			};
+			Hack.overlayGroup.addChild(btn);
+			btn.push(text);
+			btn.show();
+			return btn;
+		}
 	}
 
 	// このステージを改造
