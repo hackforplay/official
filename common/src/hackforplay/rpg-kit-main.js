@@ -290,22 +290,17 @@ game.onawake = () => {
 	Hack.textarea.height = 32;
 
 	// Life label
-	const lifeLabel = new LifeLabel(Hack.menuGroup.x + 10, Hack.menuGroup.y + 72, 0);
+	const lifeLabel = new ScoreLabel(1000, 1000, 0);
 	Hack.lifeLabel = lifeLabel;
+	Hack.lifeLabel.label = 'HP:';
 	Hack.menuGroup.addChild(lifeLabel);
-	lifeLabel.onenterframe = function enterframe() {
-		if (!Hack.player) return;
-
-		var maxhp, hp;
-		maxhp = hp = this.life = Hack.player.hp;
-		Hack.player.on('hpchange', function() {
-			var hp = Hack.player.hp;
-			maxhp = Math.max(maxhp, hp);
-			Hack.lifeLabel.life = maxhp < Hack.lifeLabel._maxlife ? hp : (hp / maxhp) * Hack.lifeLabel._maxlife;
+	Hack.lifeLabel.moveTo(Hack.menuGroup.x + 10, Hack.menuGroup.y + 72);
+	game.once('enterframe', () => {
+		lifeLabel.score = player.hp;
+		player.on('hpchange', () => {
+			lifeLabel.score = player.hp;
 		});
-
-		this.removeEventListener('enterframe', enterframe);
-	};
+	});
 
 	Hack.scoreLabel = (function(self, source) {
 		Object.keys(source).filter(function(key) {
