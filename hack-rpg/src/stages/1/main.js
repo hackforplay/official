@@ -83,9 +83,9 @@ function gameStart() {
   // そうさせつめい (2)
   player.onwalkend = () => {
     // 歩いたら
-    log(`
+    log(item1.hp > 0 ? `
 スペースキーを おして
-こうげき してみよう`);
+こうげき してみよう` : '');
     player.onwalkend = null;
   };
 
