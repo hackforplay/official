@@ -42,7 +42,7 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 
 
 	// 魔道書にプレイヤーを登録する
-	feeles.setAlias('player', player);
+	feeles.setAlias('プレイヤー', player);
 
 
 	
@@ -64,7 +64,7 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 	};
 
 	// 魔道書に階段を登録する
-	feeles.setAlias('stair', item1);
+	feeles.setAlias('カイダン', item1);
 
 	// このステージを改造
 	extra(7, 0, 'map1', 'stages/3/main.js');

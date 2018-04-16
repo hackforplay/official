@@ -54,7 +54,7 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 
 
 	// 魔道書にプレイヤーを登録する
-	feeles.setAlias('player', player);
+	feeles.setAlias('プレイヤー', player);
 
 
 	// 	HP Gage
@@ -93,7 +93,7 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 	};
 
 	// 魔道書にコウモリを登録する
-	feeles.setAlias('bat', item1);
+	feeles.setAlias('コウモリ', item1);
 
 
 	log(() => player.mapX < item1.mapX ? `

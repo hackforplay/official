@@ -46,7 +46,7 @@ function gameStart() {
   };
 
   // 魔道書にプレイヤーを登録する
-  feeles.setAlias('player', player);
+  feeles.setAlias('プレイヤー', player);
 
   // まどうしょ
   const item1 = new RPGObject();
@@ -75,7 +75,7 @@ function gameStart() {
   item2.locate(7, 5, 'map1');
 
   // 魔道書にスライムを登録する
-  feeles.setAlias('slime', item2);
+  feeles.setAlias('スライム', item2);
 
   // イモムシ
   const item3 = new RPGObject();
@@ -86,7 +86,7 @@ function gameStart() {
   item3.locate(5, 7, 'map1');
 
   // 魔道書にスライムを登録する
-  feeles.setAlias('insect', item3);
+  feeles.setAlias('イモムシ', item3);
 
   // かいだん
   const item4 = new RPGObject();

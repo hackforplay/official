@@ -49,7 +49,7 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 
 
 	// 魔道書にプレイヤーを登録する
-	feeles.setAlias('player', player);
+	feeles.setAlias('プレイヤー', player);
 
 
 	
@@ -86,7 +86,7 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 	};
 
 	// 魔道書にコウモリを登録する
-	feeles.setAlias('bat', item1);
+	feeles.setAlias('コウモリ', item1);
 
 	// かいだん
 	const item2 = new RPGObject();

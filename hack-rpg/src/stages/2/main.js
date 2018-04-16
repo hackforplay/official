@@ -43,7 +43,7 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 
 
 	// 魔道書にプレイヤーを登録する
-	feeles.setAlias('player', player);
+	feeles.setAlias('プレイヤー', player);
 
 
 	

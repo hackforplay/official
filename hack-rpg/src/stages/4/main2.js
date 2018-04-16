@@ -29,7 +29,7 @@ function gameStartLazy() {
 	};
 
 	// 魔道書にサファイアを登録
-	feeles.setAlias('supphire', item1);
+	feeles.setAlias('サファイア', item1);
 
 	// かいだん
 	const item2 = new RPGObject();
@@ -95,7 +95,7 @@ function gameStartLazy() {
 			});
 
 			// 魔道書にスライムを登録する
-			feeles.setAlias([`slime${++count}`], item3);
+			feeles.setAlias([`スライム${++count}`], item3);
 
 		});
 	});
