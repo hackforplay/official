@@ -116,11 +116,11 @@ function gameStart() {
   });
   item2.on('attacked', () => {
     if (!item1.parentNode) {
-      // 本を拾ったのに攻撃し続けている
+      // 魔道書を拾ったのに攻撃し続けている
       log(() => item2.hp > 900 ? `
 そのままだと あと${item2.hp / Hack.player.atk}回
 こうげきしないと たおせないぞ
-右にある本を よんでみよう` : '');
+右にある マドウショを よもう` : '');
     }
   });
 
