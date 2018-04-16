@@ -1,6 +1,7 @@
 import 'hackforplay/core';
 import {
 	gameclear
+	, log
 } from 'utils';
 import extra from '../extra';
 

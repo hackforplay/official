@@ -1,5 +1,6 @@
 import 'hackforplay/core';
 import './maps';
+import { log } from '../../utils'
 
 import './main2';
 import extra from '../extra';
@@ -76,6 +77,12 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 	item1.onつねに = () => {
 		// コウモリの縦の位置をプレイヤーと同じにする
 		item1.y = Hack.player.y;
+	};
+	item1.onattacked = () => {
+		log(`
+こうげきは かわされた
+けんは あたらないようだ`);
+		item1.onattacked = null;
 	};
 
 	// 魔道書にコウモリを登録する

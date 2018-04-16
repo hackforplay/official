@@ -1,6 +1,7 @@
 import 'hackforplay/core';
 import {
 	gameclear
+	, log
 } from 'utils';
 import extra from '../extra';
 
@@ -22,6 +23,9 @@ function gameStartLazy() {
 		item1.destroy();
 		// スコアを　１００ アップ！
 		Hack.score += 100;
+		log(`
+サファイアを 手に入れた！
+さっきのへやに もどろう`);
 	};
 
 	// 魔道書にサファイアを登録
@@ -83,6 +87,12 @@ function gameStartLazy() {
 				// スコアアップ！
 				Hack.score++;
 			};
+			item3.on('attacked', function needAtk() {
+				log(() => Hack.player.atk < 100 ? `
+もっと こうげきりょくが ひつようだ
+
+こうげきりょく（atk）：${Hack.player.atk}` : '');
+			});
 
 			// 魔道書にスライムを登録する
 			feeles.setAlias([`slime${++count}`], item3);

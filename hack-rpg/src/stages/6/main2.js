@@ -2,6 +2,7 @@ import 'hackforplay/core';
 import {
 	gameclear,
 	mergeBMap
+	, log
 } from 'utils';
 import extra from '../extra';
 
@@ -9,7 +10,11 @@ import extra from '../extra';
 function gameStartLazy() {
 
 
-	
+	Hack.player.on('hpchange', () => {
+		log(() => Hack.player.hp < 3 ? ` 
+たいりょくが あぶない！
+のこり hp : ${Hack.player.hp}` : '');
+	});
 
 
 	// ドラゴン
