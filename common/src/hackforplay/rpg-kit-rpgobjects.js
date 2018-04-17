@@ -60,14 +60,8 @@ _def('BehaviorTypes', function() {
 _def('RPGObject', function() {
 	return __RPGObject;
 });
-_def('HumanBase', function() {
-	return __HumanBase;
-});
 _def('Player', function() {
 	return __Player;
-});
-_def('EnemyBase', function() {
-	return __EnemyBase;
 });
 _def('BlueSlime', function() {
 	return __BlueSlime;
@@ -121,8 +115,6 @@ var __BehaviorTypes = {
 
 import __RPGObject from './object/object';
 import __Player from './object/player';
-import __EnemyBase from './object/enemy-base';
-import __HumanBase from './object/human-base';
 
 Hack.assets.knight = function() {
 	this.image = game.assets['enchantjs/x1.5/chara5.png'];
