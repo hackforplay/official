@@ -296,6 +296,7 @@ game.onawake = () => {
 	Hack.menuGroup.addChild(lifeLabel);
 	Hack.lifeLabel.moveTo(Hack.menuGroup.x + 10, Hack.menuGroup.y + 72);
 	game.once('enterframe', () => {
+		const player = player || Hack.player;
 		lifeLabel.score = player.hp;
 		player.on('hpchange', () => {
 			lifeLabel.score = player.hp;
