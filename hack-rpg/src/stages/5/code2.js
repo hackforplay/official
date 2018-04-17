@@ -1,6 +1,6 @@
 
 
-player.locate(7, 2);
+プレイヤー.locate(7, 2);
 
 
 // この CODE (コード) は 自分が、  

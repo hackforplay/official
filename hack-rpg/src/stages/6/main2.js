@@ -2,6 +2,7 @@ import 'hackforplay/core';
 import {
 	gameclear,
 	mergeBMap
+	, log
 } from 'utils';
 import extra from '../extra';
 
@@ -9,7 +10,11 @@ import extra from '../extra';
 function gameStartLazy() {
 
 
-	
+	Hack.player.on('hpchange', () => {
+		log(() => Hack.player.hp < 3 ? ` 
+たいりょくが あぶない！
+のこり hp : ${Hack.player.hp}` : '');
+	});
 
 
 	// ドラゴン
@@ -72,7 +77,7 @@ function gameStartLazy() {
 	};
 
 	// dragon をコードから利用可能に
-	feeles.setAlias('dragon', item1);
+	feeles.setAlias('ドラゴン', item1);
 
 	// 	Life gage
 	// 体力ゲージを作る
@@ -107,7 +112,7 @@ function gameStartLazy() {
 	};
 
 	// ruby をコードから利用可能に
-	feeles.setAlias('ruby', item2);
+	feeles.setAlias('ルビー', item2);
 
 	// 階段を作るコード （ 関数 )
 	function appearDownStair() {

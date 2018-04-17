@@ -95,7 +95,7 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 	);
 
 	// 魔道書にプレイヤーを登録する
-	feeles.setAlias('player', player);
+	feeles.setAlias('プレイヤー', player);
 
 	// このステージを改造
 	extra(13, 8, 'map1', 'stages/7/main.js');

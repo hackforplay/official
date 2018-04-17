@@ -3,6 +3,7 @@ import './main2';
 import './main3';
 import './main4';
 import './maps';
+import { log } from '../../utils';
 
 import extra from '../extra';
 
@@ -53,10 +54,7 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 
 
 	// 魔道書にプレイヤーを登録する
-	feeles.setAlias('player', player);
-
-
-	
+	feeles.setAlias('プレイヤー', player);
 
 
 	// 	HP Gage
@@ -87,9 +85,20 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 		//　コウモリの横の位置をプレイヤーと同じにする
 		item1.y = Hack.player.y;
 	};
+	item1.onattacked = () => {
+	  log(`
+こうげきは かわされた
+けんは あたらないようだ`);
+	  item1.onattacked = null;
+	};
 
 	// 魔道書にコウモリを登録する
-	feeles.setAlias('bat', item1);
+	feeles.setAlias('コウモリ', item1);
+
+
+	log(() => player.mapX < item1.mapX ? `
+今なら あの コウモリを こえて
+かいだんに たどりつけるだろう` : '');
 
 	// かいだん
 	const item2 = new RPGObject();

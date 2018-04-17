@@ -1,6 +1,7 @@
 import 'hackforplay/core';
 import {
 	gameclear
+	, log
 } from 'utils';
 import extra from '../extra';
 import './maps';
@@ -42,7 +43,7 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 
 
 	// 魔道書にプレイヤーを登録する
-	feeles.setAlias('player', player);
+	feeles.setAlias('プレイヤー', player);
 
 
 	
