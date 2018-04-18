@@ -4,7 +4,7 @@
     description: ムチのように からだをふりまわす、キケンなスライム
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/スライム'
     code: |
-      const item1 = new RPGObject(('▼ スキン', _sスライム));
+      const item1 = new RPGObject(('▼ スキン', Skin.スライム));
       item1.hp = 3;
       item1.atk = 1;
       item1.locate(7, 5, 'map1');
@@ -19,7 +19,7 @@
     description: にげあしは おいらの とくぎなのさ。すばやく walk() して  turn() するのが ひけつさ
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/イモムシ'
     code: |
-      const item1 = new RPGObject(('▼ スキン', _iいもむし));
+      const item1 = new RPGObject(('▼ スキン', Skin.いもむし));
       item1.hp = 2;
       item1.atk = 1;
       item1.locate(7, 5, 'map1');
@@ -39,7 +39,7 @@
     description: ねらいをつけて おそってくる おそろしいコウモリ。 ターゲットに、むかってくる らしい
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/コウモリ'
     code: |
-      const item1 = new RPGObject(('▼ スキン', _kこうもり));
+      const item1 = new RPGObject(('▼ スキン', Skin.こうもり));
       item1.hp = 3;
       item1.atk = 1;
       item1.locate(7, 5, 'map1');
@@ -67,7 +67,7 @@
     description: ４秒おきに こうげきしてくる 大蛇ウロボロス。こうげきまでの秒数を かえることもできる
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ウロボロス'
     code: |
-      const item1 = new RPGObject(('▼ スキン', _uウロボロス));
+      const item1 = new RPGObject(('▼ スキン', Skin.ウロボロス));
       item1.hp = 10;
       item1.atk = 1;
       item1.locate(7, 5, 'map1');
@@ -84,7 +84,7 @@
     description: やつが この めいきゅうの あるじ 獄炎(ごくえん) の ドラゴン だ！
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ドラゴン'
     code: |
-      const item1 = new RPGObject(('▼ スキン', _dドラゴン));
+      const item1 = new RPGObject(('▼ スキン', Skin.ドラゴン));
       item1.hp = 10;
       item1.atk = 1;
       item1.locate(7, 5, 'map1');
@@ -94,7 +94,7 @@
 
         await self.wait(); // 少しやすむ
 
-        const ばくえん = new RPGObject(('▼ スキン', _bばくえん));
+        const ばくえん = new RPGObject(('▼ スキン', Skin.ばくえん));
         ばくえん.collisionFlag = false;
         self.shoot(ばくえん, self.forward, 6);
         const fx = self.forward.x,
@@ -118,7 +118,7 @@
     description: ずっと こうげきをくりかえす きょうぼうな ミノタウルス
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ミノタウルス'
     code: |
-      const item1 = new RPGObject(('▼ スキン', _mミノタウルス));
+      const item1 = new RPGObject(('▼ スキン', Skin.ミノタウルス));
       item1.hp = 10;
       item1.atk = 1;
       item1.locate(7, 5, 'map1');
@@ -132,7 +132,7 @@
 アイテム:
   - label: ハート
     code: |
-      const item1 = new RPGObject(('▼ スキン', _hハート));
+      const item1 = new RPGObject(('▼ スキン', Skin.ハート));
       item1.locate(7, 5, 'map1');
       item1.on(('▼ イベント', 'のった'), () => {
         player.hp += 1;
@@ -143,7 +143,7 @@
     description: ライフを かいふくする うれしいアイテム！ += にすると プラスされる。ところで -= にするとどうなるのだろうか
   - label: コイン
     code: |
-      const item1 = new RPGObject(('▼ スキン', _kコイン));
+      const item1 = new RPGObject(('▼ スキン', Skin.コイン));
       item1.locate(7, 5, 'map1');
       item1.velocity(1, 0);
       item1.force(0, 0.5);
@@ -156,7 +156,7 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/チャリンチャリン'
   - label: スター
     code: |
-      const item1 = new RPGObject(('▼ スキン', _hほし));
+      const item1 = new RPGObject(('▼ スキン', Skin.ほし));
       item1.locate(7, 5, 'map1');
       item1.on(('▼ イベント', 'のった'), () => {
         player.damageTime = 100;
@@ -167,7 +167,7 @@
     description: ひろってから ３びょうちょい むてきになれる アイテム。３びょうちょい＝１００フレーム？ こも、カイゾウできるらしい
   - label: ふしぎなカギ
     code: |
-      const item1 = new RPGObject(('▼ スキン', _kかぎ));
+      const item1 = new RPGObject(('▼ スキン', Skin.かぎ));
       item1.locate(random(0, 15), random(0, 10), 'map1');
       item1.on(('▼ イベント', 'のった'), () => {
         Hack.log('カチャリ という おと が きこえた');
@@ -178,7 +178,7 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ふしぎなかぎ'
   - label: ダイヤモンド
     code: |
-      const item1 = new RPGObject(('▼ スキン', _dダイヤモンド));
+      const item1 = new RPGObject(('▼ スキン', Skin.ダイヤモンド));
       item1.locate(7, 5, 'map1');
       item1.on(('▼ イベント', 'のった'), () => {
         item1.destroy();
@@ -189,7 +189,7 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/うれしいダイヤモンド'
   - label: 色付きハート
     code: |
-      const item1 = new RPGObject(('▼ スキン', _hハート));
+      const item1 = new RPGObject(('▼ スキン', Skin.ハート));
       item1.locate(7, 5, 'map1');
       item1.color = ('▼ カラー', 'white');
       item1.on(('▼ イベント', 'のった'), () => {
@@ -201,7 +201,7 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/色付きハート'
   - label: 魔道書
     code: |
-      const item1 = new RPGObject(('▼ スキン', _m魔道書));
+      const item1 = new RPGObject(('▼ スキン', Skin.魔道書));
       item1.locate(7, 5);
       item1.on(('▼ イベント', 'のった'), () => {
         // 魔道書のコードをひらく
@@ -215,7 +215,7 @@
 せっち:
   - label: 下りかいだん
     code: |
-      const item1 = new RPGObject(('▼ スキン', _kくだりかいだん));
+      const item1 = new RPGObject(('▼ スキン', Skin.くだりかいだん));
       item1.locate(7, 5, 'map1');
       item1.layer = RPGMap.Layer.Under;
       item1.on(('▼ イベント', 'のった'), () => {
@@ -226,7 +226,7 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/下り階段'
   - label: ワープ
     code: |
-      const item1 = new RPGObject(('▼ スキン', _wワープ));
+      const item1 = new RPGObject(('▼ スキン', Skin.ワープ));
       item1.locate(7, 5, 'map1');
       item1.layer = RPGMap.Layer.Under;
       item1.on(('▼ イベント', 'のった'), () => {
@@ -237,7 +237,7 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ワープゾーン'
   - label: しろ
     code: |
-      const item1 = new RPGObject(('▼ スキン', _sしろ));
+      const item1 = new RPGObject(('▼ スキン', Skin.しろ));
       item1.locate(7, 5, 'map1');
       item1.on(('▼ イベント', 'のった'), () => {        
         Hack.gameclear(); // ゲームクリア
@@ -249,7 +249,7 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ゴールちてん'
   - label: お花
     code: |
-      const item1 = new RPGObject(('▼ スキン', _hはな));
+      const item1 = new RPGObject(('▼ スキン', Skin.はな));
       item1.locate(7, 5, 'map1');
       item1.layer = RPGMap.Layer.Under;
       item1.collisionFlag = false;
@@ -261,7 +261,7 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/お花畑'
   - label: 木
     code: |
-      const item1 = new RPGObject(('▼ スキン', _k木));
+      const item1 = new RPGObject(('▼ スキン', Skin.木));
       item1.locate(7, 5, 'map1');
       item1.hp = 1;
     image: trimmed/map-26-0.png
@@ -269,11 +269,11 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/木'
   - label: バクダン岩
     code: |
-      const item1 = new RPGObject(('▼ スキン', _iいわ));
+      const item1 = new RPGObject(('▼ スキン', Skin.いわ));
       item1.locate(7, 5, 'map1');
       item1.atk = 99;
       item1.on(('▼ イベント', 'こうげきされた'), () => {
-        const item2 = new RPGObject(('▼ スキン', _bばくえん));
+        const item2 = new RPGObject(('▼ スキン', Skin.ばくえん));
         item2.locate(7, 5, 'map1');
         item2.velocityY = -1;
         item2.collisionFlag = false;
@@ -288,7 +288,7 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/爆弾岩'
   - label: ふしぎなかべ
     code: |
-      const item1 = new RPGObject(('▼ スキン', _tつちかべ));
+      const item1 = new RPGObject(('▼ スキン', Skin.つちかべ));
       item1.locate(7, 5, 'map1');
       item1.opacity = 0.5;
     image: trimmed/map-17-0.png
@@ -296,7 +296,7 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/とうめいな壁'
   - label: しゃべるかべ
     code: |
-      const item1 = new RPGObject(('▼ スキン', _iいしかべ));
+      const item1 = new RPGObject(('▼ スキン', Skin.いしかべ));
       item1.locate(7, 5, 'map1');
       item1.on(('▼ イベント', 'こうげきされた'), () => {
         Hack.log('どうだ　おれさまは　かたいだろう！');
@@ -306,18 +306,18 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/しゃべる壁'
   - label: たからばこ
     code: |
-      const item1 = new RPGObject(('▼ スキン', _tたからばこ));
+      const item1 = new RPGObject(('▼ スキン', Skin.たからばこ));
       item1.locate(7, 5, 'map1');
       item1.onこうげきされた = () => {
         delete item1.onこうげきされた;
-        item1.mod(('▼ スキン', _tたからばこひらいた));
+        item1.mod(('▼ スキン', Skin.たからばこひらいた));
       };
     image: trimmed/map-21-0.png
     description: まえで こうげきすると かぱっとひらく (た)からばこ。なかに なにか いれられると いいんだどね
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/からばこ'
   - label: タタリ
     code: |
-      const item1 = new RPGObject(('▼ スキン', _dドクロ));
+      const item1 = new RPGObject(('▼ スキン', Skin.ドクロ));
       item1.locate(7, 5, 'map1');
       item1.on(('▼ イベント', 'のった'), () => {
         player.hp = 0;
@@ -330,15 +330,15 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/タタリ'
   - label: ツボ
     code: |
-      const item1 = new RPGObject(('▼ スキン', _tつぼ));
+      const item1 = new RPGObject(('▼ スキン', Skin.つぼ));
       item1.locate(7, 5, 'map1');
       item1.on(('▼ イベント', 'こうげきされた'), () => {
         // ランダムなアイテムをだす
         const item2 = new RPGObject(
           random([
-            ('▼ スキン', _dダイヤモンド),
-            ('▼ スキン', _sサファイア),
-            ('▼ スキン', _rルビー)
+            ('▼ スキン', Skin.ダイヤモンド),
+            ('▼ スキン', Skin.サファイア),
+            ('▼ スキン', Skin.ルビー)
           ])
         );
         item2.locate(item1.mapX, item1.mapY);
@@ -354,7 +354,7 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ふしぎなツボ'
   - label: 女の人
     code: |
-      const item1 = new RPGObject(('▼ スキン', _o女の人));
+      const item1 = new RPGObject(('▼ スキン', Skin.女の人));
       item1.locate(7, 5, 'map1');
       item1.on(('▼ イベント', 'ぶつかった'), () => {
         Hack.log('こんにちは。ここは 1F です');
@@ -364,7 +364,7 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/女の人'
   - label: 男の子
     code: |
-      const item1 = new RPGObject(('▼ スキン', _o男の子));
+      const item1 = new RPGObject(('▼ スキン', Skin.男の子));
       item1.locate(7, 5, 'map1');
       item1.on(('▼ イベント', 'ぶつかった'), () => {
         item1.turn();
@@ -380,16 +380,16 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/男の子'
   - label: わな
     code: |
-      const item1 = new RPGObject(('▼ スキン', _wわな));
+      const item1 = new RPGObject(('▼ スキン', Skin.わな));
       item1.locate(7, 5, 'map1');
       item1.layer = RPGMap.Layer.Under;
       item1.on(('▼ イベント', 'のった'), () => {
-        item1.mod(('▼ スキン', _wわなかかった));
+        item1.mod(('▼ スキン', Skin.わなかかった));
         player.hp -= 1;
         player.damageTime = 30;
       });
       item1.on(('▼ イベント', 'おりた'), () => {
-        item1.mod(('▼ スキン', _wわな));
+        item1.mod(('▼ スキン', Skin.わな));
       });
     image: trimmed/map-22-0.png
     descriptionMoreURL: 'https://github.com/hackforplay/wiki-RPG,/wiki/トゲトゲ'
@@ -397,16 +397,16 @@
   - label: れんぞくわな
     code: |
       for (let x = 4; x <= 10; x++) {
-        const item1 = new RPGObject(('▼ スキン', _wわな));
+        const item1 = new RPGObject(('▼ スキン', Skin.わな));
         item1.locate(x, 5, 'map1');
         item1.layer = RPGMap.Layer.Under;
         item1.on(('▼ イベント', 'のった'), () => {
-          item1.mod(('▼ スキン', _wわなかかった));
+          item1.mod(('▼ スキン', Skin.わなかかった));
           player.hp -= 1;
           player.damageTime = 30;
         });
         item1.on(('▼ イベント', 'おりた'), () => {
-          item1.mod(('▼ スキン', _wわな));
+          item1.mod(('▼ スキン', Skin.わな));
         });
       }
     image: trimmed/map-22-0.png
@@ -414,7 +414,7 @@
     description: ふむとダメージをうける めいわくなゆか。でも たった１ダメージだね。カイゾウすると なんダメジにも できるらしい
   - label: 上りかいだん
     code: |
-      const item1 = new RPGObject(('▼ スキン', _nのぼりかいだん));
+      const item1 = new RPGObject(('▼ スキン', Skin.のぼりかいだん));
       item1.locate(7, 5, 'map2');
       item1.layer = RPGMap.Layer.Under;
       item1.on(('▼ イベント', 'のった'), () => {
@@ -425,10 +425,10 @@
     description: まえのマップに つながっている のぼりせんようの かいだん。なかみは くだりかいだんと たいてかわらない
   - label: じげんばくだん
     code: |
-      const item1 = new RPGObject(('▼ スキン', _bばくだん));
+      const item1 = new RPGObject(('▼ スキン', Skin.ばくだん));
       item1.locate(7, 5, 'map1');
       item1.setTimeout(() => {
-        const item2 = new RPGObject(('▼ スキン', _bばくえん));
+        const item2 = new RPGObject(('▼ スキン', Skin.ばくえん));
         item2.locate(7, 5);
         item2.velocityY = -1;
         item2.collisionFlag = false;
@@ -443,12 +443,12 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/時限爆弾'
   - label: まほうじん
     code: |
-      const item1 = new RPGObject(('▼ スキン', _mまほうじん));
+      const item1 = new RPGObject(('▼ スキン', Skin.まほうじん));
       item1.locate(7, 5, 'map1');
       item1.layer = RPGMap.Layer.Under;
       item1.on(('▼ イベント', 'のった'), () => {
         if (Hack.score >= 7) {
-          item1.mod(('▼ スキン', _mまほうじんひかった));
+          item1.mod(('▼ スキン', Skin.まほうじんひかった));
         }
       });
     image: trimmed/map-16-9.png
@@ -456,13 +456,13 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/スコアで光るまほうじん'
   - label: スコアでひらく たからばこ
     code: |
-      const item1 = new RPGObject(('▼ スキン', _tたからばこ));
+      const item1 = new RPGObject(('▼ スキン', Skin.たからばこ));
       item1.locate(7, 5, 'map1');
       item1.on(('▼ イベント', 'こうげきされた'), () => {
         if (Hack.score < 5) {
           Hack.log('たからばこは びくともしない ');
         } else {
-          item1.mod(('▼ スキン', _tたからばこひらいた));
+          item1.mod(('▼ スキン', Skin.たからばこひらいた));
           Hack.log('ガチャ！たからばこが あいた！');
           // 出てくるもの　→
         }
@@ -472,7 +472,7 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/かたいからばこ'
   - label: お花屋さん
     code: |
-      const item1 = new RPGObject(('▼ スキン', _o女の子));
+      const item1 = new RPGObject(('▼ スキン', Skin.女の子));
       item1.locate(7, 5, 'map1');
       item1.on(('▼ イベント', 'ぶつかった'), () => {
         if (Hack.score < 100) {
@@ -481,7 +481,7 @@
           Hack.log('おはなは100エンです。はい、どうぞ');
           Hack.score -= 100;
           // おはな
-          const item2 = new RPGObject(('▼ スキン', _hはな));
+          const item2 = new RPGObject(('▼ スキン', Skin.はな));
           item2.locate(item1.mapX, item1.mapY + 1, 'map1');
           item2.layer = RPGMap.Layer.Under;
           item2.on(('▼ イベント', 'のった'), () => {
@@ -494,7 +494,7 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/おはなやさん'
   - label: ルーレット
     code: |
-      const item1 = new RPGObject(('▼ スキン', _rルビー));
+      const item1 = new RPGObject(('▼ スキン', Skin.ルビー));
       item1.locate(7, 5, 'map1');
       item1.うごいている = ('▼ フラグ', false);
       item1.on(('▼ イベント', 'こうげきされた'), () => {
@@ -511,10 +511,10 @@
         const スキン = event.スキン;
         
         // スコアのプログラム
-        if (スキン === ('▼ スキン', _rルビー)) {
+        if (スキン === ('▼ スキン', Skin.ルビー)) {
           Hack.score += 1; // rubyなら、SCORE + 1
         }
-        if (スキン === ('▼ スキン', _dドクロ)) {
+        if (スキン === ('▼ スキン', Skin.ドクロ)) {
           Hack.score -= 1; // skullなら、SCORE - 1
         }
       });
@@ -523,9 +523,9 @@
         await self.wait(0.1);
       
         const スキン = random([
-          ('▼ スキン', _rルビー),
-          ('▼ スキン', _dドクロ),
-          ('▼ スキン', _uうんこ)
+          ('▼ スキン', Skin.ルビー),
+          ('▼ スキン', Skin.ドクロ),
+          ('▼ スキン', Skin.うんこ)
         ]);
         self.mod(スキン);
       
@@ -546,7 +546,7 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ルーレット'
   - label: ばくえん
     code: |
-      const item1 = new RPGObject(('▼ スキン', _bばくえん);
+      const item1 = new RPGObject(('▼ スキン', Skin.ばくえん);
       item1.locate(7, 5, 'map1');
       item1.velocityY = -1;
       item1.collisionFlag = false;
@@ -563,7 +563,7 @@
     description: 2P をついかする
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/プレイヤー２'
     code: |
-      const item1 = new Player(('▼ スキン', _aあんこくきし));
+      const item1 = new Player(('▼ スキン', Skin.あんこくきし));
       item1.locate(7, 5); // はじめの位置
       item1.hp = 3; // 2P の HP
       item1.atk = 1; // 2P の こうげき力

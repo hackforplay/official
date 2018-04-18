@@ -1,87 +1,87 @@
 スキン:
-  - body: _mまじょ
+  - body: Skin.まじょ
     label: まじょのスキン
-  - body: _kきし
+  - body: Skin.きし
     label: きしのスキン
-  - body: _aあんこくきし
+  - body: Skin.あんこくきし
     label: あんこくきしのスキン
-  - body: _sスライム
+  - body: Skin.スライム
     label: スライムのスキン
-  - body: _iいもむし
+  - body: Skin.いもむし
     label: いもむしのスキン
-  - body: _kくも
+  - body: Skin.くも
     label: くものスキン
-  - body: _kこうもり
+  - body: Skin.こうもり
     label: こうもりのスキン
-  - body: _dドラゴン
+  - body: Skin.ドラゴン
     label: ドラゴンのスキン
-  - body: _mミノタウルス
+  - body: Skin.ミノタウルス
     label: ミノタウルスのスキン
-  - body: _o男の子
+  - body: Skin.男の子
     label: 男の子のスキン
-  - body: _o女の子
+  - body: Skin.女の子
     label: 女の子のスキン
-  - body: _o女の人
+  - body: Skin.女の人
     label: 女の人のスキン
-  - body: _m魔道書
+  - body: Skin.魔道書
     label: 魔道書のスキン
-  - body: _bばくえん
+  - body: Skin.ばくえん
     label: ばくえんのスキン
-  - body: _uウロボロス
+  - body: Skin.ウロボロス
     label: ウロボロスのスキン
-  - body: _bビーム
+  - body: Skin.ビーム
     label: ビームのスキン
-  - body: _kくだりかいだん
+  - body: Skin.くだりかいだん
     label: くだりかいだんのスキン
-  - body: _nのぼりかいだん
+  - body: Skin.のぼりかいだん
     label: のぼりかいだんのスキン
-  - body: _wワープ
+  - body: Skin.ワープ
     label: ワープのスキン
-  - body: _sしろ
+  - body: Skin.しろ
     label: しろのスキン
-  - body: _hはな
+  - body: Skin.はな
     label: はなのスキン
-  - body: _rルビー
+  - body: Skin.ルビー
     label: ルビーのスキン
-  - body: _wわな
+  - body: Skin.わな
     label: わなのスキン
-  - body: _wわなかかった
+  - body: Skin.わなかかった
     label: わなかかったのスキン
-  - body: _hハート
+  - body: Skin.ハート
     label: ハートのスキン
-  - body: _k木
+  - body: Skin.木
     label: 木のスキン
-  - body: _iいわ
+  - body: Skin.いわ
     label: いわのスキン
-  - body: _tつちかべ
+  - body: Skin.つちかべ
     label: つちかべのスキン
-  - body: _iいしかべ
+  - body: Skin.いしかべ
     label: いしかべのスキン
-  - body: _tたからばこ
+  - body: Skin.たからばこ
     label: たからばこのスキン
-  - body: _tたからばこひらいた
+  - body: Skin.たからばこひらいた
     label: たからばこひらいたのスキン
-  - body: _dドクロ
+  - body: Skin.ドクロ
     label: ドクロのスキン
-  - body: _uうんこ
+  - body: Skin.うんこ
     label: うんこのスキン
-  - body: _tつぼ
+  - body: Skin.つぼ
     label: つぼのスキン
-  - body: _dダイヤモンド
+  - body: Skin.ダイヤモンド
     label: ダイヤモンドのスキン
-  - body: _mまほうじん
+  - body: Skin.まほうじん
     label: まほうじんのスキン
-  - body: _mまほうじんひかった
+  - body: Skin.まほうじんひかった
     label: まほうじんひかったのスキン
-  - body: _kコイン
+  - body: Skin.コイン
     label: コインのスキン
-  - body: _sサファイア
+  - body: Skin.サファイア
     label: サファイアのスキン
-  - body: _hほし
+  - body: Skin.ほし
     label: ほしのスキン
-  - body: _kかぎ
+  - body: Skin.かぎ
     label: かぎのスキン
-  - body: _bばくだん
+  - body: Skin.ばくだん
     label: ばくだんのスキン
 イベント:
   - body: '''とまるとき'''
