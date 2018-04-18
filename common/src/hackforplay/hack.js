@@ -1,5 +1,6 @@
 import 'hackforplay/enchantjs-kit';
 import TextArea from 'hackforplay/ui/textarea';
+import find from './find';
 
 function refocus() {
 	window.document.activeElement.blur(); // Blur an enchantBook
@@ -632,3 +633,10 @@ game.addEventListener('load', function() {
 		);
 	};
 })();
+
+/**
+ * その name をもつオブジェクトを取得する
+ * @param {string} name オブジェクトの名前
+ * @returns {RPGObject|null} オブジェクトあるいは null
+ */
+Hack.find = find;

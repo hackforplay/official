@@ -7,6 +7,14 @@
 			"description": "ゲーム画面に好きな文字や数字を出せる",
 			"descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/ログ"
 		},
+		"find": {
+			"prefix": "Hackfind",
+			"body": "Hack.find('プレイヤー');",
+			"leftLabel": "みつける",
+			"description": "ある name (名前) をもつキャラクターをみつける",
+			"descriptionMoreURL":
+				"https://github.com/hackforplay/wiki-RPG/wiki/みつける"
+		},
 		"score": {
 			"prefix": "Hackscore",
 			"body": "Hack.score",

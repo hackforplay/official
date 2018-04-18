@@ -2,10 +2,10 @@ import 'hackforplay/core';
 // import 'mod/3d/core';
 
 async function gameFunc() {
-
 	Hack.changeMap('map1'); // map1 をロード
 
 	self.player = new Player(('▼ スキン', _kきし)); // プレイヤーをつくる
+	player.name = 'プレイヤー';
 	player.locate(3, 5); // はじめの位置
 
 	Hack.log('おしろがみえるだろう あれがゴールだ'); // メッセージを出す
@@ -19,7 +19,6 @@ async function gameFunc() {
 	});
 
 	/*+ モンスター アイテム せっち システム */
-
 
 	/*+ スキル */
 }
