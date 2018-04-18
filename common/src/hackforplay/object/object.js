@@ -7,7 +7,7 @@ import * as synonyms from 'hackforplay/synonyms';
 // 1 フレーム ( enterframe ) 間隔で next する
 // Unity の StartCoroutine みたいな仕様
 function startFrameCoroutine(node, generator) {
-	return new Promise((resolve) => {
+	return new Promise(resolve => {
 		node.on('enterframe', function _() {
 			const { done } = generator.next();
 			if (done) {
@@ -19,7 +19,6 @@ function startFrameCoroutine(node, generator) {
 }
 
 class RPGObject extends Sprite {
-
 	constructor(mod) {
 		super(0, 0);
 
@@ -39,9 +38,13 @@ class RPGObject extends Sprite {
 
 		this.moveTo(game.width, game.height);
 
-
 		var collisionFlag = null; // this.collisionFlag (Default:true)
-		var noCollisionEvents = ['playerenter', 'playerstay', 'playerexit', 'pickedup'];
+		var noCollisionEvents = [
+			'playerenter',
+			'playerstay',
+			'playerexit',
+			'pickedup'
+		];
 		Object.defineProperty(this, 'collisionFlag', {
 			configurable: true,
 			enumerable: true,
@@ -63,9 +66,14 @@ class RPGObject extends Sprite {
 			configurable: true,
 			enumerable: true,
 			get: function() {
-				return isKinematic !== null ? isKinematic :
-					!(this.velocityX || this.velocityY ||
-						this.accelerationX || this.accelerationY);
+				return isKinematic !== null
+					? isKinematic
+					: !(
+							this.velocityX ||
+							this.velocityY ||
+							this.accelerationX ||
+							this.accelerationY
+					  );
 			},
 			set: function(value) {
 				isKinematic = value;
@@ -98,7 +106,6 @@ class RPGObject extends Sprite {
 
 		this.directionType = null;
 
-
 		// 初期化
 		this.velocityX = this.velocityY = this.accelerationX = this.accelerationY = 0;
 		this.mass = 1;
@@ -109,8 +116,6 @@ class RPGObject extends Sprite {
 		this.getFrameOfBehavior = {}; // BehaviorTypesをキーとしたgetterのオブジェクト
 		this.behavior = BehaviorTypes.Idle; // call this.onbecomeidle
 		this._layer = RPGMap.Layer.Middle;
-
-		Hack.defaultParentNode.addChild(this);
 
 		// HPLabel
 		this.showHpLabel = true; // デフォルトで表示
@@ -144,7 +149,7 @@ class RPGObject extends Sprite {
 		return {
 			x: this.x - this.offset.x + 16,
 			y: this.y - this.offset.y + 16
-		}
+		};
 	}
 
 	geneticUpdate() {
@@ -153,7 +158,7 @@ class RPGObject extends Sprite {
 		if (typeof this.hp === 'number') {
 			this.damageTime = Math.max(0, this.damageTime - 1);
 			if (this.damageTime > 0) {
-				this.opacity = (this.damageTime / 2 + 1 | 0) % 2; // 点滅
+				this.opacity = ((this.damageTime / 2 + 1) | 0) % 2; // 点滅
 			}
 		}
 		if (this.hpchangeFlag) {
@@ -173,17 +178,17 @@ class RPGObject extends Sprite {
 
 	locate(fromLeft, fromTop, mapName) {
 		if (mapName in Hack.maps) {
-			if (Hack.maps[mapName] instanceof RPGMap &&
-				this.map !== Hack.maps[mapName]) {
+			if (
+				Hack.maps[mapName] instanceof RPGMap &&
+				this.map !== Hack.maps[mapName]
+			) {
 				// this.destroy();
 				Hack.maps[mapName].scene.addChild(this);
 			}
 		} else if (typeof mapName === 'string') {
 			Hack.log(`${mapName} は まだつくられていない`);
 		}
-		this.moveTo(
-			fromLeft * 32 + this.offset.x,
-			fromTop * 32 + this.offset.y);
+		this.moveTo(fromLeft * 32 + this.offset.x, fromTop * 32 + this.offset.y);
 	}
 
 	destroy(delay) {
@@ -207,7 +212,7 @@ class RPGObject extends Sprite {
 					return _local;
 				};
 			}
-		}).call(this, frame);
+		}.call(this, frame));
 	}
 
 	getFrame() {
@@ -256,34 +261,34 @@ class RPGObject extends Sprite {
 		return stopInterval.bind(this);
 	}
 
-
-
 	async attack() {
 		if (this.behavior !== BehaviorTypes.Idle || !Hack.isPlaying) return;
 		var f = this.forward;
 		this.behavior = BehaviorTypes.Attack;
-		Hack.Attack.call(this, this.mapX + f.x, this.mapY + f.y, this.atk, f.x, f.y);
+		Hack.Attack.call(
+			this,
+			this.mapX + f.x,
+			this.mapY + f.y,
+			this.atk,
+			f.x,
+			f.y
+		);
 
-		await new Promise((resolve) => {
+		await new Promise(resolve => {
 			this.setTimeout(resolve, this.getFrame().length);
 		});
 
 		this.behavior = BehaviorTypes.Idle;
 	}
 
-
-
 	onattacked(event) {
 		if (!this.damageTime && typeof this.hp === 'number') {
 			this.damageTime = this.attackedDamageTime;
 			this.hp -= event.damage;
 		}
-
 	}
 
-
 	async walk(distance = 1, forward = null, setForward = true) {
-
 		if (!Hack.isPlaying) return;
 		if (!this.isKinematic) return;
 		if (this.behavior !== BehaviorTypes.Idle) return;
@@ -297,20 +302,11 @@ class RPGObject extends Sprite {
 
 		// distance 回歩く
 		for (let i = 0; i < distance; ++i) {
-
-
-			await startFrameCoroutine(
-				this,
-				this.walkImpl(forward || this.forward)
-			);
-
+			await startFrameCoroutine(this, this.walkImpl(forward || this.forward));
 		}
-
 	}
 
-
-	* walkImpl(forward) {
-
+	*walkImpl(forward) {
 		// タイルのサイズ
 		const tw = Hack.map.tileWidth;
 		const th = Hack.map.tileHeight;
@@ -327,7 +323,6 @@ class RPGObject extends Sprite {
 
 		// 画面外
 		if (nextX < 0 || nextX >= tx || nextY < 0 || nextY >= ty) {
-
 			// 画面外なら歩かない
 			if (this.collideMapBoader) {
 				this.dispatchCollidedEvent([], true);
@@ -337,20 +332,20 @@ class RPGObject extends Sprite {
 			}
 			// 画面外に判定はない
 			else isHit = false;
-
 		}
 
 		// 歩く先にあるオブジェクト
-		const hits = RPGObject.collection
-			.filter((obj) => {
-				return obj.isKinematic &&
-					obj.collisionFlag &&
-					obj.mapX === nextX &&
-					obj.mapY === nextY;
-			});
+		const hits = RPGObject.collection.filter(obj => {
+			return (
+				obj.isKinematic &&
+				obj.collisionFlag &&
+				obj.mapX === nextX &&
+				obj.mapY === nextY
+			);
+		});
 
 		// 初めて衝突したオブジェクト
-		const newHits = hits.filter((node) => {
+		const newHits = hits.filter(node => {
 			return !this._collidedNodes.includes(node);
 		});
 		this._collidedNodes.push(...newHits);
@@ -378,7 +373,7 @@ class RPGObject extends Sprite {
 		animation.pop();
 
 		// 1F の移動量
-		let move = 1.0 / (animation.length);
+		let move = 1.0 / animation.length;
 
 		// 移動量に速度をかける
 		move *= this.speed;
@@ -391,9 +386,7 @@ class RPGObject extends Sprite {
 		const beginX = this.x;
 		const beginY = this.y;
 
-
 		for (let frame = 1; frame <= endFrame; ++frame) {
-
 			// アニメーション番号を算出
 			this.frame = animation[Math.round(animation.length / endFrame * frame)];
 
@@ -410,7 +403,6 @@ class RPGObject extends Sprite {
 
 			// 1 フレーム待機する
 			yield;
-
 		}
 
 		// 移動の誤差を修正
@@ -420,7 +412,6 @@ class RPGObject extends Sprite {
 		this.dispatchEvent(new Event('walkend'));
 
 		this.behavior = BehaviorTypes.Idle;
-
 	}
 
 	dispatchCollidedEvent(hits, map) {
@@ -436,7 +427,7 @@ class RPGObject extends Sprite {
 			event.map = false;
 			event.hit = this;
 			event.hits = [this];
-			hits.forEach((hitObj) => {
+			hits.forEach(hitObj => {
 				hitObj.dispatchEvent(event);
 			});
 		}
@@ -462,7 +453,6 @@ class RPGObject extends Sprite {
 		}
 	}
 
-
 	get behavior() {
 		return this._behavior;
 	}
@@ -471,9 +461,7 @@ class RPGObject extends Sprite {
 			this.isBehaviorChanged = true;
 			this._behavior = value;
 		}
-
 	}
-
 
 	get layer() {
 		return this._layer;
@@ -505,25 +493,28 @@ class RPGObject extends Sprite {
 		this.map.layerChangeFlag = true; // レイヤーをソートする
 	}
 
-
 	bringOver() {
 		// 現在のレイヤーより大きいレイヤーのうち最も小さいもの
-		var uppers = Object.keys(RPGMap.Layer).map(function(key) {
-			return RPGMap.Layer[key];
-		}, this).filter(function(layer) {
-			return layer > this.layer;
-		}, this);
+		var uppers = Object.keys(RPGMap.Layer)
+			.map(function(key) {
+				return RPGMap.Layer[key];
+			}, this)
+			.filter(function(layer) {
+				return layer > this.layer;
+			}, this);
 		this.layer = uppers.length > 0 ? Math.min.apply(null, uppers) : this.layer;
 		return this.layer;
 	}
 
 	bringUnder() {
 		// 現在のレイヤーより小さいレイヤーのうち最も大きいもの
-		var unders = Object.keys(RPGMap.Layer).map(function(key) {
-			return RPGMap.Layer[key];
-		}, this).filter(function(layer) {
-			return layer < this.layer;
-		}, this);
+		var unders = Object.keys(RPGMap.Layer)
+			.map(function(key) {
+				return RPGMap.Layer[key];
+			}, this)
+			.filter(function(layer) {
+				return layer < this.layer;
+			}, this);
 		this.layer = unders.length > 0 ? Math.max.apply(null, unders) : this.layer;
 		return this.layer;
 	}
@@ -552,7 +543,10 @@ class RPGObject extends Sprite {
 			y: vector.y * length
 		};
 
-		node.locate(Math.round(this.mapX + vector.x), Math.round(this.mapY + vector.y));
+		node.locate(
+			Math.round(this.mapX + vector.x),
+			Math.round(this.mapY + vector.y)
+		);
 
 		// 速度をかける
 		speed = arguments.length < 3 ? 1 : speed;
@@ -563,8 +557,10 @@ class RPGObject extends Sprite {
 		var angle = 0;
 
 		// 対象が MapObject かつベクトルの長さが 0.0 より大きいなら
-		if ((node instanceof MapObject || node.directionType === 'single') &&
-			!(vector.x === 0 && vector.y === 0)) {
+		if (
+			(node instanceof MapObject || node.directionType === 'single') &&
+			!(vector.x === 0 && vector.y === 0)
+		) {
 			angle = 90 - Math.atan2(-vector.y, vector.x) * 180 / Math.PI;
 		}
 
@@ -575,7 +571,6 @@ class RPGObject extends Sprite {
 
 		return this;
 	}
-
 
 	mod(func) {
 		func.call(this);
@@ -589,15 +584,17 @@ class RPGObject extends Sprite {
 	}
 	set forward(value) {
 		var vec =
-			value instanceof Array ? {
-				x: value[0],
-				y: value[1]
-			} :
-			'x' in value && 'y' in value ? {
-				x: value.x,
-				y: value.y
-			} :
-			this._forward;
+			value instanceof Array
+				? {
+						x: value[0],
+						y: value[1]
+				  }
+				: 'x' in value && 'y' in value
+					? {
+							x: value.x,
+							y: value.y
+					  }
+					: this._forward;
 		var norm = Math.sqrt(vec.x * vec.x + vec.y * vec.y);
 		if (norm > 0) {
 			this._forward = {
@@ -618,7 +615,7 @@ class RPGObject extends Sprite {
 				break;
 			case 'quadruple':
 				var dir = Hack.Vec2Dir(this._forward);
-				this.frame = [dir * 9 + (this.frame % 9)];
+				this.frame = [dir * 9 + this.frame % 9];
 				break;
 		}
 	}
@@ -649,7 +646,8 @@ class RPGObject extends Sprite {
 		this.setFrame(behavior, function() {
 			var _array = [];
 			array.forEach(function(item, index) {
-				_array[index] = item !== null && item >= 0 ? item + this.direction * 9 : item;
+				_array[index] =
+					item !== null && item >= 0 ? item + this.direction * 9 : item;
 			}, this);
 			return _array;
 		});
@@ -660,10 +658,11 @@ class RPGObject extends Sprite {
 		switch (this.directionType) {
 			case 'double':
 				c = typeof count === 'number' ? Math.ceil(Math.abs(count / 2)) : 1;
-				i = {
-					'-1': 1,
-					'1': 0
-				}[this.direction] + c; // direction to turn index
+				i =
+					{
+						'-1': 1,
+						'1': 0
+					}[this.direction] + c; // direction to turn index
 				this.direction = [1, -1, -1, 1][i % 2]; // turn index to direction
 				break;
 			case 'quadruple':
@@ -689,8 +688,11 @@ class RPGObject extends Sprite {
 	isListening(eventType) {
 		// eventType のリスナーを持っているか
 		var synonym = synonyms.events[eventType];
-		return this['on' + eventType] || this._listeners[eventType] ||
-			synonym && (this['on' + synonym] || this._listeners[synonym]);
+		return (
+			this['on' + eventType] ||
+			this._listeners[eventType] ||
+			(synonym && (this['on' + synonym] || this._listeners[synonym]))
+		);
 	}
 
 	start(virtual) {
@@ -731,18 +733,19 @@ class RPGObject extends Sprite {
 
 	pickUp() {
 		// Find items and dispatch pickedup event
-		RPGObject.collection.filter((item) => {
-			return item.mapX === this.mapX && item.mapY === this.mapY;
-		}).forEach((item) => {
-			const event = new Event('pickedup');
-			event.actor = this;
-			item.dispatchEvent(event);
-		});
+		RPGObject.collection
+			.filter(item => {
+				return item.mapX === this.mapX && item.mapY === this.mapY;
+			})
+			.forEach(item => {
+				const event = new Event('pickedup');
+				event.actor = this;
+				item.dispatchEvent(event);
+			});
 	}
 }
 
-
-function makeHpLabel (self) {
+function makeHpLabel(self) {
 	const label = new ScoreLabel();
 	label.label = 'HP:';
 	label.opacity = 0;
@@ -754,13 +757,11 @@ function makeHpLabel (self) {
 		label.opacity = Math.max(0, label.opacity - diff / 10);
 	});
 	return label;
-};
-
+}
 
 // RPGObject.collection に必要な初期化
 RPGObject._collectionTarget = [RPGObject];
 RPGObject.collection = [];
 RPGObject._collective = true;
-
 
 export default RPGObject;
