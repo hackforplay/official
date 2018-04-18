@@ -6,8 +6,6 @@ class Player extends RPGObject {
 	constructor(mod) {
 		super(mod);
 
-		this.mod(Hack.assets.knight);
-
 		this.enteredStack = [];
 		this.on('enterframe', this.stayCheck);
 		this.on('walkend', this.enterCheck);
