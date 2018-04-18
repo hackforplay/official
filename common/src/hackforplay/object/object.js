@@ -3,6 +3,7 @@ import { Sprite } from 'enchantjs/enchant';
 import 'enchantjs/ui.enchant';
 import 'hackforplay/hack';
 import * as synonyms from 'hackforplay/synonyms';
+import Skin from '../skin';
 
 // 1 フレーム ( enterframe ) 間隔で next する
 // Unity の StartCoroutine みたいな仕様
@@ -130,7 +131,12 @@ class RPGObject extends Sprite {
 		// アセット
 		if (mod) {
 			this.mod(mod);
+			// Skin.XXX の名前をデフォルトの name として登録する
+			this.name = Skin.__name.get(mod) || this.name;
 		}
+
+		// ツリーに追加
+		Hack.defaultParentNode.addChild(this);
 	}
 
 	get map() {
