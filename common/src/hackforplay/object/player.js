@@ -3,9 +3,8 @@ import RPGObject from './object';
 import Key from 'mod/key';
 
 class Player extends RPGObject {
-	constructor() {
-		super();
-
+	constructor(mod) {
+		super(mod);
 
 		this.mod(Hack.assets.knight);
 

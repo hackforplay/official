@@ -20,12 +20,12 @@ function startFrameCoroutine(node, generator) {
 
 class RPGObject extends Sprite {
 
-	constructor(width, height, offsetX, offsetY) {
-		super(width || 0, height || 0);
+	constructor(mod) {
+		super(0, 0);
 
 		this.offset = {
-			x: offsetX || 0,
-			y: offsetY || 0
+			x: 0,
+			y: 0
 		};
 
 		this.speed = 1.0;
@@ -121,6 +121,11 @@ class RPGObject extends Sprite {
 				this.hpLabel.opacity = 1;
 			}
 		});
+
+		// アセット
+		if (mod) {
+			this.mod(mod);
+		}
 	}
 
 	get map() {
