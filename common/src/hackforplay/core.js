@@ -3,13 +3,17 @@ import 'hackforplay/camera';
 import 'hackforplay/loader';
 
 import * as synonyms from './synonyms';
-
+import Skin from './skin';
 
 // Assign synonyms
-for (const [from, to] of synonyms.assets) {
-	self[to] = Hack.assets[from];
+self.Skin = self.Skin || Skin;
+for (const [from, _global, _skin] of synonyms.assets) {
+	const mod = Hack.assets[from];
+	if (typeof mod === 'function') {
+		self[_global] = Skin[_skin] = mod; // synonym
+		Skin.__name.set(mod, _skin); // Skin.__name.get(mod) === 'mod name'
+	}
 }
-
 
 /*
 // Game start
@@ -99,6 +103,5 @@ Hack.onload = function() {
 };
 
 */
-
 
 //Hack.start();
