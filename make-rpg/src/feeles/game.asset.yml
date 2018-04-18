@@ -5,6 +5,7 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/スライム'
     code: |
       const item1 = new RPGObject(('▼ スキン', Skin.スライム));
+      item1.family = ('▼ ファミリー', Family.ドクリツ);
       item1.hp = 3;
       item1.atk = 1;
       item1.locate(7, 5, 'map1');
@@ -20,6 +21,7 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/イモムシ'
     code: |
       const item1 = new RPGObject(('▼ スキン', Skin.イモムシ));
+      item1.family = ('▼ ファミリー', Family.ドクリツ);
       item1.hp = 2;
       item1.atk = 1;
       item1.locate(7, 5, 'map1');
@@ -40,6 +42,7 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/コウモリ'
     code: |
       const item1 = new RPGObject(('▼ スキン', Skin.コウモリ));
+      item1.family = ('▼ ファミリー', Family.ドクリツ);
       item1.hp = 3;
       item1.atk = 1;
       item1.locate(7, 5, 'map1');
@@ -68,6 +71,7 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ウロボロス'
     code: |
       const item1 = new RPGObject(('▼ スキン', Skin.ウロボロス));
+      item1.family = ('▼ ファミリー', Family.ドクリツ);
       item1.hp = 10;
       item1.atk = 1;
       item1.locate(7, 5, 'map1');
@@ -85,6 +89,7 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ドラゴン'
     code: |
       const item1 = new RPGObject(('▼ スキン', Skin.ドラゴン));
+      item1.family = ('▼ ファミリー', Family.ドクリツ);
       item1.hp = 10;
       item1.atk = 1;
       item1.locate(7, 5, 'map1');
@@ -94,21 +99,19 @@
 
         await self.wait(); // 少しやすむ
 
-        const ばくえん = new RPGObject(('▼ スキン', Skin.バクエン));
-        ばくえん.collisionFlag = false;
-        self.shoot(ばくえん, self.forward, 6);
+        const バクエン = self.summon(('▼ スキン', Skin.バクエン));
+        バクエン.collisionFlag = false;
+        self.shoot(バクエン, self.forward, 6);
         const fx = self.forward.x,
           fy = self.forward.y;
-        ばくえん.moveBy(fx * random(64, 96), fy * random(64, 96));
-        ばくえん.velocityX += random(-0.99, 1);
-        ばくえん.velocityY += random(-0.99, 1);
-        ばくえん.scale(random(0.99, 1.5));
-        ばくえん.force(-fx * random(0, 0.199), -fy * random(0, 0.199));
-        ばくえん.destroy(20);
-        ばくえん.onふれはじめた = (event) => {
-          if (event.hit !== self) {
-            Hack.Attack(event.mapX, event.mapY, self.atk);
-          }
+        バクエン.moveBy(fx * random(64, 96), fy * random(64, 96));
+        バクエン.velocityX += random(-0.99, 1);
+        バクエン.velocityY += random(-0.99, 1);
+        バクエン.scale(random(0.99, 1.5));
+        バクエン.force(-fx * random(0, 0.199), -fy * random(0, 0.199));
+        バクエン.destroy(20);
+        バクエン.onふれはじめた = (event) => {
+          Hack.Attack.call(バクエン, event.mapX, event.mapY, self.atk);
         };
 
         /*+ じどう*/
@@ -119,6 +122,7 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ミノタウルス'
     code: |
       const item1 = new RPGObject(('▼ スキン', Skin.ミノタウルス));
+      item1.family = ('▼ ファミリー', Family.ドクリツ);
       item1.hp = 10;
       item1.atk = 1;
       item1.locate(7, 5, 'map1');
@@ -262,6 +266,7 @@
   - label: 木
     code: |
       const item1 = new RPGObject(('▼ スキン', Skin.ツリー));
+      item1.family = ('▼ ファミリー', Family.マップ);
       item1.locate(7, 5, 'map1');
       item1.hp = 1;
     image: trimmed/map-26-0.png
@@ -270,17 +275,17 @@
   - label: バクダン岩
     code: |
       const item1 = new RPGObject(('▼ スキン', Skin.ロック));
+      item1.family = ('▼ ファミリー', Family.マップ);
       item1.locate(7, 5, 'map1');
       item1.atk = 99;
       item1.on(('▼ イベント', 'こうげきされた'), () => {
-        const item2 = new RPGObject(('▼ スキン', Skin.バクエン));
-        item2.locate(7, 5, 'map1');
-        item2.velocityY = -1;
-        item2.collisionFlag = false;
-        item2.onふれはじめた = (event) => {
-          Hack.Attack.call(item2, event.mapX, event.mapY, 1);
+        const バクエン = item1.summon(('▼ スキン', Skin.バクエン));
+        バクエン.velocityY = -1;
+        バクエン.collisionFlag = false;
+        バクエン.onふれはじめた = (event) => {
+          Hack.Attack.call(バクエン, event.mapX, event.mapY, 1);
         };
-        item2.destroy(20);
+        バクエン.destroy(20);
         item1.destroy();
       });
     image: trimmed/map-20-1.png
@@ -334,18 +339,17 @@
       item1.locate(7, 5, 'map1');
       item1.on(('▼ イベント', 'こうげきされた'), () => {
         // ランダムなアイテムをだす
-        const item2 = new RPGObject(
+        const なかみ = item1.summon(
           random([
             ('▼ スキン', Skin.ダイヤモンド),
             ('▼ スキン', Skin.サファイア),
             ('▼ スキン', Skin.ルビー)
           ])
         );
-        item2.locate(item1.mapX, item1.mapY);
-        item2.on(('▼ イベント', 'のった'), () => {
-          item2.velocity(0, -8);
-          item2.force(0, 0.8);
-          item2.destroy(16);
+        なかみ.on(('▼ イベント', 'のった'), () => {
+          なかみ.velocity(0, -8);
+          なかみ.force(0, 0.8);
+          なかみ.destroy(16);
         });
         item1.destroy();
       });
@@ -426,16 +430,16 @@
   - label: じげんばくだん
     code: |
       const item1 = new RPGObject(('▼ スキン', Skin.ボム));
+      item1.family = ('▼ ファミリー', Family.マップ);
       item1.locate(7, 5, 'map1');
       item1.setTimeout(() => {
-        const item2 = new RPGObject(('▼ スキン', Skin.バクエン));
-        item2.locate(7, 5);
-        item2.velocityY = -1;
-        item2.collisionFlag = false;
-        item2.onふれはじめた = (event) => {
-          Hack.Attack.call(item2, event.mapX, event.mapY, 1);
+        const バクエン = item1.summon(('▼ スキン', Skin.バクエン));
+        バクエン.velocityY = -1;
+        バクエン.collisionFlag = false;
+        バクエン.onふれはじめた = (event) => {
+          Hack.Attack.call(バクエン, event.mapX, event.mapY, 1);
         };
-        item2.destroy(20);
+        バクエン.destroy(20);
         item1.destroy();
       }, 90);
     image: trimmed/map-29-0.png
@@ -481,11 +485,11 @@
           Hack.log('おはなは100エンです。はい、どうぞ');
           Hack.score -= 100;
           // おはな
-          const item2 = new RPGObject(('▼ スキン', Skin.フラワー));
-          item2.locate(item1.mapX, item1.mapY + 1, 'map1');
-          item2.layer = RPGMap.Layer.Under;
-          item2.on(('▼ イベント', 'のった'), () => {
-            item2.destroy();
+          const フラワー = item1.summon(('▼ スキン', Skin.フラワー));
+          フラワー.locate(item1.mapX, item1.mapY + 1, 'map1');
+          フラワー.layer = RPGMap.Layer.Under;
+          フラワー.on(('▼ イベント', 'のった'), () => {
+            フラワー.destroy();
           });
         }
       });
@@ -544,9 +548,10 @@
     image: trimmed/map-28-2.png
     description: こうげきすると、ルーレットがはじまる
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ルーレット'
-  - label: ばくえん
+  - label: バクエン
     code: |
       const item1 = new RPGObject(('▼ スキン', Skin.バクエン);
+      item1.family = ('▼ ファミリー', Family.マップ);
       item1.locate(7, 5, 'map1');
       item1.velocityY = -1;
       item1.collisionFlag = false;
@@ -558,17 +563,18 @@
     description: 立ち昇る爆炎。ふれると１のダメージを受ける
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/爆炎'
 システム:
-  - label: プレイヤー２
+  - label: プレイヤー2
     image: trimmed/darknight.png
     description: 2P をついかする
-    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/プレイヤー２'
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/プレイヤー2'
     code: |
       const item1 = new Player(('▼ スキン', Skin.ダークナイト));
+      item1.family = ('▼ ファミリー', Family.プレイヤー2);
       item1.locate(7, 5); // はじめの位置
       item1.hp = 3; // 2P の HP
       item1.atk = 1; // 2P の こうげき力
       item1.on('たおれたとき', () => {
-        // プレイヤー２がたおれたとき
+        // プレイヤー2がたおれたとき
         Hack.gameclear();
       });
       // キーボードを変える

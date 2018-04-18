@@ -4,6 +4,7 @@ import 'enchantjs/ui.enchant';
 import 'hackforplay/hack';
 import * as synonyms from 'hackforplay/synonyms';
 import Skin from '../skin';
+import Family, { isOpposite, registerServant } from '../family';
 
 // 1 フレーム ( enterframe ) 間隔で next する
 // Unity の StartCoroutine みたいな仕様
@@ -289,8 +290,12 @@ class RPGObject extends Sprite {
 
 	onattacked(event) {
 		if (!this.damageTime && typeof this.hp === 'number') {
-			this.damageTime = this.attackedDamageTime;
-			this.hp -= event.damage;
+			// ダメージ判定が起こる状態で,
+			if (isOpposite(this, event.attacker)) {
+				// 敵対している相手なら
+				this.damageTime = this.attackedDamageTime;
+				this.hp -= event.damage;
+			}
 		}
 	}
 
@@ -748,6 +753,25 @@ class RPGObject extends Sprite {
 				event.actor = this;
 				item.dispatchEvent(event);
 			});
+	}
+
+	get family() {
+		return this._family || Family.Independence; // デフォルトでは独立軍
+	}
+
+	set family(family) {
+		this._family = family;
+	}
+
+	summon(skin) {
+		// 自分と同じ Family を持つ従者とする
+		const appended = new RPGObject(skin);
+		registerServant(this, appended);
+		if (this.map) {
+			// 同じ場所に配置する
+			appended.locate(this.mapX, this.mapY, this.map.name);
+		}
+		return appended;
 	}
 }
 

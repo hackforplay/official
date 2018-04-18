@@ -37,38 +37,35 @@
       // ビーム
       player.on(('▼ イベント', 'こうげきするとき'), (event) => {
         const 使い手 = event.target;
-        const ビーム = new RPGObject();
-        ビーム.mod(('▼ スキン', Skin.ビーム));
+        const ビーム = 使い手.summon(('▼ スキン', Skin.ビーム));
         ビーム.onふれはじめた = (event) => {
-          if (event.hit !== 使い手) {
-            Hack.Attack(event.mapX, event.mapY, 使い手.atk);
-            ビーム.destroy();
-          }
+          Hack.Attack.call(使い手, event.mapX, event.mapY, 使い手.atk);
+          ビーム.destroy();
         };
         使い手.shoot(ビーム, 使い手.forward, 10);
       });
-  - label: ばくだん
+  - label: ボム
     image: trimmed/map-29-0.png
-    description: プレイヤーがばくだんを使えるようにする。 player の部分を item1 などにかえれば、他のキャラクターがばくだんを使えるようにもできる
+    description: プレイヤーがボムを使えるようにする。 player の部分を item1 などにかえれば、他のキャラクターがボムを使えるようにもできる
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ばくだん'
     code: |
-      // ばくだん
+      // ボム
       player.on(('▼ イベント', 'こうげきするとき'), (event) => {
         const 使い手 = event.target;
-        const ばくだん = new RPGObject();
-        ばくだん.mod(('▼ スキン', Skin.ボム));
-        ばくだん.locate(使い手.mapX, 使い手.mapY);
-        ばくだん.setTimeout(() => {
-          const ばくえん = new RPGObject();
-          ばくえん.mod(('▼ スキン', Skin.バクエン));
-          ばくえん.locate(ばくだん.mapX, ばくだん.mapY);
-          ばくえん.velocityY = -1;
-          ばくえん.collisionFlag = false;
-          ばくえん.onふれはじめた = (event) => {
-            Hack.Attack.call(ばくえん, event.mapX, event.mapY, 使い手.atk);
+        const ボム = new RPGObject(('▼ スキン', Skin.ボム));
+        ボム.family = ('▼ ファミリー', Family.ドクリツ);
+        ボム.locate(使い手.mapX, 使い手.mapY);
+        ボム.setTimeout(() => {
+          const バクエン = new RPGObject();
+          バクエン.mod(('▼ スキン', Skin.バクエン));
+          バクエン.locate(ボム.mapX, ボム.mapY);
+          バクエン.velocityY = -1;
+          バクエン.collisionFlag = false;
+          バクエン.onふれはじめた = (event) => {
+            Hack.Attack.call(バクエン, event.mapX, event.mapY, 使い手.atk);
           };
-          ばくえん.destroy(20);
-          ばくだん.destroy();
+          バクエン.destroy(20);
+          ボム.destroy();
         }, 90);
       });
   - label: カラーチェンジ
