@@ -2,17 +2,15 @@ import 'hackforplay/core';
 // import 'mod/3d/core';
 
 async function gameFunc() {
-
 	Hack.changeMap('map1'); // map1 をロード
 
-	self.player = new Player(); // プレイヤーをつくる
-	player.mod(('▼ スキン', _kきし)); // 見た目
+	self.player = new Player(('▼ スキン', Skin.ナイト)); // プレイヤーをつくる
+	player.name = 'プレイヤー';
 	player.locate(3, 5); // はじめの位置
 
 	Hack.log('おしろがみえるだろう あれがゴールだ'); // メッセージを出す
 
-	const item1 = new RPGObject();
-	item1.mod(('▼ スキン', _sしろ));
+	const item1 = new RPGObject(('▼ スキン', Skin.キャッスル));
 	item1.locate(10, 5, 'map1');
 	item1.on(('▼ イベント', 'のった'), () => {
 		Hack.gameclear(); // ゲームクリア
@@ -21,7 +19,6 @@ async function gameFunc() {
 	});
 
 	/*+ モンスター アイテム せっち システム */
-
 
 	/*+ スキル */
 }

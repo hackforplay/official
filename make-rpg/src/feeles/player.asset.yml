@@ -38,7 +38,7 @@
       player.on(('▼ イベント', 'こうげきするとき'), (event) => {
         const 使い手 = event.target;
         const ビーム = new RPGObject();
-        ビーム.mod(('▼ スキン', _bビーム));
+        ビーム.mod(('▼ スキン', Skin.ビーム));
         ビーム.onふれはじめた = (event) => {
           if (event.hit !== 使い手) {
             Hack.Attack(event.mapX, event.mapY, 使い手.atk);
@@ -56,11 +56,11 @@
       player.on(('▼ イベント', 'こうげきするとき'), (event) => {
         const 使い手 = event.target;
         const ばくだん = new RPGObject();
-        ばくだん.mod(('▼ スキン', _bばくだん));
+        ばくだん.mod(('▼ スキン', Skin.ボム));
         ばくだん.locate(使い手.mapX, 使い手.mapY);
         ばくだん.setTimeout(() => {
           const ばくえん = new RPGObject();
-          ばくえん.mod(('▼ スキン', _bばくえん));
+          ばくえん.mod(('▼ スキン', Skin.バクエン));
           ばくえん.locate(ばくだん.mapX, ばくだん.mapY);
           ばくえん.velocityY = -1;
           ばくえん.collisionFlag = false;

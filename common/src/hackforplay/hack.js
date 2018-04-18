@@ -1,5 +1,6 @@
 import 'hackforplay/enchantjs-kit';
 import TextArea from 'hackforplay/ui/textarea';
+import find from './find';
 
 function refocus() {
 	window.document.activeElement.blur(); // Blur an enchantBook
@@ -14,7 +15,7 @@ function getEditor() {
 module.exports = Hack;
 
 Hack.on('error', function(event) {
-	Hack.log('It was slient. // うまく うごかなかった')
+	Hack.log('It was slient. // うまく うごかなかった');
 	console.error(event.error);
 });
 
@@ -24,10 +25,15 @@ Hack.fun2str = function(func) {
 		var str = func.toString().match(/^function[^\{]*\{\n?(\s*)([\s\S]*)\}$/);
 		if (str !== null) {
 			var indent = str[1].match(/(.*)$/)[0];
-			return (str[2]).split('\n' + indent).join('\n').replace(/\s*$/, '');
+			return str[2]
+				.split('\n' + indent)
+				.join('\n')
+				.replace(/\s*$/, '');
 		} else {
 			// 切り分けのミス
-			Hack.log('Hack.restagingCode hasnot set the function because hack.js is wrong. See hack.js and fix it');
+			Hack.log(
+				'Hack.restagingCode hasnot set the function because hack.js is wrong. See hack.js and fix it'
+			);
 		}
 	}
 	return '';
@@ -35,7 +41,7 @@ Hack.fun2str = function(func) {
 
 // 【旧ログ機能】
 // textarea : 画面全体をおおう半透明のテキストエリア(DOM)
-Hack.textarea = (function() {
+Hack.textarea = function() {
 	// scope: new Entity
 
 	this.name = 'HackTextarea';
@@ -76,8 +82,7 @@ Hack.textarea = (function() {
 	};
 
 	return this;
-
-}).call(new enchant.Entity());
+}.call(new enchant.Entity());
 
 // canvas のテキストエリアを生成
 const textArea = new TextArea(380, 60);
@@ -105,7 +110,11 @@ Hack.log = function() {
 			}
 		}
 
-		this.textArea.push(values.join(' ') + (this.textarea.text !== '' ? '\n' : '') + this.textarea.text);
+		this.textArea.push(
+			values.join(' ') +
+				(this.textarea.text !== '' ? '\n' : '') +
+				this.textarea.text
+		);
 		this.textArea.show();
 	} catch (e) {
 		Hack.log('Error', e.message);
@@ -113,7 +122,7 @@ Hack.log = function() {
 };
 
 // 画面に文字を表示する（上書き）
-Hack.show = function () {
+Hack.show = function() {
 	Hack.textArea.clear();
 	Hack.log.apply(this, arguments);
 };
@@ -125,7 +134,7 @@ Hack.clearLog = function() {
 };
 
 // enchantBook
-Hack.enchantBook = (function() {
+Hack.enchantBook = function() {
 	// scope: new Entity
 	var isEditorReady = false;
 	Hack.on('editorready', function() {
@@ -148,10 +157,13 @@ Hack.enchantBook = (function() {
 
 			function task(value) {
 				_hint = value instanceof Function ? Hack.fun2str(value) : value;
-				Hack.enchantBook._element.contentWindow.postMessage({
-					query: 'set',
-					value: _hint
-				}, '/');
+				Hack.enchantBook._element.contentWindow.postMessage(
+					{
+						query: 'set',
+						value: _hint
+					},
+					'/'
+				);
 				var e = new Event('hintset');
 				e.value = _hint;
 				e.rawValue = value;
@@ -181,12 +193,10 @@ Hack.enchantBook = (function() {
 	this._element.type = 'iframe';
 	game.rootScene.addChild(this);
 
-
 	this.name = 'EnchantBook';
 
 	return this;
-
-}).call(new enchant.Entity());
+}.call(new enchant.Entity());
 
 Hack.openEditor = function() {
 	if (!this.enchantBook) return;
@@ -199,21 +209,26 @@ Hack.openEditor = function() {
 Hack.closeEditor = function() {
 	if (!this.enchantBook) return;
 	this.enchantBook.scale(1, 1);
-	this.enchantBook.tl.scaleTo(0, 1, 7, enchant.Easing.BACK_EASEIN).then(function() {
-		this.visible = false;
-	});
+	this.enchantBook.tl
+		.scaleTo(0, 1, 7, enchant.Easing.BACK_EASEIN)
+		.then(function() {
+			this.visible = false;
+		});
 	this.dispatchEvent(new Event('editcancel'));
 };
 
 Hack.clearHistory = function() {
 	if (!this.enchantBook) return;
-	this.enchantBook._element.contentWindow.postMessage({
-		query: 'clearHistory'
-	}, '/');
+	this.enchantBook._element.contentWindow.postMessage(
+		{
+			query: 'clearHistory'
+		},
+		'/'
+	);
 };
 
 Hack.createLabel = function(text, prop) {
-	return (function() {
+	return function() {
 		this.text = text;
 		if (prop) {
 			Object.keys(prop).forEach(function(key) {
@@ -225,11 +240,11 @@ Hack.createLabel = function(text, prop) {
 			parent.addChild(this);
 		}
 		return this;
-	}).call(new enchant.Label());
+	}.call(new enchant.Label());
 };
 
 Hack.createSprite = function(width, height, prop) {
-	return (function() {
+	return function() {
 		if (prop) {
 			Object.keys(prop).forEach(function(key) {
 				this[key] = prop[key];
@@ -240,12 +255,12 @@ Hack.createSprite = function(width, height, prop) {
 			parent.addChild(this);
 		}
 		return this;
-	}).call(new enchant.Sprite(width, height));
+	}.call(new enchant.Sprite(width, height));
 };
 
 // overlay
 Hack.overlay = function() {
-	return (function(args) {
+	return function(args) {
 		// scope: createSprite()
 
 		this.image = new Surface(game.width, game.height);
@@ -265,16 +280,14 @@ Hack.overlay = function() {
 			}
 		}
 
-
-
-
 		return this;
-
-	}).call(Hack.createSprite(game.width, game.height, {
-		defaultParentNode: Hack.overlayGroup
-	}), arguments);
+	}.call(
+		Hack.createSprite(game.width, game.height, {
+			defaultParentNode: Hack.overlayGroup
+		}),
+		arguments
+	);
 };
-
 
 (function() {
 	var playing = true;
@@ -314,8 +327,13 @@ Hack.overlay = function() {
 					// [RETRY] がクリックされたとき
 					feeles.reload(false);
 				}
-			}).tl.moveTo(314 - game.rootScene.x, 0 - game.rootScene.y, 40, enchant.Easing.CUBIC_EASEOUT);
-		});;
+			}).tl.moveTo(
+				314 - game.rootScene.x,
+				0 - game.rootScene.y,
+				40,
+				enchant.Easing.CUBIC_EASEOUT
+			);
+		});
 	};
 
 	Hack.ongameover = function() {
@@ -333,16 +351,18 @@ Hack.overlay = function() {
 					// [RETRY] がクリックされたとき
 					feeles.reload(false);
 				}
-			}).tl.moveTo(157 - game.rootScene.x, 240 - game.rootScene.y, 20, enchant.Easing.CUBIC_EASEOUT);
+			}).tl.moveTo(
+				157 - game.rootScene.x,
+				240 - game.rootScene.y,
+				20,
+				enchant.Easing.CUBIC_EASEOUT
+			);
 		});
 	};
-
 })();
-
 
 // ゲームメニュー
 (function() {
-
 	game.rootScene.name = 'RootScene';
 
 	var visible, overlay;
@@ -354,7 +374,6 @@ Hack.overlay = function() {
 	const menuGroup = new enchant.Group();
 	menuGroup.name = 'MenuGroup';
 	menuGroup.order = 200;
-
 
 	menuGroup.on('enterframe', function() {
 		/*
@@ -391,9 +410,7 @@ Hack.overlay = function() {
 		}
 	});
 
-
 	game.rootScene.addChild(menuGroup);
-
 
 	// イベント Hack.onmenuopend が dispatch される
 	Hack.openMenu = function() {
@@ -409,7 +426,11 @@ Hack.overlay = function() {
 			return GUIParts[index].visible;
 		}).forEach(function(item, index) {
 			item.moveTo(opener.x, opener.y);
-			item.tl.hide().fadeIn(8).and().moveBy(0, 40 * index + 60, 8, enchant.Easing.BACK_EASEOUT);
+			item.tl
+				.hide()
+				.fadeIn(8)
+				.and()
+				.moveBy(0, 40 * index + 60, 8, enchant.Easing.BACK_EASEOUT);
 			item.touchEnabled = true;
 		});
 	};
@@ -423,14 +444,16 @@ Hack.overlay = function() {
 		overlay.tl.fadeOut(6);
 
 		GUIParts.forEach(function(item, index) {
-			item.tl.fadeOut(8, enchant.Easing.BACK_EASEIN).and().moveTo(opener.x, opener.y, 8, enchant.Easing.BACK_EASEIN);
+			item.tl
+				.fadeOut(8, enchant.Easing.BACK_EASEIN)
+				.and()
+				.moveTo(opener.x, opener.y, 8, enchant.Easing.BACK_EASEIN);
 			item.touchEnabled = false;
 		});
 	};
 
 	// スプライトの初期化
 	game.on('load', function() {
-
 		// 暗めのオーバーレイ
 		overlay = new Sprite(game.width, game.height);
 		overlay.image = new Surface(overlay.width, overlay.height);
@@ -450,59 +473,67 @@ Hack.overlay = function() {
 		};
 		*/
 
-
 		opener.ontouchend = function() {
 			if (visible) Hack.closeMenu();
 			else Hack.openMenu();
 		};
 
 		// コメント入力画面を表示するボタン
-		addGUIParts(game.assets['hackforplay/menu-button-comment.png'], function() {
-			return !({
-				getItem: function() {}
-			}).getItem('stage_param_comment'); // 存在しない場合は !'' === true
-		}, function() {
-			// GUIParts,overlayを100ミリ秒間非表示にする
-			GUIParts.concat(overlay).forEach(function(item) {
-				var visibility = item.visible;
-				item.visible = false;
+		addGUIParts(
+			game.assets['hackforplay/menu-button-comment.png'],
+			function() {
+				return !{
+					getItem: function() {}
+				}.getItem('stage_param_comment'); // 存在しない場合は !'' === true
+			},
+			function() {
+				// GUIParts,overlayを100ミリ秒間非表示にする
+				GUIParts.concat(overlay).forEach(function(item) {
+					var visibility = item.visible;
+					item.visible = false;
+					setTimeout(function() {
+						item.visible = visibility;
+					}, 100);
+				});
+				window.parent.postMessage('show_comment', '*');
 				setTimeout(function() {
-					item.visible = visibility;
-				}, 100);
-			});
-			window.parent.postMessage('show_comment', '*');
-			setTimeout(function() {
-				Hack.closeMenu();
-			}, 500);
-		});
+					Hack.closeMenu();
+				}, 500);
+			}
+		);
 		// ゲームを再スタートするボタン
-		addGUIParts(game.assets['hackforplay/menu-button-retry.png'], function() {
-			return true;
-		}, function() {
-			location.reload(false);
-		});
+		addGUIParts(
+			game.assets['hackforplay/menu-button-retry.png'],
+			function() {
+				return true;
+			},
+			function() {
+				location.reload(false);
+			}
+		);
 
 		function addGUIParts(_image, _condition, _touchEvent) {
-			GUIParts.push(Hack.createSprite(32, 32, {
-				opacity: 0,
-				image: _image,
-				defaultParentNode: menuGroup,
-				visible: _condition(),
-				condition: _condition,
-				touchEnabled: false,
-				ontouchend: function() {
-					this.tl.scaleTo(1.1, 1.1, 3).scaleTo(1, 1, 3).then(function() {
-						_touchEvent();
-					});
-				}
-			}));
+			GUIParts.push(
+				Hack.createSprite(32, 32, {
+					opacity: 0,
+					image: _image,
+					defaultParentNode: menuGroup,
+					visible: _condition(),
+					condition: _condition,
+					touchEnabled: false,
+					ontouchend: function() {
+						this.tl
+							.scaleTo(1.1, 1.1, 3)
+							.scaleTo(1, 1, 3)
+							.then(function() {
+								_touchEvent();
+							});
+					}
+				})
+			);
 		}
-
 	});
-
 })();
-
-
 
 /**
  * Hack.define
@@ -513,7 +544,8 @@ Hack.overlay = function() {
 Hack.define = function(obj, prop, condition, predicate) {
 	var _value = null,
 		descriptor = Object.getOwnPropertyDescriptor(obj, prop);
-	if (arguments.length < 4) return Hack.define(Hack, arguments[0], arguments[1], arguments[2]);
+	if (arguments.length < 4)
+		return Hack.define(Hack, arguments[0], arguments[1], arguments[2]);
 	else if (descriptor) {
 		if (!descriptor.configurable) {
 			Hack.log('Cannot define prop ' + prop + '. It is NOT configurable');
@@ -573,7 +605,6 @@ game.addEventListener('load', function() {
 });
 */
 
-
 /**
  * Hack.css2rgb
  * style: CSS Color style / Array
@@ -585,7 +616,11 @@ game.addEventListener('load', function() {
 		if (typeof style === 'string') {
 			ctx.fillStyle = style;
 			ctx.fillRect(0, 0, 1, 1);
-			return Array.prototype.slice.call(ctx.getImageData(0, 0, 1, 1).data, 0, 3);
+			return Array.prototype.slice.call(
+				ctx.getImageData(0, 0, 1, 1).data,
+				0,
+				3
+			);
 		} else if (style instanceof Array && style.length !== 3) {
 			return [0, 0, 0].map(function(elem, index) {
 				return Math.min(255, Math.max(0, style[index] || elem)) >> 0;
@@ -593,6 +628,15 @@ game.addEventListener('load', function() {
 		} else if (style instanceof Array) {
 			return style;
 		}
-		throw new Error('Hack.css2rgb requires CSS style string or Array of number');
+		throw new Error(
+			'Hack.css2rgb requires CSS style string or Array of number'
+		);
 	};
 })();
+
+/**
+ * その name をもつオブジェクトを取得する
+ * @param {string} name オブジェクトの名前
+ * @returns {RPGObject|null} オブジェクトあるいは null
+ */
+Hack.find = find;
