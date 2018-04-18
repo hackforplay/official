@@ -29,16 +29,19 @@ class Player extends RPGObject {
 	}
 
 	checkInput(type) {
-		const input = Array.isArray(this.input[type]) ? this.input[type] : [this.input[type]];
-		return input.map(function(name) {
-			return Key[name].pressed;
-		}).reduce(function(a, b) {
-			return a + b;
-		});
+		const input = Array.isArray(this.input[type])
+			? this.input[type]
+			: [this.input[type]];
+		return input
+			.map(function(name) {
+				return Key[name].pressed;
+			})
+			.reduce(function(a, b) {
+				return a + b;
+			});
 	}
 
 	onenterframe() {
-
 		if (!Hack.isPlaying) return;
 
 		if (this.behavior === BehaviorTypes.Idle) {
@@ -56,21 +59,19 @@ class Player extends RPGObject {
 				this.walk();
 			}
 		}
-
-
 	}
-
 
 	enterCheck() {
 		// Dispatch playerenter Event
-		RPGObject.collection.filter(function(item) {
-			return item.mapX === this.mapX && item.mapY === this.mapY;
-		}, this).forEach(function(item) {
-			item.dispatchEvent(new Event('playerenter'));
-			this.enteredStack.push(item);
-		}, this);
+		RPGObject.collection
+			.filter(function(item) {
+				return item.mapX === this.mapX && item.mapY === this.mapY;
+			}, this)
+			.forEach(function(item) {
+				item.dispatchEvent(new Event('playerenter'));
+				this.enteredStack.push(item);
+			}, this);
 	}
-
 
 	stayCheck() {
 		// Dispatch playerstay/playerexit Event
@@ -84,8 +85,6 @@ class Player extends RPGObject {
 			}
 		}, this);
 	}
-
 }
-
 
 export default Player;
