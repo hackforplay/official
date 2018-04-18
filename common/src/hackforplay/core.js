@@ -4,9 +4,13 @@ import 'hackforplay/loader';
 
 import * as synonyms from './synonyms';
 import Skin from './skin';
+import Family from './family';
+
+// Global
+self.Skin = self.Skin || Skin;
+self.Family = self.Family || Family;
 
 // Assign synonyms
-self.Skin = self.Skin || Skin;
 for (const [from, _global, _skin] of synonyms.assets) {
 	const mod = Hack.assets[from];
 	if (typeof mod === 'function') {
