@@ -948,6 +948,8 @@ Hack.assets.ouroboros = function() {
 var __Effect = enchant.Class(RPGObject, {
 	initialize: function(velocityX, velocityY, lifetime, randomize) {
 		RPGObject.call(this);
+		this.width = 32;
+		this.height = 32;
 		this.image = game.assets['enchantjs/x2/effect0.png'];
 		this.isKinematic = false;
 		this.velocity(velocityX, velocityY);

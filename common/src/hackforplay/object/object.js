@@ -130,7 +130,7 @@ class RPGObject extends Sprite {
 		});
 
 		// アセット
-		if (mod) {
+		if (typeof mod === 'function') {
 			this.mod(mod);
 			// Skin.XXX の名前をデフォルトの name として登録する
 			this.name = Skin.__name.get(mod) || this.name;
