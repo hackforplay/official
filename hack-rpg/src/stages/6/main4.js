@@ -2,13 +2,7 @@ import 'hackforplay/core';
 import extra from '../extra';
 import TextArea from 'hackforplay/ui/textarea';
 
-
 function gameStartLazy() {
-
-
-	
-
-
 	// しろ
 	const item1 = new RPGObject();
 	item1.mod(('▼ スキン', _sしろ));
@@ -24,48 +18,49 @@ function gameStartLazy() {
 		gameclear();
 	};
 
-
 	// ゲームクリアのコード　（　関数 )
 	function gameclear() {
 		// 画面を暗くする
 		const dark = Hack.overlay('rgb(0,0,0,1)');
 		dark.opacity = 0;
 		Hack.overlayGroup.addChild(dark);
-		dark.tl.delay(30).then(function() {
-			Hack.menuGroup.parentNode.removeChild(Hack.menuGroup);
-		}).fadeIn(90, enchant.Easing.CUBIC_EASEOUT).then(function() {
-
-			const textArea = new TextArea(480, 320);
-			textArea.x = (480 - textArea.w) / 2;
-			textArea.y = 0;
-			textArea.margin = 20;
-			textArea.defaultStyle = {
-				color: '#fff',
-				size: '32',
-				family: 'PixelMplus, sans-serif',
-				weight: 'bold',
-				align: 'center',
-				space: 0,
-				ruby: null,
-				rubyId: null
-			};
-			Hack.overlayGroup.addChild(textArea);
-			textArea.push(`
+		dark.tl
+			.delay(30)
+			.then(function() {
+				Hack.menuGroup.parentNode.removeChild(Hack.menuGroup);
+			})
+			.fadeIn(90, enchant.Easing.CUBIC_EASEOUT)
+			.then(function() {
+				const textArea = new TextArea(480, 320);
+				textArea.x = (480 - textArea.w) / 2;
+				textArea.y = 0;
+				textArea.margin = 20;
+				textArea.defaultStyle = {
+					color: '#fff',
+					size: '32',
+					family: 'PixelMplus, sans-serif',
+					weight: 'bold',
+					align: 'center',
+					space: 0,
+					ruby: null,
+					rubyId: null
+				};
+				Hack.overlayGroup.addChild(textArea);
+				textArea.push(`
 ゲームクリア おめでとう！
 つぎは なにをしますか？`);
-			textArea.show();
+				textArea.show();
 
-			button('ほかのステージであそぶ', 130).ontouchend = () => {
-				window.open('https://www.hackforplay.xyz/lists/trending');
-			};
-			button('自分のステージをつくる', 180).ontouchend = () => {
-				window.open('https://www.hackforplay.xyz/officials/make-rpg');
-			};
-			button('もういちどあそぶ', 230).ontouchend = () => {
-				feeles.replace('stages/1/index.html');
-			};
-
-		});
+				button('ほかのステージであそぶ', 130).ontouchend = () => {
+					feeles.openWindow('https://www.hackforplay.xyz/lists/trending');
+				};
+				button('自分のステージをつくる', 180).ontouchend = () => {
+					feeles.openWindow('https://www.hackforplay.xyz/officials/make-rpg');
+				};
+				button('もういちどあそぶ', 230).ontouchend = () => {
+					feeles.replace('stages/1/index.html');
+				};
+			});
 
 		function button(text, y) {
 			const btn = new TextArea(300, 38);
@@ -94,6 +89,5 @@ function gameStartLazy() {
 	// このステージを改造
 	extra(13, 7, 'map4', 'stages/6/main4.js');
 }
-
 
 game.on('load', gameStartLazy);
