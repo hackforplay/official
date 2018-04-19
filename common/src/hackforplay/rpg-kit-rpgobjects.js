@@ -112,7 +112,6 @@ var __BehaviorTypes = {
 	Dead: 'dead' // 死亡状態
 };
 
-
 import __RPGObject from './object/object';
 import __Player from './object/player';
 
@@ -126,7 +125,21 @@ Hack.assets.knight = function() {
 	};
 	this.setFrameD9(BehaviorTypes.Idle, [1]);
 	this.setFrameD9(BehaviorTypes.Walk, [0, 0, 0, 1, 1, 1, 2, 2, 2, 1, null]);
-	this.setFrameD9(BehaviorTypes.Attack, [6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, null]);
+	this.setFrameD9(BehaviorTypes.Attack, [
+		6,
+		6,
+		6,
+		6,
+		7,
+		7,
+		7,
+		7,
+		8,
+		8,
+		8,
+		8,
+		null
+	]);
 	this.setFrameD9(BehaviorTypes.Damaged, [2, -1, -1, -1, 2, 2, 2, -1, -1, -1]);
 	this.setFrameD9(BehaviorTypes.Dead, [1, null]);
 	this.directionType = 'quadruple';
@@ -147,7 +160,21 @@ Hack.assets.magician = function() {
 	};
 	this.setFrameD9(BehaviorTypes.Idle, [1]);
 	this.setFrameD9(BehaviorTypes.Walk, [0, 0, 0, 1, 1, 1, 2, 2, 2, 1, null]);
-	this.setFrameD9(BehaviorTypes.Attack, [6, 6, 6, 6, 7, 7, 7, 7, 8, 8, 8, 8, null]);
+	this.setFrameD9(BehaviorTypes.Attack, [
+		6,
+		6,
+		6,
+		6,
+		7,
+		7,
+		7,
+		7,
+		8,
+		8,
+		8,
+		8,
+		null
+	]);
 	this.setFrameD9(BehaviorTypes.Damaged, [2, -1, -1, -1, 2, 2, 2, -1, -1, -1]);
 	this.setFrameD9(BehaviorTypes.Dead, [1, null]);
 	this.directionType = 'quadruple';
@@ -164,7 +191,25 @@ Hack.assets.slime = function() {
 	};
 	this.setFrame(BehaviorTypes.Idle, [2, 2, 2, 2, 3, 3, 3, 3]);
 	this.setFrame(BehaviorTypes.Walk, [2, 2, 2, 2, 3, 3, 3, 3]);
-	this.setFrame(BehaviorTypes.Attack, [6, 6, 6, 6, 4, 4, 4, 4, 5, 5, 5, 5, 4, 4, 4, 4, null]);
+	this.setFrame(BehaviorTypes.Attack, [
+		6,
+		6,
+		6,
+		6,
+		4,
+		4,
+		4,
+		4,
+		5,
+		5,
+		5,
+		5,
+		4,
+		4,
+		4,
+		4,
+		null
+	]);
 	this.setFrame(BehaviorTypes.Damaged, [4, 4, 4, 4, 5, 5, 5, 5]);
 	this.setFrame(BehaviorTypes.Dead, [5, 5, 5, 5, 7, 7, 7, null]);
 	this.directionType = 'double';
@@ -189,7 +234,25 @@ Hack.assets.insect = function() {
 	};
 	this.setFrame(BehaviorTypes.Idle, [2, 2, 2, 2, 3, 3, 3, 3]);
 	this.setFrame(BehaviorTypes.Walk, [2, 2, 2, 2, 3, 3, 3, 3]);
-	this.setFrame(BehaviorTypes.Attack, [7, 7, 7, 6, 6, 6, 6, 6, 5, 5, 5, 5, 4, 4, 4, 4, null]);
+	this.setFrame(BehaviorTypes.Attack, [
+		7,
+		7,
+		7,
+		6,
+		6,
+		6,
+		6,
+		6,
+		5,
+		5,
+		5,
+		5,
+		4,
+		4,
+		4,
+		4,
+		null
+	]);
 	this.setFrame(BehaviorTypes.Damaged, [4, 4, 4, 4, 5, 5, 5, 5]);
 	this.setFrame(BehaviorTypes.Dead, [5, 5, 5, 5, 7, 7, 7, null]);
 	this.directionType = 'double';
@@ -214,7 +277,25 @@ Hack.assets.spider = function() {
 	};
 	this.setFrame(BehaviorTypes.Idle, [2, 2, 2, 2, 3, 3, 3, 3]);
 	this.setFrame(BehaviorTypes.Walk, [2, 2, 2, 2, 3, 3, 3, 3]);
-	this.setFrame(BehaviorTypes.Attack, [6, 6, 6, 7, 7, 7, 7, 7, 5, 5, 5, 5, 4, 4, 4, 4, null]);
+	this.setFrame(BehaviorTypes.Attack, [
+		6,
+		6,
+		6,
+		7,
+		7,
+		7,
+		7,
+		7,
+		5,
+		5,
+		5,
+		5,
+		4,
+		4,
+		4,
+		4,
+		null
+	]);
 	this.setFrame(BehaviorTypes.Damaged, [4, 4, 4, 4, 5, 5, 5, 5]);
 	this.setFrame(BehaviorTypes.Dead, [5, 5, 5, 5, 7, 7, 7, null]);
 	this.directionType = 'double';
@@ -239,7 +320,29 @@ Hack.assets.bat = function() {
 	};
 	this.setFrame(BehaviorTypes.Idle, [2, 2, 2, 2, 3, 3, 3, 3]);
 	this.setFrame(BehaviorTypes.Walk, [2, 2, 2, 4, 4, 4, 4, 4, 3, 3, 3, 3]);
-	this.setFrame(BehaviorTypes.Attack, [9, 9, 9, 9, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 3, 3, 4, 4, 4, 4, null]);
+	this.setFrame(BehaviorTypes.Attack, [
+		9,
+		9,
+		9,
+		9,
+		6,
+		6,
+		6,
+		6,
+		6,
+		6,
+		6,
+		6,
+		6,
+		6,
+		3,
+		3,
+		4,
+		4,
+		4,
+		4,
+		null
+	]);
 	this.setFrame(BehaviorTypes.Damaged, [4, 4, 4, 4, 5, 5, 5, 5]);
 	this.setFrame(BehaviorTypes.Dead, [5, 5, 5, 5, 7, 7, 7, null]);
 	this.directionType = 'double';
@@ -285,11 +388,111 @@ Hack.assets.dragon = function() {
 		x: -24,
 		y: -42
 	};
-	this.setFrame(BehaviorTypes.Idle, [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3]);
-	this.setFrame(BehaviorTypes.Walk, [2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3]);
-	this.setFrame(BehaviorTypes.Attack, [8, 8, 8, 8, 8, 8, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, 6, null]);
-	this.setFrame(BehaviorTypes.Damaged, [4, 4, 4, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5]);
-	this.setFrame(BehaviorTypes.Dead, [2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, null]);
+	this.setFrame(BehaviorTypes.Idle, [
+		2,
+		2,
+		2,
+		2,
+		2,
+		2,
+		2,
+		2,
+		2,
+		2,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3,
+		3
+	]);
+	this.setFrame(BehaviorTypes.Walk, [
+		2,
+		2,
+		2,
+		2,
+		2,
+		2,
+		2,
+		2,
+		3,
+		3,
+		4,
+		4,
+		4,
+		4,
+		4,
+		4,
+		3,
+		3,
+		3,
+		3
+	]);
+	this.setFrame(BehaviorTypes.Attack, [
+		8,
+		8,
+		8,
+		8,
+		8,
+		8,
+		6,
+		6,
+		6,
+		6,
+		6,
+		6,
+		6,
+		6,
+		6,
+		6,
+		6,
+		6,
+		6,
+		6,
+		null
+	]);
+	this.setFrame(BehaviorTypes.Damaged, [
+		4,
+		4,
+		4,
+		4,
+		4,
+		4,
+		4,
+		4,
+		5,
+		5,
+		5,
+		5,
+		5,
+		5,
+		5,
+		5
+	]);
+	this.setFrame(BehaviorTypes.Dead, [
+		2,
+		2,
+		2,
+		2,
+		2,
+		2,
+		2,
+		2,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		null
+	]);
 	this.directionType = 'double';
 	this.forward = [-1, 0];
 };
@@ -310,11 +513,119 @@ Hack.assets.minotaur = function() {
 		x: -40,
 		y: -48
 	};
-	this.setFrame(BehaviorTypes.Idle, [8, 8, 8, 8, 8, 8, 8, 8, 8, 8, 9, 9, 9, 9, 9, 9, 9, 9, 9, 9]);
-	this.setFrame(BehaviorTypes.Walk, [2, 2, 2, 2, 2, 2, 2, 2, 3, 3, 4, 4, 4, 4, 4, 4, 3, 3, 3, 3]);
-	this.setFrame(BehaviorTypes.Attack, [3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 5, 6, 6, 6, 6, 6, null]);
-	this.setFrame(BehaviorTypes.Damaged, [7, 7, 7, 7, 7, 7, 7, 7, 6, 6, 6, 6, 6, 6, 6, 6]);
-	this.setFrame(BehaviorTypes.Dead, [2, 2, 2, 2, 2, 2, 2, 2, 1, 1, 1, 1, 1, 1, 1, 1, 1, null]);
+	this.setFrame(BehaviorTypes.Idle, [
+		8,
+		8,
+		8,
+		8,
+		8,
+		8,
+		8,
+		8,
+		8,
+		8,
+		9,
+		9,
+		9,
+		9,
+		9,
+		9,
+		9,
+		9,
+		9,
+		9
+	]);
+	this.setFrame(BehaviorTypes.Walk, [
+		2,
+		2,
+		2,
+		2,
+		2,
+		2,
+		2,
+		2,
+		3,
+		3,
+		4,
+		4,
+		4,
+		4,
+		4,
+		4,
+		3,
+		3,
+		3,
+		3
+	]);
+	this.setFrame(BehaviorTypes.Attack, [
+		3,
+		3,
+		3,
+		3,
+		3,
+		4,
+		4,
+		4,
+		4,
+		4,
+		5,
+		5,
+		5,
+		5,
+		5,
+		5,
+		5,
+		5,
+		5,
+		5,
+		5,
+		5,
+		5,
+		6,
+		6,
+		6,
+		6,
+		6,
+		null
+	]);
+	this.setFrame(BehaviorTypes.Damaged, [
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		7,
+		6,
+		6,
+		6,
+		6,
+		6,
+		6,
+		6,
+		6
+	]);
+	this.setFrame(BehaviorTypes.Dead, [
+		2,
+		2,
+		2,
+		2,
+		2,
+		2,
+		2,
+		2,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		null
+	]);
 	this.directionType = 'double';
 	this.forward = [-1, 0];
 };
@@ -339,9 +650,37 @@ Hack.assets.boy = function() {
 		_1 = _0 + 1,
 		_2 = _0 + 2;
 	this.setFrameD9(BehaviorTypes.Idle, [_1]);
-	this.setFrameD9(BehaviorTypes.Walk, [_0, _0, _0, _0, _1, _1, _1, _1, _2, _2, _2, _2, _1, _1, _1, null]);
+	this.setFrameD9(BehaviorTypes.Walk, [
+		_0,
+		_0,
+		_0,
+		_0,
+		_1,
+		_1,
+		_1,
+		_1,
+		_2,
+		_2,
+		_2,
+		_2,
+		_1,
+		_1,
+		_1,
+		null
+	]);
 	this.setFrameD9(BehaviorTypes.Attack, [_0, _0, _2, _2, _1, _1, _1, _1, null]);
-	this.setFrameD9(BehaviorTypes.Damaged, [_2, -1, -1, -1, _2, _2, _2, -1, -1, -1]);
+	this.setFrameD9(BehaviorTypes.Damaged, [
+		_2,
+		-1,
+		-1,
+		-1,
+		_2,
+		_2,
+		_2,
+		-1,
+		-1,
+		-1
+	]);
 	this.setFrameD9(BehaviorTypes.Dead, [_1, null]);
 	this.directionType = 'quadruple';
 	this.forward = [0, 1];
@@ -367,9 +706,37 @@ Hack.assets.girl = function() {
 		_1 = _0 + 1,
 		_2 = _0 + 2;
 	this.setFrameD9(BehaviorTypes.Idle, [_1]);
-	this.setFrameD9(BehaviorTypes.Walk, [_0, _0, _0, _0, _1, _1, _1, _1, _2, _2, _2, _2, _1, _1, _1, null]);
+	this.setFrameD9(BehaviorTypes.Walk, [
+		_0,
+		_0,
+		_0,
+		_0,
+		_1,
+		_1,
+		_1,
+		_1,
+		_2,
+		_2,
+		_2,
+		_2,
+		_1,
+		_1,
+		_1,
+		null
+	]);
 	this.setFrameD9(BehaviorTypes.Attack, [_0, _0, _2, _2, _1, _1, _1, _1, null]);
-	this.setFrameD9(BehaviorTypes.Damaged, [_2, -1, -1, -1, _2, _2, _2, -1, -1, -1]);
+	this.setFrameD9(BehaviorTypes.Damaged, [
+		_2,
+		-1,
+		-1,
+		-1,
+		_2,
+		_2,
+		_2,
+		-1,
+		-1,
+		-1
+	]);
 	this.setFrameD9(BehaviorTypes.Dead, [_1, null]);
 	this.directionType = 'quadruple';
 	this.forward = [0, 1];
@@ -395,9 +762,37 @@ Hack.assets.woman = function() {
 		_1 = _0 + 1,
 		_2 = _0 + 2;
 	this.setFrameD9(BehaviorTypes.Idle, [_1]);
-	this.setFrameD9(BehaviorTypes.Walk, [_0, _0, _0, _0, _1, _1, _1, _1, _2, _2, _2, _2, _1, _1, _1, null]);
+	this.setFrameD9(BehaviorTypes.Walk, [
+		_0,
+		_0,
+		_0,
+		_0,
+		_1,
+		_1,
+		_1,
+		_1,
+		_2,
+		_2,
+		_2,
+		_2,
+		_1,
+		_1,
+		_1,
+		null
+	]);
 	this.setFrameD9(BehaviorTypes.Attack, [_0, _0, _2, _2, _1, _1, _1, _1, null]);
-	this.setFrameD9(BehaviorTypes.Damaged, [_2, -1, -1, -1, _2, _2, _2, -1, -1, -1]);
+	this.setFrameD9(BehaviorTypes.Damaged, [
+		_2,
+		-1,
+		-1,
+		-1,
+		_2,
+		_2,
+		_2,
+		-1,
+		-1,
+		-1
+	]);
 	this.setFrameD9(BehaviorTypes.Dead, [_1, null]);
 	this.directionType = 'quadruple';
 	this.forward = [0, 1];
@@ -439,9 +834,7 @@ var __MapObject = enchant.Class(RPGObject, {
 			}
 		}
 	},
-	onenterframe: function() {
-
-	}
+	onenterframe: function() {}
 });
 
 Hack.assets.enchantBookItem = function() {
@@ -465,7 +858,33 @@ Hack.assets.explosion = function() {
 	};
 	this.directionType = 'single';
 	this.forward = [0, -1];
-	this.frame = [0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4];
+	this.frame = [
+		0,
+		0,
+		0,
+		0,
+		0,
+		1,
+		1,
+		1,
+		1,
+		1,
+		2,
+		2,
+		2,
+		2,
+		2,
+		3,
+		3,
+		3,
+		3,
+		3,
+		4,
+		4,
+		4,
+		4,
+		4
+	];
 };
 
 game.preload('enchantjs/monster5.gif');
@@ -478,17 +897,57 @@ Hack.assets.ouroboros = function() {
 		y: -36
 	};
 	this.directionType = 'double';
-	this.setFrame(BehaviorTypes.Idle, new Array(40).fill(0).concat(new Array(12).fill(1)));
-	this.setFrame(BehaviorTypes.Walk, [0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0, null]);
-	this.setFrame(BehaviorTypes.Attack, [1, 1, 5, 5, 9, 9, 10, 10, 6, 6, 6, 6, 6, 6, 6, 6, 1, 1, null]);
+	this.setFrame(
+		BehaviorTypes.Idle,
+		new Array(40).fill(0).concat(new Array(12).fill(1))
+	);
+	this.setFrame(BehaviorTypes.Walk, [
+		0,
+		0,
+		0,
+		0,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		1,
+		0,
+		0,
+		0,
+		0,
+		null
+	]);
+	this.setFrame(BehaviorTypes.Attack, [
+		1,
+		1,
+		5,
+		5,
+		9,
+		9,
+		10,
+		10,
+		6,
+		6,
+		6,
+		6,
+		6,
+		6,
+		6,
+		6,
+		1,
+		1,
+		null
+	]);
 	this.setFrame(BehaviorTypes.Dead, [1, 5, 7, 7, 7, 7, 4, 0, 0, null]);
 	this.forward = [-1, 0];
 };
 
-
 var __Effect = enchant.Class(RPGObject, {
 	initialize: function(velocityX, velocityY, lifetime, randomize) {
-		RPGObject.call(this, 32, 32, 0, 0);
+		RPGObject.call(this);
 		this.image = game.assets['enchantjs/x2/effect0.png'];
 		this.isKinematic = false;
 		this.velocity(velocityX, velocityY);
@@ -530,9 +989,14 @@ Hack.skills.stalker = function(target) {
 			var moveX = 32 * Math.sign(_target.mapX - this.mapX);
 			var moveY = 32 * Math.sign(_target.mapY - this.mapY);
 			this.forward = [moveX, moveY];
-			this.tl.become('walk').moveBy(moveX, moveY, 30).then(function() {
-				Hack.Attack.call(this, this.mapX, this.mapY, this.atk);
-			}).become('attack', 20).become('idle');
+			this.tl
+				.become('walk')
+				.moveBy(moveX, moveY, 30)
+				.then(function() {
+					Hack.Attack.call(this, this.mapX, this.mapY, this.atk);
+				})
+				.become('attack', 20)
+				.become('idle');
 		}
 	};
 };
@@ -579,7 +1043,7 @@ Hack.skills.selfdestruct = function(time) {
 			};
 			flame.destroy(20);
 			this.destroy();
-		}, time * game.fps >> 0);
+		}, (time * game.fps) >> 0);
 	};
 };
 
@@ -599,8 +1063,6 @@ Hack.skills.pistol = function(asset) {
 	};
 };
 
-
-
 game.on('enterframe', function() {
 	var frame = game.collisionFrames || 10;
 	var physicsPhantom = RPGObject.collection.filter(function(item) {
@@ -617,90 +1079,113 @@ game.on('enterframe', function() {
 });
 
 function __physicsUpdateOnFrame(tick, frame, physics) {
-	physics.map(function(self, index) {
-		// Physical Update
-		self.velocityX += self.accelerationX / frame;
-		self.velocityY += self.accelerationY / frame;
-		self.x += self.velocityX / frame;
-		self.y += self.velocityY / frame;
-		// Intersects
-		var intersects = self.intersect(RPGObject);
-		intersects.splice(intersects.indexOf(self), 1); // ignore self
-		// Dispatch trigger(stay|exit) event
-		(self._preventFrameHits || []).filter(function(item) {
-			return item.isKinematic;
-		}).forEach(function(item) {
-			if (intersects.indexOf(item) < 0) {
-				dispatchTriggerEvent('exit', self, item);
-				dispatchTriggerEvent('exit', item, self);
-			} else if (tick === frame && !item.collisionFlag && !self.collisionFlag) {
-				dispatchTriggerEvent('stay', self, item);
-				dispatchTriggerEvent('stay', item, self);
+	physics
+		.map(function(self, index) {
+			// Physical Update
+			self.velocityX += self.accelerationX / frame;
+			self.velocityY += self.accelerationY / frame;
+			self.x += self.velocityX / frame;
+			self.y += self.velocityY / frame;
+			// Intersects
+			var intersects = self.intersect(RPGObject);
+			intersects.splice(intersects.indexOf(self), 1); // ignore self
+			// Dispatch trigger(stay|exit) event
+			(self._preventFrameHits || [])
+				.filter(function(item) {
+					return item.isKinematic;
+				})
+				.forEach(function(item) {
+					if (intersects.indexOf(item) < 0) {
+						dispatchTriggerEvent('exit', self, item);
+						dispatchTriggerEvent('exit', item, self);
+					} else if (
+						tick === frame &&
+						!item.collisionFlag &&
+						!self.collisionFlag
+					) {
+						dispatchTriggerEvent('stay', self, item);
+						dispatchTriggerEvent('stay', item, self);
+					}
+				});
+			// Intersect on time (enter) or still intersect
+			var entered = intersects.filter(function(item) {
+				return (
+					!self._preventFrameHits || self._preventFrameHits.indexOf(item) < 0
+				);
+			});
+			self._preventFrameHits = intersects; // Update cache
+			// Dispatch triggerenter event
+			entered
+				.filter(function(item) {
+					return item.isKinematic;
+				})
+				.forEach(function(item) {
+					dispatchTriggerEvent('enter', self, item);
+					dispatchTriggerEvent('enter', item, self);
+				});
+			return {
+				self: self,
+				hits: entered.filter(function(item) {
+					return !item.isKinematic && item.collisionFlag;
+				})
+			};
+		})
+		.filter(function(item) {
+			// ===> Physics collision
+			return item.self.collisionFlag;
+		})
+		.filter(function(item) {
+			var self = item.self;
+			var event = (item.event = new Event('collided'));
+			var hits = (event.hits = item.hits);
+			var calc = (item.calc = {
+				x: self.x,
+				y: self.y,
+				vx: self.velocityX,
+				vy: self.velocityY
+			});
+			if (hits.length > 0) {
+				// Hit objects
+				event.hit = hits[0];
+				var m1 = self.mass,
+					m2 = hits[0].mass;
+				calc.vx =
+					((m1 - m2) * self.velocityX + 2 * m2 * hits[0].velocityX) / (m1 + m2);
+				calc.vy =
+					((m1 - m2) * self.velocityY + 2 * m2 * hits[0].velocityY) / (m1 + m2);
+				event.map = false;
+			} else {
+				// Hit map
+				var mapHitX =
+						(self.velocityX < 0 && self.x <= 0) ||
+						(self.velocityX > 0 && self.x + self.width >= game.width),
+					mapHitY =
+						(self.velocityY < 0 && self.y <= 0) ||
+						(self.velocityY > 0 && self.y + self.height >= game.height);
+				calc.x = mapHitX
+					? Math.max(0, Math.min(game.width - self.width, self.x))
+					: self.x;
+				calc.y = mapHitX
+					? Math.max(0, Math.min(game.height - self.height, self.y))
+					: self.y;
+				calc.vx = (mapHitX ? -1 : 1) * self.velocityX;
+				calc.vy = (mapHitY ? -1 : 1) * self.velocityY;
+				event.map = mapHitX || mapHitY;
 			}
+			return event.map || hits.length > 0;
+		})
+		.filter(function(item) {
+			var self = item.self;
+			var calc = item.calc;
+			self.x = calc.x;
+			self.y = calc.y;
+			self.velocityX = calc.vx;
+			self.velocityY = calc.vy;
+			return true;
+		})
+		.forEach(function(obj) {
+			obj.self.dispatchEvent(obj.event);
 		});
-		// Intersect on time (enter) or still intersect
-		var entered = intersects.filter(function(item) {
-			return !self._preventFrameHits || self._preventFrameHits.indexOf(item) < 0;
-		});
-		self._preventFrameHits = intersects; // Update cache
-		// Dispatch triggerenter event
-		entered.filter(function(item) {
-			return item.isKinematic;
-		}).forEach(function(item) {
-			dispatchTriggerEvent('enter', self, item);
-			dispatchTriggerEvent('enter', item, self);
-		});
-		return {
-			self: self,
-			hits: entered.filter(function(item) {
-				return !item.isKinematic && item.collisionFlag;
-			})
-		};
-	}).filter(function(item) {
-		// ===> Physics collision
-		return item.self.collisionFlag;
-	}).filter(function(item) {
-		var self = item.self;
-		var event = item.event = new Event('collided');
-		var hits = event.hits = item.hits;
-		var calc = item.calc = {
-			x: self.x,
-			y: self.y,
-			vx: self.velocityX,
-			vy: self.velocityY
-		};
-		if (hits.length > 0) {
-			// Hit objects
-			event.hit = hits[0];
-			var m1 = self.mass,
-				m2 = hits[0].mass;
-			calc.vx = ((m1 - m2) * self.velocityX + 2 * m2 * hits[0].velocityX) / (m1 + m2);
-			calc.vy = ((m1 - m2) * self.velocityY + 2 * m2 * hits[0].velocityY) / (m1 + m2);
-			event.map = false;
-		} else {
-			// Hit map
-			var mapHitX = (self.velocityX < 0 && self.x <= 0 ||
-					self.velocityX > 0 && self.x + self.width >= game.width),
-				mapHitY = (self.velocityY < 0 && self.y <= 0 ||
-					self.velocityY > 0 && self.y + self.height >= game.height);
-			calc.x = mapHitX ? Math.max(0, Math.min(game.width - self.width, self.x)) : self.x;
-			calc.y = mapHitX ? Math.max(0, Math.min(game.height - self.height, self.y)) : self.y;
-			calc.vx = (mapHitX ? -1 : 1) * self.velocityX;
-			calc.vy = (mapHitY ? -1 : 1) * self.velocityY;
-			event.map = mapHitX || mapHitY;
-		}
-		return event.map || hits.length > 0;
-	}).filter(function(item) {
-		var self = item.self;
-		var calc = item.calc;
-		self.x = calc.x;
-		self.y = calc.y;
-		self.velocityX = calc.vx;
-		self.velocityY = calc.vy;
-		return true;
-	}).forEach(function(obj) {
-		obj.self.dispatchEvent(obj.event);
-	});
 
 	function dispatchTriggerEvent(type, self, hit) {
 		var event = new Event('trigger' + type);
