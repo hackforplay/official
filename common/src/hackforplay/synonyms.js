@@ -12,7 +12,7 @@ export const assets = [
 	['boy', '_o男の子', 'ボーイ'],
 	['girl', '_o女の子', 'ガール'],
 	['woman', '_o女の人', 'ウーマン'],
-	['enchantBookItem', '_mマドウショ', 'マドウショ'],
+	['enchantBookItem', '_m魔道書', 'マドウショ'],
 	['explosion', '_bばくえん', 'バクエン'],
 	['ouroboros', '_uウロボロス', 'ウロボロス'],
 	['beam', '_bビーム', 'ビーム'],
