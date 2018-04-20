@@ -217,6 +217,20 @@
     image: hackforplay/enchantbook.png
     description: 魔道書を使えるようにする。魔道書のコードは code.js で書きかえることができる
 せっち:
+  - label: ゴールちてん
+    code: |
+      Hack.log('おしろがみえるだろう あれがゴールだ'); // ヒントをだす
+
+      const item1 = new RPGObject(('▼ スキン', Skin.キャッスル));
+      item1.locate(10, 5, 'map1');
+      item1.on(('▼ イベント', 'のった'), () => {        
+        Hack.gameclear(); // ゲームクリア
+        player.destroy(); // プレイヤーをけす
+        Hack.log('ゲームクリアです。おめでとう！'); // メッセージを出す
+      });
+    image: trimmed/map-25-0.png
+    description: あなたのかえりを まちわびている おしろ。ここへ たどりつくと ゲームクリアになる
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ゴールちてん'
   - label: 下りかいだん
     code: |
       const item1 = new RPGObject(('▼ スキン', Skin.クダリカイダン));
@@ -239,18 +253,6 @@
     image: trimmed/map-16-4.png
     description: ふむとワープできる すごいゆか。あかいろや みどりいろも そんざいするという うわさ
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ワープゾーン'
-  - label: しろ
-    code: |
-      const item1 = new RPGObject(('▼ スキン', Skin.キャッスル));
-      item1.locate(7, 5, 'map1');
-      item1.on(('▼ イベント', 'のった'), () => {        
-        Hack.gameclear(); // ゲームクリア
-        player.destroy(); // プレイヤーをけす
-        Hack.log('ゲームクリアです。おめでとう！'); // メッセージを出す
-      });
-    image: trimmed/map-25-0.png
-    description: あなたのかえりを まちわびている おしろ。ここへ たどりつくと ゲームクリアになる
-    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ゴールちてん'
   - label: お花
     code: |
       const item1 = new RPGObject(('▼ スキン', Skin.フラワー));
