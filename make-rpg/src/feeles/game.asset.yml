@@ -390,7 +390,7 @@
       item1.locate(7, 5, 'map1');
       item1.layer = RPGMap.Layer.Under;
       item1.on(('▼ イベント', 'のった'), () => {
-        item1.mod(('▼ スキン', Skin.トラップかかった));
+        item1.mod(('▼ スキン', Skin.トラップ2));
         player.hp -= 1;
         player.damageTime = 30;
       });
@@ -407,7 +407,7 @@
         item1.locate(x, 5, 'map1');
         item1.layer = RPGMap.Layer.Under;
         item1.on(('▼ イベント', 'のった'), () => {
-          item1.mod(('▼ スキン', Skin.トラップかかった));
+          item1.mod(('▼ スキン', Skin.トラップ2));
           player.hp -= 1;
           player.damageTime = 30;
         });
