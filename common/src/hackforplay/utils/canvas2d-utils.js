@@ -1,3 +1,5 @@
+import Line from 'hackforplay/shapes/line';
+
 /**
  * @param {CanvasRenderingContext2D} context Context
  * @param {number} x       X
@@ -14,6 +16,22 @@ export function roundRect(context, x, y, w, h, radius) {
 	context.arc(x + radius, y + h - radius, radius, 0.5 * Math.PI, Math.PI, false);
 	context.closePath();
 	return context;
+}
+
+/**
+ * 線分を描画する
+ * @param {CanvasRenderingContext2D} context 
+ * @param {Line} line
+ * @param {number} width
+ * @param {string} color
+ */
+export function drawLine(context, line, width, color) {
+	if (width) context.lineWidth = width;
+	if (color) context.strokeStyle = color;
+	context.beginPath();
+	context.moveTo(line.start.x, line.start.y);
+	context.lineTo(line.end.x, line.end.y);
+	context.stroke();
 }
 
 /**
