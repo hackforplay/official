@@ -11,23 +11,9 @@
 
 export const じゅもん = ('▼ ふういん', 'する');
 
-
-
-
-
-
-
-
-
-
-
-
-
-
 export const flag = じゅもん !== 'する';
 
 export default function makeMagic(x, y, map, fileName) {
-
 	/* Remove the tutorial hacking */
 	return;
 
@@ -56,4 +42,4 @@ export default function makeMagic(x, y, map, fileName) {
 			}, 3000);
 		};
 	}
-};
+}

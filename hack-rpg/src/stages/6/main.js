@@ -9,8 +9,8 @@ import extra from '../extra';
 
 game.preload('hackforplay/bar_green.png', 'hackforplay/bar_red.png');
 
-
-function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
+function gameStart() {
+	game.dispatchEvent(new enchant.Event('awake'));
 
 	// map1 を読み込む
 	Hack.changeMap('map1');
@@ -34,9 +34,8 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 	// 説明書を開く
 	// feeles.openReadme('stages/6/README.md');
 
-
 	// プレイヤー（騎士）
-	const player = Hack.player = new Player();
+	const player = (Hack.player = new Player());
 	player.mod(('▼ スキン', _kきし));
 	// プレイヤーを　7, 6 の位置に移動する
 	player.locate(7, 6);
@@ -52,10 +51,8 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 		Hack.gameover();
 	};
 
-
 	// 魔道書にプレイヤーを登録する
 	feeles.setAlias('プレイヤー', player);
-
 
 	// 	HP Gage
 	// 体力のゲージを作る
@@ -74,7 +71,6 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 	};
 	Hack.menuGroup.addChild(bar);
 
-
 	// コウモリ
 	const item1 = new RPGObject();
 	item1.mod(('▼ スキン', _kこうもり));
@@ -86,19 +82,23 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 		item1.y = Hack.player.y;
 	};
 	item1.onattacked = () => {
-	  log(`
+		log(`
 こうげきは かわされた
 けんは あたらないようだ`);
-	  item1.onattacked = null;
+		item1.onattacked = null;
 	};
 
 	// 魔道書にコウモリを登録する
 	feeles.setAlias('コウモリ', item1);
 
-
-	log(() => player.mapX < item1.mapX ? `
+	log(
+		() =>
+			player.mapX < item1.mapX
+				? `
 今なら あの コウモリを こえて
-かいだんに たどりつけるだろう` : '');
+かいだんに たどりつけるだろう`
+				: ''
+	);
 
 	// かいだん
 	const item2 = new RPGObject();
@@ -122,7 +122,6 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 	// このステージを改造
 	extra(0, 5, 'map1', 'stages/6/main.js');
 }
-
 
 game.onload = gameStart;
 

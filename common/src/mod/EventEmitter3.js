@@ -65,7 +65,8 @@ function EventEmitter() {
  */
 EventEmitter.prototype.eventNames = function eventNames() {
 	var names = [],
-		events, name;
+		events,
+		name;
 
 	if (this._eventsCount === 0) return names;
 
@@ -117,10 +118,12 @@ EventEmitter.prototype.emit = function emit(event, a1, a2, a3, a4, a5) {
 
 	var listeners = this._events[evt],
 		len = arguments.length,
-		args, i;
+		args,
+		i;
 
 	if (listeners.fn) {
-		if (listeners.once) this.removeListener(event, listeners.fn, undefined, true);
+		if (listeners.once)
+			this.removeListener(event, listeners.fn, undefined, true);
 
 		switch (len) {
 			case 1:
@@ -147,7 +150,8 @@ EventEmitter.prototype.emit = function emit(event, a1, a2, a3, a4, a5) {
 			j;
 
 		for (i = 0; i < length; i++) {
-			if (listeners[i].once) this.removeListener(event, listeners[i].fn, undefined, true);
+			if (listeners[i].once)
+				this.removeListener(event, listeners[i].fn, undefined, true);
 
 			switch (len) {
 				case 1:
@@ -189,7 +193,7 @@ EventEmitter.prototype.on = function on(event, fn, context) {
 	var listener = new EE(fn, context || this),
 		evt = prefix ? prefix + event : event;
 
-	if (!this._events[evt]) this._events[evt] = listener, this._eventsCount++;
+	if (!this._events[evt]) (this._events[evt] = listener), this._eventsCount++;
 	else if (!this._events[evt].fn) this._events[evt].push(listener);
 	else this._events[evt] = [this._events[evt], listener];
 
@@ -209,7 +213,7 @@ EventEmitter.prototype.once = function once(event, fn, context) {
 	var listener = new EE(fn, context || this, true),
 		evt = prefix ? prefix + event : event;
 
-	if (!this._events[evt]) this._events[evt] = listener, this._eventsCount++;
+	if (!this._events[evt]) (this._events[evt] = listener), this._eventsCount++;
 	else if (!this._events[evt].fn) this._events[evt].push(listener);
 	else this._events[evt] = [this._events[evt], listener];
 
@@ -226,7 +230,12 @@ EventEmitter.prototype.once = function once(event, fn, context) {
  * @returns {EventEmitter} `this`.
  * @api public
  */
-EventEmitter.prototype.removeListener = function removeListener(event, fn, context, once) {
+EventEmitter.prototype.removeListener = function removeListener(
+	event,
+	fn,
+	context,
+	once
+) {
 	var evt = prefix ? prefix + event : event;
 
 	if (!this._events[evt]) return this;
@@ -261,7 +270,8 @@ EventEmitter.prototype.removeListener = function removeListener(event, fn, conte
 		//
 		// Reset the array, or remove it completely if we have no more listeners.
 		//
-		if (events.length) this._events[evt] = events.length === 1 ? events[0] : events;
+		if (events.length)
+			this._events[evt] = events.length === 1 ? events[0] : events;
 		else if (--this._eventsCount === 0) this._events = new Events();
 		else delete this._events[evt];
 	}

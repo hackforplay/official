@@ -4,7 +4,8 @@ import './maps';
 
 import extra from '../extra';
 
-function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
+function gameStart() {
+	game.dispatchEvent(new enchant.Event('awake'));
 
 	// map1 を読み込む
 	Hack.changeMap('map1');
@@ -29,7 +30,7 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 	// feeles.openReadme('stages/5/README.md');
 
 	// プレイヤー（騎士）
-	const player = Hack.player = new Player();
+	const player = (Hack.player = new Player());
 	player.mod(('▼ スキン', _kきし));
 	// プレイヤーを　7, 2 の位置に移動する
 	player.locate(7, 2);
@@ -45,13 +46,8 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 		Hack.gameover();
 	};
 
-
 	// 魔道書にプレイヤーを登録する
 	feeles.setAlias('プレイヤー', player);
-
-
-	
-
 
 	// ATK Label
 	// 攻撃力を画面に表示する
@@ -64,8 +60,6 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 		atkLabel.score = Hack.player.atk;
 	};
 	Hack.menuGroup.addChild(atkLabel);
-
-
 
 	// コウモリ
 	const item4 = new RPGObject();
@@ -117,7 +111,6 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 		[0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0],
 		[0, 0, 0, 0, 1, 1, 1, 0, 1, 1, 1, 0, 0, 0, 0],
 		[0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 0, 0, 0, 0, 0]
-
 	].forEach((array, y) => {
 		array.forEach((flag, x) => {
 			if (!flag) return;
@@ -139,14 +132,12 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 
 			// 魔道書にスライムを登録する
 			feeles.setAlias([`スライム${++count}`], item3);
-
 		});
 	});
 
 	// このステージを改造
 	extra(0, 5, 'map1', 'stages/5/main.js');
 }
-
 
 game.onload = gameStart;
 

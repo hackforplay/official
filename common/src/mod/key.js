@@ -76,10 +76,9 @@ Key.v.observe(function(key) {
 
 var core = enchant.Core.instance;
 
-var Key = window.Key = {};
+var Key = (window.Key = {});
 
-var keyCode = {　
-
+var keyCode = {
 	num0: 48,
 	num1: 49,
 	num2: 50,
@@ -145,18 +144,17 @@ var keyCode = {　
 	down: 40,
 
 	esc: 243
-
 };
 
-Object.keys(keyCode).map(function(key) {
-	return keyCode[key];
-}).forEach(function(value) {
-	core.keybind(value, value);
-});
-
+Object.keys(keyCode)
+	.map(function(key) {
+		return keyCode[key];
+	})
+	.forEach(function(value) {
+		core.keybind(value, value);
+	});
 
 var KeyClass = enchant.Class.create({
-
 	initialize: function() {
 		this.listeners = [];
 	},
@@ -183,9 +181,7 @@ var KeyClass = enchant.Class.create({
 		}
 	},
 
-
 	update: function(input) {
-
 		var pressed = this.pressed;
 		var released = this.released;
 
@@ -209,16 +205,17 @@ var KeyClass = enchant.Class.create({
 		}
 
 		this.dispatch('observe');
-
 	},
 
 	dispatch: function(type) {
-		this.listeners.filter(function(listener) {
-			return listener.type === type;
-		}).forEach(function(listener) {
-			var thisArg = listener.thisArg === undefined ? this : listener.thisArg;
-			listener.listener.call(thisArg, this);
-		}, this);
+		this.listeners
+			.filter(function(listener) {
+				return listener.type === type;
+			})
+			.forEach(function(listener) {
+				var thisArg = listener.thisArg === undefined ? this : listener.thisArg;
+				listener.listener.call(thisArg, this);
+			}, this);
 	},
 
 	on: function(type, event, thisArg) {
@@ -240,9 +237,6 @@ var KeyClass = enchant.Class.create({
 	observe: function(listener, thisArg) {
 		this.on('observe', listener, thisArg);
 	}
-
-
-
 });
 
 Object.keys(keyCode).forEach(function(key) {
@@ -250,38 +244,27 @@ Object.keys(keyCode).forEach(function(key) {
 	Key[key].name = key;
 });
 
-
 const alias = {
-
-	'space': 'a',
-	'up': 'up',
-	'down': 'down',
-	'left': 'left',
-	'right': 'right'
-
+	space: 'a',
+	up: 'up',
+	down: 'down',
+	left: 'left',
+	right: 'right'
 };
 
-
 core.on('enterframe', function() {
-
-
 	Object.keys(keyCode).forEach(function(key) {
-
 		let input = core.input[keyCode[key]];
 
 		// ui.enchant.js などの対策
 		if (key in alias) {
-
 			input = input || core.input[alias[key]];
-
 		}
 
 		// console.log(key);
 
 		Key[key].update(input);
-
 	});
-
 });
 
 export { KeyClass };

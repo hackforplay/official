@@ -2,7 +2,6 @@ import 'hackforplay/core';
 
 /* こまかいゲームのルールを作ろう (アップデート関数) */
 function update() {
-
 	if (player.hp <= 0) {
 		// HP が 0 以下のとき
 

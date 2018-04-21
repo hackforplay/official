@@ -16,7 +16,6 @@ function maps() {
 	Hack.maps.map1 = map1;
 
 	/*+ マップ */
-
 }
 
 export default maps;

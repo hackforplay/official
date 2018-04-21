@@ -11,9 +11,10 @@ Object.defineProperties(enchant.Sprite.prototype, {
 	color: {
 		configurable: true,
 		enumerable: true,
-		get: function() { return this._color || this.originalColor; },
+		get: function() {
+			return this._color || this.originalColor;
+		},
 		set: function(color) {
-
 			if (!this.originalTexture) {
 				this.originalTexture = this.image;
 			}
@@ -23,7 +24,7 @@ Object.defineProperties(enchant.Sprite.prototype, {
 			} else if (this.color) {
 				color = Hack.css2rgb(color);
 				if (color.join(' ') !== this.color.join(' ')) {
-					this.moveColor(this.originalColor, this._color = color);
+					this.moveColor(this.originalColor, (this._color = color));
 				}
 			}
 		}
@@ -33,7 +34,8 @@ Object.defineProperties(enchant.Sprite.prototype, {
 		enumerable: true,
 		get: function() {
 			if (!this.image) return null;
-			if (!this._originalColor &&
+			if (
+				!this._originalColor &&
 				'number' === typeof this.image.width // Is load completely?
 			) {
 				// limited 432*192 size
@@ -47,7 +49,9 @@ Object.defineProperties(enchant.Sprite.prototype, {
 			}
 			return this._originalColor;
 		},
-		set: function(color) { this._originalColor = Hack.css2rgb(color); }
+		set: function(color) {
+			this._originalColor = Hack.css2rgb(color);
+		}
 	}
 });
 // 代表色を抽出
@@ -66,9 +70,11 @@ function getRepresentativeColor(data) {
 	var black = palette.indexOf('0 0 0');
 	if (black !== -1) space[black] = 0; // 黒は輪郭線として代表色にはさせない
 	var max = Math.max.apply(null, space);
-	return space.length > 0 ?
-		palette[space.indexOf(max)].split(' ').map(function(s) { return s >> 0; }) :
-		null;
+	return space.length > 0
+		? palette[space.indexOf(max)].split(' ').map(function(s) {
+				return s >> 0;
+		  })
+		: null;
 }
 /**
  * RGB色空間上で、beforeからafterへ線形変換する
@@ -82,7 +88,12 @@ enchant.Sprite.prototype.moveColor = function(before, after) {
 	// Transfer
 	this._origin = this._origin || this.image; // 元画像を参照
 	this.image = this._origin.clone(); // 他のSpriteに影響を与えないようコピー
-	var imageData = this.image.context.getImageData(0, 0, this.image.width, this.image.height),
+	var imageData = this.image.context.getImageData(
+			0,
+			0,
+			this.image.width,
+			this.image.height
+		),
 		data = imageData.data;
 	var filter = [0, 0, 0].map(function(_, c) {
 		var scaleL = after[c] / before[c];
@@ -103,10 +114,15 @@ enchant.Sprite.prototype.moveColor = function(before, after) {
 
 function rgb256toNum64(r, g, b) {
 	if (arguments[0] instanceof Array) {
-		return rgb256toNum64.call(null, arguments[0][0], arguments[0][1], arguments[0][2]);
+		return rgb256toNum64.call(
+			null,
+			arguments[0][0],
+			arguments[0][1],
+			arguments[0][2]
+		);
 	}
-	var R2 = r >> 6 & 3; // 2bits of R
-	var G2 = g >> 6 & 3;
-	var B2 = b >> 6 & 3;
-	return R2 << 4 | G2 << 2 | B2; // RRGGBB 6bit value
+	var R2 = (r >> 6) & 3; // 2bits of R
+	var G2 = (g >> 6) & 3;
+	var B2 = (b >> 6) & 3;
+	return (R2 << 4) | (G2 << 2) | B2; // RRGGBB 6bit value
 }

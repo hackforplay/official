@@ -38,7 +38,6 @@ if (xhr_url) {
  * @param set: Function
  */
 function resourceLoader(node, src, set) {
-
 	if (src.startsWith('data:')) return set(src);
 	if (src.startsWith('blob:')) return set(src);
 
@@ -47,9 +46,10 @@ function resourceLoader(node, src, set) {
 		return;
 	}
 	// If relative path:
-	feeles.fetch(getFeelesName(src))
+	feeles
+		.fetch(getFeelesName(src))
 		.then(response => response.blob())
-		.then((blob) => {
+		.then(blob => {
 			const url = URL.createObjectURL(blob);
 			const revokeHandler = () => {
 				node.removeEventListener('load', revokeHandler);
@@ -61,7 +61,6 @@ function resourceLoader(node, src, set) {
 
 			set(url);
 		});
-
 }
 
 /**
@@ -74,7 +73,6 @@ function resourceLoader(node, src, set) {
  * )
  */
 function interruptSetter(constructor, attr, delegate) {
-
 	const proto = constructor.prototype;
 	const desc = Object.getOwnPropertyDescriptor(proto, attr);
 	Object.defineProperty(proto, attr, {
@@ -82,7 +80,6 @@ function interruptSetter(constructor, attr, delegate) {
 			delegate(this, value, desc.set.bind(this));
 		}
 	});
-
 }
 
 /**
@@ -95,27 +92,33 @@ function interruptSetter(constructor, attr, delegate) {
  * )
  */
 function interruptXHR(constructor) {
-	const {
-		open,
-		send
-	} = constructor.prototype;
+	const { open, send } = constructor.prototype;
 
 	Object.defineProperty(constructor.prototype, 'open', {
-		value: interruptOpen,
+		value: interruptOpen
 	});
 
-	function interruptOpen(_method, _url, _async = true, _user = '', _password = '') {
+	function interruptOpen(
+		_method,
+		_url,
+		_async = true,
+		_user = '',
+		_password = ''
+	) {
 		if (_async === false) {
-			throw new Error('feeles.XMLHttpRequest does not support synchronization requests.');
+			throw new Error(
+				'feeles.XMLHttpRequest does not support synchronization requests.'
+			);
 		}
 		if (!isSameOrigin(_url)) {
 			open.call(this, _method, _url, _async, _user, _password);
 			return;
 		}
 		this.send = function(...sendArgs) {
-			feeles.fetch(getFeelesName(_url))
-				.then((response) => response.blob())
-				.then((blob) => {
+			feeles
+				.fetch(getFeelesName(_url))
+				.then(response => response.blob())
+				.then(blob => {
 					const url = URL.createObjectURL(blob);
 
 					const revokeHandler = () => {
@@ -134,10 +137,7 @@ function interruptXHR(constructor) {
 				});
 		};
 	}
-
 }
-
-
 
 const currentOrigin = getOrigin('');
 const baseURL = (() => {
@@ -149,7 +149,7 @@ const baseURL = (() => {
 	}
 
 	// 	If a.origin === "null" (e.g. Open in Blob URL), a.pathname doesn't work.
-	if (a.origin === "null") {
+	if (a.origin === 'null') {
 		return 'http://fake.origin/';
 	}
 

@@ -11,9 +11,9 @@ enchant.Node.prototype.resume = function() {
 enchant.Core.prototype._tick = function(time) {
 	var e = new enchant.Event('enterframe');
 	var now = window.getTime();
-	var elapsed = e.elapsed = now - this.currentTime;
+	var elapsed = (e.elapsed = now - this.currentTime);
 	this.currentTime = now;
-	this._actualFps = elapsed > 0 ? (1000 / elapsed) : 0;
+	this._actualFps = elapsed > 0 ? 1000 / elapsed : 0;
 	var nodes = this.currentScene.childNodes.slice();
 	var push = Array.prototype.push;
 

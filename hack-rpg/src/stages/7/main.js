@@ -1,18 +1,16 @@
 import 'hackforplay/core';
 import './maps';
 
-import extra, {
-	flag
-} from '../extra';
+import extra, { flag } from '../extra';
 
-
-function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
+function gameStart() {
+	game.dispatchEvent(new enchant.Event('awake'));
 
 	// map1 を読み込む
 	Hack.changeMap('map1');
 
 	// プレイヤー（騎士）
-	const player = Hack.player = new Player();
+	const player = (Hack.player = new Player());
 	player.mod(('▼ スキン', _kきし));
 	// プレイヤーを 7, 5 の位置に移動する
 	player.locate(7, 5);
@@ -28,11 +26,6 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 		Hack.gameover();
 	};
 
-
-
-	
-
-
 	// 神官
 	const boy = new RPGObject();
 	boy.mod(('▼ スキン', _o男の子));
@@ -43,7 +36,9 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 		Hack.log('転移装置 の ふういんが とけた!');
 		// 神官にぶつかったら...
 		boy.onぶつかった = () => {
-			Hack.log('きみの そのちから、このせかいをもっと 自由にできるんじゃないかな');
+			Hack.log(
+				'きみの そのちから、このせかいをもっと 自由にできるんじゃないかな'
+			);
 		};
 	}
 	// フラグが立っていなかったら...
@@ -59,37 +54,55 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 	// 転移装置
 
 	// 4, 6 の位置に　明るい緑色（lightgreen） の転移装置を作る
-	const warp1 = createWarp(4, 6, 'lightgreen',
+	const warp1 = createWarp(
+		4,
+		6,
+		'lightgreen',
 		'ステージ１ "はじまりの森" に ワープしますか？',
 		'stages/1/index.html'
 	);
 
 	// 5, 7 の位置に　オレンジ色（orange） の転移装置を作る
-	const warp2 = createWarp(5, 7, 'orange',
+	const warp2 = createWarp(
+		5,
+		7,
+		'orange',
 		'ステージ2 "CODE の 魔法" に ワープしますか？',
 		'stages/2/index.html'
 	);
 
 	// 6, 7 の位置に　青色（blue） の転移装置を作る
-	const warp3 = createWarp(6, 7, 'blue',
+	const warp3 = createWarp(
+		6,
+		7,
+		'blue',
 		'ステージ3 "おかしな行き止まり" に ワープしますか？',
 		'stages/3/index.html'
 	);
 
 	// 8, 7 の位置に　シアン（水色）（cyan） の転移装置を作る
-	const warp4 = createWarp(8, 7, 'cyan',
+	const warp4 = createWarp(
+		8,
+		7,
+		'cyan',
 		'ステージ4 "閉じられた群青の輝き" に ワープしますか？',
 		'stages/4/index.html'
 	);
 
 	// 9, 7 の位置に　黄色（yellow） の転移装置を作る
-	const warp5 = createWarp(9, 7, 'yellow',
+	const warp5 = createWarp(
+		9,
+		7,
+		'yellow',
 		'ステージ5 "大グモ荒野" に ワープしますか？',
 		'stages/5/index.html'
 	);
 
 	// 10, 8 の位置に紫色（purple)　の転移装置を作る
-	const warp6 = createWarp(10, 8, 'purple',
+	const warp6 = createWarp(
+		10,
+		8,
+		'purple',
 		'ステージ6 "守りし者" に ワープしますか？',
 		'stages/6/index.html'
 	);
@@ -103,7 +116,6 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 
 // 転移装置を作るコード （ 関数 ）
 function createWarp(x, y, color, message, next) {
-
 	// ワープ床
 	const warp = new RPGObject();
 	warp.mod(('▼ スキン', _wワープ));
@@ -123,7 +135,6 @@ function createWarp(x, y, color, message, next) {
 				feeles.replace(next);
 			}
 		};
-
 	}
 	// もしフラグが立っていなかったら...
 	else {
@@ -137,7 +148,6 @@ function createWarp(x, y, color, message, next) {
 	}
 	return warp;
 }
-
 
 game.onload = gameStart;
 

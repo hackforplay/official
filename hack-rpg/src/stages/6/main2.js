@@ -1,21 +1,18 @@
 import 'hackforplay/core';
-import {
-	gameclear,
-	mergeBMap
-	, log
-} from 'utils';
+import { gameclear, mergeBMap, log } from 'utils';
 import extra from '../extra';
 
-
 function gameStartLazy() {
-
-
 	Hack.player.on('hpchange', () => {
-		log(() => Hack.player.hp < 3 ? ` 
+		log(
+			() =>
+				Hack.player.hp < 3
+					? ` 
 たいりょくが あぶない！
-のこり hp : ${Hack.player.hp}` : '');
+のこり hp : ${Hack.player.hp}`
+					: ''
+		);
 	});
-
 
 	// ドラゴン
 	const item1 = new RPGObject();
@@ -35,7 +32,6 @@ function gameStartLazy() {
 	item1.setFrame('Idle', [10]);
 	//　ドラゴンを更新する...
 	item1.onつねに = () => {
-
 		// 炎を作る
 		const effect1 = new Effect(-3, 5, 40, true);
 		// 炎にさわれないようにする
@@ -45,7 +41,7 @@ function gameStartLazy() {
 		// 炎の動きを設定する
 		effect1.force(0, -0.1);
 		// 炎に何かが当たったら...
-		effect1.onふれはじめた = (event) => {
+		effect1.onふれはじめた = event => {
 			// ドラゴン以外に当たったら...
 			if (event.hit !== item1) {
 				// 1 ダメージの攻撃！
@@ -66,14 +62,13 @@ function gameStartLazy() {
 		// 炎の動きを設定する 2
 		effect2.velocityX = 0;
 		// 炎が何かに当たったら...
-		effect2.onふれはじめた = (event) => {
+		effect2.onふれはじめた = event => {
 			// ドラゴン以外に当たったら...
 			if (event.hit !== item1) {
 				// 450 ダメージの攻撃！！！！
 				Hack.Attack(event.mapX, event.mapY, 450);
 			}
 		};
-
 	};
 
 	// dragon をコードから利用可能に
@@ -96,7 +91,6 @@ function gameStartLazy() {
 	};
 	Hack.menuGroup.addChild(bar1);
 
-
 	// ルビー
 	const item2 = new RPGObject();
 	item2.mod(('▼ スキン', _rルビー));
@@ -116,7 +110,6 @@ function gameStartLazy() {
 
 	// 階段を作るコード （ 関数 )
 	function appearDownStair() {
-
 		// かいだん
 		const item3 = new RPGObject();
 		item3.mod(('▼ スキン', _kくだりかいだん));
@@ -131,12 +124,10 @@ function gameStartLazy() {
 			// 説明書 3 を表示する
 			// feeles.openReadme('stages/6/README3.md');
 		};
-
 	}
 
 	// このステージを改造
 	extra(0, 0, 'map2', 'stages/6/main2.js');
-};
-
+}
 
 game.on('load', gameStartLazy);

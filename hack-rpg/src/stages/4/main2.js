@@ -1,17 +1,8 @@
 import 'hackforplay/core';
-import {
-	gameclear
-	, log
-} from 'utils';
+import { gameclear, log } from 'utils';
 import extra from '../extra';
 
-
 function gameStartLazy() {
-
-
-	
-
-
 	// サファイア
 	const item1 = new RPGObject();
 	item1.mod(('▼ スキン', _sサファイア));
@@ -48,10 +39,8 @@ function gameStartLazy() {
 		if (Hack.score >= 100) {
 			// 次のステージに！
 			gameclear('stages/5/index.html');
-		};
+		}
 	};
-
-
 
 	// スライム軍団をつくる
 
@@ -70,7 +59,6 @@ function gameStartLazy() {
 		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-
 	].forEach((array, y) => {
 		array.forEach((flag, x) => {
 			if (!flag) return;
@@ -88,21 +76,24 @@ function gameStartLazy() {
 				Hack.score++;
 			};
 			item3.on('attacked', function needAtk() {
-				log(() => Hack.player.atk < 100 ? `
+				log(
+					() =>
+						Hack.player.atk < 100
+							? `
 もっと こうげきりょくが ひつようだ
 
-こうげきりょく（atk）：${Hack.player.atk}` : '');
+こうげきりょく（atk）：${Hack.player.atk}`
+							: ''
+				);
 			});
 
 			// 魔道書にスライムを登録する
 			feeles.setAlias([`スライム${++count}`], item3);
-
 		});
 	});
 
 	// このステージを改造
 	extra(9, 9, 'map2', 'stages/4/main2.js');
 }
-
 
 game.on('load', gameStartLazy);

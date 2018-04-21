@@ -48,7 +48,8 @@ class MountFile {
 
 module.exports = class FeelesWebpackPlugin {
 	constructor(params) {
-		params = Object.assign({
+		params = Object.assign(
+			{
 				paths: ['mount'],
 				output: 'index.json',
 				ignore: /[]/,
@@ -90,7 +91,7 @@ module.exports = class FeelesWebpackPlugin {
 			}
 		});
 
-		compiler.plugin('emit', async(compilation, callback) => {
+		compiler.plugin('emit', async (compilation, callback) => {
 			// compilation.fileDependencies をもとにプロジェクト全体をシリアライズ
 
 			// { [mountName]: [mountDir] }

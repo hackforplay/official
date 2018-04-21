@@ -92,14 +92,24 @@ class Keyboard extends Sprite {
 		this.disabledAlpha = 0.5;
 
 		// キャンセルボタン
-		this.cancelKey = new KeyRenderer('キャンセル', { x: 0, y: 232, w: 124, h: 28 });
+		this.cancelKey = new KeyRenderer('キャンセル', {
+			x: 0,
+			y: 232,
+			w: 124,
+			h: 28
+		});
 		this.cancelKey.on('click', () => {
 			this.dispatchEvent(new Event('cancel'));
 			this.select(this.cancelKey);
 		});
 
 		// けっていボタン
-		this.enterKey = new KeyRenderer('けってい', { x: 296, y: 232, w: 124, h: 28 });
+		this.enterKey = new KeyRenderer('けってい', {
+			x: 296,
+			y: 232,
+			w: 124,
+			h: 28
+		});
 		this.enterKey.on('click', () => {
 			this.dispatchEvent(new Event('enter'));
 			this.select(this.enterKey);
@@ -140,7 +150,6 @@ class Keyboard extends Sprite {
 	 * @param {number} y Y 移動回数
 	 */
 	move(x, y) {
-
 		let newX = this.cursorX + x;
 		let newY = this.cursorY + y;
 
@@ -198,7 +207,9 @@ class Keyboard extends Sprite {
 		}
 
 		// 最大文字数を超えないように調整
-		this.value = stringToArray(this.value).slice(0, this.maxLength).join('');
+		this.value = stringToArray(this.value)
+			.slice(0, this.maxLength)
+			.join('');
 	}
 
 	/**
@@ -211,13 +222,14 @@ class Keyboard extends Sprite {
 	 */
 	_getKeyStyle(key, backgroundColor, textColor, useSelectedColor = true) {
 		return {
-			backgroundColor: (useSelectedColor && key.selected) ? this.selectedColor : backgroundColor,
+			backgroundColor:
+				useSelectedColor && key.selected ? this.selectedColor : backgroundColor,
 			borderColor: this.borderColor,
 			borderWidth: key.selected ? this.selectedBorderWidth : this.borderWidth,
 			color: textColor || this.textColor,
 			alpha: key.disabled ? this.disabledAlpha : 1,
 			font: `${this.fontWeight} ${this.fontSize}px ${this.fontFamily}`
-		}
+		};
 	}
 
 	/**
@@ -236,7 +248,7 @@ class Keyboard extends Sprite {
 		const n = this.maxLength;
 
 		// 入力している値の表示位置を計算する
-		const valueKeysWidth = n * 28 + ((n - 1) * 4);
+		const valueKeysWidth = n * 28 + (n - 1) * 4;
 		const valueKeyLeft = (420 - valueKeysWidth) / 2;
 
 		// 入力している値を描画する
@@ -251,21 +263,35 @@ class Keyboard extends Sprite {
 			key.interactable = false;
 			key.selected = stringToArray(this.value).length === i;
 
-			key.render(context, this._getKeyStyle(key, this.valueKeyColor, this.valueKeyTextColor, false));
+			key.render(
+				context,
+				this._getKeyStyle(
+					key,
+					this.valueKeyColor,
+					this.valueKeyTextColor,
+					false
+				)
+			);
 		}
 
 		context.translate(0, 50);
 
 		// 特殊キーを描画する
-		this.functionKeys.forEach((key) => {
+		this.functionKeys.forEach(key => {
 			key.render(context, this._getKeyStyle(key, this.functionKeyColor));
 		});
 
 		this.cancelKey.disabled = !this.cancelable;
 		this.cancelKey.interactable = this.cancelable;
 
-		this.enterKey.render(context, this._getKeyStyle(this.enterKey, this.enterKeyColor));
-		this.cancelKey.render(context, this._getKeyStyle(this.cancelKey, this.cancelKeyColor));
+		this.enterKey.render(
+			context,
+			this._getKeyStyle(this.enterKey, this.enterKeyColor)
+		);
+		this.cancelKey.render(
+			context,
+			this._getKeyStyle(this.cancelKey, this.cancelKeyColor)
+		);
 
 		// 開いているページ
 		const page = this.pages[this.pageIndex];
@@ -285,45 +311,44 @@ class Keyboard extends Sprite {
 	 * @param {array} array キーリスト
 	 */
 	registerKeys(array, pageIndex) {
-
 		const keys = [];
 		let index = 0;
 
-		step(7).forEach((y) => {
-
+		step(7).forEach(y => {
 			const rows = [];
 
-			step(2).forEach((side) => {
-
+			step(2).forEach(side => {
 				const values = stringToArray(array[index++]).slice(0, 5);
 
-				rows.push(...values.map((value, x) => {
-					x += side * 5;
+				rows.push(
+					...values.map((value, x) => {
+						x += side * 5;
 
-					const button = new KeyRenderer(value, {
-						x: x * 32 + (x >= 5 ? 8 : 0),
-						y: y * 32,
-						w: 28,
-						h: 28,
-					});
+						const button = new KeyRenderer(value, {
+							x: x * 32 + (x >= 5 ? 8 : 0),
+							y: y * 32,
+							w: 28,
+							h: 28
+						});
 
-					// 空文字なら押せないようにする
-					if (value.match(/\s/)) {
-						button.interactable = false;
-						button.disabled = true;
-					}
+						// 空文字なら押せないようにする
+						if (value.match(/\s/)) {
+							button.interactable = false;
+							button.disabled = true;
+						}
 
-					// キーが押されたら
-					button.on('click', () => {
-						this.value += value;
+						// キーが押されたら
+						button.on('click', () => {
+							this.value += value;
 
-						this.cursorX = x;
-						this.cursorY = y;
-						this.select(button);
-					});
+							this.cursorX = x;
+							this.cursorY = y;
+							this.select(button);
+						});
 
-					return button;
-				}));
+						return button;
+					})
+				);
 			});
 			keys.push(rows);
 		});
@@ -336,7 +361,6 @@ class Keyboard extends Sprite {
 	 * @param {number} index 表示順
 	 */
 	registerFunctionKey(name, index) {
-
 		const key = new KeyRenderer(name, {
 			x: 336,
 			y: index * 32,
@@ -374,7 +398,6 @@ class Keyboard extends Sprite {
 	 * @return {string} 入力された文字列
 	 */
 	async get(maxLength = 10, defaultValue = '', cancelValue = null) {
-
 		this.maxLength = maxLength;
 
 		this.reset();
@@ -389,12 +412,12 @@ class Keyboard extends Sprite {
 
 		// 決定かキャンセルが押されるまで待つ
 		const value = await Promise.race([
-			new Promise((resolve) => {
+			new Promise(resolve => {
 				this.once('enter', function() {
 					resolve(this.value);
 				});
 			}),
-			new Promise((resolve) => {
+			new Promise(resolve => {
 				this.once('cancel', function() {
 					resolve(cancelValue);
 				});
