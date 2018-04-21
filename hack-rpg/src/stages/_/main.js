@@ -1,13 +1,10 @@
 import 'hackforplay/core';
-import {
-	gameclear
-	, log
-} from 'utils';
+import { gameclear, log } from 'utils';
 import extra from '../extra';
 import './maps';
 
-
-function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
+function gameStart() {
+	game.dispatchEvent(new enchant.Event('awake'));
 
 	// map1 を読み込む
 	Hack.changeMap('map1');
@@ -24,7 +21,7 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 	// feeles.openReadme('stages/3/README.md');
 
 	// プレイヤー（騎士）
-	const player = Hack.player = new Player();
+	const player = (Hack.player = new Player());
 	player.mod(('▼ スキン', _kきし));
 	// プレイヤーを　7, 1 の位置に移動する
 	player.locate(7, 1);
@@ -40,13 +37,8 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 		Hack.gameover();
 	};
 
-
 	// 魔道書にプレイヤーを登録する
 	feeles.setAlias('プレイヤー', player);
-
-
-	
-
 
 	// かいだん
 	const item1 = new RPGObject();
@@ -69,7 +61,6 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 	// このステージを改造
 	extra(7, 0, 'map1', 'stages/3/main.js');
 }
-
 
 game.onload = gameStart;
 

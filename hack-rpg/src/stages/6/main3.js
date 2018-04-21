@@ -1,17 +1,8 @@
 import 'hackforplay/core';
-import {
-	gameclear
-	, log
-} from 'utils';
+import { gameclear, log } from 'utils';
 import extra from '../extra';
 
-
 function gameStartLazy() {
-
-
-	
-	
-
 	// プレイヤーが map3 に入ったら
 	Hack.maps['map3'].onload = () => {
 		// コードをとじる
@@ -35,9 +26,7 @@ function gameStartLazy() {
 		Hack.changeMap('map4');
 		// 説明書 4 を表示する
 		// feeles.openReadme('stages/6/README4.md');
-
 	};
-
 
 	// 宝箱とコインをたくさん作る
 	// 0 なら何も出ないけど、
@@ -55,7 +44,6 @@ function gameStartLazy() {
 		[0, 0, 0, 2, 2, 2, 2, 2, 0, 0, 0, 0, 0, 0, 0],
 		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
 		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-
 	].forEach((array, y) => {
 		array.forEach((value, x) => {
 			// もし数値が 1 なら...
@@ -71,10 +59,8 @@ function gameStartLazy() {
 		});
 	});
 
-
 	// 宝箱を作るコード （ 関数 ）
 	function appearBox(x, y) {
-
 		// はこ
 		const item1 = new RPGObject();
 		item1.mod(('▼ スキン', _tたからばこ));
@@ -88,12 +74,10 @@ function gameStartLazy() {
 			Hack.score += 400;
 		};
 		return item1;
-
 	}
 
 	//　コインを作るコード （ 関数 ）
 	function appearCoin(x, y) {
-
 		// コイン
 		const item1 = new RPGObject();
 		item1.mod(('▼ スキン', _kコイン));
@@ -107,12 +91,10 @@ function gameStartLazy() {
 			Hack.score += 400;
 		};
 		return item1;
-
 	}
 
 	// このステージを改造
 	extra(0, 0, 'map3', 'stages/6/main3.js');
 }
-
 
 game.on('load', gameStartLazy);

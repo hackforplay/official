@@ -8,9 +8,7 @@ function blobToDataURL(blob, callback) {
 }
 */
 
-
 enchant.Surface.load = function(src, callback, onerror) {
-
 	// console.log(src);
 
 	const image = new Image();
@@ -41,26 +39,19 @@ enchant.Surface.load = function(src, callback, onerror) {
 		surface.dispatchEvent(new enchant.Event('load'));
 	};
 
-
-
 	if (src.startsWith('data:')) {
-
 		image.src = src;
 		// 一部の MOD の為に元画像の情報を残す
 		image.originalSource = src;
 
 		return surface;
-
 	}
 
 	feeles.fetchDataURL(src).then(function(dataURL) {
-
 		image.src = dataURL;
 		// 一部の MOD の為に元画像の情報を残す
 		image.originalSource = src;
-
 	});
-
 
 	return surface;
 };

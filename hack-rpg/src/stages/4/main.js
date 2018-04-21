@@ -1,12 +1,12 @@
 import 'hackforplay/core';
 import './maps';
-import { log } from '../../utils'
+import { log } from '../../utils';
 
 import './main2';
 import extra from '../extra';
 
-
-function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
+function gameStart() {
+	game.dispatchEvent(new enchant.Event('awake'));
 
 	// map1 を読み込む
 	Hack.changeMap('map1');
@@ -31,7 +31,7 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 	// feeles.openReadme('stages/4/README.md');
 
 	// プレイヤー（騎士）
-	const player = Hack.player = new Player();
+	const player = (Hack.player = new Player());
 	player.mod(('▼ スキン', _kきし));
 	// プレイヤーを　3, 5 の位置に移動する
 	player.locate(3, 5);
@@ -47,13 +47,8 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 		Hack.gameover();
 	};
 
-
 	// 魔道書にプレイヤーを登録する
 	feeles.setAlias('プレイヤー', player);
-
-
-	
-
 
 	// ATK Label
 	// 攻撃力を画面に表示する
@@ -66,7 +61,6 @@ function gameStart() { game.dispatchEvent(new enchant.Event('awake'));
 		atkLabel.score = Hack.player.atk;
 	};
 	Hack.menuGroup.addChild(atkLabel);
-
 
 	// コウモリ
 	const item1 = new RPGObject();

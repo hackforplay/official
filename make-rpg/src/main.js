@@ -5,7 +5,6 @@ import maps from './maps';
 import update from './update';
 import vote from './hackforplay/vote';
 
-
 let gameOnLoad, hackOnLoad;
 
 if (gameFunc._bundled) {
@@ -19,8 +18,7 @@ if (gameFunc._bundled) {
 }
 
 // ゲームをつくる
-game.onload = async() => {
-
+game.onload = async () => {
 	// gameOnLoad より先に実行するイベント
 	// lifelabel などが gameOnLoad 時に参照できない対策
 	game.dispatchEvent(new enchant.Event('awake'));
@@ -36,14 +34,12 @@ game.onload = async() => {
 	game.on('enterframe', update);
 
 	// ゲームクリアの投票（まだクリアしてない人だけ）（feeles.com の旧仕様）
-	if (await vote('GAME') !== 'CLEAR') {
-
+	if ((await vote('GAME')) !== 'CLEAR') {
 		vote('GAME', 'START'); // ゲーム「スタート」
 
 		Hack.on('gameclear', () => {
 			vote('GAME', 'CLEAR'); // ゲーム「クリア」
 		});
-
 	}
 
 	// ゲームクリアの測定（hackforplay.xyz の新仕様）

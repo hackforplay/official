@@ -2,7 +2,9 @@ const [kana, dakuon, handakuon] = `
 あいうえおかきくけこさしすせそたちつてとなにぬねのはひふへほまみむめもやゆよらりるれろわをん
 　　ゔ　　がぎぐげござじずぜぞだぢづでど　　　　　ばびぶべぼ
 　　　　　　　　　　　　　　　　　　　　　　　　　ぱぴぷぺぽ
-`.split('\n').slice(1);
+`
+	.split('\n')
+	.slice(1);
 
 /**
  * カナを濁音にする　既に濁音なら元に戻す
@@ -10,12 +12,15 @@ const [kana, dakuon, handakuon] = `
  * @return {string} 変換された文字
  */
 export function dakuten(char) {
-	if (char.match(/[ァ-ン]/)) return String.fromCharCode(dakuten(String.fromCharCode(char.charCodeAt() - 96)).charCodeAt() + 96);
+	if (char.match(/[ァ-ン]/))
+		return String.fromCharCode(
+			dakuten(String.fromCharCode(char.charCodeAt() - 96)).charCodeAt() + 96
+		);
 	let result = '';
 	if (dakuon.includes(char)) result = kana[dakuon.indexOf(char)];
 	if (kana.includes(char)) result = dakuon[kana.indexOf(char)];
 	if (handakuon.includes(char)) result = dakuon[handakuon.indexOf(char)];
-	return (!result || result.match(/\s/)) ? char : result;
+	return !result || result.match(/\s/) ? char : result;
 }
 
 /**
@@ -24,12 +29,15 @@ export function dakuten(char) {
  * @return {string} 変換された文字
  */
 export function handakuten(char) {
-	if (char.match(/[ァ-ン]/)) return String.fromCharCode(handakuten(String.fromCharCode(char.charCodeAt() - 96)).charCodeAt() + 96);
+	if (char.match(/[ァ-ン]/))
+		return String.fromCharCode(
+			handakuten(String.fromCharCode(char.charCodeAt() - 96)).charCodeAt() + 96
+		);
 	let result = '';
 	if (handakuon.includes(char)) result = kana[handakuon.indexOf(char)];
 	if (kana.includes(char)) result = handakuon[kana.indexOf(char)];
 	if (dakuon.includes(char)) result = handakuon[dakuon.indexOf(char)];
-	return (!result || result.match(/\s/)) ? char : result;
+	return !result || result.match(/\s/) ? char : result;
 }
 
 /**

@@ -49,7 +49,14 @@ require('enchantjs/enchant');
 /**
  * @type {Object}
  */
-enchant.ui = { assets: ['hackforplay/move_key.png', 'enchantjs/apad.png', 'enchantjs/icon0.png', 'enchantjs/font0.png'] };
+enchant.ui = {
+	assets: [
+		'hackforplay/move_key.png',
+		'enchantjs/apad.png',
+		'enchantjs/icon0.png',
+		'enchantjs/font0.png'
+	]
+};
 
 /**
  * 方向キーパッドのクラス: Pad
@@ -64,7 +71,7 @@ enchant.ui.Pad = enchant.Class.create(enchant.Sprite, {
 	initialize: function() {
 		var core = enchant.Core.instance;
 		var image = core.assets['hackforplay/move_key.png'];
-		enchant.Sprite.call(this, image.width /*/ 2*/ , image.height);
+		enchant.Sprite.call(this, image.width /*/ 2*/, image.height);
 		this.image = image;
 		this.input = { left: false, right: false, up: false, down: false };
 		this.addEventListener('touchstart', function(e) {
@@ -127,8 +134,8 @@ enchant.ui.APad = enchant.Class.create(enchant.Group, {
 	initialize: function(mode) {
 		var core = enchant.Core.instance;
 		var image = core.assets['enchantjs/apad.png'];
-		var w = this.width = image.width;
-		var h = this.height = image.height;
+		var w = (this.width = image.width);
+		var h = (this.height = image.height);
 		enchant.Group.call(this);
 
 		this.outside = new enchant.Sprite(w, h);
@@ -136,7 +143,17 @@ enchant.ui.APad = enchant.Class.create(enchant.Group, {
 		outsideImage.draw(image, 0, 0, w, h / 4, 0, 0, w, h / 4);
 		outsideImage.draw(image, 0, h / 4 * 3, w, h / 4, 0, h / 4 * 3, w, h / 4);
 		outsideImage.draw(image, 0, h / 4, w / 4, h / 2, 0, h / 4, w / 4, h / 2);
-		outsideImage.draw(image, w / 4 * 3, h / 4, w / 4, h / 2, w / 4 * 3, h / 4, w / 4, h / 2);
+		outsideImage.draw(
+			image,
+			w / 4 * 3,
+			h / 4,
+			w / 4,
+			h / 2,
+			w / 4 * 3,
+			h / 4,
+			w / 4,
+			h / 2
+		);
 		this.outside.image = outsideImage;
 		this.inside = new enchant.Sprite(w / 2, h / 2);
 		var insideImage = new enchant.Surface(w / 2, h / 2);
@@ -224,18 +241,18 @@ enchant.ui.APad = enchant.Class.create(enchant.Group, {
 		} else if (x === 0) {
 			this.vx = 0;
 			if (this.mode === 'direct') {
-				this.vy = (y / this.r);
+				this.vy = y / this.r;
 			} else {
 				dir = y / Math.abs(y);
-				this.vy = Math.pow((y / this.r), 2) * dir;
+				this.vy = Math.pow(y / this.r, 2) * dir;
 			}
 		} else if (distance < this.r) {
 			if (this.mode === 'direct') {
-				this.vx = (x / this.r);
-				this.vy = (y / this.r);
+				this.vx = x / this.r;
+				this.vy = y / this.r;
 			} else {
-				this.vx = Math.pow((distance / this.r), 2) * Math.cos(rad) * dir;
-				this.vy = Math.pow((distance / this.r), 2) * Math.sin(rad) * dir;
+				this.vx = Math.pow(distance / this.r, 2) * Math.cos(rad) * dir;
+				this.vy = Math.pow(distance / this.r, 2) * Math.sin(rad) * dir;
 			}
 		} else {
 			this.vx = Math.cos(rad) * dir;
@@ -304,20 +321,20 @@ enchant.ui.Button = enchant.Class.create(enchant.Entity, {
 
 		// デフォルトのスタイル (テーマで上書き可能)
 		var style = this._style;
-		style["display"] = "inline-block";
-		style["font-size"] = "12px";
-		style["height"] = "2em";
-		style["line-height"] = "2em";
-		style["min-width"] = "2em";
-		style["padding"] = "2px 10px";
-		style["text-align"] = "center";
-		style["font-weight"] = "bold";
-		style["border-radius"] = "0.5em";
+		style['display'] = 'inline-block';
+		style['font-size'] = '12px';
+		style['height'] = '2em';
+		style['line-height'] = '2em';
+		style['min-width'] = '2em';
+		style['padding'] = '2px 10px';
+		style['text-align'] = 'center';
+		style['font-weight'] = 'bold';
+		style['border-radius'] = '0.5em';
 
 		// テーマの指定がなければ "dark" を使う
-		theme = theme || "dark";
+		theme = theme || 'dark';
 
-		if (typeof theme === "string") {
+		if (typeof theme === 'string') {
 			// theme 引数が string なら、その名前のデフォルトテーマを使う
 			this.theme = enchant.ui.Button.DEFAULT_THEME[theme];
 		} else {
@@ -329,14 +346,14 @@ enchant.ui.Button = enchant.Class.create(enchant.Entity, {
 		this._applyTheme(this.theme.normal);
 
 		// タッチしたときの挙動
-		this.addEventListener("touchstart", function() {
+		this.addEventListener('touchstart', function() {
 			this._applyTheme(this.theme.active);
 			this.pressed = true;
 			this.y++;
 		});
 
 		// タッチが離されたときの挙動
-		this.addEventListener("touchend", function() {
+		this.addEventListener('touchend', function() {
 			this._applyTheme(this.theme.normal);
 			this.pressed = false;
 			this.y--;
@@ -424,12 +441,15 @@ enchant.ui.Button.theme2css = function(theme) {
 	if (prefix === '-ms-') {
 		obj['background'] = bg.start;
 	} else {
-		obj['background-image'] = prefix + bg.type + '(' + ['top', bg.start, bg.end] + ')';
+		obj['background-image'] =
+			prefix + bg.type + '(' + ['top', bg.start, bg.end] + ')';
 	}
 	obj['color'] = theme.color;
 	obj['border'] = bd.color + ' ' + bd.width + ' ' + bd.type;
-	obj['text-shadow'] = ts.offsetX + 'px ' + ts.offsetY + 'px ' + ts.blur + ' ' + ts.color;
-	obj['box-shadow'] = bs.offsetX + 'px ' + bs.offsetY + 'px ' + bs.blur + ' ' + bs.color;
+	obj['text-shadow'] =
+		ts.offsetX + 'px ' + ts.offsetY + 'px ' + ts.blur + ' ' + ts.color;
+	obj['box-shadow'] =
+		bs.offsetX + 'px ' + bs.offsetY + 'px ' + bs.blur + ' ' + bs.color;
 	return obj;
 };
 
@@ -440,14 +460,24 @@ enchant.ui.Button.DEFAULT_THEME = {
 			background: { type: 'linear-gradient', start: '#666', end: '#333' },
 			border: { color: '#333', width: 1, type: 'solid' },
 			textShadow: { offsetX: 0, offsetY: 1, blur: 0, color: '#666' },
-			boxShadow: { offsetX: 0, offsetY: 1, blur: 0, color: 'rgba(255, 255, 255, 0.3)' }
+			boxShadow: {
+				offsetX: 0,
+				offsetY: 1,
+				blur: 0,
+				color: 'rgba(255, 255, 255, 0.3)'
+			}
 		},
 		active: {
 			color: '#ccc',
 			background: { type: 'linear-gradient', start: '#333', end: '#000' },
 			border: { color: '#333', width: 1, type: 'solid' },
 			textShadow: { offsetX: 0, offsetY: 1, blur: 0, color: '#000' },
-			boxShadow: { offsetX: 0, offsetY: 1, blur: 0, color: 'rgba(255, 255, 255, 0.3)' }
+			boxShadow: {
+				offsetX: 0,
+				offsetY: 1,
+				blur: 0,
+				color: 'rgba(255, 255, 255, 0.3)'
+			}
 		}
 	},
 	light: {
@@ -456,14 +486,19 @@ enchant.ui.Button.DEFAULT_THEME = {
 			background: { type: 'linear-gradient', start: '#fff', end: '#ccc' },
 			border: { color: '#999', width: 1, type: 'solid' },
 			textShadow: { offsetX: 0, offsetY: 1, blur: 0, color: '#fff' },
-			boxShadow: { offsetX: 0, offsetY: 1, blur: 0, color: 'rgba(0, 0, 0, 1)' },
+			boxShadow: { offsetX: 0, offsetY: 1, blur: 0, color: 'rgba(0, 0, 0, 1)' }
 		},
 		active: {
 			color: '#333',
 			background: { type: 'linear-gradient', start: '#ccc', end: '#999' },
 			border: { color: '#666', width: 1, type: 'solid' },
 			textShadow: { offsetX: 0, offsetY: 1, blur: 0, color: '#ccc' },
-			boxShadow: { offsetX: 0, offsetY: 1, blur: 0, color: 'rgba(255, 255, 255, 0.3)' }
+			boxShadow: {
+				offsetX: 0,
+				offsetY: 1,
+				blur: 0,
+				color: 'rgba(255, 255, 255, 0.3)'
+			}
 		}
 	},
 	blue: {
@@ -472,7 +507,12 @@ enchant.ui.Button.DEFAULT_THEME = {
 			background: { type: 'linear-gradient', start: '#04f', end: '#04c' },
 			border: { color: '#026', width: 1, type: 'solid' },
 			textShadow: { offsetX: 0, offsetY: 1, blur: 0, color: '#666' },
-			boxShadow: { offsetX: 0, offsetY: 1, blur: 0, color: 'rgba(0, 0, 0, 0.5)' }
+			boxShadow: {
+				offsetX: 0,
+				offsetY: 1,
+				blur: 0,
+				color: 'rgba(0, 0, 0, 0.5)'
+			}
 		},
 		active: {
 			color: '#ccc',
@@ -529,16 +569,31 @@ enchant.ui.MutableText = enchant.Class.create(enchant.Sprite, {
 		this._text = txt;
 		var newWidth;
 		if (!this.returnLength) {
-			this.width = Math.min(this.fontSize * this._text.length, enchant.Game.instance.width);
+			this.width = Math.min(
+				this.fontSize * this._text.length,
+				enchant.Game.instance.width
+			);
 		} else {
-			this.width = Math.min(this.returnLength * this.fontSize, enchant.Game.instance.width);
+			this.width = Math.min(
+				this.returnLength * this.fontSize,
+				enchant.Game.instance.width
+			);
 		}
-		this.height = this.fontSize * (Math.ceil(this._text.length / this.row) || 1);
+		this.height =
+			this.fontSize * (Math.ceil(this._text.length / this.row) || 1);
 		// if image is to small or was to big for a long time create new image
-		if (!this.image || this.width > this.image.width || this.height > this.image.height || this._imageAge > 300) {
+		if (
+			!this.image ||
+			this.width > this.image.width ||
+			this.height > this.image.height ||
+			this._imageAge > 300
+		) {
 			this.image = new enchant.Surface(this.width, this.height);
 			this._imageAge = 0;
-		} else if (this.width < this.image.width || this.height < this.image.height) {
+		} else if (
+			this.width < this.image.width ||
+			this.height < this.image.height
+		) {
 			this._imageAge++;
 		} else {
 			this._imageAge = 0;
@@ -553,9 +608,17 @@ enchant.ui.MutableText = enchant.Class.create(enchant.Sprite, {
 			}
 			x = charPos % this.widthItemNum;
 			y = (charPos / this.widthItemNum) | 0;
-			this.image.draw(enchant.Game.instance.assets['enchantjs/font0.png'],
-				x * this.fontSize, y * this.fontSize, this.fontSize, this.fontSize,
-				(i % this.row) * this.fontSize, ((i / this.row) | 0) * this.fontSize, this.fontSize, this.fontSize);
+			this.image.draw(
+				enchant.Game.instance.assets['enchantjs/font0.png'],
+				x * this.fontSize,
+				y * this.fontSize,
+				this.fontSize,
+				this.fontSize,
+				(i % this.row) * this.fontSize,
+				((i / this.row) | 0) * this.fontSize,
+				this.fontSize,
+				this.fontSize
+			);
 		}
 	},
 	/**
@@ -675,7 +738,8 @@ enchant.ui.TimeLabel = enchant.Class.create(enchant.ui.MutableText, {
 		this.text = this.label = 'TIME:';
 		this.addEventListener('enterframe', function() {
 			this._time += this._count;
-			this.text = this.label + (this._time / enchant.Game.instance.fps).toFixed(2);
+			this.text =
+				this.label + (this._time / enchant.Game.instance.fps).toFixed(2);
 		});
 	},
 	/**
@@ -738,7 +802,7 @@ enchant.ui.LifeLabel = enchant.Class.create(enchant.Group, {
 				this._life = this._maxlife;
 			}
 			for (var i = 0; i < this._maxlife; i++) {
-				this.heart[i].visible = (i <= newlife - 1);
+				this.heart[i].visible = i <= newlife - 1;
 			}
 		}
 	}
@@ -787,7 +851,7 @@ enchant.ui.Bar = enchant.Class.create(enchant.Sprite, {
 			if (Math.abs(this._lastvalue - this.value) < 1.3) {
 				this._lastvalue = this.value;
 			}
-			this.width = (this._lastvalue) | 0;
+			this.width = this._lastvalue | 0;
 			if (this.width > this._maxvalue) {
 				this.width = this._maxvalue;
 			}
@@ -901,7 +965,7 @@ enchant.ui.VirtualMap = enchant.Class.create(enchant.Group, {
 	 */
 	bind: function(obj) {
 		Object.defineProperties(obj, {
-			"mx": {
+			mx: {
 				get: function() {
 					return Math.floor(this.x / this.parentNode.meshWidth);
 				},
@@ -909,7 +973,7 @@ enchant.ui.VirtualMap = enchant.Class.create(enchant.Group, {
 					this.x = Math.floor(arg * this.parentNode.meshWidth);
 				}
 			},
-			"my": {
+			my: {
 				get: function() {
 					return Math.floor(this.y / this.parentNode.meshHeight);
 				},

@@ -1,10 +1,9 @@
 // シェーダ定義
 
 export default async function(FragmentShader, VertexShader) {
-
-
-
-	FragmentShader.new('sky', `
+	FragmentShader.new(
+		'sky',
+		`
 // https://threejs.org/examples/webgl_shaders_sky.html
 precision highp float;
 precision highp int;
@@ -119,9 +118,12 @@ vec3 retColor = pow( color, vec3( 1.0 / ( 1.2 + ( 1.2 * vSunfade ) ) ) );
 gl_FragColor.rgb = retColor;
 gl_FragColor.a = 1.0;
 }
-	`);
-	
-	VertexShader.new('sky', `
+	`
+	);
+
+	VertexShader.new(
+		'sky',
+		`
 // https://threejs.org/examples/webgl_shaders_sky.html
 
 precision highp float;
@@ -193,10 +195,12 @@ float rayleighCoefficient = rayleigh - ( 1.0 * ( 1.0 - vSunfade ) );
 vBetaR = totalRayleigh * rayleighCoefficient;
 vBetaM = totalMie( turbidity ) * mieCoefficient;
 }
-	`);
-	
+	`
+	);
 
-	FragmentShader.new('fragment-shadow', `
+	FragmentShader.new(
+		'fragment-shadow',
+		`
 precision mediump float;
 
 varying vec2 v_uv;
@@ -233,9 +237,12 @@ gl_FragColor = color;
 
 }
 
-	`);
+	`
+	);
 
-	FragmentShader.new('fragment-shadow2', `
+	FragmentShader.new(
+		'fragment-shadow2',
+		`
 precision mediump float;
 
 
@@ -284,32 +291,42 @@ gl_FragColor = result * depthColor;
 
 }
 
-	`);
-	
-	
-	VertexShader.new('vertex-simple', `
+	`
+	);
+
+	VertexShader.new(
+		'vertex-simple',
+		`
 uniform mat4 matrix;
 attribute vec3 position;
 void main() {
 gl_Position = matrix * vec4(position, 1.0);
-}`);
-	
-	VertexShader.new('vs2', '\n\t\tuniform mat4 matrix;\n\t\tattribute vec3 position;\n\t\tvoid main() {\n\t\t\tgl_Position = matrix * vec4(position, 1.0);\n\t\t}\n\t\t');
+}`
+	);
 
-	FragmentShader.new('fs2', '\n\t\tprecision mediump float;\n\t\tuniform vec4 color;\n\t\tvoid main() {\n\t\t\tgl_FragColor = color;\n\t\t}\n\t\t');
+	VertexShader.new(
+		'vs2',
+		'\n\t\tuniform mat4 matrix;\n\t\tattribute vec3 position;\n\t\tvoid main() {\n\t\t\tgl_Position = matrix * vec4(position, 1.0);\n\t\t}\n\t\t'
+	);
 
-	VertexShader.new('map', '\n\t\tuniform mat4 matrix;\n\t\tattribute vec3 position;\n\t\tattribute vec2 uv;\n\t\tvarying vec2 v_uv;\n\t\tvoid main() {\n\t\t\tv_uv = uv;\n\t\t\tgl_Position = matrix * vec4(position, 1.0);\n\t\t}\n\t\t');
+	FragmentShader.new(
+		'fs2',
+		'\n\t\tprecision mediump float;\n\t\tuniform vec4 color;\n\t\tvoid main() {\n\t\t\tgl_FragColor = color;\n\t\t}\n\t\t'
+	);
 
+	VertexShader.new(
+		'map',
+		'\n\t\tuniform mat4 matrix;\n\t\tattribute vec3 position;\n\t\tattribute vec2 uv;\n\t\tvarying vec2 v_uv;\n\t\tvoid main() {\n\t\t\tv_uv = uv;\n\t\t\tgl_Position = matrix * vec4(position, 1.0);\n\t\t}\n\t\t'
+	);
 
+	FragmentShader.new(
+		'map',
+		'\n\t\tprecision mediump float;\n\t\tuniform sampler2D texture;\n\t\tvarying vec2 v_uv;\n\t\tvoid main() {\n\t\t\tgl_FragColor = texture2D(texture, v_uv);\n\t\t\t\n\t\t\t//if (abs(v_uv.x - 0.5) > 0.48 || abs(v_uv.y - 0.5) > 0.48) {\n\t\t\t\t//\tgl_FragColor = vec4(0, 0, 0, 0.5);\n\t\t\t\t//}\n\t\t\t\n\t\t\t\n\t\t}\n\t\t'
+	);
 
-	FragmentShader.new('map', '\n\t\tprecision mediump float;\n\t\tuniform sampler2D texture;\n\t\tvarying vec2 v_uv;\n\t\tvoid main() {\n\t\t\tgl_FragColor = texture2D(texture, v_uv);\n\t\t\t\n\t\t\t//if (abs(v_uv.x - 0.5) > 0.48 || abs(v_uv.y - 0.5) > 0.48) {\n\t\t\t\t//\tgl_FragColor = vec4(0, 0, 0, 0.5);\n\t\t\t\t//}\n\t\t\t\n\t\t\t\n\t\t}\n\t\t');
-
-
-
-
-
-
-	VertexShader.new('vertex-shadow2', `
+	VertexShader.new(
+		'vertex-shadow2',
+		`
 
 attribute vec3 position;
 attribute vec2 uv;
@@ -335,12 +352,12 @@ v_depth = matrixLight * vec4(position, 1.0);
 
 gl_Position = matrix * vec4(position, 1.0);
 }
-`);
+`
+	);
 
-
-
-
-	VertexShader.new('vertex-shadow', `
+	VertexShader.new(
+		'vertex-shadow',
+		`
 attribute vec3 position;
 uniform   mat4 matrix;
 
@@ -356,10 +373,12 @@ v_position = matrix * vec4(position, 1.0);
 
 gl_Position = v_position;
 }
-`);
+`
+	);
 
-
-	VertexShader.new('texture-simple', `
+	VertexShader.new(
+		'texture-simple',
+		`
 
 
 uniform mat4 matrix;
@@ -383,10 +402,12 @@ v_position = gl_Position.xyz;
 }
 
 
-`);
+`
+	);
 
-
-	VertexShader.new('vs-texture', `
+	VertexShader.new(
+		'vs-texture',
+		`
 
 uniform mat4 matrix;
 
@@ -405,13 +426,12 @@ gl_Position = matrix * vec4(position, 1.0);
 }
 
 
-`);
+`
+	);
 
-
-
-
-
-	FragmentShader.new('fragment-simple', `
+	FragmentShader.new(
+		'fragment-simple',
+		`
 
 precision mediump float;
 uniform vec4 color;
@@ -420,11 +440,12 @@ void main() {
 gl_FragColor = color;
 }
 
-`);
+`
+	);
 
-
-
-	FragmentShader.new('texture-simple', `
+	FragmentShader.new(
+		'texture-simple',
+		`
 precision mediump float;
 
 uniform float opacity;
@@ -445,11 +466,12 @@ result *= opacity;
 
 gl_FragColor = result;
 }
-`);
+`
+	);
 
-
-
-	FragmentShader.new('fs-block', `
+	FragmentShader.new(
+		'fs-block',
+		`
 
 precision mediump float;
 
@@ -474,12 +496,12 @@ color += a;
 
 gl_FragColor = color;
 }
-`);
+`
+	);
 
-
-
-
-	VertexShader.new('fog', `
+	VertexShader.new(
+		'fog',
+		`
 attribute vec3 position;
 attribute vec2 uv;
 
@@ -507,10 +529,12 @@ varyingPosition = (matrix2 * vec4(position, 1)).xyz;
 }
 
 
-`);
+`
+	);
 
-
-	FragmentShader.new('fog', `
+	FragmentShader.new(
+		'fog',
+		`
 precision mediump float;
 
 uniform sampler2D texture;
@@ -556,13 +580,6 @@ color *= f;
 gl_FragColor = color;
 
 }
-`);
-
-
-
-
-
-
-
-
-};
+`
+	);
+}

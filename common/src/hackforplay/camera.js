@@ -1,11 +1,4 @@
-import {
-	Core,
-	Node,
-	Event,
-	Sprite,
-	Surface,
-	Group
-} from 'enchantjs/enchant';
+import { Core, Node, Event, Sprite, Surface, Group } from 'enchantjs/enchant';
 import 'enchantjs/ui.enchant';
 import 'enchantjs/fix';
 import 'hackforplay/rpg-kit-main';
@@ -13,7 +6,6 @@ import 'hackforplay/rpg-kit-main';
 import { clamp } from 'hackforplay/utils/math-utils';
 
 class Camera extends Sprite {
-
 	constructor(x, y, w, h) {
 		super(w, h);
 
@@ -30,9 +22,7 @@ class Camera extends Sprite {
 		this.x = x || 0;
 		this.y = y || 0;
 
-
 		this.background = '#000';
-
 
 		this.enabled = true;
 		this.target = null;
@@ -46,21 +36,25 @@ class Camera extends Sprite {
 		this.borderColor = '#000';
 		this.borderLineWidth = 1;
 
-
 		Hack.cameraGroup.addChild(this);
 		Camera.collection.push(this);
-
 	}
 
+	get w() {
+		return this.width;
+	}
+	set w(value) {
+		this.width = value;
+	}
 
-	get w() { return this.width; }
-	set w(value) { this.width = value; }
-
-	get h() { return this.height; }
-	set h(value) { this.height = value; }
+	get h() {
+		return this.height;
+	}
+	set h(value) {
+		this.height = value;
+	}
 
 	resize(w, h) {
-
 		w = Math.ceil(w);
 		h = Math.ceil(h);
 
@@ -83,7 +77,6 @@ class Camera extends Sprite {
 	}
 
 	getCenter() {
-
 		// center 固定
 		if (this.center) return this.center;
 
@@ -94,21 +87,18 @@ class Camera extends Sprite {
 
 		// マップの中心
 		if (Hack.map) {
-
 			const map = Hack.map;
 
 			return {
 				x: map.width / 2,
 				y: map.height / 2
-			}
-
+			};
 		}
 
 		console.error('Camera#getCenter');
 	}
 
 	getScale() {
-
 		// クリップしない
 		if (!this.clipScaleFunction) return this.scale;
 
@@ -120,7 +110,6 @@ class Camera extends Sprite {
 
 		return this.scale;
 	}
-
 
 	// 描画範囲を取得する
 	getRenderRect() {
@@ -137,27 +126,20 @@ class Camera extends Sprite {
 		x -= w / 2;
 		y -= h / 2;
 
-
 		var rect = {
-
 			x: x,
 			y: y,
 			width: w,
 			height: h
-
 		};
-
 
 		if (this.clamp) rect = this.clampRect(rect);
 
 		return rect;
-
 	}
-
 
 	// 描画範囲を画面に収める
 	clampRect(rect) {
-
 		const { w, h } = this.getVisionSize();
 
 		var over = false;
@@ -174,9 +156,7 @@ class Camera extends Sprite {
 			rect.y = (rect.height - h) / 2;
 		}
 
-
 		var b = false;
-
 
 		if (w > Hack.map.width) {
 			_d_x = true;
@@ -186,19 +166,14 @@ class Camera extends Sprite {
 		if (h > Hack.map.height) {
 			_d_y = true;
 			rect.y = -(h - Hack.map.height) / 2;
-
 		}
 
 		if (over || b) {
 			return rect;
 		}
 
-
-
-
 		if (!_d_x) rect.x = clamp(rect.x, 0.0, Hack.map.width - w);
 		if (!_d_y) rect.y = clamp(rect.y, 0.0, Hack.map.height - h);
-
 
 		return rect;
 	}
@@ -222,7 +197,6 @@ class Camera extends Sprite {
 
 	// カメラ上の座標を計算する
 	getNodeRect(node) {
-
 		var renderRect = this.getRenderRect();
 		var scale = this.getScale();
 
@@ -233,12 +207,11 @@ class Camera extends Sprite {
 			x: x,
 			y: y,
 			width: node.width,
-			height: node.height,
+			height: node.height
 		};
 
 		return this._rectScale(rect, 1.0 / scale);
 	}
-
 
 	getVisionSize() {
 		const scale = this.getScale();
@@ -248,11 +221,9 @@ class Camera extends Sprite {
 		};
 	}
 
-
 	zoom(value) {
 		this.scale /= value;
 	}
-
 
 	borderStyle(lineWidth, color) {
 		this.border = true;
@@ -269,8 +240,6 @@ class Camera extends Sprite {
 	}
 
 	render() {
-
-
 		const context = this.image.context;
 
 		var center = this.getCenter();
@@ -280,10 +249,8 @@ class Camera extends Sprite {
 		var x = center.x;
 		var y = center.y;
 
-
 		var rect = this.getRenderRect();
 		var r = rect;
-
 
 		if (this.background) {
 			context.fillStyle = this.background;
@@ -293,16 +260,22 @@ class Camera extends Sprite {
 		this.image.context.drawImage(
 			Hack.map._surface._element,
 
-			r.x, r.y, r.width, r.height,
-			0, 0, this.w, this.h);
+			r.x,
+			r.y,
+			r.width,
+			r.height,
+			0,
+			0,
+			this.w,
+			this.h
+		);
 
 		this.drawBorder();
-
 	}
 
 	remove() {
 		super.remove();
-		Camera.collection = Camera.collection.filter((camera) => {
+		Camera.collection = Camera.collection.filter(camera => {
 			return camera !== this;
 		});
 	}
@@ -312,14 +285,12 @@ class Camera extends Sprite {
 		super._computeFramePosition();
 		this.resize(this.w, this.h);
 	}
-
 }
 
 Camera.collection = [];
 
 // カメラを並べる
 Camera.arrange = function(x, y, border, filter) {
-
 	var for2d = function(x, y, callback) {
 		for (var a = 0; a < x; ++a) {
 			for (var b = 0; b < y; ++b) {
@@ -327,7 +298,6 @@ Camera.arrange = function(x, y, border, filter) {
 			}
 		}
 	};
-
 
 	// 枠を表示する
 	if (border === undefined ? true : border) {
@@ -338,27 +308,24 @@ Camera.arrange = function(x, y, border, filter) {
 
 	// 並べるカメラだけ取得
 	var index = 0;
-	var cameras = Camera.collection.filter(filter || function(camera) {
-		return camera.enabled;
-
-	});
+	var cameras = Camera.collection.filter(
+		filter ||
+			function(camera) {
+				return camera.enabled;
+			}
+	);
 
 	// 再配置
 	for2d(y, x, function(y2, x2) {
-
-
 		if (index >= cameras.length) return;
 		var camera = cameras[index++];
 
 		camera.moveTo(game.width / x * x2, game.height / y * y2);
 		camera.resize(game.width / x, game.height / y);
-
 	});
-
 };
 
 Camera.layout = Camera.arrange;
-
 
 window.Camera = Camera;
 Camera.main = Hack.camera;

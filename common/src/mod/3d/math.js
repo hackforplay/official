@@ -1,25 +1,27 @@
 // Math
-Math.hypot = Math.hypot || function() {
-	var y = 0;
-	var length = arguments.length;
+Math.hypot =
+	Math.hypot ||
+	function() {
+		var y = 0;
+		var length = arguments.length;
 
-	for (var i = 0; i < length; i++) {
-		if (arguments[i] === Infinity || arguments[i] === -Infinity) {
-			return Infinity;
+		for (var i = 0; i < length; i++) {
+			if (arguments[i] === Infinity || arguments[i] === -Infinity) {
+				return Infinity;
+			}
+			y += arguments[i] * arguments[i];
 		}
-		y += arguments[i] * arguments[i];
-	}
-	return Math.sqrt(y);
-};
+		return Math.sqrt(y);
+	};
 
-
-Math.log2 = Math.log2 || function(x) {
-	return Math.log(x) / Math.LN2;
-};
+Math.log2 =
+	Math.log2 ||
+	function(x) {
+		return Math.log(x) / Math.LN2;
+	};
 
 // 行列関連（仮）
 var Matrix = {
-
 	inverse: function inverse(i) {
 		var j = new Float32Array(16),
 			o = i[0],
@@ -51,12 +53,29 @@ var Matrix = {
 			ia = U * i - W * Y,
 			ja = V * i - W * Z,
 			ka = 1 / ($ * ja - _ * ia + aa * ha + ba * ga - ca * fa + da * ea);
-		return j[0] = (Q * ja - R * ia + S * ha) * ka, j[1] = (-s * ja + N * ia - O * ha) * ka, j[2] = (Y * da - Z * ca + i * ba) * ka, j[3] = (-U * da + V * ca - W * ba) * ka, j[4] = (-P * ja + R * ga - S * fa) * ka, j[5] = (o * ja - N * ga + O * fa) * ka, j[6] = (-X * da + Z * aa - i * _) * ka, j[7] = (T * da - V * aa + W * _) * ka, j[8] = (P * ia - Q * ga + S * ea) * ka, j[9] = (-o * ia + s * ga - O * ea) * ka, j[10] = (X * ca - Y * aa + i * $) * ka, j[11] = (-T * ca + U * aa - W * $) * ka, j[12] = (-P * ha + Q * fa - R * ea) * ka, j[13] = (o * ha - s * fa + N * ea) * ka, j[14] = (-X * ba + Y * _ - Z * $) * ka, j[15] = (T * ba - U * _ + V * $) * ka, j
+		return (
+			(j[0] = (Q * ja - R * ia + S * ha) * ka),
+			(j[1] = (-s * ja + N * ia - O * ha) * ka),
+			(j[2] = (Y * da - Z * ca + i * ba) * ka),
+			(j[3] = (-U * da + V * ca - W * ba) * ka),
+			(j[4] = (-P * ja + R * ga - S * fa) * ka),
+			(j[5] = (o * ja - N * ga + O * fa) * ka),
+			(j[6] = (-X * da + Z * aa - i * _) * ka),
+			(j[7] = (T * da - V * aa + W * _) * ka),
+			(j[8] = (P * ia - Q * ga + S * ea) * ka),
+			(j[9] = (-o * ia + s * ga - O * ea) * ka),
+			(j[10] = (X * ca - Y * aa + i * $) * ka),
+			(j[11] = (-T * ca + U * aa - W * $) * ka),
+			(j[12] = (-P * ha + Q * fa - R * ea) * ka),
+			(j[13] = (o * ha - s * fa + N * ea) * ka),
+			(j[14] = (-X * ba + Y * _ - Z * $) * ka),
+			(j[15] = (T * ba - U * _ + V * $) * ka),
+			j
+		);
 	},
 
-
 	multiply2: function multiply2() {
-		return Array.prototype.reduce.call(arguments, Matrix.multiply)
+		return Array.prototype.reduce.call(arguments, Matrix.multiply);
 	},
 	lookAt: function lookAt(i, j, o) {
 		var s = new Float32Array(16),
@@ -70,13 +89,68 @@ var Matrix = {
 		var S = j[2];
 		if (N == j[0] && O == o && i == S) return Matrix.identity();
 		var T, U, V, W;
-		return o = N - j[0], S = O - j[1], V = i - j[2], W = 1 / Math.sqrt(o * o + S * S + V * V), o *= W, S *= W, V *= W, j = Q * V - R * S, R = R * o - P * V, P = P * S - Q * o, (W = Math.sqrt(j * j + R * R + P * P)) ? (W = 1 / W, j *= W, R *= W, P *= W) : P = R = j = 0, Q = S * P - V * R, T = V * j - o * P, U = o * R - S * j, (W = Math.sqrt(Q * Q + T * T + U * U)) ? (W = 1 / W, Q *= W, T *= W, U *= W) : U = T = Q = 0, s[0] = j, s[1] = Q, s[2] = o, s[3] = 0, s[4] = R, s[5] = T, s[6] = S, s[7] = 0, s[8] = P, s[9] = U, s[10] = V, s[11] = 0, s[12] = -(j * N + R * O + P * i), s[13] = -(Q * N + T * O + U * i), s[14] = -(o * N + S * O + V * i), s[15] = 1, s
+		return (
+			(o = N - j[0]),
+			(S = O - j[1]),
+			(V = i - j[2]),
+			(W = 1 / Math.sqrt(o * o + S * S + V * V)),
+			(o *= W),
+			(S *= W),
+			(V *= W),
+			(j = Q * V - R * S),
+			(R = R * o - P * V),
+			(P = P * S - Q * o),
+			(W = Math.sqrt(j * j + R * R + P * P))
+				? ((W = 1 / W), (j *= W), (R *= W), (P *= W))
+				: (P = R = j = 0),
+			(Q = S * P - V * R),
+			(T = V * j - o * P),
+			(U = o * R - S * j),
+			(W = Math.sqrt(Q * Q + T * T + U * U))
+				? ((W = 1 / W), (Q *= W), (T *= W), (U *= W))
+				: (U = T = Q = 0),
+			(s[0] = j),
+			(s[1] = Q),
+			(s[2] = o),
+			(s[3] = 0),
+			(s[4] = R),
+			(s[5] = T),
+			(s[6] = S),
+			(s[7] = 0),
+			(s[8] = P),
+			(s[9] = U),
+			(s[10] = V),
+			(s[11] = 0),
+			(s[12] = -(j * N + R * O + P * i)),
+			(s[13] = -(Q * N + T * O + U * i)),
+			(s[14] = -(o * N + S * O + V * i)),
+			(s[15] = 1),
+			s
+		);
 	},
 	perspective: function perspective(i, j, o, s) {
 		var N = new Float32Array(16);
 		i = o * Math.tan(i * Math.PI / 360);
 		var O = s - o;
-		return N[0] = 2 * o / (2 * (i * j)), N[1] = 0, N[2] = 0, N[3] = 0, N[4] = 0, N[5] = 2 * o / (2 * i), N[6] = 0, N[7] = 0, N[8] = 0, N[9] = 0, N[10] = -(s + o) / O, N[11] = -1, N[12] = 0, N[13] = 0, N[14] = -(2 * (s * o)) / O, N[15] = 0, N
+		return (
+			(N[0] = 2 * o / (2 * (i * j))),
+			(N[1] = 0),
+			(N[2] = 0),
+			(N[3] = 0),
+			(N[4] = 0),
+			(N[5] = 2 * o / (2 * i)),
+			(N[6] = 0),
+			(N[7] = 0),
+			(N[8] = 0),
+			(N[9] = 0),
+			(N[10] = -(s + o) / O),
+			(N[11] = -1),
+			(N[12] = 0),
+			(N[13] = 0),
+			(N[14] = -(2 * (s * o)) / O),
+			(N[15] = 0),
+			N
+		);
 	},
 	rotate: function rotate(i, j) {
 		var o = Matrix.identity(),
@@ -86,7 +160,7 @@ var Matrix = {
 		var O = j[0],
 			P = j[1],
 			Q = j[2];
-		1 != N && (N = 1 / N, O *= N, P *= N, Q *= N);
+		1 != N && ((N = 1 / N), (O *= N), (P *= N), (Q *= N));
 		var R = Math.sin(i),
 			S = Math.cos(i),
 			T = 1 - S,
@@ -111,37 +185,71 @@ var Matrix = {
 			ja = O * Q * T + P * R,
 			O = P * Q * T - O * R,
 			Q = Q * Q * T + S;
-		return i ? o != s && (s[12] = o[12], s[13] = o[13], s[14] = o[14], s[15] = o[15]) : s = o, s[0] = N * da + X * ea + _ * fa, s[1] = U * da + Y * ea + aa * fa, s[2] = V * da + Z * ea + ba * fa, s[3] = W * da + $ * ea + ca * fa, s[4] = N * ga + X * ha + _ * ia, s[5] = U * ga + Y * ha + aa * ia, s[6] = V * ga + Z * ha + ba * ia, s[7] = W * ga + $ * ha + ca * ia, s[8] = N * ja + X * O + _ * Q, s[9] = U * ja + Y * O + aa * Q, s[10] = V * ja + Z * O + ba * Q, s[11] = W * ja + $ * O + ca * Q, s
+		return (
+			i
+				? o != s &&
+				  ((s[12] = o[12]), (s[13] = o[13]), (s[14] = o[14]), (s[15] = o[15]))
+				: (s = o),
+			(s[0] = N * da + X * ea + _ * fa),
+			(s[1] = U * da + Y * ea + aa * fa),
+			(s[2] = V * da + Z * ea + ba * fa),
+			(s[3] = W * da + $ * ea + ca * fa),
+			(s[4] = N * ga + X * ha + _ * ia),
+			(s[5] = U * ga + Y * ha + aa * ia),
+			(s[6] = V * ga + Z * ha + ba * ia),
+			(s[7] = W * ga + $ * ha + ca * ia),
+			(s[8] = N * ja + X * O + _ * Q),
+			(s[9] = U * ja + Y * O + aa * Q),
+			(s[10] = V * ja + Z * O + ba * Q),
+			(s[11] = W * ja + $ * O + ca * Q),
+			s
+		);
 	}
 };
 
-
-
 Matrix.identity = function() {
-	return new Float32Array([
-		1, 0, 0, 0,
-		0, 1, 0, 0,
-		0, 0, 1, 0,
-		0, 0, 0, 1
-	]);
+	return new Float32Array([1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1]);
 };
-
 
 Matrix.scale = function(vec) {
 	return new Float32Array([
-		vec[0], 0, 0, 0,
-		0, vec[1], 0, 0,
-		0, 0, vec[2], 0,
-		0, 0, 0, 1
+		vec[0],
+		0,
+		0,
+		0,
+		0,
+		vec[1],
+		0,
+		0,
+		0,
+		0,
+		vec[2],
+		0,
+		0,
+		0,
+		0,
+		1
 	]);
 };
 
 Matrix.translate = function(vec) {
 	return new Float32Array([
-		1, 0, 0, 0,
-		0, 1, 0, 0,
-		0, 0, 1, 0,
-		vec[0], vec[1], vec[2], 1
+		1,
+		0,
+		0,
+		0,
+		0,
+		1,
+		0,
+		0,
+		0,
+		0,
+		1,
+		0,
+		vec[0],
+		vec[1],
+		vec[2],
+		1
 	]);
 };
 
@@ -169,22 +277,19 @@ Matrix.multiply = function(mat1, mat2) {
 	]);
 };
 
-
-
 // 列オーダーで行列を乗算する
 Matrix.mulCol = function() {
-	return Array.prototype.reduce.call(arguments, Matrix.multiply)
+	return Array.prototype.reduce.call(arguments, Matrix.multiply);
 };
 
 // 行オーダーで行列を乗算する
 Matrix.mulRow = function() {
-	return Array.prototype.reduceRight.call(arguments, Matrix.multiply)
+	return Array.prototype.reduceRight.call(arguments, Matrix.multiply);
 };
 
 // ベクトル（仮）
 
 var Vec3 = enchant.Class.create({
-
 	initialize: function(x, y, z) {
 		this.set(x, y, z);
 	},
@@ -203,29 +308,22 @@ var Vec3 = enchant.Class.create({
 		return new Vec3(this.x, this.y, this.z);
 	},
 
-
 	length: function() {
 		return Math.hypot(this.x, this.y, this.z);
 	},
 
-
 	scale(v) {
-
 		this.x *= v;
 		this.y *= v;
 		this.z *= v;
 
 		return this;
-
 	},
 
-
 	normalize() {
-
 		let { x, y, z } = this;
 
 		var n = Math.sqrt(x * x + y * y + z * z);
-
 
 		if (n > 0.0) {
 			var invN = 1 / n;
@@ -240,15 +338,11 @@ var Vec3 = enchant.Class.create({
 		}
 		return this;
 	}
-
-
 });
-
 
 Vec3.sub = function(a, b) {
 	return new Vec3(a.x - b.x, a.y - b.y, a.z - b.z);
 };
-
 
 Vec3.add = function(v1, v2) {
 	return [v1[0] + v2[0], v1[1] + v2[1], v1[2] + v2[2]];
@@ -266,33 +360,28 @@ Vec3.transform = function(a, m) {
 	return [x, y, z];
 };
 
-
 Vec3.distance = function(v1, v2) {
-	return Math.pow(v2[0] - v1[0], 2) + Math.pow(v2[1] - v1[1], 2) + Math.pow(v2[2] - v1[2], 2);
+	return (
+		Math.pow(v2[0] - v1[0], 2) +
+		Math.pow(v2[1] - v1[1], 2) +
+		Math.pow(v2[2] - v1[2], 2)
+	);
 };
 
-
 Vec3.distance = function(v1, v2) {
-	return Math.abs(v2[0] - v1[0]) + Math.abs(v2[1] - v1[1]) + Math.abs(v2[2] - v1[2]);
+	return (
+		Math.abs(v2[0] - v1[0]) + Math.abs(v2[1] - v1[1]) + Math.abs(v2[2] - v1[2])
+	);
 };
 
 var Vec2 = {};
-
 
 Vec2.rotate = function(vec, rad) {
 	var x = vec[0],
 		y = vec[1];
 	var sin = Math.sin(rad),
 		cos = Math.cos(rad);
-	return [
-		x * cos - y * sin,
-		x * sin + y * cos
-	];
+	return [x * cos - y * sin, x * sin + y * cos];
 };
 
-
-export {
-Vec3,
-	Matrix,
-	Vec2
-};
+export { Vec3, Matrix, Vec2 };

@@ -13,14 +13,21 @@ export function roundRect(context, x, y, w, h, radius) {
 	context.arc(x + radius, y + radius, radius, -Math.PI, -0.5 * Math.PI, false);
 	context.arc(x + w - radius, y + radius, radius, -0.5 * Math.PI, 0, false);
 	context.arc(x + w - radius, y + h - radius, radius, 0, 0.5 * Math.PI, false);
-	context.arc(x + radius, y + h - radius, radius, 0.5 * Math.PI, Math.PI, false);
+	context.arc(
+		x + radius,
+		y + h - radius,
+		radius,
+		0.5 * Math.PI,
+		Math.PI,
+		false
+	);
 	context.closePath();
 	return context;
 }
 
 /**
  * 線分を描画する
- * @param {CanvasRenderingContext2D} context 
+ * @param {CanvasRenderingContext2D} context
  * @param {Line} line
  * @param {number} width
  * @param {string} color
@@ -88,7 +95,17 @@ export function drawNineSliceImage(context, image, l, t, r, b, w, h) {
 	// 4
 	context.drawImage(image, 0, t, l, ih - t - b, 0, t, l, h - t - b);
 	// 5
-	context.drawImage(image, l, t, iw - r - l, ih - t - b, l, t, w - l - r, h - t - b);
+	context.drawImage(
+		image,
+		l,
+		t,
+		iw - r - l,
+		ih - t - b,
+		l,
+		t,
+		w - l - r,
+		h - t - b
+	);
 	// 6
 	context.drawImage(image, iw - r, t, r, ih - t - b, w - r, t, r, h - t - b);
 	// 7

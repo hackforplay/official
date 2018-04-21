@@ -5,20 +5,14 @@ import 'mod/3d/player-input';
 import MapObjectConfig from 'mod/3d/mapObjectConfig';
 import { initializeMapObjectConfig } from 'mod/3d/mapObjectConfig';
 
-
-
-
 // MapObject が RPGObject になったアプデの対策
 (function() {
-
 	var rpg = RPGObject.prototype;
 	var map = MapObject.prototype;
 
 	var mapProto = Object.keys(map).map(function(key) {
 		return !(key in rpg);
 	});
-
-
 
 	Object.keys(MapObject.dictionary).forEach(function(name) {
 		Hack.assets[name] = function() {
@@ -37,34 +31,23 @@ import { initializeMapObjectConfig } from 'mod/3d/mapObjectConfig';
 
 			MapObjectConfig.assign(this, 'default');
 			MapObjectConfig.assign(this, this.frame);
-
 		};
 	});
-
-
-
 })();
-
 
 // Insect 等が RPGObject になった対策
 (function() {
-
 	var extendOffset = function(name, z) {
-
 		var base = Hack.assets[name];
 
 		Hack.assets[name] = function() {
-
 			base.apply(this, arguments);
 
 			this.assetName = name;
 
 			this.offset.z = z || 0;
-
 		};
-
 	};
-
 
 	extendOffset('slime', -14);
 	extendOffset('spider', -14);
@@ -75,35 +58,17 @@ import { initializeMapObjectConfig } from 'mod/3d/mapObjectConfig';
 	extendOffset('boy', -8);
 	extendOffset('girl', -8);
 	extendOffset('woman', -8);
-
 })();
-
 
 initializeMapObjectConfig();
 
-
-
 // オブジェクトを再配置する
 RPGObject.prototype.relocate = function relocate() {
-
-	this.locate3D(
-		this.mapX,
-		this.mapY,
-		this.mapZ,
-		this.map.name);
-
+	this.locate3D(this.mapX, this.mapY, this.mapZ, this.map.name);
 };
-
-
-
-
-
-
-
 
 // locate3D
 (function() {
-
 	Object.defineProperties(RPGObject.prototype, {
 		mapX: {
 			configurable: true,
@@ -129,11 +94,9 @@ RPGObject.prototype.relocate = function relocate() {
 	});
 
 	RPGMap.prototype.getItem3D = function(x, y, z) {
-
 		var nodes = this.scene.childNodes;
 
 		var items = nodes.filter(function(node) {
-
 			return node.mapX === x && node.mapY === y && node.mapZ === z;
 		});
 
@@ -143,9 +106,8 @@ RPGObject.prototype.relocate = function relocate() {
 	};
 
 	RPGMap.prototype.removeItem = function(x, y, z, remover) {
-
 		if (remover.removedItems) {
-			remover.removedItems.forEach((node) => {
+			remover.removedItems.forEach(node => {
 				node.visible = true;
 			});
 		}
@@ -154,22 +116,24 @@ RPGObject.prototype.relocate = function relocate() {
 
 		var nodes = this.scene.childNodes;
 
-		nodes.filter(function(node) {
+		nodes
+			.filter(function(node) {
+				return node.mapX === x && node.mapY === y && node.mapZ === z;
+			})
+			.forEach(function(node) {
+				// node.remove();
+				node.visible = false;
 
-			return node.mapX === x && node.mapY === y && node.mapZ === z;
-		}).forEach(function(node) {
-
-			// node.remove();
-			node.visible = false;
-
-			remover.removedItems.push(node);
-
-		});
+				remover.removedItems.push(node);
+			});
 	};
 
 	RPGObject.prototype.locate3D = function(x, y, z, mapName) {
-
-		if (mapName in Hack.maps && Hack.maps[mapName] instanceof RPGMap && this.map !== Hack.maps[mapName]) {
+		if (
+			mapName in Hack.maps &&
+			Hack.maps[mapName] instanceof RPGMap &&
+			this.map !== Hack.maps[mapName]
+		) {
 			// this.destroy();
 			Hack.maps[mapName].scene.addChild(this);
 		}
@@ -177,12 +141,9 @@ RPGObject.prototype.relocate = function relocate() {
 
 		this.z = z * 32;
 
-
 		if (this.isGround) {
-
 			this.map.removeItem(x, y, z - 1, this);
 		}
-
 	};
 
 	RPGObject.prototype.locate = function(x, y, mapName) {
@@ -190,14 +151,7 @@ RPGObject.prototype.relocate = function relocate() {
 	};
 })();
 
-
-
-
-
-
-
 Object.defineProperty(RPGObject.prototype, 'opacity', {
-
 	set(value) {
 		this._opacity = parseFloat(value);
 
@@ -205,36 +159,28 @@ Object.defineProperty(RPGObject.prototype, 'opacity', {
 			this.visible = false;
 
 			if (!this.visible && this.removedItems) {
-				this.removedItems.forEach((node) => {
+				this.removedItems.forEach(node => {
 					node.visible = true;
 				});
 			}
-
 		}
 		if (value) {
-
 			if (!this.visible && this.removedItems) {
-				this.removedItems.forEach((node) => {
+				this.removedItems.forEach(node => {
 					node.visible = false;
 				});
 			}
 
 			this.visible = true;
-
 		}
-
 	},
 
 	get() {
 		return this._opacity;
 	}
-
 });
 
-
-
 (() => {
-
 	RPGObject.prototype._dirty = false;
 
 	Object.defineProperty(RPGObject.prototype, '_dirty', {
@@ -246,19 +192,20 @@ Object.defineProperty(RPGObject.prototype, 'opacity', {
 			return this.__dirty;
 		}
 	});
-
 })();
-
 
 // walk の条件に高さを追加
 (function() {
-
 	// TODO: 新仕様の walk に対応する
 	return;
 
-
 	RPGObject.prototype.walk = function(distance, continuous) {
-		if (!this.isKinematic || !continuous && this.behavior !== BehaviorTypes.Idle || !Hack.isPlaying) return;
+		if (
+			!this.isKinematic ||
+			(!continuous && this.behavior !== BehaviorTypes.Idle) ||
+			!Hack.isPlaying
+		)
+			return;
 		this.behavior = BehaviorTypes.Walk;
 		var f = this.forward,
 			d = typeof distance === 'number' ? distance >> 0 : 1,
@@ -270,38 +217,44 @@ Object.defineProperty(RPGObject.prototype, 'opacity', {
 		// Map Collision
 		var mapR = Hack.map.width / tw - 1,
 			mapB = Hack.map.height / th - 1;
-		var mapHit = Hack.map.hitTest(_x * tw, _y * th) || 0 > _x || _x > mapR || 0 > _y || _y > mapB;
+		var mapHit =
+			Hack.map.hitTest(_x * tw, _y * th) ||
+			0 > _x ||
+			_x > mapR ||
+			0 > _y ||
+			_y > mapB;
 		// RPGObject(s) Collision
 
 		// z
 		var mapY = Math.floor((this.position.y - this.offset.z) / 32);
 
 		var hits = RPGObject.collection.filter(function(item) {
-			return item.isKinematic && item.collisionFlag && item.mapX === _x && item.mapY === _y;
+			return (
+				item.isKinematic &&
+				item.collisionFlag &&
+				item.mapX === _x &&
+				item.mapY === _y
+			);
 		});
-
-
 
 		hits = hits.filter(function(node) {
 			return 'hp' in node && mapY === node.mapZ;
 		});
 
-
 		var i2 = Hack.map.getItem3D(
-
 			this.mapX + this.forward.x,
 			this.mapY + this.forward.y,
-			this.mapZ - 1);
+			this.mapZ - 1
+		);
 
 		i2 = (i2 || []).filter(function(item) {
-			return item.isKinematic && item.collisionFlag && item.mapX === _x && item.mapY === _y;
+			return (
+				item.isKinematic &&
+				item.collisionFlag &&
+				item.mapX === _x &&
+				item.mapY === _y
+			);
 		});
-
-
-
-
-
-
 
 		if (!mapHit && !hits.length) {
 			if (continuous) {
@@ -336,13 +289,15 @@ Object.defineProperty(RPGObject.prototype, 'opacity', {
 			var e = new Event('collided');
 			e.map = mapHit;
 			e.hits = hits.filter(function(item) {
-				return !this._preventFrameHits || this._preventFrameHits.indexOf(item) < 0;
+				return (
+					!this._preventFrameHits || this._preventFrameHits.indexOf(item) < 0
+				);
 			}, this);
 			e.hit = e.hits.length > 0 ? e.hits[0] : undefined;
 			if (e.hit || e.map) {
 				var e2 = new Event('collided');
 				e2.map = false;
-				e2.hits = [e2.hit = this];
+				e2.hits = [(e2.hit = this)];
 				this.dispatchEvent(e);
 				e.hits.forEach(function(item) {
 					item.dispatchEvent(e2);
@@ -408,30 +363,24 @@ Object.defineProperty(RPGObject.prototype, 'opacity', {
 	});
 })();
 
-
 // map
 (function() {
-
-
-
 	Object.defineProperties(RPGMap.prototype, {
-		'mapWidth': {
+		mapWidth: {
 			get: function() {
 				return this._mapWidth;
 			}
 		},
-		'mapHeight': {
+		mapHeight: {
 			get: function() {
 				return this._mapHeight;
 			}
 		}
 	});
 
-
 	var load = RPGMap.prototype.load;
 	RPGMap.prototype.load = function() {
-
-		var loaded = this.isLoaded
+		var loaded = this.isLoaded;
 
 		load.apply(this, arguments);
 
@@ -442,14 +391,8 @@ Object.defineProperty(RPGObject.prototype, 'opacity', {
 		const ul = this.bmap._3d_underLayer || 0;
 
 		this.bmap._data.forEach((data, index) => {
-
-
-
-
-
 			for (var x = 0; x < this.mapWidth; ++x) {
 				for (var y = 0; y < this.mapHeight; ++y) {
-
 					let value = data[y][x];
 
 					if (value === -1) continue;
@@ -457,33 +400,20 @@ Object.defineProperty(RPGObject.prototype, 'opacity', {
 					const config = MapObjectConfig.get(value);
 
 					if ('replace' in config) {
-
 						value = config.replace;
-
-					};
-
+					}
 
 					var block = new MapObject(value);
 					block.locate3D(x, y, -1 + index + ul);
 
 					block.collisionFlag = false;
-
 				}
 			}
-
-
 		});
-
 
 		// 再配置してオブジェクトの重なりを修正する
-		this.scene.childNodes.forEach((node) => {
-
+		this.scene.childNodes.forEach(node => {
 			if (node.relocate) node.relocate();
-
 		});
-
-
-
-
 	};
 })();

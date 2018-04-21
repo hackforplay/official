@@ -13,20 +13,51 @@ import { CanvasRenderer } from 'enchantjs/enchant';
 import { KeyClass } from 'mod/key';
 
 import Keyboard from 'hackforplay/keyboard';
-import { stringToArray, dakuten, handakuten } from 'hackforplay/utils/string-utils';
+import {
+	stringToArray,
+	dakuten,
+	handakuten
+} from 'hackforplay/utils/string-utils';
 
 import RPGMap from './rpg-map';
 
 const game = enchant.Core.instance;
 
-
-game.preload('enchantjs/monster1.gif', 'enchantjs/monster2.gif', 'enchantjs/monster3.gif', 'enchantjs/monster4.gif', 'enchantjs/bigmonster1.gif', 'enchantjs/bigmonster2.gif', 'enchantjs/x2/map1.gif', 'enchantjs/x2/dotmat.gif', 'enchantjs/x1.5/chara0.png', 'enchantjs/x1.5/chara5.png', 'hackforplay/enchantbook.png', 'enchantjs/icon0.png', 'enchantjs/x2/effect0.png', 'hackforplay/madosyo_small.png', 'enchantjs/shadow.gif', 'enchantjs/x1.5/chara7.png',
-	'hackforplay/clear.png', 'hackforplay/gameover.png', 'hackforplay/button_retry.png', 'hackforplay/new_button_replay.png', 'hackforplay/new_button_retry.png', 'hackforplay/menu-button-menu.png', 'hackforplay/menu-button-restage.png', 'hackforplay/menu-button-hint.png', 'hackforplay/menu-button-comment.png', 'hackforplay/menu-button-retry.png', 'hackforplay/new_button_next.png', 'hackforplay/new_button_comment.png', 'hackforplay/new_button_restage.png', 'hackforplay/attack.png',
-	'hackforplay/magician_girl.png');
+game.preload(
+	'enchantjs/monster1.gif',
+	'enchantjs/monster2.gif',
+	'enchantjs/monster3.gif',
+	'enchantjs/monster4.gif',
+	'enchantjs/bigmonster1.gif',
+	'enchantjs/bigmonster2.gif',
+	'enchantjs/x2/map1.gif',
+	'enchantjs/x2/dotmat.gif',
+	'enchantjs/x1.5/chara0.png',
+	'enchantjs/x1.5/chara5.png',
+	'hackforplay/enchantbook.png',
+	'enchantjs/icon0.png',
+	'enchantjs/x2/effect0.png',
+	'hackforplay/madosyo_small.png',
+	'enchantjs/shadow.gif',
+	'enchantjs/x1.5/chara7.png',
+	'hackforplay/clear.png',
+	'hackforplay/gameover.png',
+	'hackforplay/button_retry.png',
+	'hackforplay/new_button_replay.png',
+	'hackforplay/new_button_retry.png',
+	'hackforplay/menu-button-menu.png',
+	'hackforplay/menu-button-restage.png',
+	'hackforplay/menu-button-hint.png',
+	'hackforplay/menu-button-comment.png',
+	'hackforplay/menu-button-retry.png',
+	'hackforplay/new_button_next.png',
+	'hackforplay/new_button_comment.png',
+	'hackforplay/new_button_restage.png',
+	'hackforplay/attack.png',
+	'hackforplay/magician_girl.png'
+);
 
 game.keybind(' '.charCodeAt(0), 'a');
-
-
 
 Hack.on('load', function() {
 	// Appending to Hack.maps
@@ -57,7 +88,8 @@ Hack.on('load', function() {
 			get: function() {
 				var previous = null;
 				Object.keys(Hack.maps).reduceRight(function(previousKey, currentKey) {
-					previous = Hack.map === Hack.maps[previousKey] ? currentKey : previous;
+					previous =
+						Hack.map === Hack.maps[previousKey] ? currentKey : previous;
 				});
 				return previous;
 			}
@@ -74,35 +106,65 @@ function createDefaultKeyboard() {
 	Hack.keyboard = keyboard;
 	Hack.popupGroup.addChild(keyboard);
 
-	keyboard.registerKeys([
-		'あいうえお', 'はひふへほ',
-		'かきくけこ', 'まみむめも',
-		'さしすせそ', 'や　ゆ　よ',
-		'たちつてと', 'らりるれろ',
-		'なにぬねの', 'わ　を　ん',
-		'ぁぃぅぇぉ', 'っ　ゃゅょ',
-		'ー～…、。 ', '・！？「」'
-	], 0);
+	keyboard.registerKeys(
+		[
+			'あいうえお',
+			'はひふへほ',
+			'かきくけこ',
+			'まみむめも',
+			'さしすせそ',
+			'や　ゆ　よ',
+			'たちつてと',
+			'らりるれろ',
+			'なにぬねの',
+			'わ　を　ん',
+			'ぁぃぅぇぉ',
+			'っ　ゃゅょ',
+			'ー～…、。 ',
+			'・！？「」'
+		],
+		0
+	);
 
-	keyboard.registerKeys([
-		'アイウエオ', 'ハヒフヘホ',
-		'カキクケコ', 'マミムメモ',
-		'サシスセソ', 'ヤ　ユ　ヨ',
-		'タチツテト', 'ラリルレロ',
-		'ナニヌネノ', 'ワ　ヲ　ン',
-		'ァィゥェォ', 'ッ　ャュョ',
-		'ー～…、。 ', '♂♀#/&'
-	], 1);
+	keyboard.registerKeys(
+		[
+			'アイウエオ',
+			'ハヒフヘホ',
+			'カキクケコ',
+			'マミムメモ',
+			'サシスセソ',
+			'ヤ　ユ　ヨ',
+			'タチツテト',
+			'ラリルレロ',
+			'ナニヌネノ',
+			'ワ　ヲ　ン',
+			'ァィゥェォ',
+			'ッ　ャュョ',
+			'ー～…、。 ',
+			'♂♀#/&'
+		],
+		1
+	);
 
-	keyboard.registerKeys([
-		'12345', '67890',
-		'ABCDE', 'FGHIJ',
-		'KLMNO', 'PQRST',
-		'UVWXY', 'Z()!?',
-		'abcde', 'fghij',
-		'klmno', 'pqrst',
-		'uvwxy', 'z @🍣😎'
-	], 2);
+	keyboard.registerKeys(
+		[
+			'12345',
+			'67890',
+			'ABCDE',
+			'FGHIJ',
+			'KLMNO',
+			'PQRST',
+			'UVWXY',
+			'Z()!?',
+			'abcde',
+			'fghij',
+			'klmno',
+			'pqrst',
+			'uvwxy',
+			'z @🍣😎'
+		],
+		2
+	);
 
 	keyboard.registerFunctionKey('かな', 0).on('click', () => {
 		keyboard.pageIndex = 0;
@@ -133,7 +195,9 @@ function createDefaultKeyboard() {
 	});
 
 	keyboard.registerFunctionKey('←', 5).on('click', () => {
-		keyboard.value = stringToArray(keyboard.value).slice(0, stringToArray(keyboard.value).length - 1).join('');
+		keyboard.value = stringToArray(keyboard.value)
+			.slice(0, stringToArray(keyboard.value).length - 1)
+			.join('');
 	});
 
 	keyboard.registerFunctionKey('スペース', 6).on('click', () => {
@@ -142,7 +206,6 @@ function createDefaultKeyboard() {
 }
 
 game.onawake = () => {
-
 	// マウス座標
 	let mouseX = null;
 	let mouseY = null;
@@ -168,8 +231,8 @@ game.onawake = () => {
 	// マウスの入力状態
 	Hack.mouseInput = new KeyClass();
 	let mousePressed = false;
-	game.rootScene.on('touchstart', () => mousePressed = true);
-	game.rootScene.on('touchend', () => mousePressed = false);
+	game.rootScene.on('touchstart', () => (mousePressed = true));
+	game.rootScene.on('touchend', () => (mousePressed = false));
 	game.on('enterframe', () => Hack.mouseInput.update(mousePressed));
 
 	// カメラグループ
@@ -181,25 +244,21 @@ game.onawake = () => {
 	game.rootScene.addChild(cameraGroup);
 
 	// デフォルトのカメラを作成する
-	const camera = Hack.camera = Camera.main = new Camera();
+	const camera = (Hack.camera = Camera.main = new Camera());
 
 	// ゲーム開始時にデフォルトのカメラのターゲットが存在しないならプレイヤーを割り当てる
 	game.on('load', () => {
 		if (!camera.target) camera.target = Hack.player;
 	});
 
-
 	// コントローラーグループ
 	const controllerGroup = new enchant.Group();
 	controllerGroup.name = 'ControllerGroup';
 	controllerGroup.order = 300;
 
-
 	Hack.controllerGroup = controllerGroup;
 
 	game.rootScene.addChild(controllerGroup);
-
-
 
 	// マップ関連の親
 	const world = new Group();
@@ -214,14 +273,12 @@ game.onawake = () => {
 
 	// ワールドが描画されたら描画先をデフォルトのキャンバスに差し替える
 	world.on('postrender', ({ canvasRenderer }) => {
-
 		canvasRenderer.targetSurface = game.rootScene._layers.Canvas;
 
 		// カメラに描画する
 		for (const camera of Camera.collection) {
 			camera.render();
 		}
-
 	});
 
 	const overlayGroup = new Group();
@@ -229,7 +286,6 @@ game.onawake = () => {
 	overlayGroup.order = 1000;
 	Hack.overlayGroup = overlayGroup;
 	game.rootScene.addChild(overlayGroup);
-
 
 	// DOMGroup
 	const domGroup = new Group();
@@ -262,10 +318,8 @@ game.onawake = () => {
 	apad.buttonMode = 'a';
 	apad.moveTo(400, 250);
 
-
 	controllerGroup.addChild(apad);
 	Hack.apad = apad;
-
 
 	Hack.pad.name = 'Pad';
 	Hack.apad.name = 'APad';
@@ -304,15 +358,20 @@ game.onawake = () => {
 	});
 
 	Hack.scoreLabel = (function(self, source) {
-		Object.keys(source).filter(function(key) {
-			var desc = Object.getOwnPropertyDescriptor(source, key);
-			return desc !== undefined && desc.enumerable;
-		}).forEach(function(key) {
-			self[key] = source[key];
-		});
+		Object.keys(source)
+			.filter(function(key) {
+				var desc = Object.getOwnPropertyDescriptor(source, key);
+				return desc !== undefined && desc.enumerable;
+			})
+			.forEach(function(key) {
+				self[key] = source[key];
+			});
 		Hack.menuGroup.addChild(self);
 		return self;
-	})(new ScoreLabel(Hack.menuGroup.x + 10, Hack.menuGroup.y + 88), Hack.scoreLabel);
+	})(
+		new ScoreLabel(Hack.menuGroup.x + 10, Hack.menuGroup.y + 88),
+		Hack.scoreLabel
+	);
 
 	feeles.setAlias('Hack', Hack);
 	feeles.setAlias('game', game);
@@ -380,7 +439,7 @@ MapObject.dictionary = {
 	grassland: 322,
 	waterside: 205,
 	flatGray: 135,
-	squareGray: 93,
+	squareGray: 93
 };
 
 // １枚ずつ切り分けたsurface
@@ -410,7 +469,7 @@ function tryFetchMapImage(name) {
 			y = ((frame / length) >> 0) * h;
 		var s = new Surface(w, h);
 		s.draw(game.assets['enchantjs/x2/dotmat.gif'], x, y, w, h, 0, 0, w, h);
-		return MapObject.surfaces[name] = s;
+		return (MapObject.surfaces[name] = s);
 	}
 	return undefined;
 }
@@ -435,14 +494,12 @@ Object.defineProperty(window, 'RPGMap', {
 	}
 });
 
-
-
 RPGMap.Layer = {
 	Over: 4,
 	Player: 3,
 	Middle: 2,
 	Shadow: 1,
-	Under: 0,
+	Under: 0
 };
 
 Hack.createMap = function(template) {
@@ -451,9 +508,10 @@ Hack.createMap = function(template) {
 	if (zenkaku) {
 		Hack.log(`⚠️ 全かくの ${zenkaku[0]} がマップに入っています!`);
 	}
-	var source = template.split('\n')
+	var source = template
+		.split('\n')
 		.map(function(line) {
-			return line.match(/\s*\d+[\s\|]?/g)
+			return line.match(/\s*\d+[\s\|]?/g);
 		})
 		.filter(function(line) {
 			return Array.isArray(line);
@@ -489,10 +547,12 @@ Hack.changeMap = function(mapName) {
 					Hack.log('まだ マップが つくられていないようだ');
 					break;
 				case 'number':
-					Hack.log(mapName + ' ではなく \'map' + mapName + '\' ではありませんか？');
+					Hack.log(
+						mapName + " ではなく 'map" + mapName + "' ではありませんか？"
+					);
 					break;
 				default:
-					Hack.log('Hack.changeMap(\'map2\'); の ように かいてみよう');
+					Hack.log("Hack.changeMap('map2'); の ように かいてみよう");
 					break;
 			}
 		} else if (!current) {
@@ -565,14 +625,16 @@ Hack.Vec2Dir = function(vec) {
 };
 
 Hack.Attack = function(x, y, damage, pushX, pushY) {
-	RPGObject.collection.filter(function(item) {
-		return item.mapX === x && item.mapY === y && item !== this;
-	}, this).forEach(function(item) {
-		var e = new Event('attacked');
-		e.attacker = this;
-		e.damage = damage || 0;
-		item.dispatchEvent(e);
-	}, this);
+	RPGObject.collection
+		.filter(function(item) {
+			return item.mapX === x && item.mapY === y && item !== this;
+		}, this)
+		.forEach(function(item) {
+			var e = new Event('attacked');
+			e.attacker = this;
+			e.damage = damage || 0;
+			item.dispatchEvent(e);
+		}, this);
 };
 
 /**
@@ -608,15 +670,20 @@ game.on('enterframe', function() {
  * time フレームが経過した時、behavior typeを指定する
  */
 enchant.Timeline.prototype.become = function(type, time) {
-	this.add(new enchant.Action({
-		onactionstart: function() {
-			var capital = type[0].toUpperCase() + type.substr(1).toLowerCase();
-			if (this instanceof RPGObject && BehaviorTypes.hasOwnProperty(capital)) {
-				this.behavior = BehaviorTypes[capital];
-			}
-		},
-		time: time || 0
-	}));
+	this.add(
+		new enchant.Action({
+			onactionstart: function() {
+				var capital = type[0].toUpperCase() + type.substr(1).toLowerCase();
+				if (
+					this instanceof RPGObject &&
+					BehaviorTypes.hasOwnProperty(capital)
+				) {
+					this.behavior = BehaviorTypes[capital];
+				}
+			},
+			time: time || 0
+		})
+	);
 	return this;
 };
 
@@ -629,17 +696,19 @@ enchant.Timeline.prototype.become = function(type, time) {
  * (Array) ====> value in Array
  * () ====> 0 ~ 1
  */
-window.random = window.random || function(min, max) {
-	if (arguments.length === 0) return Math.random();
-	if (min instanceof Array) {
-		var keys = Object.keys(min);
-		return min[keys[random(keys.length)]];
-	}
-	var _min = arguments.length >= 2 ? Math.min(min, max) : 0;
-	var _sub = arguments.length >= 2 ? Math.max(min, max) - _min : min;
-	if (min % 1 === 0 && (max === undefined || max % 1 === 0)) {
-		return _min + Math.random() * _sub >> 0; // integer
-	} else {
-		return _min + Math.random() * _sub;
-	}
-};
+window.random =
+	window.random ||
+	function(min, max) {
+		if (arguments.length === 0) return Math.random();
+		if (min instanceof Array) {
+			var keys = Object.keys(min);
+			return min[keys[random(keys.length)]];
+		}
+		var _min = arguments.length >= 2 ? Math.min(min, max) : 0;
+		var _sub = arguments.length >= 2 ? Math.max(min, max) - _min : min;
+		if (min % 1 === 0 && (max === undefined || max % 1 === 0)) {
+			return (_min + Math.random() * _sub) >> 0; // integer
+		} else {
+			return _min + Math.random() * _sub;
+		}
+	};

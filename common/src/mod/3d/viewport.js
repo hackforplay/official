@@ -1,7 +1,6 @@
 import { Matrix } from 'mod/3d/math';
 
 const Viewport = enchant.Class.create({
-
 	fov: null,
 	aspect: null,
 	near: null,
@@ -16,8 +15,6 @@ const Viewport = enchant.Class.create({
 	getMatrix: function() {
 		return this.matrix;
 	}
-
 });
-
 
 export default Viewport;
