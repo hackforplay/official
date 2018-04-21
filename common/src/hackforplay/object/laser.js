@@ -1,26 +1,29 @@
 import Vector2 from 'hackforplay/math/vector2';
 import Line from 'hackforplay/shapes/line';
-import { Sprite, Event } from 'enchantjs/enchant';
+import { Surface, Event } from 'enchantjs/enchant';
+import RPGObject from './object';
 import { drawLine } from 'hackforplay/utils/canvas2d-utils';
 import { reflect } from 'hackforplay/utils/math-utils';
 
 /**
  * レーザー
  */
-class Laser extends Sprite {
-    constructor(origin, direction, length, speed) {
+class Laser extends RPGObject {
+    constructor({ origin, direction, length, speed, thickness, color }) {
+        super();
+
         const w = Hack.map.width;
         const h = Hack.map.height;
-
-        super(w, h);
-
         this.image = new Surface(w, h);
         this.context = this.image.context;
 
         this.length = length;
         this.speed = speed;
+        this.thickness = thickness;
         this.position = 0;
         this.points = [];
+
+        Object.defineProperty(this, 'color', { value: color });
 
         this.points = [{
             point: origin,
@@ -35,7 +38,9 @@ class Laser extends Sprite {
         this.on('enterframe', this.update);
         this.on('prerender', this.render);
 
-        Hack.defaultParentNode.addChild(this);
+        this.moveTo(0, 0);
+        this.width = w;
+        this.height = h;
     }
 
     update() {
@@ -229,12 +234,8 @@ class Laser extends Sprite {
     stroke(context) {
         context.lineCap = 'round';
 
-        context.strokeStyle = 'blue';
-        context.lineWidth = 8;
-        context.stroke();
-
-        context.strokeStyle = '#fff';
-        context.lineWidth = 4;
+        context.strokeStyle = this.color;
+        context.lineWidth = this.thickness;
         context.stroke();
     }
 }
