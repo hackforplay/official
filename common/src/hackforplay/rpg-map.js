@@ -1,8 +1,11 @@
 import enchant from 'enchantjs/enchant';
+import { Surface, EventTarget } from 'enchantjs/enchant';
 import 'hackforplay/enchantjs-kit';
 import 'hackforplay/hack';
 import 'hackforplay/rpg-kit-rpgobjects';
 import 'hackforplay/rpg-kit-color';
+import Vector2 from 'hackforplay/math/vector2';
+import Line from 'hackforplay/shapes/line';
 
 /*
  * RPGMap
@@ -45,7 +48,18 @@ class RPGMap extends EventTarget {
 		this.fmap.name = 'FMap';
 		this.scene.name = 'MapScene';
 
-		this._surface = new enchant.Surface(tileWidth * mapWidth, tileHeight * mapHeight);
+		const w = tileWidth * mapWidth;
+		const h = tileHeight * mapHeight;
+
+		this._surface = new Surface(w, h);
+
+		// 反射ライン
+		this.reflectionLines = [
+			new Line(new Vector2(w, 0), new Vector2(0, 0)),
+			new Line(new Vector2(w, h), new Vector2(w, 0)),
+			new Line(new Vector2(0, 0), new Vector2(0, h)),
+			new Line(new Vector2(0, h), new Vector2(w, h))
+		];
 	}
 
 	load() {
