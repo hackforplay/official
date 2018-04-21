@@ -1,4 +1,4 @@
-hack-rpg/**/code.js
+hack-rpg/**/code*.js
 public
 webpack.config.js
 **/*.min.js
