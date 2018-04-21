@@ -4,6 +4,7 @@ import { Surface, Event } from 'enchantjs/enchant';
 import RPGObject from './object';
 import { drawLine } from 'hackforplay/utils/canvas2d-utils';
 import { reflect } from 'hackforplay/utils/math-utils';
+import SAT from 'lib/sat.min';
 
 /**
  * レーザー
@@ -129,7 +130,7 @@ class Laser extends RPGObject {
                     }));
                 }
                 const lastReflectionPoint = this.points[this.points.length - 1];
-                
+
                 // 反射点を追加する
                 this.points.push({
                     point: collidedPoint,
@@ -216,6 +217,11 @@ class Laser extends RPGObject {
 
         // レーザーを描画する
         if (points.length >= 2) {
+
+            // 全ての点が描画範囲外ならレーザーを削除
+            const box = new SAT.Box(new SAT.V(0, 0), this.width, this.height).toPolygon();
+            const isDestory = points.every(({ x, y }) => !SAT.pointInPolygon(new SAT.V(x, y), box));
+            if (isDestory) return this.setTimeout(this.destroy, 1);
 
             context.beginPath();
             context.moveTo(points[0].x, points[0].y);

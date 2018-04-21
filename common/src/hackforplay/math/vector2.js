@@ -97,6 +97,10 @@ class Vector2 {
         return `[${vector.x}; ${vector.y}]`;
     }
 
+    static from({ x, y }) {
+        return new Vector2(x, y);
+    }
+
     static equal(a, b) {
         return a.x === b.x && a.y === b.y;
     }
