@@ -90,6 +90,24 @@ export default class Rockman extends RPGObject {
 		}
 	}
 	/**
+	 * 特殊武器を発動（あるいは停止）する
+	 * @param {string} weapon 特殊武器の名前
+	 */
+	cmd(weapon) {
+		switch (weapon) {
+			case 'エアーシューター':
+				// WIP
+				const wind = this.summon(Skin.ワープ);
+				this.shoot(wind, this.forward, 6);
+				wind.force(0, -1);
+				wind.destroy(20);
+				break;
+			default:
+				log(`${direction} は正しい武器の名前ではありません`);
+				break;
+		}
+	}
+	/**
 	 * 召喚された時にコールされる
 	 */
 	しょうかんされたら() {}
@@ -140,6 +158,11 @@ function update() {
 			// distance <= rockmanSpeed, つまりこのフレームで到達
 			rockman._isOnTarget = true;
 			rockman.とうちゃくしたら(rockman.mapX, rockman.mapY);
+		}
+		// 向きを変更する
+		const signX = Math.sign(next.x - pos.x);
+		if (signX !== 0) {
+			rockman.forward = new Vector2(signX, 0);
 		}
 	}
 }
