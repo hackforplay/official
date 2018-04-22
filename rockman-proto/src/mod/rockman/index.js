@@ -117,6 +117,8 @@ export function summonRockman(ExtendedClass) {
 	rockman.collisionFlag = false;
 	rockman.locate(player.mapX, player.mapY);
 	rockman.forward = [1, 0];
+
+	previousRockman = rockman;
 }
 
 function update() {
