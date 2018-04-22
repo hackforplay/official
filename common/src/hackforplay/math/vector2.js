@@ -1,3 +1,5 @@
+import SAT from 'lib/sat.min';
+
 class Vector2 {
 	constructor(x, y) {
 		this.x = x || 0;
@@ -95,6 +97,10 @@ class Vector2 {
 	toString() {
 		const vector = this.toPrecision(1);
 		return `[${vector.x}; ${vector.y}]`;
+	}
+
+	toSAT() {
+		return new SAT.Vector(this.x, this.y);
 	}
 
 	static from({ x, y }) {
