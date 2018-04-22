@@ -39,6 +39,6 @@
 		"webpack-dev-server": "^2.11.2"
 	},
 	"dependencies": {
-		"feeles-ide": "^0.3.10"
+		"feeles-ide": "^0.3.11"
 	}
 }
