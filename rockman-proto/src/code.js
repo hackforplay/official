@@ -6,7 +6,9 @@ class MyRockman extends Rockman {
 		this.move(('▼ いどう', 'ひだりから'), pLeft);
 		this.move(('▼ いどう', 'うえから'), pTop);
 	}
-	とうちゃくしたら(left, top) {}
+	とうちゃくしたら(left, top) {
+		this.cmd(('▼ ブキ', 'エアーシューター'));
+	}
 }
 
 // ロックマンをしょうかん！

@@ -50,10 +50,10 @@ export const metadata = {
 	},
 	Rockman: {
 		name: `${cwd}Rockman.png`,
-		width: 40,
-		height: 40,
-		offsetX: -4,
-		offsetY: -8
+		width: 32,
+		height: 32,
+		offsetX: 0,
+		offsetY: 0
 	},
 	SuperArm: {
 		name: `${cwd}SuperArm.png`,
