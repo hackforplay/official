@@ -112,6 +112,8 @@ var __BehaviorTypes = {
 	Dead: 'dead' // 死亡状態
 };
 
+export const BehaviorTypes = __BehaviorTypes;
+
 import __RPGObject from './object/object';
 import __Player from './object/player';
 
