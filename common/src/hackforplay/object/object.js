@@ -50,7 +50,7 @@ class RPGObject extends Sprite {
 		Object.defineProperty(this, 'collisionFlag', {
 			configurable: true,
 			enumerable: true,
-			get: function() {
+			get: function () {
 				if (collisionFlag !== null) return collisionFlag;
 				for (var i = 0; i < noCollisionEvents.length; i++) {
 					if (this.isListening(noCollisionEvents[i])) {
@@ -59,7 +59,7 @@ class RPGObject extends Sprite {
 				}
 				return true;
 			},
-			set: function(value) {
+			set: function (value) {
 				collisionFlag = value;
 			}
 		});
@@ -67,34 +67,34 @@ class RPGObject extends Sprite {
 		Object.defineProperty(this, 'isKinematic', {
 			configurable: true,
 			enumerable: true,
-			get: function() {
+			get: function () {
 				return isKinematic !== null
 					? isKinematic
 					: !(
-							this.velocityX ||
-							this.velocityY ||
-							this.accelerationX ||
-							this.accelerationY
-					  );
+						this.velocityX ||
+						this.velocityY ||
+						this.accelerationX ||
+						this.accelerationY
+					);
 			},
-			set: function(value) {
+			set: function (value) {
 				isKinematic = value;
 			}
 		});
 		// Destroy when dead
-		this.on('becomedead', function() {
-			this.setTimeout(function() {
+		this.on('becomedead', function () {
+			this.setTimeout(function () {
 				this.destroy();
 			}, this.getFrame().length);
 		});
-		this.on('hpchange', function() {
+		this.on('hpchange', function () {
 			if (this.hp <= 0) {
 				this.behavior = BehaviorTypes.Dead;
 			}
 		});
 
 		// 歩き終わったときに自動でものを拾う設定
-		this.on('walkend', function() {
+		this.on('walkend', function () {
 			if (this.isAutoPickUp) {
 				this.pickUp();
 			}
@@ -211,11 +211,11 @@ class RPGObject extends Sprite {
 	setFrame(behavior, frame) {
 		// behavior is Type:string
 		// frame is Frames:array or Getter:function
-		(function(_local) {
+		(function (_local) {
 			if (typeof frame === 'function') {
 				this.getFrameOfBehavior[behavior] = _local;
 			} else {
-				this.getFrameOfBehavior[behavior] = function() {
+				this.getFrameOfBehavior[behavior] = function () {
 					return _local;
 				};
 			}
@@ -482,7 +482,7 @@ class RPGObject extends Sprite {
 		if (value === this._layer) return this._layer;
 
 		// Range of layer
-		var sortingOrder = Object.keys(RPGMap.Layer).map(function(key) {
+		var sortingOrder = Object.keys(RPGMap.Layer).map(function (key) {
 			return RPGMap.Layer[key];
 		});
 		var max = Math.max.apply(null, sortingOrder);
@@ -507,10 +507,10 @@ class RPGObject extends Sprite {
 	bringOver() {
 		// 現在のレイヤーより大きいレイヤーのうち最も小さいもの
 		var uppers = Object.keys(RPGMap.Layer)
-			.map(function(key) {
+			.map(function (key) {
 				return RPGMap.Layer[key];
 			}, this)
-			.filter(function(layer) {
+			.filter(function (layer) {
 				return layer > this.layer;
 			}, this);
 		this.layer = uppers.length > 0 ? Math.min.apply(null, uppers) : this.layer;
@@ -520,10 +520,10 @@ class RPGObject extends Sprite {
 	bringUnder() {
 		// 現在のレイヤーより小さいレイヤーのうち最も大きいもの
 		var unders = Object.keys(RPGMap.Layer)
-			.map(function(key) {
+			.map(function (key) {
 				return RPGMap.Layer[key];
 			}, this)
-			.filter(function(layer) {
+			.filter(function (layer) {
 				return layer < this.layer;
 			}, this);
 		this.layer = unders.length > 0 ? Math.max.apply(null, unders) : this.layer;
@@ -597,14 +597,14 @@ class RPGObject extends Sprite {
 		var vec =
 			value instanceof Array
 				? {
-						x: value[0],
-						y: value[1]
-				  }
+					x: value[0],
+					y: value[1]
+				}
 				: 'x' in value && 'y' in value
 					? {
-							x: value.x,
-							y: value.y
-					  }
+						x: value.x,
+						y: value.y
+					}
 					: this._forward;
 		var norm = Math.sqrt(vec.x * vec.x + vec.y * vec.y);
 		if (norm > 0) {
@@ -654,9 +654,9 @@ class RPGObject extends Sprite {
 	setFrameD9(behavior, frame) {
 		var array = typeof frame === 'function' ? frame() : frame;
 
-		this.setFrame(behavior, function() {
+		this.setFrame(behavior, function () {
 			var _array = [];
-			array.forEach(function(item, index) {
+			array.forEach(function (item, index) {
 				_array[index] =
 					item !== null && item >= 0 ? item + this.direction * 9 : item;
 			}, this);
