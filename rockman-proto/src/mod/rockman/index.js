@@ -1,6 +1,7 @@
 import { Core, Sprite } from 'enchantjs/enchant';
 import Hack from 'hackforplay/hack';
 import RPGObject from 'hackforplay/object/object';
+import { BehaviorTypes } from 'hackforplay/rpg-kit-rpgobjects';
 import Skin from 'hackforplay/skin';
 import { registerServant } from 'hackforplay/family';
 import Vector2 from 'hackforplay/math/vector2';
@@ -25,11 +26,11 @@ Skin.ロックマン = function() {
 		x: metadata.Rockman.offsetX,
 		y: metadata.Rockman.offsetY
 	};
-	this.setFrameD9(BehaviorTypes.Idle, [0]);
-	this.setFrameD9(BehaviorTypes.Walk, [null]);
-	this.setFrameD9(BehaviorTypes.Attack, [null]);
-	this.setFrameD9(BehaviorTypes.Damaged, [null]);
-	this.setFrameD9(BehaviorTypes.Dead, [null]);
+	this.setFrame(BehaviorTypes.Idle, [4]);
+	this.setFrame(BehaviorTypes.Walk, [1, 1, 2, 2, 2, 3, 3, 2, 2, 2]);
+	this.setFrame(BehaviorTypes.Attack, [null]);
+	this.setFrame(BehaviorTypes.Damaged, [null]);
+	this.setFrame(BehaviorTypes.Dead, [null]);
 	this.directionType = 'double';
 	this.forward = [1, 0];
 };
@@ -37,11 +38,11 @@ Skin.ロックマン = function() {
 export default class Rockman extends RPGObject {
 	constructor() {
 		super(Skin.ロックマン);
-		this.しょうかんされたら();
 
 		this.locate(player.mapX, player.mapY); // 初期値
 		this._target = new Vector2(this.x, this.y); // 現在の目的地
-		this._isOnTarget = true; // 目的到達フラグ
+
+		this.しょうかんされたら();
 
 		this._pMapX = player.mapX;
 		this._pMapY = player.mapY;
@@ -57,7 +58,7 @@ export default class Rockman extends RPGObject {
 		});
 	}
 	move(direction, amount) {
-		this._isOnTarget = false; // 歩き始める
+		this.behavior = BehaviorTypes.Walk; // 歩き始める
 		switch (direction) {
 			case 'ひだりから':
 				this._target.x = amount * 32 + this.offset.x;
@@ -85,7 +86,7 @@ export default class Rockman extends RPGObject {
 				break;
 			default:
 				log(`${direction} は正しい向きではありません`);
-				this._isOnTarget = true; // ストップ
+				this.behavior = BehaviorTypes.Idle; // ストップ
 				break;
 		}
 	}
@@ -146,7 +147,7 @@ function update() {
 
 	// 移動処理
 	const rockmanSpeed = 4; // ロックマンのスピード [px/frame]
-	if (!rockman._isOnTarget) {
+	if (rockman.behavior === BehaviorTypes.Walk) {
 		const pos = new Vector2(rockman.x, rockman.y);
 		const distance = pos.distance(rockman._target);
 		// rockmanSpeed [px] だけ進む
@@ -156,7 +157,7 @@ function update() {
 		rockman.y = next.y;
 		if (t >= 1) {
 			// distance <= rockmanSpeed, つまりこのフレームで到達
-			rockman._isOnTarget = true;
+			rockman.behavior = BehaviorTypes.Idle;
 			rockman.とうちゃくしたら(rockman.mapX, rockman.mapY);
 		}
 		// 向きを変更する
