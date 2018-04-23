@@ -1,9 +1,16 @@
+import { Core } from 'enchantjs/enchant';
+import Hack from 'hackforplay/hack';
 import 'hackforplay/core';
 // import 'mod/3d/core';
 import { setEnergy } from './mod/rockman/index';
 import './resources/preload';
 
+const game = Core.instance;
+
 async function gameFunc() {
+	game.rootScene.removeChild(Hack.controllerGroup); // バーチャルパッドを消す
+	Hack.scoreLabel.label = 'E :';
+
 	Hack.changeMap('map1'); // map1 をロード
 
 	self.player = new Player(); // プレイヤーをつくる
