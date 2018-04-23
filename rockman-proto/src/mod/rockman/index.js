@@ -99,6 +99,7 @@ export default class Rockman extends RPGObject {
 			case 'エアーシューター':
 				// WIP
 				const wind = this.summon(Skin.ワープ);
+				this.image = game.assets[metadata.AirShooter.name];
 				this.shoot(wind, this.forward, 6);
 				wind.force(0, -1);
 				wind.destroy(20);
