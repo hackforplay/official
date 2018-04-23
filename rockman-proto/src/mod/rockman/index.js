@@ -10,7 +10,7 @@ import { fileNames, metadata } from './resources/index';
 
 const game = Core.instance;
 const log = Hack.log;
-const lengthOfAppearingAnimation = 4;
+const lengthOfAppearingAnimation = 10;
 
 // 画像のプリロード
 game.preload(fileNames);
@@ -28,12 +28,13 @@ Skin.ロックマン = function() {
 		y: metadata.Rockman.offsetY
 	};
 	const _appearing = Array.from({ length: lengthOfAppearingAnimation }).fill(9);
+	const _stopping = Array.from({ length: 16 }).fill(5);
 	this.setFrame('appear', _appearing.concat(8, 7, 6, null));
 	this.setFrame(BehaviorTypes.Idle, [4]);
-	this.setFrame(BehaviorTypes.Walk, [1, 1, 2, 2, 2, 3, 3, 2, 2, 2]);
+	this.setFrame(BehaviorTypes.Walk, [4, 1, 1, 2, 2, 2, 3, 3, 2, 2, 2]);
 	this.setFrame(BehaviorTypes.Attack, [null]);
-	this.setFrame(BehaviorTypes.Damaged, [null]);
-	this.setFrame(BehaviorTypes.Dead, [12, 11, 11, 11, 10, 10, 10, null]);
+	this.setFrame(BehaviorTypes.Damaged, [12, 11, 11, 11, 10, 10, 10, null]);
+	this.setFrame(BehaviorTypes.Dead, _stopping.concat([6, 7, 8], _appearing));
 	this.directionType = 'double';
 	this.forward = [1, 0];
 };
@@ -113,12 +114,15 @@ export default class Rockman extends RPGObject {
 		switch (weapon) {
 			case 'エアーシューター':
 				// WIP
-				const wind = this.summon(Skin.ワープ);
-				// this.image = game.assets[metadata.AirShooter.name];
-				this.shoot(wind, this.forward, 6);
-				wind.force(0, -1);
-				wind.destroy(20);
-				energy = 0;
+				for (const vx of [4, 6, 8]) {
+					const wind = this.summon(Skin.ワープ);
+					// this.image = game.assets[metadata.AirShooter.name];
+					this.shoot(wind, this.forward, vx);
+					wind.force(0, -1);
+					wind.scale(0.5);
+					wind.destroy(20);
+				}
+				energy -= 100;
 				break;
 			default:
 				log(`${direction} は正しい武器の名前ではありません`);
@@ -150,6 +154,10 @@ export function setEnergy(value) {
 }
 
 export function summonRockman(ExtendedClass) {
+	if (energy <= 0) {
+		// エネルギー不足
+		return;
+	}
 	// 前回のロックマンを削除
 	if (rockman && rockman.parentNode) {
 		rockman.destroy();
@@ -194,7 +202,10 @@ function update() {
 
 	// エネルギーゲージ
 	if (energy <= 0) {
-		rockman.hp = 0; // たおれる
+		rockman.behavior = BehaviorTypes.Dead;
+		rockman.tl
+			.delay(16)
+			.moveBy(0, -lengthOfAppearingAnimation * 32, lengthOfAppearingAnimation);
 	}
 }
 
