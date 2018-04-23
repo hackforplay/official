@@ -35,6 +35,7 @@ Skin.ロックマン = function() {
 	this.setFrame(BehaviorTypes.Attack, [null]);
 	this.setFrame(BehaviorTypes.Damaged, [12, 11, 11, 11, 10, 10, 10, null]);
 	this.setFrame(BehaviorTypes.Dead, _stopping.concat([6, 7, 8], _appearing));
+	this.setFrame('AirShooter', [18, 18, 18, 18, 18, 18, 18, 18, null]);
 	this.directionType = 'double';
 	this.forward = [1, 0];
 };
@@ -114,15 +115,17 @@ export default class Rockman extends RPGObject {
 		switch (weapon) {
 			case 'エアーシューター':
 				// WIP
+				this.behavior = 'AirShooter';
 				for (const vx of [4, 6, 8]) {
 					const wind = this.summon(Skin.ワープ);
-					// this.image = game.assets[metadata.AirShooter.name];
 					this.shoot(wind, this.forward, vx);
 					wind.force(0, -1);
 					wind.scale(0.5);
 					wind.destroy(20);
 				}
-				energy -= 100;
+				this.tl.delay(this.getFrame().length).then(() => {
+					energy -= 100;
+				});
 				break;
 			default:
 				log(`${direction} は正しい武器の名前ではありません`);
