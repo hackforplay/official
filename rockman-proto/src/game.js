@@ -3,7 +3,6 @@ import Hack from 'hackforplay/hack';
 import 'hackforplay/core';
 // import 'mod/3d/core';
 import { setEnergy } from './mod/rockman/index';
-import './resources/preload';
 
 const game = Core.instance;
 

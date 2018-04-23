@@ -6,39 +6,12 @@ import Skin from 'hackforplay/skin';
 import { registerServant } from 'hackforplay/family';
 import Vector2 from 'hackforplay/math/vector2';
 
-import { fileNames, metadata } from './resources/index';
+import './preload';
+import { fileNames, metadata } from './resources/metadata';
 
 const game = Core.instance;
 const log = Hack.log;
 const lengthOfAppearingAnimation = 10;
-
-// 画像のプリロード
-game.preload(fileNames);
-
-// スキンを追加
-Skin.ロックマン = function() {
-	// this が bind されているかチェックする
-	if (!this instanceof RPGObject) return;
-
-	this.image = game.assets[metadata.Rockman.name];
-	this.width = metadata.Rockman.width;
-	this.height = metadata.Rockman.height;
-	this.offset = {
-		x: metadata.Rockman.offsetX,
-		y: metadata.Rockman.offsetY
-	};
-	const _appearing = Array.from({ length: lengthOfAppearingAnimation }).fill(9);
-	const _stopping = Array.from({ length: 16 }).fill(5);
-	this.setFrame('appear', _appearing.concat(8, 7, 6, null));
-	this.setFrame(BehaviorTypes.Idle, [4]);
-	this.setFrame(BehaviorTypes.Walk, [4, 1, 1, 2, 2, 2, 3, 3, 2, 2, 2]);
-	this.setFrame(BehaviorTypes.Attack, [null]);
-	this.setFrame(BehaviorTypes.Damaged, [12, 11, 11, 11, 10, 10, 10, null]);
-	this.setFrame(BehaviorTypes.Dead, _stopping.concat([6, 7, 8], _appearing));
-	this.setFrame('AirShooter', [18, 18, 18, 18, 18, 18, 18, 18, null]);
-	this.directionType = 'double';
-	this.forward = [1, 0];
-};
 
 export default class Rockman extends RPGObject {
 	constructor() {
@@ -116,12 +89,11 @@ export default class Rockman extends RPGObject {
 			case 'エアーシューター':
 				// WIP
 				this.behavior = 'AirShooter';
-				for (const vx of [4, 6, 8]) {
-					const wind = this.summon(Skin.ワープ);
+				for (const vx of [2, 3, 4]) {
+					const wind = this.summon(Skin.エアーシューター);
 					this.shoot(wind, this.forward, vx);
-					wind.force(0, -1);
-					wind.scale(0.5);
-					wind.destroy(20);
+					wind.force(0, -0.5);
+					wind.destroy(80);
 				}
 				this.tl.delay(this.getFrame().length).then(() => {
 					energy -= 100;
@@ -167,7 +139,9 @@ export function summonRockman(ExtendedClass) {
 	}
 	// ロックマンを生成
 	rockman = new ExtendedClass();
+	rockman.showHpLabel = false;
 	rockman.hp = 100;
+	rockman.scale(-1, 1);
 	// サーヴァント扱いにする
 	registerServant(player, rockman);
 }

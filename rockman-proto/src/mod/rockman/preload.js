@@ -1,7 +1,7 @@
 import { Core } from 'enchantjs/enchant';
 import { addSkin } from 'hackforplay/skin';
 
-import { fileNames, metadatas } from './metadata';
+import { fileNames, metadatas } from './resources/metadata';
 
 const game = Core.instance;
 if (game) {
