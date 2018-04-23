@@ -10,6 +10,7 @@ import { fileNames, metadata } from './resources/index';
 
 const game = Core.instance;
 const log = Hack.log;
+const lengthOfAppearingAnimation = 4;
 
 // 画像のプリロード
 game.preload(fileNames);
@@ -26,6 +27,8 @@ Skin.ロックマン = function() {
 		x: metadata.Rockman.offsetX,
 		y: metadata.Rockman.offsetY
 	};
+	const _appearing = Array.from({ length: lengthOfAppearingAnimation }).fill(9);
+	this.setFrame('appear', _appearing.concat(8, 7, 6, null));
 	this.setFrame(BehaviorTypes.Idle, [4]);
 	this.setFrame(BehaviorTypes.Walk, [1, 1, 2, 2, 2, 3, 3, 2, 2, 2]);
 	this.setFrame(BehaviorTypes.Attack, [null]);
@@ -39,10 +42,21 @@ export default class Rockman extends RPGObject {
 	constructor() {
 		super(Skin.ロックマン);
 
-		this.locate(player.mapX, player.mapY); // 初期値
 		this._target = new Vector2(this.x, this.y); // 現在の目的地
 
-		this.しょうかんされたら();
+		this.locate(
+			player.mapX + player.forward.x,
+			player.mapY + player.forward.y - lengthOfAppearingAnimation
+		);
+		this.tl
+			.moveBy(0, lengthOfAppearingAnimation * 32, lengthOfAppearingAnimation)
+			.delay(16)
+			.then(() => {
+				this.しょうかんされたら();
+			});
+		this.forward = player.forward;
+		this.collisionFlag = false;
+		this.behavior = 'appear';
 
 		this._pMapX = player.mapX;
 		this._pMapY = player.mapY;
@@ -134,9 +148,6 @@ export function summonRockman(ExtendedClass) {
 	rockman = new ExtendedClass();
 	// サーヴァント扱いにする
 	registerServant(player, rockman);
-	rockman.collisionFlag = false;
-	rockman.locate(player.mapX, player.mapY);
-	rockman.forward = [1, 0];
 }
 
 function update() {
