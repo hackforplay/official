@@ -29,7 +29,7 @@ if (game) {
 						this.setFrame(key, frames);
 					}
 				}
-				this.directionType = 'double';
+				this.directionType = metadata.directionType;
 				this.forward = [1, 0];
 			});
 		}

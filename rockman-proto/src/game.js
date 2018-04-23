@@ -1,6 +1,6 @@
 import 'hackforplay/core';
 // import 'mod/3d/core';
-import './mod/rockman/index';
+import { setEnergy } from './mod/rockman/index';
 import './resources/preload';
 
 async function gameFunc() {
@@ -16,6 +16,14 @@ async function gameFunc() {
 	item1.locate(10, 5);
 	item1.hp = 1;
 	item1.turn();
+
+	const item2 = new RPGObject(Skin.エネルギー缶);
+	item2.locate(6, 7);
+	item2.forward = [0, -1];
+	item2.on('playerenter', () => {
+		item2.destroy();
+		setEnergy(100);
+	});
 
 	/*+ モンスター アイテム せっち システム */
 

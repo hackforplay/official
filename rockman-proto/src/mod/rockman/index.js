@@ -33,7 +33,7 @@ Skin.ロックマン = function() {
 	this.setFrame(BehaviorTypes.Walk, [1, 1, 2, 2, 2, 3, 3, 2, 2, 2]);
 	this.setFrame(BehaviorTypes.Attack, [null]);
 	this.setFrame(BehaviorTypes.Damaged, [null]);
-	this.setFrame(BehaviorTypes.Dead, [null]);
+	this.setFrame(BehaviorTypes.Dead, [12, 11, 11, 11, 10, 10, 10, null]);
 	this.directionType = 'double';
 	this.forward = [1, 0];
 };
@@ -43,6 +43,7 @@ export default class Rockman extends RPGObject {
 		super(Skin.ロックマン);
 
 		this._target = new Vector2(this.x, this.y); // 現在の目的地
+		this._energy = 0; // 現在のエネルギー量
 
 		this.locate(
 			player.mapX + player.forward.x,
@@ -113,10 +114,11 @@ export default class Rockman extends RPGObject {
 			case 'エアーシューター':
 				// WIP
 				const wind = this.summon(Skin.ワープ);
-				this.image = game.assets[metadata.AirShooter.name];
+				// this.image = game.assets[metadata.AirShooter.name];
 				this.shoot(wind, this.forward, 6);
 				wind.force(0, -1);
 				wind.destroy(20);
+				energy = 0;
 				break;
 			default:
 				log(`${direction} は正しい武器の名前ではありません`);
@@ -138,6 +140,14 @@ export default class Rockman extends RPGObject {
 }
 
 let rockman; // インスタンス（１つしか作ってはいけない）
+let energy = 100; // ロックマンのエネルギーゲージ（インスタンスではなくゲームに対して一つ）
+
+export function getEnergy() {
+	return energy;
+}
+export function setEnergy(value) {
+	energy = value;
+}
 
 export function summonRockman(ExtendedClass) {
 	// 前回のロックマンを削除
@@ -146,11 +156,14 @@ export function summonRockman(ExtendedClass) {
 	}
 	// ロックマンを生成
 	rockman = new ExtendedClass();
+	rockman.hp = 100;
 	// サーヴァント扱いにする
 	registerServant(player, rockman);
 }
 
 function update() {
+	Hack.score = energy; // for debugging
+
 	// 魔道書から改変されてはいけない毎フレーム処理はここに書く
 	if (!rockman || !rockman.parentNode) {
 		// 今はいない
@@ -177,6 +190,11 @@ function update() {
 		if (signX !== 0) {
 			rockman.forward = new Vector2(signX, 0);
 		}
+	}
+
+	// エネルギーゲージ
+	if (energy <= 0) {
+		rockman.hp = 0; // たおれる
 	}
 }
 

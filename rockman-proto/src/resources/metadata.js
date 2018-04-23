@@ -15,7 +15,20 @@ export const metadatas = {
 			attack: [3],
 			damaged: [3, -1],
 			dead: [3, 2, 1, 0, null]
-		}
+		},
+		directionType: 'double'
+	},
+	EnergyTank: {
+		name: 'エネルギー缶',
+		fileName: abs('./EnergyTank.png'),
+		width: 16,
+		height: 16,
+		offsetX: 8,
+		offsetY: 8,
+		frames: {
+			idle: [0]
+		},
+		directionType: 'single'
 	}
 };
 
