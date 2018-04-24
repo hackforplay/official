@@ -34,41 +34,23 @@ function gameStartLazy() {
 	item1.onつねに = () => {
 		// 炎を作る
 		const effect1 = new Effect(-3, 5, 40, true);
-		// 炎にさわれないようにする
-		effect1.collisionFlag = false;
+		effect1.mod(Hack.createDamageMod(1));
 		// 炎の位置をドラゴンの位置から -2, -1 の位置に移動する ( map 2 )
 		effect1.locate(item1.mapX - 2, item1.mapY - 1, 'map2');
 		// 炎の動きを設定する
 		effect1.force(0, -0.1);
-		// 炎に何かが当たったら...
-		effect1.onふれはじめた = event => {
-			// ドラゴン以外に当たったら...
-			if (event.hit !== item1) {
-				// 1 ダメージの攻撃！
-				Hack.Attack(event.mapX, event.mapY, 1);
-			}
-		};
 
 		if (game.frame % 30 > 0) return;
 
 		//　炎を作る
 		const effect2 = new Effect(-3, 5, 40);
-		// 炎にさわれないようにする
-		effect2.collisionFlag = false;
-		// 炎の位置をドラゴンの位置から -2, -1 の位置に移動する ( map 2 )
-		effect2.locate(item1.mapX - 2, item1.mapY - 1);
+		effect2.mod(Hack.createDamageMod(450));
+		// 炎の位置をドラゴンの位置から -1, -1 の位置に移動する ( map 2 )
+		effect2.locate(item1.mapX - 1, item1.mapY - 1, 'map2');
 		// 炎の動きを設定する 1
 		effect2.force(0, -0.1);
 		// 炎の動きを設定する 2
 		effect2.velocityX = 0;
-		// 炎が何かに当たったら...
-		effect2.onふれはじめた = event => {
-			// ドラゴン以外に当たったら...
-			if (event.hit !== item1) {
-				// 450 ダメージの攻撃！！！！
-				Hack.Attack(event.mapX, event.mapY, 450);
-			}
-		};
 	};
 
 	// dragon をコードから利用可能に
