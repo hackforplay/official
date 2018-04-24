@@ -1,5 +1,6 @@
 const cwd = 'mod/rockman/resources/';
 const abs = rel => rel.replace('./', cwd);
+const fill = (num, length) => Array.from({ length: 10 }).fill(num);
 
 export const metadatas = {
 	AirShooterEffect: {
@@ -22,17 +23,13 @@ export const metadatas = {
 		offsetX: 0,
 		offsetY: 0,
 		frames: {
-			appear: Array.from({ length: 10 })
-				.fill(9)
-				.concat(8, 7, 6, null),
+			appear: fill(9, 10).concat(8, 7, 6, null),
 			idle: [4],
 			walk: [4, 1, 1, 2, 2, 2, 3, 3, 2, 2, 2],
 			attack: [null],
 			damaged: [12, 11, 11, 11, 10, 10, 10, null],
-			dead: Array.from({ length: 16 })
-				.fill(5)
-				.concat([6, 7, 8], Array.from({ length: 10 }).fill(9)),
-			AirShooter: [18, 18, 18, 18, 18, 18, 18, 18, null]
+			dead: fill(5, 13).concat([6, 7, 8], fill(9, 10)),
+			AirShooter: fill(18, 8).concat(null)
 		},
 		directionType: 'double'
 	},
