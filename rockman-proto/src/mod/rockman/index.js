@@ -5,6 +5,7 @@ import { BehaviorTypes } from 'hackforplay/rpg-kit-rpgobjects';
 import Skin from 'hackforplay/skin';
 import { registerServant } from 'hackforplay/family';
 import Vector2 from 'hackforplay/math/vector2';
+import Family from 'hackforplay/family';
 
 import './preload';
 import { fileNames, metadata } from './resources/metadata';
@@ -18,7 +19,7 @@ export default class Rockman extends RPGObject {
 		super(Skin.ロックマン);
 
 		this._target = new Vector2(this.x, this.y); // 現在の目的地
-		this._energy = 0; // 現在のエネルギー量
+		this._timeStopper = false; // タイムストッパーを使っているフラグ
 
 		this.locate(
 			player.mapX + player.forward.x,
@@ -99,6 +100,28 @@ export default class Rockman extends RPGObject {
 					energy -= 100;
 				});
 				break;
+			case 'タイムストッパー':
+				// WIP
+				this.become('TimeStopper');
+				this._timeStopper = !this._timeStopper; // フラグ反転
+				if (this._timeStopper) {
+					// ストップ
+					for (const item of RPGObject.collection) {
+						// プレイヤー陣営以外のオブジェクト全てをストップ
+						if (item.family !== Family.Player) {
+							item.stop();
+						}
+					}
+				} else {
+					// ストッパー解除
+					for (const item of RPGObject.collection) {
+						// 元に戻す
+						if (item.family !== Family.Player) {
+							item.resume();
+						}
+					}
+				}
+				break;
 			default:
 				log(`${weapon} は正しい武器の名前ではありません`);
 				break;
@@ -132,7 +155,7 @@ export default class Rockman extends RPGObject {
 }
 
 let rockman; // インスタンス（１つしか作ってはいけない）
-let energy = 100; // ロックマンのエネルギーゲージ（インスタンスではなくゲームに対して一つ）
+let energy = 1000; // ロックマンのエネルギーゲージ（インスタンスではなくゲームに対して一つ）
 
 export function getEnergy() {
 	return energy;
@@ -162,7 +185,11 @@ function update() {
 	Hack.score = energy; // for debugging
 
 	// 魔道書から改変されてはいけない毎フレーム処理はここに書く
-	if (!rockman || !rockman.parentNode) {
+	if (
+		!rockman ||
+		!rockman.parentNode ||
+		rockman.behavior === BehaviorTypes.Dead
+	) {
 		// 今はいない
 		return;
 	}
@@ -189,12 +216,20 @@ function update() {
 		}
 	}
 
+	// タイムストッパー
+	if (rockman._timeStopper) {
+		energy -= 20; // 使用中は常に減り続ける
+	}
+
 	// エネルギーゲージ
 	if (energy <= 0) {
 		rockman.behavior = BehaviorTypes.Dead;
 		rockman.tl
 			.delay(16)
 			.moveBy(0, -lengthOfAppearingAnimation * 32, lengthOfAppearingAnimation);
+		if (this._timeStopper) {
+			this.cmd('タイムストッパー'); // 強制解除
+		}
 	}
 }
 
