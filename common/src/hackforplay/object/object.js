@@ -799,7 +799,8 @@ function makeHpLabel(self) {
  */
 Hack.createDamageMod = damage =>
 	function damageMod() {
-		this.isDamageObject = true;
+		this.isDamageObject = true; // ダメージ処理を行うフラグ
+		this.collisionFlag = false; // ダメージオブジェクトそのものは, ぶつからない
 
 		this.on('enterframe', () => {
 			// 接触している RPGObject を取得する
