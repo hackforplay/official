@@ -303,17 +303,6 @@ class RPGObject extends Sprite {
 		this.behavior = BehaviorTypes.Idle;
 	}
 
-	onattacked(event) {
-		if (!this.damageTime && typeof this.hp === 'number') {
-			// ダメージ判定が起こる状態で,
-			if (isOpposite(this, event.attacker)) {
-				// 敵対している相手なら
-				this.damageTime = this.attackedDamageTime;
-				this.hp -= event.damage;
-			}
-		}
-	}
-
 	async walk(distance = 1, forward = null, setForward = true) {
 		if (!Hack.isPlaying) return;
 		if (!this.isKinematic) return;
@@ -833,6 +822,18 @@ Hack.createDamageMod = damage =>
 
 			// 攻撃する
 			for (const object of hits) {
+				// ダメージ処理
+				//   従来は onattacked イベントハンドラを使っていたが,
+				//   処理を上書きされないようここに移した
+				if (!object.damageTime && typeof object.hp === 'number') {
+					// ダメージ判定が起こる状態で,
+					if (isOpposite(object, this)) {
+						// 敵対している相手(もしくはその関係者)なら
+						object.damageTime = object.attackedDamageTime;
+						object.hp -= damage;
+					}
+				}
+				// attacked Event
 				object.dispatchEvent(
 					new Event('attacked', {
 						attacker: this, // attacker は弾などのエフェクトの場合もある
