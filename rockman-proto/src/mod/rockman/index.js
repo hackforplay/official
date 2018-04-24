@@ -10,7 +10,7 @@ import './preload';
 import { fileNames, metadata } from './resources/metadata';
 
 const game = Core.instance;
-const log = Hack.log;
+const log = (...args) => Hack.log(...args);
 const lengthOfAppearingAnimation = 10;
 
 export default class Rockman extends RPGObject {
