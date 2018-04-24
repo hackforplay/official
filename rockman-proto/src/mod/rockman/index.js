@@ -100,7 +100,7 @@ export default class Rockman extends RPGObject {
 				});
 				break;
 			default:
-				log(`${direction} は正しい武器の名前ではありません`);
+				log(`${weapon} は正しい武器の名前ではありません`);
 				break;
 		}
 	}
