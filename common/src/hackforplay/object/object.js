@@ -51,7 +51,7 @@ class RPGObject extends Sprite {
 		Object.defineProperty(this, 'collisionFlag', {
 			configurable: true,
 			enumerable: true,
-			get: function () {
+			get: function() {
 				if (collisionFlag !== null) return collisionFlag;
 				for (var i = 0; i < noCollisionEvents.length; i++) {
 					if (this.isListening(noCollisionEvents[i])) {
@@ -60,7 +60,7 @@ class RPGObject extends Sprite {
 				}
 				return true;
 			},
-			set: function (value) {
+			set: function(value) {
 				collisionFlag = value;
 			}
 		});
@@ -68,34 +68,34 @@ class RPGObject extends Sprite {
 		Object.defineProperty(this, 'isKinematic', {
 			configurable: true,
 			enumerable: true,
-			get: function () {
+			get: function() {
 				return isKinematic !== null
 					? isKinematic
 					: !(
-						this.velocityX ||
-						this.velocityY ||
-						this.accelerationX ||
-						this.accelerationY
-					);
+							this.velocityX ||
+							this.velocityY ||
+							this.accelerationX ||
+							this.accelerationY
+					  );
 			},
-			set: function (value) {
+			set: function(value) {
 				isKinematic = value;
 			}
 		});
 		// Destroy when dead
-		this.on('becomedead', function () {
-			this.setTimeout(function () {
+		this.on('becomedead', function() {
+			this.setTimeout(function() {
 				this.destroy();
 			}, this.getFrame().length);
 		});
-		this.on('hpchange', function () {
+		this.on('hpchange', function() {
 			if (this.hp <= 0) {
 				this.behavior = BehaviorTypes.Dead;
 			}
 		});
 
 		// 歩き終わったときに自動でものを拾う設定
-		this.on('walkend', function () {
+		this.on('walkend', function() {
 			if (this.isAutoPickUp) {
 				this.pickUp();
 			}
@@ -139,9 +139,7 @@ class RPGObject extends Sprite {
 
 		this.colliderOffset = new SAT.V(2, 2);
 		// 衝突判定用のポリゴン
-		this.collider = new SAT.Box(
-			this.colliderOffset, 28, 28
-		).toPolygon();
+		this.collider = new SAT.Box(this.colliderOffset, 28, 28).toPolygon();
 
 		// ツリーに追加
 		Hack.defaultParentNode.addChild(this);
@@ -226,11 +224,11 @@ class RPGObject extends Sprite {
 	setFrame(behavior, frame) {
 		// behavior is Type:string
 		// frame is Frames:array or Getter:function
-		(function (_local) {
+		(function(_local) {
 			if (typeof frame === 'function') {
 				this.getFrameOfBehavior[behavior] = _local;
 			} else {
-				this.getFrameOfBehavior[behavior] = function () {
+				this.getFrameOfBehavior[behavior] = function() {
 					return _local;
 				};
 			}
@@ -293,7 +291,10 @@ class RPGObject extends Sprite {
 		const damageObject = this.summon(Hack.createDamageMod(this.atk));
 		damageObject.locate(dx, dy);
 		damageObject.updateCollider();
-		damageObject.setTimeout(() => damageObject.destroy(), this.getFrame().length);
+		damageObject.setTimeout(
+			() => damageObject.destroy(),
+			this.getFrame().length
+		);
 
 		await new Promise(resolve => {
 			this.setTimeout(resolve, this.getFrame().length);
@@ -496,7 +497,7 @@ class RPGObject extends Sprite {
 		if (value === this._layer) return this._layer;
 
 		// Range of layer
-		var sortingOrder = Object.keys(RPGMap.Layer).map(function (key) {
+		var sortingOrder = Object.keys(RPGMap.Layer).map(function(key) {
 			return RPGMap.Layer[key];
 		});
 		var max = Math.max.apply(null, sortingOrder);
@@ -521,10 +522,10 @@ class RPGObject extends Sprite {
 	bringOver() {
 		// 現在のレイヤーより大きいレイヤーのうち最も小さいもの
 		var uppers = Object.keys(RPGMap.Layer)
-			.map(function (key) {
+			.map(function(key) {
 				return RPGMap.Layer[key];
 			}, this)
-			.filter(function (layer) {
+			.filter(function(layer) {
 				return layer > this.layer;
 			}, this);
 		this.layer = uppers.length > 0 ? Math.min.apply(null, uppers) : this.layer;
@@ -534,10 +535,10 @@ class RPGObject extends Sprite {
 	bringUnder() {
 		// 現在のレイヤーより小さいレイヤーのうち最も大きいもの
 		var unders = Object.keys(RPGMap.Layer)
-			.map(function (key) {
+			.map(function(key) {
 				return RPGMap.Layer[key];
 			}, this)
-			.filter(function (layer) {
+			.filter(function(layer) {
 				return layer < this.layer;
 			}, this);
 		this.layer = unders.length > 0 ? Math.max.apply(null, unders) : this.layer;
@@ -611,14 +612,14 @@ class RPGObject extends Sprite {
 		var vec =
 			value instanceof Array
 				? {
-					x: value[0],
-					y: value[1]
-				}
+						x: value[0],
+						y: value[1]
+				  }
 				: 'x' in value && 'y' in value
 					? {
-						x: value.x,
-						y: value.y
-					}
+							x: value.x,
+							y: value.y
+					  }
 					: this._forward;
 		var norm = Math.sqrt(vec.x * vec.x + vec.y * vec.y);
 		if (norm > 0) {
@@ -668,9 +669,9 @@ class RPGObject extends Sprite {
 	setFrameD9(behavior, frame) {
 		var array = typeof frame === 'function' ? frame() : frame;
 
-		this.setFrame(behavior, function () {
+		this.setFrame(behavior, function() {
 			var _array = [];
-			array.forEach(function (item, index) {
+			array.forEach(function(item, index) {
 				_array[index] =
 					item !== null && item >= 0 ? item + this.direction * 9 : item;
 			}, this);
@@ -781,7 +782,6 @@ class RPGObject extends Sprite {
 		// 自分と同じ Family を持つ従者とする
 		const appended = new _class(skin);
 		registerServant(this, appended);
-		appended.master = this;
 		if (this.map) {
 			// 同じ場所に配置する
 			appended.locate(this.mapX, this.mapY, this.map.name);
@@ -806,42 +806,42 @@ function makeHpLabel(self) {
 
 /**
  * ダメージを与える MOD を生成する
- * @param {number} damage 
+ * @param {number} damage
  */
-Hack.createDamageMod = (damage) => function damageMod() {
+Hack.createDamageMod = damage =>
+	function damageMod() {
+		this.isDamageObject = true;
 
-	this.isDamageObject = true;
+		this.on('enterframe', () => {
+			// 接触している RPGObject を取得する
+			const hits = RPGObject.collection.filter(object => {
+				if (object === this) return false;
+				if (object.isDamageObject) return false;
 
-	this.on('enterframe', () => {
+				const cols1 = this.colliders ? this.colliders : [this.collider];
+				const cols2 = object.colliders ? object.colliders : [object.collider];
 
-		// 接触している RPGObject を取得する
-		const hits = RPGObject.collection.filter((object) => {
-
-			if (object === this) return false;
-			if (object.isDamageObject) return false;
-
-			const cols1 = this.colliders ? this.colliders : [this.collider];
-			const cols2 = object.colliders ? object.colliders : [object.collider];
-
-			for (const col1 of cols1) {
-				for (const col2 of cols2) {
-					const response = new SAT.Response();
-					const collided = SAT.testPolygonPolygon(col1, col2, response);
-					if (collided) return true;
+				for (const col1 of cols1) {
+					for (const col2 of cols2) {
+						const response = new SAT.Response();
+						const collided = SAT.testPolygonPolygon(col1, col2, response);
+						if (collided) return true;
+					}
 				}
-			}
-			return false;
-		})
+				return false;
+			});
 
-		// 攻撃する
-		for (const object of hits) {
-			object.dispatchEvent(new Event('attacked', {
-				attacker: this.master || this,
-				damage
-			}));
-		}
-	});
-}
+			// 攻撃する
+			for (const object of hits) {
+				object.dispatchEvent(
+					new Event('attacked', {
+						attacker: this, // attacker は弾などのエフェクトの場合もある
+						damage
+					})
+				);
+			}
+		});
+	};
 
 // RPGObject.collection に必要な初期化
 RPGObject._collectionTarget = [RPGObject];
