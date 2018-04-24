@@ -100,7 +100,7 @@
         await self.wait(); // 少しやすむ
 
         const バクエン = self.summon(('▼ スキン', Skin.バクエン));
-        バクエン.collisionFlag = false;
+        バクエン.mod(Hack.createDamageMod(item1.atk)); // ダメージオブジェクトにする
         self.shoot(バクエン, self.forward, 6);
         const fx = self.forward.x,
           fy = self.forward.y;
@@ -110,9 +110,6 @@
         バクエン.scale(random(0.99, 1.5));
         バクエン.force(-fx * random(0, 0.199), -fy * random(0, 0.199));
         バクエン.destroy(20);
-        バクエン.onふれはじめた = (event) => {
-          Hack.Attack.call(バクエン, event.mapX, event.mapY, self.atk);
-        };
 
         /*+ じどう*/
       });
@@ -279,14 +276,10 @@
       const item1 = new RPGObject(('▼ スキン', Skin.ロック));
       item1.family = ('▼ ファミリー', Family.マップ);
       item1.locate(7, 5, 'map1');
-      item1.atk = 99;
       item1.on(('▼ イベント', 'こうげきされた'), () => {
         const バクエン = item1.summon(('▼ スキン', Skin.バクエン));
+        バクエン.mod(Hack.createDamageMod(1)); // ダメージオブジェクトにする
         バクエン.velocityY = -1;
-        バクエン.collisionFlag = false;
-        バクエン.onふれはじめた = (event) => {
-          Hack.Attack.call(バクエン, event.mapX, event.mapY, 1);
-        };
         バクエン.destroy(20);
         item1.destroy();
       });
@@ -437,10 +430,7 @@
       item1.setTimeout(() => {
         const バクエン = item1.summon(('▼ スキン', Skin.バクエン));
         バクエン.velocityY = -1;
-        バクエン.collisionFlag = false;
-        バクエン.onふれはじめた = (event) => {
-          Hack.Attack.call(バクエン, event.mapX, event.mapY, 1);
-        };
+        バクエン.mod(Hack.createDamageMod(1)); // ダメージオブジェクトにする
         バクエン.destroy(20);
         item1.destroy();
       }, 90);
@@ -553,13 +543,10 @@
   - label: バクエン
     code: |
       const item1 = new RPGObject(('▼ スキン', Skin.バクエン);
+      item1.mod(Hack.createDamageMod(item1.atk)); // ダメージオブジェクトにする
       item1.family = ('▼ ファミリー', Family.マップ);
       item1.locate(7, 5, 'map1');
       item1.velocityY = -1;
-      item1.collisionFlag = false;
-      item1.onふれはじめた = (event) => {
-        Hack.Attack.call(item1, event.mapX, event.mapY, 1);
-      };
       item1.destroy(20);
     image: trimmed/explosion.png
     description: 立ち昇る爆炎。ふれると１のダメージを受ける
