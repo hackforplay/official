@@ -88,7 +88,7 @@ export default class Rockman extends RPGObject {
 		switch (weapon) {
 			case 'エアーシューター':
 				// WIP
-				this.behavior = 'AirShooter';
+				this.become('AirShooter');
 				for (const vx of [2, 3, 4]) {
 					const wind = this.summon(Skin.エアーシューター);
 					this.shoot(wind, this.forward, vx);
@@ -103,6 +103,19 @@ export default class Rockman extends RPGObject {
 				log(`${weapon} は正しい武器の名前ではありません`);
 				break;
 		}
+	}
+	/**
+	 * BehaviorTypes を設定し, しばらくすると戻る
+	 * @param {string} behavior behavior の名前
+	 */
+	become(behavior) {
+		if (!this.getFrameOfBehavior[behavior]) {
+			throw new Error(`${behavior} のアニメーションはありません`);
+		}
+		this.behavior = behavior;
+		this.setTimeout(() => {
+			this.behavior = BehaviorTypes.Idle;
+		}, this.getFrame().length);
 	}
 	/**
 	 * 召喚された時にコールされる
