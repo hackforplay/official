@@ -141,7 +141,6 @@ export function summonRockman(ExtendedClass) {
 	rockman = new ExtendedClass();
 	rockman.showHpLabel = false;
 	rockman.hp = 100;
-	rockman.scale(-1, 1);
 	// サーヴァント扱いにする
 	registerServant(player, rockman);
 }

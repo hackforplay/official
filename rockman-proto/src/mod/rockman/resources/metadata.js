@@ -33,7 +33,8 @@ export const metadatas = {
 				.fill(5)
 				.concat([6, 7, 8], Array.from({ length: 10 }).fill(9)),
 			AirShooter: [18, 18, 18, 18, 18, 18, 18, 18, null]
-		}
+		},
+		directionType: 'double'
 	},
 	NeoMetall: {
 		name: 'ネオメットール',
