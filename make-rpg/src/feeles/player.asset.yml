@@ -38,11 +38,11 @@
       player.on(('▼ イベント', 'こうげきするとき'), (event) => {
         const 使い手 = event.target;
         const ビーム = 使い手.summon(('▼ スキン', Skin.ビーム));
-        ビーム.onふれはじめた = (event) => {
-          Hack.Attack.call(使い手, event.mapX, event.mapY, 使い手.atk);
-          ビーム.destroy();
-        };
+        ビーム.mod(Hack.createDamageMod(使い手.atk)); // ダメージオブジェクトにする
         使い手.shoot(ビーム, 使い手.forward, 10);
+        ビーム.on('triggerexit', () => {
+          ビーム.destroy(); // かんつうしない
+        });
       });
   - label: ボム
     image: trimmed/map-29-0.png
@@ -56,14 +56,9 @@
         ボム.family = ('▼ ファミリー', Family.ドクリツ);
         ボム.locate(使い手.mapX, 使い手.mapY);
         ボム.setTimeout(() => {
-          const バクエン = new RPGObject();
-          バクエン.mod(('▼ スキン', Skin.バクエン));
-          バクエン.locate(ボム.mapX, ボム.mapY);
+          const バクエン = ボム.summon(('▼ スキン', Skin.バクエン));
           バクエン.velocityY = -1;
-          バクエン.collisionFlag = false;
-          バクエン.onふれはじめた = (event) => {
-            Hack.Attack.call(バクエン, event.mapX, event.mapY, 使い手.atk);
-          };
+          バクエン.mod(Hack.createDamageMod(使い手.atk)); // ダメージオブジェクトにする
           バクエン.destroy(20);
           ボム.destroy();
         }, 90);
