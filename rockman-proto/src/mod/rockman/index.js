@@ -20,6 +20,7 @@ export default class Rockman extends RPGObject {
 
 		this._target = new Vector2(this.x, this.y); // 現在の目的地
 		this._timeStopper = false; // タイムストッパーを使っているフラグ
+		this._leafShield = false; // リーフシールドを使っているフラグ
 
 		this.locate(
 			player.mapX + player.forward.x,
@@ -86,6 +87,7 @@ export default class Rockman extends RPGObject {
 	 * @param {string} weapon 特殊武器の名前
 	 */
 	cmd(weapon) {
+		const rockman = this;
 		switch (weapon) {
 			case 'エアーシューター':
 				// WIP
@@ -100,11 +102,35 @@ export default class Rockman extends RPGObject {
 					energy -= 100;
 				});
 				break;
+			case 'リーフシールド':
+				// WIP
+				this._leafShield = !this._leafShield; // フラグ反転
+				if (this._leafShield) {
+					this.become('LeafShield');
+					// 見えないシールドを展開
+					this._leafShieldInstance = this.summon(function() {
+						this.width = 60;
+						this.height = 60;
+						this.offset = {
+							x: (32 - this.width) / 2,
+							y: (32 - this.height) / 2
+						};
+						this.name = 'リーフシールド';
+					});
+					// シールドにはダメージ効果がある
+					this._leafShieldInstance.mod(Hack.createDamageMod(1));
+				} else {
+					// シールドを解除
+					if (this._leafShieldInstance) {
+						this._leafShieldInstance.destroy();
+					}
+				}
+				break;
 			case 'タイムストッパー':
 				// WIP
-				this.become('TimeStopper');
 				this._timeStopper = !this._timeStopper; // フラグ反転
 				if (this._timeStopper) {
+					this.become('TimeStopper');
 					// ストップ
 					for (const item of RPGObject.collection) {
 						// プレイヤー陣営以外のオブジェクト全てをストップ
@@ -132,13 +158,29 @@ export default class Rockman extends RPGObject {
 	 * @param {string} behavior behavior の名前
 	 */
 	become(behavior) {
-		if (!this.getFrameOfBehavior[behavior]) {
+		this.behavior = behavior;
+		const frames = this.getFrame();
+		if (!frames) {
 			throw new Error(`${behavior} のアニメーションはありません`);
 		}
-		this.behavior = behavior;
-		this.setTimeout(() => {
-			this.behavior = BehaviorTypes.Idle;
-		}, this.getFrame().length);
+		// null が来たら Idle に戻る
+		const length = frames.indexOf(null);
+		if (length > -1) {
+			this.setTimeout(() => {
+				this.behavior = BehaviorTypes.Idle;
+			}, length);
+		}
+	}
+	onbecomedead() {
+		this.tl
+			.delay(16)
+			.moveBy(0, -lengthOfAppearingAnimation * 32, lengthOfAppearingAnimation);
+		if (this._timeStopper) {
+			this.cmd('タイムストッパー'); // 強制解除
+		}
+		if (this._leafShield) {
+			this.cmd('リーフシールド'); // 強制解除
+		}
 	}
 	/**
 	 * 召喚された時にコールされる
@@ -156,6 +198,7 @@ export default class Rockman extends RPGObject {
 
 let rockman; // インスタンス（１つしか作ってはいけない）
 let energy = 1000; // ロックマンのエネルギーゲージ（インスタンスではなくゲームに対して一つ）
+let argsWhenRespawn; // ロックマンをリスポーンしようとしている場合, その引数
 
 export function getEnergy() {
 	return energy;
@@ -169,9 +212,11 @@ export function summonRockman(ExtendedClass) {
 		// エネルギー不足
 		return;
 	}
-	// 前回のロックマンを削除
+	// 前回のロックマンがまだ残っている
 	if (rockman && rockman.parentNode) {
-		rockman.destroy();
+		rockman.hp = 0; // 体力を 0 にすることで仕切り直しする
+		argsWhenRespawn = arguments;
+		return;
 	}
 	// ロックマンを生成
 	rockman = new ExtendedClass();
@@ -191,6 +236,11 @@ function update() {
 		rockman.behavior === BehaviorTypes.Dead
 	) {
 		// 今はいない
+		if (rockman && !rockman.parentNode && argsWhenRespawn) {
+			// リスポーンさせる
+			summonRockman(...argsWhenRespawn);
+			argsWhenRespawn = null;
+		}
 		return;
 	}
 
@@ -220,16 +270,14 @@ function update() {
 	if (rockman._timeStopper) {
 		energy -= 20; // 使用中は常に減り続ける
 	}
+	// リーフシールド
+	if (rockman._leafShield) {
+		energy -= 10; // 使用中は常に減り続ける
+	}
 
 	// エネルギーゲージ
 	if (energy <= 0) {
 		rockman.behavior = BehaviorTypes.Dead;
-		rockman.tl
-			.delay(16)
-			.moveBy(0, -lengthOfAppearingAnimation * 32, lengthOfAppearingAnimation);
-		if (this._timeStopper) {
-			this.cmd('タイムストッパー'); // 強制解除
-		}
 	}
 }
 

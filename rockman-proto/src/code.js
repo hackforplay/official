@@ -5,9 +5,10 @@ class MyRockman extends Rockman {
 	}
 	プレイヤーがあるいたら(left, top, pLeft, pTop) {}
 	とうちゃくしたら(left, top) {
-		this.cmd(('▼ ブキ', 'エアーシューター'));
+		this.cmd(('▼ ブキ', 'リーフシールド'));
 	}
 }
 
 // ロックマンをしょうかん！
 summonRockman(MyRockman);
+enchant.Core.instance._debug = true;
