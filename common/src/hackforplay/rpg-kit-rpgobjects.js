@@ -3,6 +3,7 @@ import 'enchantjs/enchant';
 import 'enchantjs/ui.enchant';
 import 'hackforplay/hack';
 import * as synonyms from './synonyms';
+import SAT from 'lib/sat.min';
 
 /**
 * RPGObject
@@ -146,10 +147,16 @@ Hack.assets.knight = function() {
 	this.setFrameD9(BehaviorTypes.Dead, [1, null]);
 	this.directionType = 'quadruple';
 	this.forward = [0, 1];
+	// ダメージ判定用のポリゴン
+	this.colliderOffset = new SAT.V(10, 6);
+	this.collider = new SAT.Box(this.colliderOffset, 28, 38).toPolygon();
 };
 Hack.assets.darkKnight = function() {
 	this.mod(Hack.assets.knight);
 	this.image = game.assets['enchantjs/x1.5/chara7.png'];
+	// ダメージ判定用のポリゴン
+	this.colliderOffset = new SAT.V(10, 6);
+	this.collider = new SAT.Box(this.colliderOffset, 28, 38).toPolygon();
 };
 
 Hack.assets.magician = function() {
@@ -181,6 +188,9 @@ Hack.assets.magician = function() {
 	this.setFrameD9(BehaviorTypes.Dead, [1, null]);
 	this.directionType = 'quadruple';
 	this.forward = [0, 1];
+	// ダメージ判定用のポリゴン
+	this.colliderOffset = new SAT.V(10, 6);
+	this.collider = new SAT.Box(this.colliderOffset, 28, 38).toPolygon();
 };
 
 Hack.assets.slime = function() {
@@ -216,6 +226,9 @@ Hack.assets.slime = function() {
 	this.setFrame(BehaviorTypes.Dead, [5, 5, 5, 5, 7, 7, 7, null]);
 	this.directionType = 'double';
 	this.forward = [-1, 0];
+	// ダメージ判定用のポリゴン
+	this.colliderOffset = new SAT.V(10, 10);
+	this.collider = new SAT.Box(this.colliderOffset, 28, 28).toPolygon();
 };
 var __BlueSlime = enchant.Class(RPGObject, {
 	initialize: function() {
@@ -259,6 +272,9 @@ Hack.assets.insect = function() {
 	this.setFrame(BehaviorTypes.Dead, [5, 5, 5, 5, 7, 7, 7, null]);
 	this.directionType = 'double';
 	this.forward = [-1, 0];
+	// ダメージ判定用のポリゴン
+	this.colliderOffset = new SAT.V(6, 18);
+	this.collider = new SAT.Box(this.colliderOffset, 36, 28).toPolygon();
 };
 var __Insect = enchant.Class(RPGObject, {
 	initialize: function() {
@@ -302,6 +318,9 @@ Hack.assets.spider = function() {
 	this.setFrame(BehaviorTypes.Dead, [5, 5, 5, 5, 7, 7, 7, null]);
 	this.directionType = 'double';
 	this.forward = [-1, 0];
+	// ダメージ判定用のポリゴン
+	this.colliderOffset = new SAT.V(4, 18);
+	this.collider = new SAT.Box(this.colliderOffset, 56, 40).toPolygon();
 };
 var __Spider = enchant.Class(RPGObject, {
 	initialize: function() {
@@ -349,6 +368,10 @@ Hack.assets.bat = function() {
 	this.setFrame(BehaviorTypes.Dead, [5, 5, 5, 5, 7, 7, 7, null]);
 	this.directionType = 'double';
 	this.forward = [-1, 0];
+	this.mod(Hack.assets.shadowMod);
+	// ダメージ判定用のポリゴン
+	this.colliderOffset = new SAT.V(4, 4);
+	this.collider = new SAT.Box(this.colliderOffset, 40, 26).toPolygon();
 };
 Hack.assets.shadowMod = function() {
 	// shadow
@@ -361,8 +384,12 @@ Hack.assets.shadowMod = function() {
 		y: this.height - this.shadow.height
 	};
 	this.shadow.scale(this.width / 64, this.height / 64);
-	this.parentNode.addChild(this.shadow);
-	this.map.layerChangeFlag = true;
+	if (this.parentNode) {
+		this.parentNode.addChild(this.shadow);
+	}
+	if (this.map) {
+		this.map.layerChangeFlag = true;
+	}
 	this.on('added', function() {
 		this.parentNode.addChild(this.shadow);
 		this.map.layerChangeFlag = true;
@@ -497,6 +524,9 @@ Hack.assets.dragon = function() {
 	]);
 	this.directionType = 'double';
 	this.forward = [-1, 0];
+	// ダメージ判定用のポリゴン
+	this.colliderOffset = new SAT.V(0, 0);
+	this.collider = new SAT.Box(this.colliderOffset, 80, 80).toPolygon();
 };
 var __Dragon = enchant.Class(RPGObject, {
 	initialize: function() {
@@ -630,6 +660,9 @@ Hack.assets.minotaur = function() {
 	]);
 	this.directionType = 'double';
 	this.forward = [-1, 0];
+	// ダメージ判定用のポリゴン
+	this.colliderOffset = new SAT.V(0, 0);
+	this.collider = new SAT.Box(this.colliderOffset, 80, 80).toPolygon();
 };
 var __Minotaur = enchant.Class(RPGObject, {
 	initialize: function() {
@@ -686,6 +719,9 @@ Hack.assets.boy = function() {
 	this.setFrameD9(BehaviorTypes.Dead, [_1, null]);
 	this.directionType = 'quadruple';
 	this.forward = [0, 1];
+	// ダメージ判定用のポリゴン
+	this.colliderOffset = new SAT.V(12, 14);
+	this.collider = new SAT.Box(this.colliderOffset, 24, 34).toPolygon();
 };
 var __Boy = enchant.Class(RPGObject, {
 	initialize: function() {
@@ -742,6 +778,9 @@ Hack.assets.girl = function() {
 	this.setFrameD9(BehaviorTypes.Dead, [_1, null]);
 	this.directionType = 'quadruple';
 	this.forward = [0, 1];
+	// ダメージ判定用のポリゴン
+	this.colliderOffset = new SAT.V(12, 14);
+	this.collider = new SAT.Box(this.colliderOffset, 24, 34).toPolygon();
 };
 var __Girl = enchant.Class(RPGObject, {
 	initialize: function() {
@@ -798,6 +837,9 @@ Hack.assets.woman = function() {
 	this.setFrameD9(BehaviorTypes.Dead, [_1, null]);
 	this.directionType = 'quadruple';
 	this.forward = [0, 1];
+	// ダメージ判定用のポリゴン
+	this.colliderOffset = new SAT.V(12, 14);
+	this.collider = new SAT.Box(this.colliderOffset, 24, 34).toPolygon();
 };
 var __Woman = enchant.Class(RPGObject, {
 	initialize: function() {
@@ -945,6 +987,9 @@ Hack.assets.ouroboros = function() {
 	]);
 	this.setFrame(BehaviorTypes.Dead, [1, 5, 7, 7, 7, 7, 4, 0, 0, null]);
 	this.forward = [-1, 0];
+	// ダメージ判定用のポリゴン
+	this.colliderOffset = new SAT.V(10, 38);
+	this.collider = new SAT.Box(this.colliderOffset, 60, 36).toPolygon();
 };
 
 var __Effect = enchant.Class(RPGObject, {
