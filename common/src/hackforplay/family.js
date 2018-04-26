@@ -22,7 +22,11 @@ const servantMasterMap = new WeakMap(); // 従者関係の参照を保持する�
  * @param {RPGObject} item2 別のオブジェクト
  */
 export function isOpposite(item1, item2) {
-	if (hasContract(item1, item2) || hasContract(item2, item1)) {
+	if (
+		item1 === item2 ||
+		hasContract(item1, item2) ||
+		hasContract(item2, item1)
+	) {
 		return false; // どちらかが一方の従者である
 	}
 	if (

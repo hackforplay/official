@@ -10,7 +10,7 @@ import SAT from 'lib/sat.min';
  * レーザー
  */
 class Laser extends RPGObject {
-	constructor({ origin, direction, length, speed, thickness, color }) {
+	constructor({ origin, direction, length, speed, thickness, color, damage }) {
 		super();
 
 		const w = Hack.map.width;
@@ -44,6 +44,9 @@ class Laser extends RPGObject {
 		this.moveTo(0, 0);
 		this.width = w;
 		this.height = h;
+
+		this.damage = damage;
+		this.mod(Hack.createDamageMod(this.damage));
 	}
 
 	update() {
@@ -174,22 +177,38 @@ class Laser extends RPGObject {
 		}.call(this, newLine));
 	}
 
-	render() {
-		const context = this.context;
+	updateCollider() {
+		const points = this.getRenderPoints();
 
-		context.clearRect(0, 0, this.width, this.height);
+		this.colliders = [];
 
-		// 反射線を描画する
-		if (this.debug) {
-			for (const line of Hack.map.reflectionLines) {
-				drawLine(context, line, 1, '#000');
-				const center = line.start.add(line.end.subtract(line.start).scale(0.5));
-				drawLine(context, new Line(center, center.add(line.normal.scale(10))));
-			}
+		for (let i = 0; i < points.length - 1; ++i) {
+			const p1 = points[i];
+			const p2 = points[i + 1];
+
+			const dir1 = p2
+				.subtract(p1)
+				.normalize()
+				.rotate(Math.PI / 2);
+			const dir2 = p2
+				.subtract(p1)
+				.normalize()
+				.rotate(-Math.PI / 2);
+
+			const t = this.thickness / 2;
+
+			this.colliders.push(
+				new SAT.Polygon(new SAT.Vector(), [
+					p1.add(dir1.scale(t)).toSAT(),
+					p1.add(dir2.scale(t)).toSAT(),
+					p2.add(dir2.scale(t)).toSAT(),
+					p2.add(dir1.scale(t)).toSAT()
+				])
+			);
 		}
+	}
 
-		if (!this.points.length) return;
-
+	getRenderPoints() {
 		const points = [];
 
 		const startPosition = Math.max(this.position - this.length, 0);
@@ -258,6 +277,26 @@ class Laser extends RPGObject {
 				);
 			}
 		}
+		return points;
+	}
+
+	render() {
+		const context = this.context;
+
+		context.clearRect(0, 0, this.width, this.height);
+
+		// 反射線を描画する
+		if (this.debug) {
+			for (const line of Hack.map.reflectionLines) {
+				drawLine(context, line, 1, '#000');
+				const center = line.start.add(line.end.subtract(line.start).scale(0.5));
+				drawLine(context, new Line(center, center.add(line.normal.scale(10))));
+			}
+		}
+
+		if (!this.points.length) return;
+
+		const points = this.getRenderPoints();
 
 		// レーザーを描画する
 		if (points.length >= 2) {

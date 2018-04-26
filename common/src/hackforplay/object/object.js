@@ -5,6 +5,7 @@ import 'hackforplay/hack';
 import * as synonyms from 'hackforplay/synonyms';
 import Skin from '../skin';
 import Family, { isOpposite, registerServant } from '../family';
+import SAT from 'lib/sat.min';
 
 // 1 フレーム ( enterframe ) 間隔で next する
 // Unity の StartCoroutine みたいな仕様
@@ -136,6 +137,10 @@ class RPGObject extends Sprite {
 			this.name = Skin.__name.get(mod) || this.name;
 		}
 
+		this.colliderOffset = new SAT.V(2, 2);
+		// 衝突判定用のポリゴン
+		this.collider = new SAT.Box(this.colliderOffset, 28, 28).toPolygon();
+
 		// ツリーに追加
 		Hack.defaultParentNode.addChild(this);
 	}
@@ -159,6 +164,13 @@ class RPGObject extends Sprite {
 		};
 	}
 
+	updateCollider() {
+		this.collider.setOffset({
+			x: this.x - this.offset.x + this.colliderOffset.x,
+			y: this.y - this.offset.y + this.colliderOffset.y
+		});
+	}
+
 	get directionType() {
 		return this._directionType || 'single'; // デフォルトは single
 	}
@@ -177,6 +189,7 @@ class RPGObject extends Sprite {
 	}
 
 	geneticUpdate() {
+		this.updateCollider();
 		if (!Hack.isPlaying) return;
 		// enter frame
 		if (typeof this.hp === 'number') {
@@ -287,15 +300,17 @@ class RPGObject extends Sprite {
 
 	async attack() {
 		if (this.behavior !== BehaviorTypes.Idle || !Hack.isPlaying) return;
-		var f = this.forward;
 		this.behavior = BehaviorTypes.Attack;
-		Hack.Attack.call(
-			this,
-			this.mapX + f.x,
-			this.mapY + f.y,
-			this.atk,
-			f.x,
-			f.y
+		const dx = this.mapX + this.forward.x;
+		const dy = this.mapY + this.forward.y;
+
+		// ダメージを与えるオブジェクトを生成する
+		const damageObject = this.summon(Hack.createDamageMod(this.atk));
+		damageObject.locate(dx, dy);
+		damageObject.updateCollider();
+		damageObject.setTimeout(
+			() => damageObject.destroy(),
+			this.getFrame().length
 		);
 
 		await new Promise(resolve => {
@@ -303,17 +318,6 @@ class RPGObject extends Sprite {
 		});
 
 		this.behavior = BehaviorTypes.Idle;
-	}
-
-	onattacked(event) {
-		if (!this.damageTime && typeof this.hp === 'number') {
-			// ダメージ判定が起こる状態で,
-			if (isOpposite(this, event.attacker)) {
-				// 敵対している相手なら
-				this.damageTime = this.attackedDamageTime;
-				this.hp -= event.damage;
-			}
-		}
 	}
 
 	async walk(distance = 1, forward = null, setForward = true) {
@@ -786,9 +790,9 @@ class RPGObject extends Sprite {
 		this._family = family;
 	}
 
-	summon(skin) {
+	summon(skin, _class = RPGObject) {
 		// 自分と同じ Family を持つ従者とする
-		const appended = new RPGObject(skin);
+		const appended = new _class(skin);
 		registerServant(this, appended);
 		if (this.map) {
 			// 同じ場所に配置する
@@ -811,6 +815,58 @@ function makeHpLabel(self) {
 	});
 	return label;
 }
+
+/**
+ * ダメージを与える MOD を生成する
+ * @param {number} damage
+ */
+Hack.createDamageMod = damage =>
+	function damageMod() {
+		this.isDamageObject = true; // ダメージ処理を行うフラグ
+		this.collisionFlag = false; // ダメージオブジェクトそのものは, ぶつからない
+
+		this.on('enterframe', () => {
+			// 接触している RPGObject を取得する
+			const hits = RPGObject.collection.filter(object => {
+				if (object === this) return false;
+				if (object.isDamageObject) return false;
+
+				const cols1 = this.colliders ? this.colliders : [this.collider];
+				const cols2 = object.colliders ? object.colliders : [object.collider];
+
+				for (const col1 of cols1) {
+					for (const col2 of cols2) {
+						const response = new SAT.Response();
+						const collided = SAT.testPolygonPolygon(col1, col2, response);
+						if (collided) return true;
+					}
+				}
+				return false;
+			});
+     
+			// 攻撃する
+			for (const object of hits) {
+				// ダメージ処理
+				//   従来は onattacked イベントハンドラを使っていたが,
+				//   処理を上書きされないようここに移した
+				if (!object.damageTime && typeof object.hp === 'number') {
+					// ダメージ判定が起こる状態で,
+					if (isOpposite(object, this)) {
+						// 敵対している相手(もしくはその関係者)なら
+						object.damageTime = object.attackedDamageTime;
+						object.hp -= damage;
+					}
+				}
+				// attacked Event
+				object.dispatchEvent(
+					new Event('attacked', {
+						attacker: this, // attacker は弾などのエフェクトの場合もある
+						damage
+					})
+				);
+			}
+		});
+	};
 
 // RPGObject.collection に必要な初期化
 RPGObject._collectionTarget = [RPGObject];
