@@ -186,17 +186,25 @@ class Laser extends RPGObject {
 			const p1 = points[i];
 			const p2 = points[i + 1];
 
-			const dir1 = p2.subtract(p1).normalize().rotate(Math.PI / 2);
-			const dir2 = p2.subtract(p1).normalize().rotate(-Math.PI / 2);
+			const dir1 = p2
+				.subtract(p1)
+				.normalize()
+				.rotate(Math.PI / 2);
+			const dir2 = p2
+				.subtract(p1)
+				.normalize()
+				.rotate(-Math.PI / 2);
 
 			const t = this.thickness / 2;
 
-			this.colliders.push(new SAT.Polygon(new SAT.Vector(), [
-				p1.add(dir1.scale(t)).toSAT(),
-				p1.add(dir2.scale(t)).toSAT(),
-				p2.add(dir2.scale(t)).toSAT(),
-				p2.add(dir1.scale(t)).toSAT()
-			]));
+			this.colliders.push(
+				new SAT.Polygon(new SAT.Vector(), [
+					p1.add(dir1.scale(t)).toSAT(),
+					p1.add(dir2.scale(t)).toSAT(),
+					p2.add(dir2.scale(t)).toSAT(),
+					p2.add(dir1.scale(t)).toSAT()
+				])
+			);
 		}
 	}
 
