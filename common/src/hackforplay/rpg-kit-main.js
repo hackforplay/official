@@ -1,6 +1,7 @@
 import 'hackforplay/enchantjs-kit';
 import 'mod/stop';
 import 'mod/coordinate';
+import SAT from 'lib/sat.min';
 
 import 'hackforplay/hack';
 import 'hackforplay/rpg-kit-rpgobjects';
@@ -484,6 +485,9 @@ Object.keys(MapObject.dictionary).forEach(function(name) {
 			x: 0,
 			y: 0
 		};
+		// 衝突判定用のポリゴン
+		this.colliderOffset = new SAT.V(0, 0);
+		this.collider = new SAT.Box(this.colliderOffset, 32, 32).toPolygon();
 		this.directionType = 'single';
 		this.forward = [0, -1];
 	};
