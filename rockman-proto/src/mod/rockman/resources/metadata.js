@@ -15,6 +15,18 @@ export const metadatas = {
 		},
 		directionType: 'double'
 	},
+	Bullet: {
+		name: 'Rockman/Bullet',
+		fileName: abs('./Bullet.png'),
+		width: 8,
+		height: 8,
+		offsetX: 12,
+		offsetY: 12,
+		frames: {
+			idle: [0]
+		},
+		directionType: 'single'
+	},
 	Rockman: {
 		name: 'ロックマン',
 		fileName: abs('./Rockman.png'),

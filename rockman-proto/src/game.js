@@ -12,7 +12,7 @@ async function gameFunc() {
 
 	Hack.changeMap('map1'); // map1 をロード
 
-	self.player = new Player(); // プレイヤーをつくる
+	self.player = new Player(('▼ スキン', _kきし)); // プレイヤーをつくる
 	player.mod(('▼ スキン', _kきし)); // 見た目
 	player.locate(3, 5); // はじめの位置
 
