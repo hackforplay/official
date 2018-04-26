@@ -5,6 +5,7 @@ import 'hackforplay/core';
 import { setEnergy } from './mod/rockman/index';
 
 const game = Core.instance;
+game._debug = true;
 
 async function gameFunc() {
 	game.rootScene.removeChild(Hack.controllerGroup); // バーチャルパッドを消す

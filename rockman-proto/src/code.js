@@ -11,4 +11,3 @@ class MyRockman extends Rockman {
 
 // ロックマンをしょうかん！
 summonRockman(MyRockman);
-enchant.Core.instance._debug = true;
