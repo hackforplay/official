@@ -107,7 +107,7 @@ class RPGObject extends Sprite {
 			y: 0
 		};
 
-		this.directionType = null;
+		this._directionType = null;
 
 		// 初期化
 		this.velocityX = this.velocityY = this.accelerationX = this.accelerationY = 0;
@@ -169,6 +169,23 @@ class RPGObject extends Sprite {
 			x: this.x - this.offset.x + this.colliderOffset.x,
 			y: this.y - this.offset.y + this.colliderOffset.y
 		});
+	}
+
+	get directionType() {
+		return this._directionType || 'single'; // デフォルトは single
+	}
+
+	set directionType(value) {
+		switch (value) {
+			case 'single':
+			case 'double':
+			case 'quadruple':
+				this._directionType = value;
+				break;
+			default:
+				throw new Error(`${value} は正しい directionType ではありません`);
+				break;
+		}
 	}
 
 	geneticUpdate() {
@@ -619,11 +636,13 @@ class RPGObject extends Sprite {
 		}
 		switch (this.directionType) {
 			case 'single':
+				// 画像は上向きと想定する
 				var rad = Math.atan2(this._forward.y, this._forward.x);
 				var enchantRot = rad / Math.PI * 180 + 90; // 基準は上,時計回りの度数法
 				this.rotation = (enchantRot + 360) % 360;
 				break;
 			case 'double':
+				// 画像は左向きと想定する
 				if (this._forward.x !== 0) {
 					this.scaleX = -Math.sign(this._forward.x) * Math.abs(this.scaleX);
 				}
@@ -637,6 +656,8 @@ class RPGObject extends Sprite {
 
 	get direction() {
 		switch (this.directionType) {
+			case 'single':
+				return 0;
 			case 'double':
 				return this.forward.x;
 			case 'quadruple':
@@ -646,11 +667,12 @@ class RPGObject extends Sprite {
 
 	set direction(value) {
 		switch (this.directionType) {
-			case 'double':
-				this.forward = [Math.sign(value) || -1, 0];
-				return;
+			case 'single':
 			case 'quadruple':
 				this.forward = Hack.Dir2Vec(value);
+				break;
+			case 'double':
+				this.forward = [Math.sign(value) || -1, 0];
 				break;
 		}
 	}
@@ -680,6 +702,7 @@ class RPGObject extends Sprite {
 					}[this.direction] + c; // direction to turn index
 				this.direction = [1, -1, -1, 1][i % 2]; // turn index to direction
 				break;
+			case 'single':
 			case 'quadruple':
 				c = typeof count === 'number' ? count % 4 + 4 : 1;
 				i = [3, 2, 0, 1][this.direction] + c; // direction to turn index
@@ -820,7 +843,7 @@ Hack.createDamageMod = damage =>
 				}
 				return false;
 			});
-
+     
 			// 攻撃する
 			for (const object of hits) {
 				// ダメージ処理

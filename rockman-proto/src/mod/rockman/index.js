@@ -5,44 +5,35 @@ import { BehaviorTypes } from 'hackforplay/rpg-kit-rpgobjects';
 import Skin from 'hackforplay/skin';
 import { registerServant } from 'hackforplay/family';
 import Vector2 from 'hackforplay/math/vector2';
+import Family from 'hackforplay/family';
 
-import { fileNames, metadata } from './resources/index';
+import './preload';
+import { fileNames, metadata } from './resources/metadata';
 
 const game = Core.instance;
-const log = Hack.log;
-
-// 画像のプリロード
-game.preload(fileNames);
-
-// スキンを追加
-Skin.ロックマン = function() {
-	// this が bind されているかチェックする
-	if (!this instanceof RPGObject) return;
-
-	this.image = game.assets[metadata.Rockman.name];
-	this.width = metadata.Rockman.width;
-	this.height = metadata.Rockman.height;
-	this.offset = {
-		x: metadata.Rockman.offsetX,
-		y: metadata.Rockman.offsetY
-	};
-	this.setFrame(BehaviorTypes.Idle, [4]);
-	this.setFrame(BehaviorTypes.Walk, [1, 1, 2, 2, 2, 3, 3, 2, 2, 2]);
-	this.setFrame(BehaviorTypes.Attack, [null]);
-	this.setFrame(BehaviorTypes.Damaged, [null]);
-	this.setFrame(BehaviorTypes.Dead, [null]);
-	this.directionType = 'double';
-	this.forward = [1, 0];
-};
+const log = (...args) => Hack.log(...args);
+const lengthOfAppearingAnimation = 10;
 
 export default class Rockman extends RPGObject {
 	constructor() {
 		super(Skin.ロックマン);
 
-		this.locate(player.mapX, player.mapY); // 初期値
 		this._target = new Vector2(this.x, this.y); // 現在の目的地
+		this._timeStopper = false; // タイムストッパーを使っているフラグ
 
-		this.しょうかんされたら();
+		this.locate(
+			player.mapX + player.forward.x,
+			player.mapY + player.forward.y - lengthOfAppearingAnimation
+		);
+		this.tl
+			.moveBy(0, lengthOfAppearingAnimation * 32, lengthOfAppearingAnimation)
+			.delay(16)
+			.then(() => {
+				this.しょうかんされたら();
+			});
+		this.forward = player.forward;
+		this.collisionFlag = false;
+		this.behavior = 'appear';
 
 		this._pMapX = player.mapX;
 		this._pMapY = player.mapY;
@@ -98,15 +89,56 @@ export default class Rockman extends RPGObject {
 		switch (weapon) {
 			case 'エアーシューター':
 				// WIP
-				const wind = this.summon(Skin.ワープ);
-				this.shoot(wind, this.forward, 6);
-				wind.force(0, -1);
-				wind.destroy(20);
+				this.become('AirShooter');
+				for (const vx of [2, 3, 4]) {
+					const wind = this.summon(Skin.エアーシューター);
+					this.shoot(wind, this.forward, vx);
+					wind.force(0, -0.5);
+					wind.destroy(80);
+				}
+				this.tl.delay(this.getFrame().length).then(() => {
+					energy -= 100;
+				});
+				break;
+			case 'タイムストッパー':
+				// WIP
+				this.become('TimeStopper');
+				this._timeStopper = !this._timeStopper; // フラグ反転
+				if (this._timeStopper) {
+					// ストップ
+					for (const item of RPGObject.collection) {
+						// プレイヤー陣営以外のオブジェクト全てをストップ
+						if (item.family !== Family.Player) {
+							item.stop();
+						}
+					}
+				} else {
+					// ストッパー解除
+					for (const item of RPGObject.collection) {
+						// 元に戻す
+						if (item.family !== Family.Player) {
+							item.resume();
+						}
+					}
+				}
 				break;
 			default:
-				log(`${direction} は正しい武器の名前ではありません`);
+				log(`${weapon} は正しい武器の名前ではありません`);
 				break;
 		}
+	}
+	/**
+	 * BehaviorTypes を設定し, しばらくすると戻る
+	 * @param {string} behavior behavior の名前
+	 */
+	become(behavior) {
+		if (!this.getFrameOfBehavior[behavior]) {
+			throw new Error(`${behavior} のアニメーションはありません`);
+		}
+		this.behavior = behavior;
+		this.setTimeout(() => {
+			this.behavior = BehaviorTypes.Idle;
+		}, this.getFrame().length);
 	}
 	/**
 	 * 召喚された時にコールされる
@@ -123,24 +155,41 @@ export default class Rockman extends RPGObject {
 }
 
 let rockman; // インスタンス（１つしか作ってはいけない）
+let energy = 1000; // ロックマンのエネルギーゲージ（インスタンスではなくゲームに対して一つ）
+
+export function getEnergy() {
+	return energy;
+}
+export function setEnergy(value) {
+	energy = value;
+}
 
 export function summonRockman(ExtendedClass) {
+	if (energy <= 0) {
+		// エネルギー不足
+		return;
+	}
 	// 前回のロックマンを削除
 	if (rockman && rockman.parentNode) {
 		rockman.destroy();
 	}
 	// ロックマンを生成
 	rockman = new ExtendedClass();
+	rockman.showHpLabel = false;
+	rockman.hp = 100;
 	// サーヴァント扱いにする
 	registerServant(player, rockman);
-	rockman.collisionFlag = false;
-	rockman.locate(player.mapX, player.mapY);
-	rockman.forward = [1, 0];
 }
 
 function update() {
+	Hack.score = energy; // for debugging
+
 	// 魔道書から改変されてはいけない毎フレーム処理はここに書く
-	if (!rockman || !rockman.parentNode) {
+	if (
+		!rockman ||
+		!rockman.parentNode ||
+		rockman.behavior === BehaviorTypes.Dead
+	) {
 		// 今はいない
 		return;
 	}
@@ -164,6 +213,22 @@ function update() {
 		const signX = Math.sign(next.x - pos.x);
 		if (signX !== 0) {
 			rockman.forward = new Vector2(signX, 0);
+		}
+	}
+
+	// タイムストッパー
+	if (rockman._timeStopper) {
+		energy -= 20; // 使用中は常に減り続ける
+	}
+
+	// エネルギーゲージ
+	if (energy <= 0) {
+		rockman.behavior = BehaviorTypes.Dead;
+		rockman.tl
+			.delay(16)
+			.moveBy(0, -lengthOfAppearingAnimation * 32, lengthOfAppearingAnimation);
+		if (this._timeStopper) {
+			this.cmd('タイムストッパー'); // 強制解除
 		}
 	}
 }
