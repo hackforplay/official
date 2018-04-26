@@ -137,9 +137,16 @@ class RPGObject extends Sprite {
 			this.name = Skin.__name.get(mod) || this.name;
 		}
 
-		this.colliderOffset = new SAT.V(2, 2);
+		// 後方互換性保持
+		this.colliderOffset = this.colliderOffset || new SAT.V(2, 2);
 		// 衝突判定用のポリゴン
-		this.collider = new SAT.Box(this.colliderOffset, 28, 28).toPolygon();
+		this.collider =
+			this.collider ||
+			new SAT.Box(
+				this.colliderOffset,
+				this.width - 4,
+				this.height - 4
+			).toPolygon();
 
 		// ツリーに追加
 		Hack.defaultParentNode.addChild(this);
@@ -166,8 +173,8 @@ class RPGObject extends Sprite {
 
 	updateCollider() {
 		this.collider.setOffset({
-			x: this.x - this.offset.x + this.colliderOffset.x,
-			y: this.y - this.offset.y + this.colliderOffset.y
+			x: this.x + this.colliderOffset.x,
+			y: this.y + this.colliderOffset.y
 		});
 	}
 
@@ -226,6 +233,7 @@ class RPGObject extends Sprite {
 			Hack.log(`${mapName} は まだつくられていない`);
 		}
 		this.moveTo(fromLeft * 32 + this.offset.x, fromTop * 32 + this.offset.y);
+		this.updateCollider();
 	}
 
 	destroy(delay) {
@@ -307,7 +315,6 @@ class RPGObject extends Sprite {
 		// ダメージを与えるオブジェクトを生成する
 		const damageObject = this.summon(Hack.createDamageMod(this.atk));
 		damageObject.locate(dx, dy);
-		damageObject.updateCollider();
 		damageObject.setTimeout(
 			() => damageObject.destroy(),
 			this.getFrame().length
@@ -833,7 +840,6 @@ Hack.createDamageMod = damage =>
 
 				const cols1 = this.colliders ? this.colliders : [this.collider];
 				const cols2 = object.colliders ? object.colliders : [object.collider];
-
 				for (const col1 of cols1) {
 					for (const col2 of cols2) {
 						const response = new SAT.Response();
@@ -843,7 +849,7 @@ Hack.createDamageMod = damage =>
 				}
 				return false;
 			});
-     
+
 			// 攻撃する
 			for (const object of hits) {
 				// ダメージ処理

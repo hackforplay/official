@@ -21,7 +21,7 @@ function gameStart() {
 	// feeles.openReadme('stages/3/README.md');
 
 	// プレイヤー（騎士）
-	const player = (Hack.player = new Player());
+	const player = (Hack.player = new Player(('▼ スキン', _kきし)));
 	player.mod(('▼ スキン', _kきし));
 	// プレイヤーを　7, 1 の位置に移動する
 	player.locate(7, 1);

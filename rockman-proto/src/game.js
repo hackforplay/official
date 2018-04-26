@@ -3,8 +3,10 @@ import Hack from 'hackforplay/hack';
 import 'hackforplay/core';
 // import 'mod/3d/core';
 import { setEnergy } from './mod/rockman/index';
+import Vector2 from 'hackforplay/math/vector2';
 
 const game = Core.instance;
+game._debug = true;
 
 async function gameFunc() {
 	game.rootScene.removeChild(Hack.controllerGroup); // バーチャルパッドを消す
@@ -12,7 +14,7 @@ async function gameFunc() {
 
 	Hack.changeMap('map1'); // map1 をロード
 
-	self.player = new Player(); // プレイヤーをつくる
+	self.player = new Player(('▼ スキン', _kきし)); // プレイヤーをつくる
 	player.mod(('▼ スキン', _kきし)); // 見た目
 	player.locate(3, 5); // はじめの位置
 
@@ -22,6 +24,15 @@ async function gameFunc() {
 	item1.locate(10, 5);
 	item1.hp = 1;
 	item1.turn();
+	item1.on('becomeattack', () => {
+		const bullet = item1.summon(Skin['Rockman/Bullet']);
+		item1.shoot(bullet, item1.forward, 4);
+		bullet.mod(Hack.createDamageMod(1));
+		bullet.destroy(100);
+	});
+	item1.setInterval(() => {
+		item1.attack();
+	}, 30 * 4);
 
 	const item2 = new RPGObject(Skin.エネルギー缶);
 	item2.locate(6, 7);

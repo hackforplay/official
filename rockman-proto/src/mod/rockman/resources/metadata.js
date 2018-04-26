@@ -15,6 +15,18 @@ export const metadatas = {
 		},
 		directionType: 'double'
 	},
+	Bullet: {
+		name: 'Rockman/Bullet',
+		fileName: abs('./Bullet.png'),
+		width: 8,
+		height: 8,
+		offsetX: 12,
+		offsetY: 12,
+		frames: {
+			idle: [0]
+		},
+		directionType: 'single'
+	},
 	Rockman: {
 		name: 'ロックマン',
 		fileName: abs('./Rockman.png'),
@@ -30,6 +42,7 @@ export const metadatas = {
 			damaged: [12, 11, 11, 11, 10, 10, 10, null],
 			dead: fill(5, 13).concat([6, 7, 8], fill(9, 10)),
 			AirShooter: fill(18, 8).concat(null),
+			LeafShield: [6],
 			TimeStopper: fill(13, 6).concat(null)
 		},
 		directionType: 'double'

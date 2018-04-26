@@ -30,7 +30,7 @@ game.onload = function() {
 
 
 	// プレイヤー（騎士）
-	var player = Hack.player = new Player();
+	var player = Hack.player = new Player(('▼ スキン', _kきし));
 	player.mod(Hack.assets.knight);
 	player.locate(3, 5);
 	player.hp = 3;
