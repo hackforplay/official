@@ -11,6 +11,7 @@ import Camera from 'hackforplay/camera';
 
 import { CanvasRenderer } from 'enchantjs/enchant';
 import { KeyClass } from 'mod/key';
+import { isOpposite } from './family';
 
 import Keyboard from 'hackforplay/keyboard';
 import {
@@ -630,6 +631,17 @@ Hack.Attack = function(x, y, damage, pushX, pushY) {
 			return item.mapX === x && item.mapY === y && item !== this;
 		}, this)
 		.forEach(function(item) {
+			// ダメージ処理
+			//   従来は onattacked イベントハンドラを使っていたが,
+			//   処理を上書きされないようここに移した
+			if (!item.damageTime && typeof item.hp === 'number') {
+				// ダメージ判定が起こる状態で,
+				if (isOpposite(item, this)) {
+					// 敵対している相手(もしくはその関係者)なら
+					item.damageTime = item.attackedDamageTime;
+					item.hp -= damage;
+				}
+			}
 			var e = new Event('attacked');
 			e.attacker = this;
 			e.damage = damage || 0;

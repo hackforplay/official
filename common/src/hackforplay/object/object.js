@@ -320,17 +320,6 @@ class RPGObject extends Sprite {
 		this.behavior = BehaviorTypes.Idle;
 	}
 
-	onattacked(event) {
-		if (!this.damageTime && typeof this.hp === 'number') {
-			// ダメージ判定が起こる状態で,
-			if (isOpposite(this, event.attacker)) {
-				// 敵対している相手なら
-				this.damageTime = this.attackedDamageTime;
-				this.hp -= event.damage;
-			}
-		}
-	}
-
 	async walk(distance = 1, forward = null, setForward = true) {
 		if (!Hack.isPlaying) return;
 		if (!this.isKinematic) return;
@@ -805,7 +794,6 @@ class RPGObject extends Sprite {
 		// 自分と同じ Family を持つ従者とする
 		const appended = new _class(skin);
 		registerServant(this, appended);
-		appended.master = this;
 		if (this.map) {
 			// 同じ場所に配置する
 			appended.locate(this.mapX, this.mapY, this.map.name);
@@ -834,7 +822,8 @@ function makeHpLabel(self) {
  */
 Hack.createDamageMod = damage =>
 	function damageMod() {
-		this.isDamageObject = true;
+		this.isDamageObject = true; // ダメージ処理を行うフラグ
+		this.collisionFlag = false; // ダメージオブジェクトそのものは, ぶつからない
 
 		this.on('enterframe', () => {
 			// 接触している RPGObject を取得する
@@ -854,12 +843,24 @@ Hack.createDamageMod = damage =>
 				}
 				return false;
 			});
-
+     
 			// 攻撃する
 			for (const object of hits) {
+				// ダメージ処理
+				//   従来は onattacked イベントハンドラを使っていたが,
+				//   処理を上書きされないようここに移した
+				if (!object.damageTime && typeof object.hp === 'number') {
+					// ダメージ判定が起こる状態で,
+					if (isOpposite(object, this)) {
+						// 敵対している相手(もしくはその関係者)なら
+						object.damageTime = object.attackedDamageTime;
+						object.hp -= damage;
+					}
+				}
+				// attacked Event
 				object.dispatchEvent(
 					new Event('attacked', {
-						attacker: this.master || this,
+						attacker: this, // attacker は弾などのエフェクトの場合もある
 						damage
 					})
 				);
