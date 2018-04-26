@@ -197,7 +197,6 @@ class RPGObject extends Sprite {
 	}
 
 	geneticUpdate() {
-		this.updateCollider();
 		if (!Hack.isPlaying) return;
 		// enter frame
 		if (typeof this.hp === 'number') {
@@ -234,7 +233,7 @@ class RPGObject extends Sprite {
 			Hack.log(`${mapName} は まだつくられていない`);
 		}
 		this.moveTo(fromLeft * 32 + this.offset.x, fromTop * 32 + this.offset.y);
-		this.updateCollider();
+		this.updateCollider(); // TODO: 動的プロパティ
 	}
 
 	destroy(delay) {
@@ -448,6 +447,7 @@ class RPGObject extends Sprite {
 		// 移動の誤差を修正
 		this.x = beginX + tw * forward.x;
 		this.y = beginY + th * forward.y;
+		this.updateCollider(); // TODO: 動的プロパティ
 
 		this.dispatchEvent(new Event('walkend'));
 

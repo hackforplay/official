@@ -1080,6 +1080,9 @@ game.on('enterframe', function() {
 	for (var tick = 1; tick <= frame; tick++) {
 		__physicsUpdateOnFrame(tick, frame, physicsCollision);
 	}
+	for (const item of physicsPhantom) {
+		item.updateCollider(); // TODO: 動的プロパティ
+	}
 });
 
 function __physicsUpdateOnFrame(tick, frame, physics) {
