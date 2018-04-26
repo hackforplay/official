@@ -119,6 +119,7 @@ class RPGObject extends Sprite {
 		this.getFrameOfBehavior = {}; // BehaviorTypesをキーとしたgetterのオブジェクト
 		this.behavior = BehaviorTypes.Idle; // call this.onbecomeidle
 		this._layer = RPGMap.Layer.Middle;
+		this._debugColor = 'rgba(0, 0, 255, 0.5)';
 
 		// HPLabel
 		this.showHpLabel = true; // デフォルトで表示
