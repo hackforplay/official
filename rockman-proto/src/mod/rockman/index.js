@@ -119,6 +119,12 @@ export default class Rockman extends RPGObject {
 					});
 					// シールドにはダメージ効果がある
 					this._leafShieldInstance.mod(Hack.createDamageMod(1));
+					// シールドに触れた弾を消す
+					this._leafShieldInstance.on('triggerenter', event => {
+						if (event.hit.name === 'Rockman/Bullet') {
+							event.hit.destroy();
+						}
+					});
 				} else {
 					// シールドを解除
 					if (this._leafShieldInstance) {
