@@ -313,7 +313,11 @@ class RPGObject extends Sprite {
 		const dy = this.mapY + this.forward.y;
 
 		// ダメージを与えるオブジェクトを生成する
-		const damageObject = this.summon(Hack.createDamageMod(this.atk));
+		const damageObject = this.summon(function() {
+			this.colliderOffset = new SAT.V(12, 12);
+			this.collider = new SAT.Box(this.colliderOffset, 8, 8).toPolygon();
+		});
+		damageObject.mod(Hack.createDamageMod(this.atk));
 		damageObject.locate(dx, dy);
 		damageObject.setTimeout(
 			() => damageObject.destroy(),
