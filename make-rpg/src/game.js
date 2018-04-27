@@ -14,4 +14,6 @@ async function gameFunc() {
 	/*+ スキル */
 }
 
+game._debug = ('▼ フラグ', false);
+
 export default gameFunc;

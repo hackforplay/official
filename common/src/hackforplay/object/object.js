@@ -119,6 +119,7 @@ class RPGObject extends Sprite {
 		this.getFrameOfBehavior = {}; // BehaviorTypesをキーとしたgetterのオブジェクト
 		this.behavior = BehaviorTypes.Idle; // call this.onbecomeidle
 		this._layer = RPGMap.Layer.Middle;
+		this._debugColor = 'rgba(0, 0, 255, 0.5)';
 
 		// HPLabel
 		this.showHpLabel = true; // デフォルトで表示
@@ -196,7 +197,6 @@ class RPGObject extends Sprite {
 	}
 
 	geneticUpdate() {
-		this.updateCollider();
 		if (!Hack.isPlaying) return;
 		// enter frame
 		if (typeof this.hp === 'number') {
@@ -233,7 +233,7 @@ class RPGObject extends Sprite {
 			Hack.log(`${mapName} は まだつくられていない`);
 		}
 		this.moveTo(fromLeft * 32 + this.offset.x, fromTop * 32 + this.offset.y);
-		this.updateCollider();
+		this.updateCollider(); // TODO: 動的プロパティ
 	}
 
 	destroy(delay) {
@@ -313,7 +313,11 @@ class RPGObject extends Sprite {
 		const dy = this.mapY + this.forward.y;
 
 		// ダメージを与えるオブジェクトを生成する
-		const damageObject = this.summon(Hack.createDamageMod(this.atk));
+		const damageObject = this.summon(function() {
+			this.colliderOffset = new SAT.V(12, 12);
+			this.collider = new SAT.Box(this.colliderOffset, 8, 8).toPolygon();
+		});
+		damageObject.mod(Hack.createDamageMod(this.atk));
 		damageObject.locate(dx, dy);
 		damageObject.setTimeout(
 			() => damageObject.destroy(),
@@ -447,6 +451,7 @@ class RPGObject extends Sprite {
 		// 移動の誤差を修正
 		this.x = beginX + tw * forward.x;
 		this.y = beginY + th * forward.y;
+		this.updateCollider(); // TODO: 動的プロパティ
 
 		this.dispatchEvent(new Event('walkend'));
 
@@ -844,7 +849,11 @@ Hack.createDamageMod = damage =>
 					for (const col2 of cols2) {
 						const response = new SAT.Response();
 						const collided = SAT.testPolygonPolygon(col1, col2, response);
-						if (collided) return true;
+						if (collided && response.overlap > 0) {
+							// 重なっていないのに collided になる場合がある.
+							// その場合は overlap (重なりの大きさ) が 0 になっている
+							return true;
+						}
 					}
 				}
 				return false;

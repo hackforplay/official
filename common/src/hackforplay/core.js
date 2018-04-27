@@ -5,6 +5,7 @@ import 'hackforplay/loader';
 import * as synonyms from './synonyms';
 import Skin from './skin';
 import Family from './family';
+import './mod/collider-debugger';
 
 // Global
 self.Skin = self.Skin || Skin;
