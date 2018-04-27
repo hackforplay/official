@@ -845,7 +845,11 @@ Hack.createDamageMod = damage =>
 					for (const col2 of cols2) {
 						const response = new SAT.Response();
 						const collided = SAT.testPolygonPolygon(col1, col2, response);
-						if (collided) return true;
+						if (collided && response.overlap > 0) {
+							// 重なっていないのに collided になる場合がある.
+							// その場合は overlap (重なりの大きさ) が 0 になっている
+							return true;
+						}
 					}
 				}
 				return false;
