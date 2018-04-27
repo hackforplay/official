@@ -525,8 +525,8 @@ Hack.assets.dragon = function() {
 	this.directionType = 'double';
 	this.forward = [-1, 0];
 	// ダメージ判定用のポリゴン
-	this.colliderOffset = new SAT.V(0, 0);
-	this.collider = new SAT.Box(this.colliderOffset, 80, 80).toPolygon();
+	this.colliderOffset = new SAT.V(16, 16);
+	this.collider = new SAT.Box(this.colliderOffset, 48, 48).toPolygon();
 };
 var __Dragon = enchant.Class(RPGObject, {
 	initialize: function() {
@@ -661,8 +661,8 @@ Hack.assets.minotaur = function() {
 	this.directionType = 'double';
 	this.forward = [-1, 0];
 	// ダメージ判定用のポリゴン
-	this.colliderOffset = new SAT.V(0, 0);
-	this.collider = new SAT.Box(this.colliderOffset, 80, 80).toPolygon();
+	this.colliderOffset = new SAT.V(16, 16);
+	this.collider = new SAT.Box(this.colliderOffset, 48, 48).toPolygon();
 };
 var __Minotaur = enchant.Class(RPGObject, {
 	initialize: function() {
