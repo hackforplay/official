@@ -21,6 +21,7 @@ export default class Rockman extends RPGObject {
 
 		this._timeStopper = false; // タイムストッパーを使っているフラグ
 		this._leafShield = false; // リーフシールドを使っているフラグ
+		this._atomicFirePower = 0; // アトミックファイヤーの段階
 		this._commandChunks = []; // コマンドのチャンク
 		this._commandNum = 0; // キューイングされている全コマンドの数
 		this._chunkName = ''; // 現在追加中のチャンクに紐づいたイベント名
@@ -36,7 +37,7 @@ export default class Rockman extends RPGObject {
 			lengthOfAppearingAnimation * 32,
 			lengthOfAppearingAnimation
 		);
-		this.forward = player.forward;
+		this.forward = new Vector2(player.forward.x || 1, 0);
 		this.collisionFlag = false;
 		this.become('appear');
 
@@ -161,12 +162,40 @@ ${direction} は正しい向きではないからです`;
 		if (this.behavior === BehaviorTypes.Dead) {
 			return; // もう死んでいる
 		}
+		if (this.currentChunk.length < 1) {
+			// チャンクが空になった
+			// アトミックファイヤーが残っていれば発射
+			if (this._atomicFirePower > 0) {
+				this.shootAtomicFire(); // アトミックファイヤー発射
+				return;
+			}
+			// 空のチャンクの消去
+			this._commandChunks.shift();
+			if (this._commandChunks.length > 0) {
+				// まだ残っていれば再帰的に実行
+				this.executeNextCommand();
+				return;
+			}
+		}
+
 		const rockman = this;
 		const command = this.currentChunk[0];
+
+		// アトミックファイヤー
+		if (this._atomicFirePower > 0) {
+			if (!command || command.type !== 'アトミックファイヤー') {
+				// アトミックファイヤー発射
+				this.shootAtomicFire();
+				return;
+			}
+		}
+
+		// コマンドがない
 		if (!command) {
 			this.behavior = BehaviorTypes.Idle;
-			return; // 終了
+			return; // 待機
 		}
+
 		switch (command.type) {
 			case 'move':
 				const target = new Vector2(this.x, this.y);
@@ -213,6 +242,22 @@ ${direction} は正しい向きではないからです`;
 					energy -= 100;
 					this.next();
 				});
+				break;
+			case 'アトミックファイヤー':
+				// WIP
+				this.become('AtomicFire');
+				this._atomicFirePower = Math.min(3, this._atomicFirePower + 1);
+				if (this._atomicFirePower === 1) {
+					const fire = this.summon(Skin.アトミックファイヤー);
+					fire.x += this.forward.x * 32;
+					this._atomicFireInstance = fire;
+				}
+				this._atomicFireInstance.behavior = `power-${this._atomicFirePower}`;
+				this.setTimeout(() => {
+					// 一定フレームが経過したら次へ
+					energy -= 100;
+					this.next();
+				}, 30);
 				break;
 			case 'リーフシールド':
 				// WIP
@@ -290,10 +335,6 @@ ${direction} は正しい向きではないからです`;
 		if (previousCommand) {
 			this._commandNum--; // デクリメント
 		}
-		if (this.currentChunk.length < 1) {
-			// チャンクが空になった
-			this._commandChunks.shift();
-		}
 		// 次の動作へ
 		this.executeNextCommand();
 	}
@@ -311,6 +352,7 @@ ${direction} は正しい向きではないからです`;
 			case 'エアーシューター':
 			case 'リーフシールド':
 			case 'タイムストッパー':
+			case 'アトミックファイヤー':
 				command.type = weapon;
 				break;
 			default:
@@ -359,6 +401,10 @@ ${weapon} は正しい武器の名前ではないからです`;
 				}
 			}
 		}
+		// アトミックファイヤー消去
+		if (this._atomicFireInstance) {
+			this._atomicFireInstance.destroy();
+		}
 	}
 	/**
 	 * "〜たら" イベントを発火させる
@@ -377,6 +423,21 @@ ${weapon} は正しい武器の名前ではないからです`;
 			// "〜たら" をコール
 			this[name].apply(this, args);
 		}
+	}
+	/**
+	 * アトミックファイヤー発射
+	 */
+	shootAtomicFire() {
+		const damage = this._atomicFirePower;
+		this._atomicFireInstance.mod(Hack.createDamageMod(damage));
+		this.shoot(this._atomicFireInstance, this.forward, 10);
+		this._atomicFireInstance.destroy(50);
+		this._atomicFirePower = 0;
+		this._atomicFireInstance = null;
+		this.setTimeout(() => {
+			// 少しのディレイののち, 次の動作へ
+			this.next();
+		}, 6);
 	}
 }
 
