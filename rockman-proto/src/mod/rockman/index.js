@@ -20,36 +20,75 @@ export default class Rockman extends RPGObject {
 
 		this._timeStopper = false; // タイムストッパーを使っているフラグ
 		this._leafShield = false; // リーフシールドを使っているフラグ
-		this._commands = []; // キューイングされたコマンド
+		this._commandChunks = []; // 後に詰まっているコマンドのチャンク
+		this._chunkName = ''; // 現在追加中のチャンクに紐づいたイベント名
+		this._enableDispatch = false; // dispatch が使えるかどうかのフラグ
 
 		this.locate(
 			player.mapX + player.forward.x,
 			player.mapY + player.forward.y - lengthOfAppearingAnimation
 		);
 
-		this.tl
-			.moveBy(0, lengthOfAppearingAnimation * 32, lengthOfAppearingAnimation)
-			.delay(16)
-			.then(() => {
-				this._target = new Vector2(this.x, this.y); // 現在の目的地
-				this.しょうかんされたら();
-			});
+		this.tl.moveBy(
+			0,
+			lengthOfAppearingAnimation * 32,
+			lengthOfAppearingAnimation
+		);
 		this.forward = player.forward;
 		this.collisionFlag = false;
-		this.behavior = 'appear';
+		this.become('appear');
 
 		this._pMapX = player.mapX;
 		this._pMapY = player.mapY;
 		player.on('walkend', () => {
-			this.プレイヤーがあるいたら(
+			this.dispatch('プレイヤーがあるいたら', [
 				player.mapX,
 				player.mapY,
 				this._pMapX,
 				this._pMapY
-			);
+			]);
 			this._pMapX = player.mapX;
 			this._pMapY = player.mapY;
 		});
+
+		this.once('becomeidle', () => {
+			this._target = new Vector2(this.x, this.y); // 現在の目的地
+			this._enableDispatch = true; // 行動スタート
+			this.dispatch('しょうかんされたら');
+		});
+	}
+	/**
+	 * @returns {Array} 現在実行中のコマンドのチャンク
+	 */
+	get currentChunk() {
+		return this._commandChunks[0] || [];
+	}
+	/**
+	 * @returns {Array} 最後, つまり現在追加中のチャンク
+	 */
+	get lastChunk() {
+		return this._commandChunks[this._commandChunks.length - 1] || [];
+	}
+	/**
+	 *
+	 * @param {Object} command
+	 */
+	addCommand(command) {
+		if (!this._enableDispatch) {
+			// 準備中
+			return;
+		}
+		if (!command.type || !command.chunkName) {
+			// 不正なコマンド
+			log(command.message);
+			throw new Error(command.message);
+		}
+		// チャンクに追加
+		this.lastChunk.push(command);
+		if (this._commandChunks.length === 1 && this.currentChunk.length === 1) {
+			// これが唯一のコマンドである場合, その瞬間に実行する
+			this.next();
+		}
 	}
 	/**
 	 * 動きをキューイングする
@@ -59,7 +98,8 @@ export default class Rockman extends RPGObject {
 	move(direction, amount) {
 		this.behavior = BehaviorTypes.Walk; // 歩き始める
 		const command = {
-			message: `this.move('${direction}', ${amount})`
+			chunkName: this._chunkName,
+			message: `this.move('${direction}', ${amount});`
 		};
 		switch (direction) {
 			case 'ひだりから':
@@ -97,20 +137,16 @@ export default class Rockman extends RPGObject {
 			default:
 				command.type = 'invalid';
 				command.message = `
-${command.message} というコマンドは 実行されませんでした.
+${command.chunkName}() {
+	${command.message} ←このコマンドは 実行されませんでした.
+}
 ${direction} は正しい向きではないからです`;
 				break;
 		}
-		if (command.type) {
-			this._commands.push(command);
-			if (this._commands.length < 2) {
-				// これが唯一のコマンドである場合, その瞬間に実行する
-				this.next();
-			}
-		}
+		this.addCommand(command);
 	}
 	next() {
-		const command = this._commands[0];
+		const command = this.currentChunk[0];
 		if (!command) {
 			this.behavior = BehaviorTypes.Idle;
 			return; // 終了
@@ -134,7 +170,12 @@ ${direction} は正しい向きではないからです`;
 		}
 	}
 	end() {
-		this._commands.shift();
+		this.currentChunk.shift();
+		if (this.currentChunk.length < 1) {
+			// チャンクが空になった
+			this._commandChunks.shift();
+		}
+		// 次の動作へ
 		this.next();
 	}
 	/**
@@ -244,17 +285,23 @@ ${direction} は正しい向きではないからです`;
 		}
 	}
 	/**
-	 * 召喚された時にコールされる
+	 * "〜たら" イベントを発火させる
+	 * @param {String} name "〜たら" というイベントの名前
+	 * @param {Array} args イベントを発火させるパラメータ
 	 */
-	しょうかんされたら() {}
-	/**
-	 * プレイヤーが１歩歩く時にコールされる
-	 * @param {number} left 現在のプレイヤーの位置X
-	 * @param {number} top 現在のプレイヤーの位置Y
-	 * @param {number} pLeft 一つ前のプレイヤーの位置X
-	 * @param {number} pTop 一つ前のプレイヤーの位置Y
-	 */
-	プレイヤーがあるいたら(left, top, pLeft, pTop) {}
+	dispatch(name, args) {
+		if (!this._enableDispatch) {
+			// 準備中
+			return;
+		}
+		// 新たなコマンドチャンクを作る
+		this._chunkName = name;
+		this._commandChunks.push([]);
+		if (typeof this[name] === 'function') {
+			// "〜たら" をコール
+			this[name].apply(this, args);
+		}
+	}
 }
 
 let rockman; // インスタンス（１つしか作ってはいけない）
