@@ -109,40 +109,42 @@ export default class Rockman extends RPGObject {
 	move(direction, amount) {
 		const command = {
 			chunkName: this._chunkName,
-			message: `this.move('${direction}', ${amount});`
+			type: 'move',
+			message: `this.move('${direction}', ${amount});`,
+			value: {}
 		};
 		switch (direction) {
 			case 'ひだりから':
-				command.type = 'move_absolute_x';
-				command.value = amount * 32 + this.offset.x;
+				command.value.type = 'absolute';
+				command.value.x = amount * 32 + this.offset.x;
 				break;
 			case 'うえから':
-				command.type = 'move_absolute_y';
-				command.value = amount * 32 + this.offset.y;
+				command.value.type = 'absolute';
+				command.value.y = amount * 32 + this.offset.y;
 				break;
 			case 'みぎから':
-				command.type = 'move_absolute_x';
-				command.value = (15 - amount) * 32 + this.offset.x;
+				command.value.type = 'absolute';
+				command.value.x = (15 - amount) * 32 + this.offset.x;
 				break;
 			case 'したから':
-				command.type = 'move_absolute_y';
-				command.value = (10 - amount) * 32 + this.offset.y;
+				command.value.type = 'absolute';
+				command.value.y = (10 - amount) * 32 + this.offset.y;
 				break;
 			case 'ひだりへ':
-				command.type = 'move_relative_x';
-				command.value = -32;
+				command.value.type = 'relative';
+				command.value.x = -32 * amount;
 				break;
 			case 'うえへ':
-				command.type = 'move_relative_y';
-				command.value = -32;
+				command.value.type = 'relative';
+				command.value.y = -32 * amount;
 				break;
 			case 'みぎへ':
-				command.type = 'move_relative_x';
-				command.value = 32;
+				command.value.type = 'relative';
+				command.value.x = 32 * amount;
 				break;
 			case 'したへ':
-				command.type = 'move_relative_y';
-				command.value = 32;
+				command.value.type = 'relative';
+				command.value.y = 32 * amount;
 				break;
 			default:
 				command.type = 'invalid';
@@ -166,21 +168,36 @@ ${direction} は正しい向きではないからです`;
 			return; // 終了
 		}
 		switch (command.type) {
-			case 'move_absolute_x':
-				this.behavior = BehaviorTypes.Walk; // 歩き始める
-				this._target.x = command.value;
-				break;
-			case 'move_absolute_y':
-				this.behavior = BehaviorTypes.Walk; // 歩き始める
-				this._target.y = command.value;
-				break;
-			case 'move_relative_x':
-				this.behavior = BehaviorTypes.Walk; // 歩き始める
-				this._target.x = this.x + command.value;
-				break;
-			case 'move_relative_y':
-				this.behavior = BehaviorTypes.Walk; // 歩き始める
-				this._target.y = this.y + command.value;
+			case 'move':
+				const target = new Vector2(this.x, this.y);
+				if (typeof command.value.x === 'number') {
+					if (command.value.type === 'relative') {
+						target.x += command.value.x;
+					} else {
+						target.x = command.value.x;
+					}
+				}
+				if (typeof command.value.y === 'number') {
+					if (command.value.type === 'relative') {
+						target.y += command.value.y;
+					} else {
+						target.y = command.value.y;
+					}
+				}
+				if (this._leafShield && this._leafShieldInstance) {
+					// リーフシールドの発射
+					const dir = target
+						.subtract(new Vector2(this.x, this.y))
+						.normalize()
+						.scale(10);
+					this._leafShieldInstance.velocity(dir.x, dir.y);
+					this._leafShieldInstance.destroy(50);
+					this._leafShield = false;
+				} else {
+					// 歩行開始
+					this.behavior = BehaviorTypes.Walk; // 歩き始める
+					this._target = target;
+				}
 				break;
 			case 'エアーシューター':
 				// WIP
