@@ -15,6 +15,21 @@ export const metadatas = {
 		},
 		directionType: 'double'
 	},
+	AtomicFire: {
+		name: 'アトミックファイヤー',
+		fileName: abs('./AtomicFire.png'),
+		width: 32,
+		height: 32,
+		offsetX: 0,
+		offsetY: 0,
+		frames: {
+			idle: [4],
+			'power-1': [5, 4],
+			'power-2': [3, 2],
+			'power-3': [1, 0]
+		},
+		directionType: 'double'
+	},
 	Bullet: {
 		name: 'Rockman/Bullet',
 		fileName: abs('./Bullet.png'),
@@ -42,6 +57,7 @@ export const metadatas = {
 			damaged: [12, 11, 11, 11, 10, 10, 10, null],
 			dead: fill(5, 13).concat([6, 7, 8], fill(9, 10)),
 			AirShooter: fill(18, 8).concat(null),
+			AtomicFire: [18],
 			LeafShield: fill(6, 6).concat(null),
 			TimeStopper: fill(13, 6).concat(null)
 		},
