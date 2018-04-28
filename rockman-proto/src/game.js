@@ -36,7 +36,6 @@ async function gameFunc() {
 
 	const item2 = new RPGObject(Skin.エネルギー缶);
 	item2.locate(6, 7);
-	item2.forward = [0, -1];
 	item2.on('playerenter', () => {
 		item2.destroy();
 		setEnergy(100);

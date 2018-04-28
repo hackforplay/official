@@ -30,7 +30,17 @@ if (game) {
 					}
 				}
 				this.directionType = metadata.directionType;
-				this.forward = [1, 0];
+				switch (this.directionType) {
+					case 'single':
+						this.forward = [0, -1];
+						break;
+					case 'double':
+						this.forward = [1, 0];
+						break;
+					case 'quadruple':
+						this.forward = [0, 1];
+						break;
+				}
 			});
 		}
 	}
