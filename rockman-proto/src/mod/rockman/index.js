@@ -159,6 +159,7 @@ ${direction} は正しい向きではないからです`;
 		if (this.behavior === BehaviorTypes.Dead) {
 			return; // もう死んでいる
 		}
+		const rockman = this;
 		const command = this.currentChunk[0];
 		if (!command) {
 			this.behavior = BehaviorTypes.Idle;
@@ -181,32 +182,6 @@ ${direction} は正しい向きではないからです`;
 				this.behavior = BehaviorTypes.Walk; // 歩き始める
 				this._target.y = this.y + command.value;
 				break;
-			default:
-				log(command.message);
-				// 不正なコマンドを受けるとロックマンはかえってしまう
-				this.behavior = BehaviorTypes.Dead;
-				break;
-		}
-	}
-	end() {
-		const previousCommand = this.currentChunk.shift();
-		if (previousCommand) {
-			this._commandNum--; // デクリメント
-		}
-		if (this.currentChunk.length < 1) {
-			// チャンクが空になった
-			this._commandChunks.shift();
-		}
-		// 次の動作へ
-		this.next();
-	}
-	/**
-	 * 特殊武器を発動（あるいは停止）する
-	 * @param {string} weapon 特殊武器の名前
-	 */
-	cmd(weapon) {
-		const rockman = this;
-		switch (weapon) {
 			case 'エアーシューター':
 				// WIP
 				this.become('AirShooter');
@@ -273,9 +248,50 @@ ${direction} は正しい向きではないからです`;
 				}
 				break;
 			default:
-				log(`${weapon} は正しい武器の名前ではありません`);
+				log(command.message);
+				// 不正なコマンドを受けるとロックマンはかえってしまう
+				this.behavior = BehaviorTypes.Dead;
 				break;
 		}
+	}
+	end() {
+		const previousCommand = this.currentChunk.shift();
+		if (previousCommand) {
+			this._commandNum--; // デクリメント
+		}
+		if (this.currentChunk.length < 1) {
+			// チャンクが空になった
+			this._commandChunks.shift();
+		}
+		// 次の動作へ
+		this.next();
+	}
+	/**
+	 * 特殊武器を発動（あるいは停止）する
+	 * @param {string} weapon 特殊武器の名前
+	 */
+	cmd(weapon) {
+		const command = {
+			chunkName: this._chunkName,
+			message: `this.cmd('${weapon}');`
+		};
+		// バリデーション
+		switch (weapon) {
+			case 'エアーシューター':
+			case 'リーフシールド':
+			case 'タイムストッパー':
+				command.type = weapon;
+				break;
+			default:
+				command.type = 'invalid';
+				command.message = `
+${command.chunkName}() {
+${command.message} ←このコマンドは 実行されませんでした.
+}
+${weapon} は正しい武器の名前ではないからです`;
+				break;
+		}
+		this.addCommand(command);
 	}
 	/**
 	 * BehaviorTypes を設定し, しばらくすると戻る
@@ -299,11 +315,18 @@ ${direction} は正しい向きではないからです`;
 		this.tl
 			.delay(16)
 			.moveBy(0, -lengthOfAppearingAnimation * 32, lengthOfAppearingAnimation);
-		if (this._timeStopper) {
-			this.cmd('タイムストッパー'); // 強制解除
+		// リーフシールド解除
+		if (this._leafShield && this._leafShieldInstance) {
+			this._leafShieldInstance.destroy();
 		}
-		if (this._leafShield) {
-			this.cmd('リーフシールド'); // 強制解除
+		// タイムストッパー解除
+		if (this._timeStopper) {
+			for (const item of RPGObject.collection) {
+				// 元に戻す
+				if (item.family !== Family.Player) {
+					item.resume();
+				}
+			}
 		}
 	}
 	/**
