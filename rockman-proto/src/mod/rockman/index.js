@@ -13,6 +13,7 @@ import { fileNames, metadata } from './resources/metadata';
 const game = Core.instance;
 const log = (...args) => Hack.log(...args);
 const lengthOfAppearingAnimation = 10;
+const maxCommandNum = 1000;
 
 export default class Rockman extends RPGObject {
 	constructor() {
@@ -20,7 +21,8 @@ export default class Rockman extends RPGObject {
 
 		this._timeStopper = false; // タイムストッパーを使っているフラグ
 		this._leafShield = false; // リーフシールドを使っているフラグ
-		this._commandChunks = []; // 後に詰まっているコマンドのチャンク
+		this._commandChunks = []; // コマンドのチャンク
+		this._commandNum = 0; // キューイングされている全コマンドの数
 		this._chunkName = ''; // 現在追加中のチャンクに紐づいたイベント名
 		this._enableDispatch = false; // dispatch が使えるかどうかのフラグ
 
@@ -80,12 +82,21 @@ export default class Rockman extends RPGObject {
 		}
 		if (!command.type || !command.chunkName) {
 			// 不正なコマンド
-			log(command.message);
+			log(`不正なコマンドです. 係りの人を呼んでください`);
 			throw new Error(command.message);
+		}
+		if (this._commandNum >= maxCommandNum) {
+			// コマンドが多すぎる => invalid (ロックマン死亡)
+			log(`コマンドが多すぎます！！
+ロックマンは ${command.chunkName} かえってしまいました`);
+			this._enableDispatch = false;
+			this.behavior = BehaviorTypes.Dead;
+			return;
 		}
 		// チャンクに追加
 		this.lastChunk.push(command);
-		if (this._commandChunks.length === 1 && this.currentChunk.length === 1) {
+		this._commandNum++; // インクリメント
+		if (this._commandNum === 1) {
 			// これが唯一のコマンドである場合, その瞬間に実行する
 			this.next();
 		}
@@ -96,7 +107,6 @@ export default class Rockman extends RPGObject {
 	 * @param {number} amount マスの数
 	 */
 	move(direction, amount) {
-		this.behavior = BehaviorTypes.Walk; // 歩き始める
 		const command = {
 			chunkName: this._chunkName,
 			message: `this.move('${direction}', ${amount});`
@@ -146,6 +156,9 @@ ${direction} は正しい向きではないからです`;
 		this.addCommand(command);
 	}
 	next() {
+		if (this.behavior === BehaviorTypes.Dead) {
+			return; // もう死んでいる
+		}
 		const command = this.currentChunk[0];
 		if (!command) {
 			this.behavior = BehaviorTypes.Idle;
@@ -153,24 +166,33 @@ ${direction} は正しい向きではないからです`;
 		}
 		switch (command.type) {
 			case 'move_absolute_x':
+				this.behavior = BehaviorTypes.Walk; // 歩き始める
 				this._target.x = command.value;
 				break;
 			case 'move_absolute_y':
+				this.behavior = BehaviorTypes.Walk; // 歩き始める
 				this._target.y = command.value;
 				break;
 			case 'move_relative_x':
+				this.behavior = BehaviorTypes.Walk; // 歩き始める
 				this._target.x = this.x + command.value;
 				break;
 			case 'move_relative_y':
+				this.behavior = BehaviorTypes.Walk; // 歩き始める
 				this._target.y = this.y + command.value;
 				break;
 			default:
 				log(command.message);
+				// 不正なコマンドを受けるとロックマンはかえってしまう
+				this.behavior = BehaviorTypes.Dead;
 				break;
 		}
 	}
 	end() {
-		this.currentChunk.shift();
+		const previousCommand = this.currentChunk.shift();
+		if (previousCommand) {
+			this._commandNum--; // デクリメント
+		}
 		if (this.currentChunk.length < 1) {
 			// チャンクが空になった
 			this._commandChunks.shift();
