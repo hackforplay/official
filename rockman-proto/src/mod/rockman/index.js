@@ -21,6 +21,7 @@ export default class Rockman extends RPGObject {
 
 		this._timeStopper = false; // タイムストッパーを使っているフラグ
 		this._leafShield = false; // リーフシールドを使っているフラグ
+		this._superArm = false; // スーパーアーム使用中フラグ
 		this._atomicFirePower = 0; // アトミックファイヤーの段階
 		this._commandChunks = []; // コマンドのチャンク
 		this._commandNum = 0; // キューイングされている全コマンドの数
@@ -295,6 +296,39 @@ ${direction} は正しい向きではないからです`;
 					this.next();
 				}
 				break;
+			case 'スーパーアーム':
+				if (!this._superArm) {
+					this.become('SuperArm');
+					// 手元のオブジェクトを持ち上げる
+					const hand = getHandyObject(this.mapX, this.mapY);
+					if (hand) {
+						hand.onenterframe = () => {
+							hand.moveTo(this.x, this.y - 24);
+							hand.updateCollider();
+						};
+						hand.collisionFlag = false;
+						this._superArmInstance = hand;
+						this._superArm = true;
+					} else {
+						// 平常時に戻る
+						this.behavior = BehaviorTypes.Idle;
+						this.next();
+						return;
+					}
+				} else {
+					// 持っているオブジェクトをそこに置く
+					this.become('SuperArm');
+					this._superArmInstance.collisionFlag = true;
+					this._superArmInstance.locate(this.mapX, this.mapY);
+					this._superArmInstance.onenterframe = null;
+					this._superArmInstance = null;
+					this._superArm = false;
+				}
+				// アニメーションの後, 次へ
+				this.once('becomeidle', () => {
+					this.next();
+				});
+				break;
 			case 'タイムストッパー':
 				// WIP
 				this._timeStopper = !this._timeStopper; // フラグ反転
@@ -350,9 +384,10 @@ ${direction} は正しい向きではないからです`;
 		// バリデーション
 		switch (weapon) {
 			case 'エアーシューター':
-			case 'リーフシールド':
-			case 'タイムストッパー':
 			case 'アトミックファイヤー':
+			case 'リーフシールド':
+			case 'スーパーアーム':
+			case 'タイムストッパー':
 				command.type = weapon;
 				break;
 			default:
@@ -450,6 +485,18 @@ export function getEnergy() {
 }
 export function setEnergy(value) {
 	energy = value;
+}
+
+let handies = new WeakSet();
+
+export function registerHandyObject(obj) {
+	handies.add(obj);
+}
+
+function getHandyObject(x, y) {
+	return RPGObject.collection.find(item => {
+		return handies.has(item) && item.mapX === x && item.mapY;
+	});
 }
 
 export function summonRockman(ExtendedClass) {

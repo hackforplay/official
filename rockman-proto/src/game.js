@@ -2,7 +2,7 @@ import { Core } from 'enchantjs/enchant';
 import Hack from 'hackforplay/hack';
 import 'hackforplay/core';
 // import 'mod/3d/core';
-import { setEnergy } from './mod/rockman/index';
+import { setEnergy, registerHandyObject } from './mod/rockman/index';
 import Vector2 from 'hackforplay/math/vector2';
 
 const game = Core.instance;
@@ -41,6 +41,10 @@ async function gameFunc() {
 		item2.destroy();
 		setEnergy(100);
 	});
+
+	const item3 = new RPGObject(Skin.ロック);
+	item3.locate(6, 3);
+	registerHandyObject(item3);
 
 	/*+ モンスター アイテム せっち システム */
 
