@@ -440,6 +440,13 @@ ${weapon} は正しい武器の名前ではないからです`;
 		if (this._atomicFireInstance) {
 			this._atomicFireInstance.destroy();
 		}
+		// スーパーアームで持ち上げたオブジェクトの消去
+		if (this._superArm && this._superArmInstance) {
+			this._superArmInstance.locate(this.mapX, this.mapY);
+			this._superArmInstance.onenterframe = null;
+			this._superArmInstance.collisionFlag = true;
+			this._superArmInstance = null;
+		}
 	}
 	/**
 	 * "〜たら" イベントを発火させる
@@ -495,7 +502,7 @@ export function registerHandyObject(obj) {
 
 function getHandyObject(x, y) {
 	return RPGObject.collection.find(item => {
-		return handies.has(item) && item.mapX === x && item.mapY;
+		return handies.has(item) && item.mapX === x && item.mapY === y;
 	});
 }
 
