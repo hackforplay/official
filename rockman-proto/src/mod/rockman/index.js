@@ -18,18 +18,20 @@ export default class Rockman extends RPGObject {
 	constructor() {
 		super(Skin.ロックマン);
 
-		this._target = new Vector2(this.x, this.y); // 現在の目的地
 		this._timeStopper = false; // タイムストッパーを使っているフラグ
 		this._leafShield = false; // リーフシールドを使っているフラグ
+		this._commands = []; // キューイングされたコマンド
 
 		this.locate(
 			player.mapX + player.forward.x,
 			player.mapY + player.forward.y - lengthOfAppearingAnimation
 		);
+
 		this.tl
 			.moveBy(0, lengthOfAppearingAnimation * 32, lengthOfAppearingAnimation)
 			.delay(16)
 			.then(() => {
+				this._target = new Vector2(this.x, this.y); // 現在の目的地
 				this.しょうかんされたら();
 			});
 		this.forward = player.forward;
@@ -49,38 +51,91 @@ export default class Rockman extends RPGObject {
 			this._pMapY = player.mapY;
 		});
 	}
+	/**
+	 * 動きをキューイングする
+	 * @param {string} direction 向きキーワード
+	 * @param {number} amount マスの数
+	 */
 	move(direction, amount) {
 		this.behavior = BehaviorTypes.Walk; // 歩き始める
+		const command = {
+			message: `this.move('${direction}', ${amount})`
+		};
 		switch (direction) {
 			case 'ひだりから':
-				this._target.x = amount * 32 + this.offset.x;
+				command.type = 'move_absolute_x';
+				command.value = amount * 32 + this.offset.x;
 				break;
 			case 'うえから':
-				this._target.y = amount * 32 + this.offset.y;
+				command.type = 'move_absolute_y';
+				command.value = amount * 32 + this.offset.y;
 				break;
 			case 'みぎから':
-				this._target.x = (15 - amount) * 32 + this.offset.x;
+				command.type = 'move_absolute_x';
+				command.value = (15 - amount) * 32 + this.offset.x;
 				break;
 			case 'したから':
-				this._target.y = (10 - amount) * 32 + this.offset.y;
+				command.type = 'move_absolute_y';
+				command.value = (10 - amount) * 32 + this.offset.y;
 				break;
 			case 'ひだりへ':
-				this._target.x -= amount * 32;
+				command.type = 'move_relative_x';
+				command.value = -32;
 				break;
 			case 'うえへ':
-				this._target.y -= amount * 32;
+				command.type = 'move_relative_y';
+				command.value = -32;
 				break;
 			case 'みぎへ':
-				this._target.x += amount * 32;
+				command.type = 'move_relative_x';
+				command.value = 32;
 				break;
 			case 'したへ':
-				this._target.y += amount * 32;
+				command.type = 'move_relative_y';
+				command.value = 32;
 				break;
 			default:
-				log(`${direction} は正しい向きではありません`);
-				this.behavior = BehaviorTypes.Idle; // ストップ
+				command.type = 'invalid';
+				command.message = `
+${command.message} というコマンドは 実行されませんでした.
+${direction} は正しい向きではないからです`;
 				break;
 		}
+		if (command.type) {
+			this._commands.push(command);
+			if (this._commands.length < 2) {
+				// これが唯一のコマンドである場合, その瞬間に実行する
+				this.next();
+			}
+		}
+	}
+	next() {
+		const command = this._commands[0];
+		if (!command) {
+			this.behavior = BehaviorTypes.Idle;
+			return; // 終了
+		}
+		switch (command.type) {
+			case 'move_absolute_x':
+				this._target.x = command.value;
+				break;
+			case 'move_absolute_y':
+				this._target.y = command.value;
+				break;
+			case 'move_relative_x':
+				this._target.x = this.x + command.value;
+				break;
+			case 'move_relative_y':
+				this._target.y = this.y + command.value;
+				break;
+			default:
+				log(command.message);
+				break;
+		}
+	}
+	end() {
+		this._commands.shift();
+		this.next();
 	}
 	/**
 	 * 特殊武器を発動（あるいは停止）する
@@ -262,8 +317,8 @@ function update() {
 		rockman.y = next.y;
 		if (t >= 1) {
 			// distance <= rockmanSpeed, つまりこのフレームで到達
-			rockman.behavior = BehaviorTypes.Idle;
-			rockman.とうちゃくしたら(rockman.mapX, rockman.mapY);
+			// 次のコマンドへ
+			rockman.end();
 		}
 		// 向きを変更する
 		const signX = Math.sign(next.x - pos.x);
