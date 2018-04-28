@@ -59,6 +59,7 @@ export const metadatas = {
 			AirShooter: fill(18, 8).concat(null),
 			AtomicFire: [18],
 			LeafShield: fill(6, 6).concat(null),
+			SuperArm: [1, 1, 1, 2, 2, 2].concat(null),
 			TimeStopper: fill(13, 6).concat(null)
 		},
 		directionType: 'double'
