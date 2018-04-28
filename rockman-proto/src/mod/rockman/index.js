@@ -98,7 +98,7 @@ export default class Rockman extends RPGObject {
 		this._commandNum++; // インクリメント
 		if (this._commandNum === 1) {
 			// これが唯一のコマンドである場合, その瞬間に実行する
-			this.next();
+			this.executeNextCommand();
 		}
 	}
 	/**
@@ -155,7 +155,7 @@ ${direction} は正しい向きではないからです`;
 		}
 		this.addCommand(command);
 	}
-	next() {
+	executeNextCommand() {
 		if (this.behavior === BehaviorTypes.Dead) {
 			return; // もう死んでいる
 		}
@@ -191,8 +191,10 @@ ${direction} は正しい向きではないからです`;
 					wind.force(0, -0.5);
 					wind.destroy(80);
 				}
-				this.tl.delay(this.getFrame().length).then(() => {
+				this.once('becomeidle', () => {
+					// モーションが終わったら次へ
 					energy -= 100;
+					this.next();
 				});
 				break;
 			case 'リーフシールド':
@@ -218,11 +220,17 @@ ${direction} は正しい向きではないからです`;
 							event.hit.destroy();
 						}
 					});
+					this.once('becomeidle', () => {
+						// モーションが終わったら次へ
+						this.next();
+					});
 				} else {
 					// シールドを解除
 					if (this._leafShieldInstance) {
 						this._leafShieldInstance.destroy();
 					}
+					// すぐに次へ
+					this.next();
 				}
 				break;
 			case 'タイムストッパー':
@@ -237,6 +245,10 @@ ${direction} は正しい向きではないからです`;
 							item.stop();
 						}
 					}
+					this.once('becomeidle', () => {
+						// モーションが終わったら次へ
+						this.next();
+					});
 				} else {
 					// ストッパー解除
 					for (const item of RPGObject.collection) {
@@ -245,6 +257,8 @@ ${direction} は正しい向きではないからです`;
 							item.resume();
 						}
 					}
+					// すぐに次へ
+					this.next();
 				}
 				break;
 			default:
@@ -254,7 +268,7 @@ ${direction} は正しい向きではないからです`;
 				break;
 		}
 	}
-	end() {
+	next() {
 		const previousCommand = this.currentChunk.shift();
 		if (previousCommand) {
 			this._commandNum--; // デクリメント
@@ -264,7 +278,7 @@ ${direction} は正しい向きではないからです`;
 			this._commandChunks.shift();
 		}
 		// 次の動作へ
-		this.next();
+		this.executeNextCommand();
 	}
 	/**
 	 * 特殊武器を発動（あるいは停止）する
@@ -410,7 +424,7 @@ function update() {
 		if (t >= 1) {
 			// distance <= rockmanSpeed, つまりこのフレームで到達
 			// 次のコマンドへ
-			rockman.end();
+			rockman.next();
 		}
 		// 向きを変更する
 		const signX = Math.sign(next.x - pos.x);
