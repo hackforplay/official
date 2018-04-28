@@ -13,82 +13,192 @@ import { fileNames, metadata } from './resources/metadata';
 const game = Core.instance;
 const log = (...args) => Hack.log(...args);
 const lengthOfAppearingAnimation = 10;
+const maxCommandNum = 1000;
 
 export default class Rockman extends RPGObject {
 	constructor() {
 		super(Skin.ロックマン);
 
-		this._target = new Vector2(this.x, this.y); // 現在の目的地
 		this._timeStopper = false; // タイムストッパーを使っているフラグ
 		this._leafShield = false; // リーフシールドを使っているフラグ
+		this._commandChunks = []; // コマンドのチャンク
+		this._commandNum = 0; // キューイングされている全コマンドの数
+		this._chunkName = ''; // 現在追加中のチャンクに紐づいたイベント名
+		this._enableDispatch = false; // dispatch が使えるかどうかのフラグ
 
 		this.locate(
 			player.mapX + player.forward.x,
 			player.mapY + player.forward.y - lengthOfAppearingAnimation
 		);
-		this.tl
-			.moveBy(0, lengthOfAppearingAnimation * 32, lengthOfAppearingAnimation)
-			.delay(16)
-			.then(() => {
-				this.しょうかんされたら();
-			});
+
+		this.tl.moveBy(
+			0,
+			lengthOfAppearingAnimation * 32,
+			lengthOfAppearingAnimation
+		);
 		this.forward = player.forward;
 		this.collisionFlag = false;
-		this.behavior = 'appear';
+		this.become('appear');
 
 		this._pMapX = player.mapX;
 		this._pMapY = player.mapY;
 		player.on('walkend', () => {
-			this.プレイヤーがあるいたら(
+			this.dispatch('プレイヤーがあるいたら', [
 				player.mapX,
 				player.mapY,
 				this._pMapX,
 				this._pMapY
-			);
+			]);
 			this._pMapX = player.mapX;
 			this._pMapY = player.mapY;
 		});
+
+		this.once('becomeidle', () => {
+			this._target = new Vector2(this.x, this.y); // 現在の目的地
+			this._enableDispatch = true; // 行動スタート
+			this.dispatch('しょうかんされたら');
+		});
 	}
-	move(direction, amount) {
-		this.behavior = BehaviorTypes.Walk; // 歩き始める
-		switch (direction) {
-			case 'ひだりから':
-				this._target.x = amount * 32 + this.offset.x;
-				break;
-			case 'うえから':
-				this._target.y = amount * 32 + this.offset.y;
-				break;
-			case 'みぎから':
-				this._target.x = (15 - amount) * 32 + this.offset.x;
-				break;
-			case 'したから':
-				this._target.y = (10 - amount) * 32 + this.offset.y;
-				break;
-			case 'ひだりへ':
-				this._target.x -= amount * 32;
-				break;
-			case 'うえへ':
-				this._target.y -= amount * 32;
-				break;
-			case 'みぎへ':
-				this._target.x += amount * 32;
-				break;
-			case 'したへ':
-				this._target.y += amount * 32;
-				break;
-			default:
-				log(`${direction} は正しい向きではありません`);
-				this.behavior = BehaviorTypes.Idle; // ストップ
-				break;
+	/**
+	 * @returns {Array} 現在実行中のコマンドのチャンク
+	 */
+	get currentChunk() {
+		return this._commandChunks[0] || [];
+	}
+	/**
+	 * @returns {Array} 最後, つまり現在追加中のチャンク
+	 */
+	get lastChunk() {
+		return this._commandChunks[this._commandChunks.length - 1] || [];
+	}
+	/**
+	 *
+	 * @param {Object} command
+	 */
+	addCommand(command) {
+		if (!this._enableDispatch) {
+			// 準備中
+			return;
+		}
+		if (!command.type || !command.chunkName) {
+			// 不正なコマンド
+			log(`不正なコマンドです. 係りの人を呼んでください`);
+			throw new Error(command.message);
+		}
+		if (this._commandNum >= maxCommandNum) {
+			// コマンドが多すぎる => invalid (ロックマン死亡)
+			log(`コマンドが多すぎます！！
+ロックマンは ${command.chunkName} かえってしまいました`);
+			this._enableDispatch = false;
+			this.behavior = BehaviorTypes.Dead;
+			return;
+		}
+		// チャンクに追加
+		this.lastChunk.push(command);
+		this._commandNum++; // インクリメント
+		if (this._commandNum === 1) {
+			// これが唯一のコマンドである場合, その瞬間に実行する
+			this.executeNextCommand();
 		}
 	}
 	/**
-	 * 特殊武器を発動（あるいは停止）する
-	 * @param {string} weapon 特殊武器の名前
+	 * 動きをキューイングする
+	 * @param {string} direction 向きキーワード
+	 * @param {number} amount マスの数
 	 */
-	cmd(weapon) {
+	move(direction, amount) {
+		const command = {
+			chunkName: this._chunkName,
+			type: 'move',
+			message: `this.move('${direction}', ${amount});`,
+			value: {}
+		};
+		switch (direction) {
+			case 'ひだりから':
+				command.value.type = 'absolute';
+				command.value.x = amount * 32 + this.offset.x;
+				break;
+			case 'うえから':
+				command.value.type = 'absolute';
+				command.value.y = amount * 32 + this.offset.y;
+				break;
+			case 'みぎから':
+				command.value.type = 'absolute';
+				command.value.x = (15 - amount) * 32 + this.offset.x;
+				break;
+			case 'したから':
+				command.value.type = 'absolute';
+				command.value.y = (10 - amount) * 32 + this.offset.y;
+				break;
+			case 'ひだりへ':
+				command.value.type = 'relative';
+				command.value.x = -32 * amount;
+				break;
+			case 'うえへ':
+				command.value.type = 'relative';
+				command.value.y = -32 * amount;
+				break;
+			case 'みぎへ':
+				command.value.type = 'relative';
+				command.value.x = 32 * amount;
+				break;
+			case 'したへ':
+				command.value.type = 'relative';
+				command.value.y = 32 * amount;
+				break;
+			default:
+				command.type = 'invalid';
+				command.message = `
+${command.chunkName}() {
+	${command.message} ←このコマンドは 実行されませんでした.
+}
+${direction} は正しい向きではないからです`;
+				break;
+		}
+		this.addCommand(command);
+	}
+	executeNextCommand() {
+		if (this.behavior === BehaviorTypes.Dead) {
+			return; // もう死んでいる
+		}
 		const rockman = this;
-		switch (weapon) {
+		const command = this.currentChunk[0];
+		if (!command) {
+			this.behavior = BehaviorTypes.Idle;
+			return; // 終了
+		}
+		switch (command.type) {
+			case 'move':
+				const target = new Vector2(this.x, this.y);
+				if (typeof command.value.x === 'number') {
+					if (command.value.type === 'relative') {
+						target.x += command.value.x;
+					} else {
+						target.x = command.value.x;
+					}
+				}
+				if (typeof command.value.y === 'number') {
+					if (command.value.type === 'relative') {
+						target.y += command.value.y;
+					} else {
+						target.y = command.value.y;
+					}
+				}
+				if (this._leafShield && this._leafShieldInstance) {
+					// リーフシールドの発射
+					const dir = target
+						.subtract(new Vector2(this.x, this.y))
+						.normalize()
+						.scale(10);
+					this._leafShieldInstance.velocity(dir.x, dir.y);
+					this._leafShieldInstance.destroy(50);
+					this._leafShield = false;
+				} else {
+					// 歩行開始
+					this.behavior = BehaviorTypes.Walk; // 歩き始める
+					this._target = target;
+				}
+				break;
 			case 'エアーシューター':
 				// WIP
 				this.become('AirShooter');
@@ -98,8 +208,10 @@ export default class Rockman extends RPGObject {
 					wind.force(0, -0.5);
 					wind.destroy(80);
 				}
-				this.tl.delay(this.getFrame().length).then(() => {
+				this.once('becomeidle', () => {
+					// モーションが終わったら次へ
 					energy -= 100;
+					this.next();
 				});
 				break;
 			case 'リーフシールド':
@@ -125,11 +237,17 @@ export default class Rockman extends RPGObject {
 							event.hit.destroy();
 						}
 					});
+					this.once('becomeidle', () => {
+						// モーションが終わったら次へ
+						this.next();
+					});
 				} else {
 					// シールドを解除
 					if (this._leafShieldInstance) {
 						this._leafShieldInstance.destroy();
 					}
+					// すぐに次へ
+					this.next();
 				}
 				break;
 			case 'タイムストッパー':
@@ -144,6 +262,10 @@ export default class Rockman extends RPGObject {
 							item.stop();
 						}
 					}
+					this.once('becomeidle', () => {
+						// モーションが終わったら次へ
+						this.next();
+					});
 				} else {
 					// ストッパー解除
 					for (const item of RPGObject.collection) {
@@ -152,12 +274,55 @@ export default class Rockman extends RPGObject {
 							item.resume();
 						}
 					}
+					// すぐに次へ
+					this.next();
 				}
 				break;
 			default:
-				log(`${weapon} は正しい武器の名前ではありません`);
+				log(command.message);
+				// 不正なコマンドを受けるとロックマンはかえってしまう
+				this.behavior = BehaviorTypes.Dead;
 				break;
 		}
+	}
+	next() {
+		const previousCommand = this.currentChunk.shift();
+		if (previousCommand) {
+			this._commandNum--; // デクリメント
+		}
+		if (this.currentChunk.length < 1) {
+			// チャンクが空になった
+			this._commandChunks.shift();
+		}
+		// 次の動作へ
+		this.executeNextCommand();
+	}
+	/**
+	 * 特殊武器を発動（あるいは停止）する
+	 * @param {string} weapon 特殊武器の名前
+	 */
+	cmd(weapon) {
+		const command = {
+			chunkName: this._chunkName,
+			message: `this.cmd('${weapon}');`
+		};
+		// バリデーション
+		switch (weapon) {
+			case 'エアーシューター':
+			case 'リーフシールド':
+			case 'タイムストッパー':
+				command.type = weapon;
+				break;
+			default:
+				command.type = 'invalid';
+				command.message = `
+${command.chunkName}() {
+${command.message} ←このコマンドは 実行されませんでした.
+}
+${weapon} は正しい武器の名前ではないからです`;
+				break;
+		}
+		this.addCommand(command);
 	}
 	/**
 	 * BehaviorTypes を設定し, しばらくすると戻る
@@ -181,25 +346,38 @@ export default class Rockman extends RPGObject {
 		this.tl
 			.delay(16)
 			.moveBy(0, -lengthOfAppearingAnimation * 32, lengthOfAppearingAnimation);
-		if (this._timeStopper) {
-			this.cmd('タイムストッパー'); // 強制解除
+		// リーフシールド解除
+		if (this._leafShield && this._leafShieldInstance) {
+			this._leafShieldInstance.destroy();
 		}
-		if (this._leafShield) {
-			this.cmd('リーフシールド'); // 強制解除
+		// タイムストッパー解除
+		if (this._timeStopper) {
+			for (const item of RPGObject.collection) {
+				// 元に戻す
+				if (item.family !== Family.Player) {
+					item.resume();
+				}
+			}
 		}
 	}
 	/**
-	 * 召喚された時にコールされる
+	 * "〜たら" イベントを発火させる
+	 * @param {String} name "〜たら" というイベントの名前
+	 * @param {Array} args イベントを発火させるパラメータ
 	 */
-	しょうかんされたら() {}
-	/**
-	 * プレイヤーが１歩歩く時にコールされる
-	 * @param {number} left 現在のプレイヤーの位置X
-	 * @param {number} top 現在のプレイヤーの位置Y
-	 * @param {number} pLeft 一つ前のプレイヤーの位置X
-	 * @param {number} pTop 一つ前のプレイヤーの位置Y
-	 */
-	プレイヤーがあるいたら(left, top, pLeft, pTop) {}
+	dispatch(name, args) {
+		if (!this._enableDispatch) {
+			// 準備中
+			return;
+		}
+		// 新たなコマンドチャンクを作る
+		this._chunkName = name;
+		this._commandChunks.push([]);
+		if (typeof this[name] === 'function') {
+			// "〜たら" をコール
+			this[name].apply(this, args);
+		}
+	}
 }
 
 let rockman; // インスタンス（１つしか作ってはいけない）
@@ -262,8 +440,8 @@ function update() {
 		rockman.y = next.y;
 		if (t >= 1) {
 			// distance <= rockmanSpeed, つまりこのフレームで到達
-			rockman.behavior = BehaviorTypes.Idle;
-			rockman.とうちゃくしたら(rockman.mapX, rockman.mapY);
+			// 次のコマンドへ
+			rockman.next();
 		}
 		// 向きを変更する
 		const signX = Math.sign(next.x - pos.x);

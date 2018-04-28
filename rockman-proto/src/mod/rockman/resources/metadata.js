@@ -42,7 +42,7 @@ export const metadatas = {
 			damaged: [12, 11, 11, 11, 10, 10, 10, null],
 			dead: fill(5, 13).concat([6, 7, 8], fill(9, 10)),
 			AirShooter: fill(18, 8).concat(null),
-			LeafShield: [6],
+			LeafShield: fill(6, 6).concat(null),
 			TimeStopper: fill(13, 6).concat(null)
 		},
 		directionType: 'double'
