@@ -360,6 +360,9 @@ ${direction} は正しい向きではないからです`;
 					this.next();
 				});
 				break;
+			case 'サンダービーム':
+				this.shootThunderBeam();
+				break;
 			case 'タイムストッパー':
 				this.toggleTimeStopper();
 				break;
@@ -394,6 +397,7 @@ ${direction} は正しい向きではないからです`;
 			case 'ジェミニレーザー':
 			case 'リーフシールド':
 			case 'スーパーアーム':
+			case 'サンダービーム':
 			case 'タイムストッパー':
 				command.type = weapon;
 				break;
@@ -528,6 +532,36 @@ ${weapon} は正しい武器の名前ではないからです`;
 			// すぐに次へ
 			this.next();
 		}
+	}
+	/**
+	 * サンダービーム
+	 */
+	shootThunderBeam() {
+		this.become('ThunderBeam');
+		const makeBeamBase = (behavior, vx, vy) => {
+			const above = this.summon(Skin.サンダービーム);
+			above.mod(Hack.createDamageMod(1));
+			above.moveBy(vx, vy);
+			above.moveBy(this.forward.x * this.width, 0);
+			above.scale(-this.forward.x, 1);
+			// アニメーションに合わせてスプライトを動かす
+			above.behavior = behavior;
+			let previousFrame = 0;
+			above.on('prerender', () => {
+				if (previousFrame !== above.frame) {
+					above.moveBy(vx, vy);
+					above.updateCollider();
+				}
+				previousFrame = above.frame;
+			});
+		};
+		makeBeamBase('vertical', 0, -7);
+		makeBeamBase('vertical', 0, 7);
+		makeBeamBase('horizontal', this.forward.x * 7, 0);
+		// アニメーションの後, 次へ
+		this.once('becomeidle', () => {
+			this.next();
+		});
 	}
 }
 
