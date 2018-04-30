@@ -1115,10 +1115,10 @@ Hack.skills.pistol = function(asset) {
 game.on('enterframe', function() {
 	var frame = game.collisionFrames || 10;
 	var physicsPhantom = RPGObject.collection.filter(function(item) {
-		return !item.isKinematic && !item.collisionFlag;
+		return !item.isKinematic && !item.collisionFlag && !item._stop;
 	});
 	var physicsCollision = RPGObject.collection.filter(function(item) {
-		return !item.isKinematic && item.collisionFlag;
+		return !item.isKinematic && item.collisionFlag && !item._stop;
 	});
 
 	__physicsUpdateOnFrame(1, 1, physicsPhantom);
