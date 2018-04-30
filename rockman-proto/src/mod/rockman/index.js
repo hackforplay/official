@@ -215,15 +215,14 @@ ${direction} は正しい向きではないからです`;
 						target.y = command.value.y;
 					}
 				}
+				const towardX = Math.sign(target.x - this.x);
+				if (towardX !== 0) {
+					this.forward.x = towardX;
+				}
 				if (this._leafShield && this._leafShieldInstance) {
-					// リーフシールドの発射
-					const dir = target
-						.subtract(new Vector2(this.x, this.y))
-						.normalize()
-						.scale(10);
-					this._leafShieldInstance.velocity(dir.x, dir.y);
-					this._leafShieldInstance.destroy(50);
-					this._leafShield = false;
+					// こことのベクトルを定める
+					const dir = target.subtract(new Vector2(this.x, this.y));
+					this.shootLeafShield(dir);
 				} else {
 					// 歩行開始
 					this.behavior = BehaviorTypes.Walk; // 歩き始める
@@ -295,40 +294,7 @@ ${direction} は正しい向きではないからです`;
 				this.toggleHyperBomb();
 				break;
 			case 'リーフシールド':
-				// WIP
-				this._leafShield = !this._leafShield; // フラグ反転
-				if (this._leafShield) {
-					this.become('LeafShield');
-					// 見えないシールドを展開
-					this._leafShieldInstance = this.summon(function() {
-						this.width = 60;
-						this.height = 60;
-						this.offset = {
-							x: (32 - this.width) / 2,
-							y: (32 - this.height) / 2
-						};
-						this.name = 'リーフシールド';
-					});
-					// シールドにはダメージ効果がある
-					this._leafShieldInstance.mod(Hack.createDamageMod(1));
-					// シールドに触れた弾を消す
-					this._leafShieldInstance.on('triggerenter', event => {
-						if (event.hit.name === 'Rockman/Bullet') {
-							event.hit.destroy();
-						}
-					});
-					this.once('becomeidle', () => {
-						// モーションが終わったら次へ
-						this.next();
-					});
-				} else {
-					// シールドを解除
-					if (this._leafShieldInstance) {
-						this._leafShieldInstance.destroy();
-					}
-					// すぐに次へ
-					this.next();
-				}
+				this.toggleLeafShield();
 				break;
 			case 'スーパーアーム':
 				if (!this._superArm) {
@@ -526,6 +492,58 @@ ${weapon} は正しい武器の名前ではないからです`;
 			this._hyperBombInstance.behavior = BehaviorTypes.Dead;
 			this._hyperBombInstance = null;
 		}
+	}
+	/**
+	 * リーフシールドの展開/解除
+	 */
+	toggleLeafShield() {
+		this._leafShield = !this._leafShield; // フラグ反転
+		if (this._leafShield) {
+			this.become('LeafShield');
+			// 見えないシールドを展開
+			const shield = this.summon(Skin.リーフシールド);
+			// シールドにはダメージ効果がある
+			shield.mod(Hack.createDamageMod(1));
+			// シールドに触れた弾を消す
+			shield.on('triggerenter', event => {
+				if (event.hit.name === 'Rockman/Bullet') {
+					event.hit.destroy();
+				}
+			});
+			// だんだん大きくなる
+			shield.scale(0, 0);
+			shield.tl.scaleTo(1, 1, 6).then(() => {
+				// モーションが終わったら次へ
+				this.next();
+			});
+			this._leafShieldInstance = shield;
+		} else {
+			// シールドを解除
+			if (this._leafShieldInstance) {
+				this._leafShieldInstance.destroy();
+			}
+			// すぐに次へ
+			this.next();
+		}
+	}
+	/**
+	 * リーフシールドの発射
+	 */
+	shootLeafShield(dir) {
+		// 大きさを 10 にして発射
+		if (dir.magnitudeSqr() < 1) {
+			dir.set(this.forward.x, 0);
+		}
+		// リーフシールドの発射
+		const v = dir.normalize().scale(10);
+		this._leafShieldInstance.velocity(v.x, v.y);
+		this._leafShieldInstance.destroy(50);
+		this._leafShieldInstance = null;
+		this._leafShield = false;
+		this.setTimeout(() => {
+			// 少しのディレイの後、次へ
+			this.next();
+		}, 5);
 	}
 	/**
 	 * タイムストッパー
