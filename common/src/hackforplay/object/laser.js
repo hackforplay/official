@@ -175,6 +175,8 @@ class Laser extends RPGObject {
 				)
 			);
 		}.call(this, newLine));
+
+		this.updateCollider();
 	}
 
 	updateCollider() {

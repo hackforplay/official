@@ -1,5 +1,6 @@
 class MyRockman extends Rockman {
 	しょうかんされたら() {
+		this.cmd('ジェミニレーザー');
 		this.move(('▼ いどう', 'ひだりから'), 9);
 		this.move(('▼ いどう', 'うえから'), 5);
 	}
