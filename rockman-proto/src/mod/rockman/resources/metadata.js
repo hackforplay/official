@@ -59,6 +59,7 @@ export const metadatas = {
 			AirShooter: fill(4, 8).concat(null),
 			AtomicFire: [4],
 			GeminiLaser: fill(4, 8).concat(null),
+			HyperBomb: fill(0, 8).concat(null),
 			LeafShield: fill(6, 6).concat(null),
 			SuperArm: [1, 1, 1, 2, 2, 2].concat(null),
 			ThunderBeam: fill(4, 8).concat(null),
@@ -93,6 +94,19 @@ export const metadatas = {
 			idle: [0]
 		},
 		directionType: 'single'
+	},
+	HyperBomb: {
+		name: 'ハイパーボム',
+		fileName: abs('./HyperBomb.png'),
+		width: 64,
+		height: 64,
+		offsetX: -16,
+		offsetY: -16,
+		frames: {
+			idle: [9],
+			dead: [8, 7, 6, 5, 4, 3, 2, 1, 0, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10]
+		},
+		directionType: 'double'
 	},
 	ThunderBeam: {
 		name: 'サンダービーム',
