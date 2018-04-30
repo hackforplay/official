@@ -9,6 +9,7 @@ import Family from 'hackforplay/family';
 
 import './preload';
 import { fileNames, metadata } from './resources/metadata';
+import Laser from 'hackforplay/object/laser';
 
 const game = Core.instance;
 const log = (...args) => Hack.log(...args);
@@ -260,6 +261,36 @@ ${direction} は正しい向きではないからです`;
 					this.next();
 				}, 30);
 				break;
+			case 'ジェミニレーザー':
+				// WIP
+				this.become('GeminiLaser');
+				const laser = new Laser({
+					origin: new Vector2(this.center.x, this.center.y),
+					direction: new Vector2(this.forward.x, this.forward.y),
+					length: 20,
+					speed: 10,
+					thickness: 4,
+					color: 'rgb(255,255,255)',
+					damage: 1
+				});
+				registerServant(this, laser);
+				laser.on('reflect', event => {
+					if (event.count === 1) {
+						// 最初にぶつかった時のみ斜めに跳ね返る
+						const dx = Math.sign(event.reflectDirection.x);
+						event.setReflectDirection(new Vector2(dx, -1));
+					}
+					if (event.count === 11) {
+						// １０回ぶつかったらなくなる
+						event.cancel();
+					}
+				});
+				this.once('becomeidle', () => {
+					// モーションの後、次へ
+					energy -= 100;
+					this.next();
+				});
+				break;
 			case 'リーフシールド':
 				// WIP
 				this._leafShield = !this._leafShield; // フラグ反転
@@ -385,6 +416,7 @@ ${direction} は正しい向きではないからです`;
 		switch (weapon) {
 			case 'エアーシューター':
 			case 'アトミックファイヤー':
+			case 'ジェミニレーザー':
 			case 'リーフシールド':
 			case 'スーパーアーム':
 			case 'タイムストッパー':
