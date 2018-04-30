@@ -92,6 +92,18 @@ export const metadatas = {
 			idle: [0]
 		},
 		directionType: 'single'
+	},
+	TimeStopper: {
+		name: 'タイムストッパー',
+		fileName: abs('./TimeStopper.png'),
+		width: 16,
+		height: 16,
+		offsetX: 8,
+		offsetY: 8,
+		frames: {
+			idle: [].concat(fill(2, 4), fill(1, 4), fill(0, 4))
+		},
+		directionType: 'single'
 	}
 };
 

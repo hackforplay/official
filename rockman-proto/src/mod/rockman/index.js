@@ -361,7 +361,6 @@ ${direction} は正しい向きではないからです`;
 				});
 				break;
 			case 'タイムストッパー':
-				// WIP
 				this.toggleTimeStopper();
 				break;
 			default:
@@ -497,9 +496,22 @@ ${weapon} は正しい武器の名前ではないからです`;
 				// プレイヤー陣営以外のオブジェクト全てをストップ
 				if (item.family !== Family.Player) {
 					item.stop();
-					console.log(item);
 					this._timeStopperInstances.add(item);
 				}
+			}
+			for (let index = 0; index < 10; index++) {
+				// １０個のキラキラエフェクト
+				const effect = new RPGObject(Skin.タイムストッパー);
+				const moveRandom = () => {
+					if (this._timeStopper) {
+						effect.x = Math.random() * 448 + effect.offset.x;
+						effect.y = Math.random() * 288 + effect.offset.y;
+					} else {
+						effect.destroy();
+					}
+				};
+				moveRandom();
+				effect.setInterval(moveRandom, effect.getFrame().length);
 			}
 			this.once('becomeidle', () => {
 				// モーションが終わったら次へ
