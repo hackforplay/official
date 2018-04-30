@@ -58,6 +58,7 @@ export const metadatas = {
 			dead: fill(5, 13).concat([6, 7, 8], fill(9, 10)),
 			AirShooter: fill(18, 8).concat(null),
 			AtomicFire: [18],
+			GeminiLaser: fill(18, 8).concat(null),
 			LeafShield: fill(6, 6).concat(null),
 			SuperArm: [1, 1, 1, 2, 2, 2].concat(null),
 			TimeStopper: fill(13, 6).concat(null)
