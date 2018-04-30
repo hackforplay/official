@@ -61,6 +61,7 @@ export const metadatas = {
 			GeminiLaser: fill(4, 8).concat(null),
 			LeafShield: fill(6, 6).concat(null),
 			SuperArm: [1, 1, 1, 2, 2, 2].concat(null),
+			ThunderBeam: fill(4, 8).concat(null),
 			TimeStopper: fill(0, 6).concat(null)
 		},
 		directionType: 'double'
@@ -90,6 +91,20 @@ export const metadatas = {
 		offsetY: 8,
 		frames: {
 			idle: [0]
+		},
+		directionType: 'single'
+	},
+	ThunderBeam: {
+		name: 'サンダービーム',
+		fileName: abs('./ThunderBeam.png'),
+		width: 40,
+		height: 40,
+		offsetX: -4,
+		offsetY: -4,
+		frames: {
+			idle: [null],
+			vertical: [9, 8, 7],
+			horizontal: [6, 5, 4, 3, 2, 1, 0]
 		},
 		directionType: 'single'
 	},
