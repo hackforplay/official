@@ -291,6 +291,9 @@ ${direction} は正しい向きではないからです`;
 					this.next();
 				});
 				break;
+			case 'ハイパーボム':
+				this.toggleHyperBomb();
+				break;
 			case 'リーフシールド':
 				// WIP
 				this._leafShield = !this._leafShield; // フラグ反転
@@ -395,6 +398,7 @@ ${direction} は正しい向きではないからです`;
 			case 'エアーシューター':
 			case 'アトミックファイヤー':
 			case 'ジェミニレーザー':
+			case 'ハイパーボム':
 			case 'リーフシールド':
 			case 'スーパーアーム':
 			case 'サンダービーム':
@@ -453,6 +457,11 @@ ${weapon} は正しい武器の名前ではないからです`;
 			this._superArmInstance.collisionFlag = true;
 			this._superArmInstance = null;
 		}
+		// ボムを消す
+		if (this._hyperBombInstance) {
+			this._hyperBombInstance.destroy();
+			this._hyperBombInstance = null;
+		}
 	}
 	/**
 	 * "〜たら" イベントを発火させる
@@ -486,6 +495,37 @@ ${weapon} は正しい武器の名前ではないからです`;
 			// 少しのディレイののち, 次の動作へ
 			this.next();
 		}, 6);
+	}
+	/**
+	 * ハイパーボムを投げる/爆破させる
+	 */
+	toggleHyperBomb() {
+		this._hyperBomb = !this._hyperBomb; // フラグ反転
+		if (this._hyperBomb) {
+			this.become('HyperBomb'); // 投げる動作
+			const bomb = this.summon(Skin.ハイパーボム);
+			bomb.force(0, 0.5);
+			bomb.velocity(this.forward.x * 5, -5);
+			bomb.collisionFlag = false;
+			let startY = bomb.y;
+			bomb.onenterframe = () => {
+				if (bomb.y >= startY) {
+					// 上がって落ちて止まる
+					bomb.velocity(0, 0);
+					bomb.force(0, 0);
+				}
+			};
+			this.once('becomeidle', () => {
+				// モーションが終わったら次へ
+				this.next();
+			});
+			this._hyperBombInstance = bomb;
+		} else {
+			// 爆破させる
+			this._hyperBombInstance.mod(Hack.createDamageMod(1));
+			this._hyperBombInstance.behavior = BehaviorTypes.Dead;
+			this._hyperBombInstance = null;
+		}
 	}
 	/**
 	 * タイムストッパー
