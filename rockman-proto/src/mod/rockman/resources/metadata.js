@@ -54,14 +54,14 @@ export const metadatas = {
 			idle: fill(6, 30 * 6).concat(fill(5, 6)),
 			walk: [4, 1, 1, 2, 2, 2, 3, 3, 2, 2, 2],
 			attack: [null],
-			damaged: [12, 11, 11, 11, 10, 10, 10, null],
+			damaged: [11, 11, 11, 11, 10, 10, 10, null],
 			dead: fill(5, 13).concat([6, 7, 8], fill(9, 10)),
-			AirShooter: fill(18, 8).concat(null),
-			AtomicFire: [18],
-			GeminiLaser: fill(18, 8).concat(null),
+			AirShooter: fill(4, 8).concat(null),
+			AtomicFire: [4],
+			GeminiLaser: fill(4, 8).concat(null),
 			LeafShield: fill(6, 6).concat(null),
 			SuperArm: [1, 1, 1, 2, 2, 2].concat(null),
-			TimeStopper: fill(13, 6).concat(null)
+			TimeStopper: fill(0, 6).concat(null)
 		},
 		directionType: 'double'
 	},
