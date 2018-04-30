@@ -4,6 +4,7 @@ import 'hackforplay/core';
 // import 'mod/3d/core';
 import { setEnergy, registerHandyObject } from './mod/rockman/index';
 import Vector2 from 'hackforplay/math/vector2';
+import Family from 'hackforplay/family';
 
 const game = Core.instance;
 game._debug = true;
@@ -15,6 +16,7 @@ async function gameFunc() {
 	Hack.changeMap('map1'); // map1 をロード
 
 	self.player = new Player(('▼ スキン', _kきし)); // プレイヤーをつくる
+	player.family = Family.Player;
 	player.mod(('▼ スキン', _kきし)); // 見た目
 	player.locate(3, 5); // はじめの位置
 
