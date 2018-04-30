@@ -362,31 +362,7 @@ ${direction} は正しい向きではないからです`;
 				break;
 			case 'タイムストッパー':
 				// WIP
-				this._timeStopper = !this._timeStopper; // フラグ反転
-				if (this._timeStopper) {
-					this.become('TimeStopper');
-					// ストップ
-					for (const item of RPGObject.collection) {
-						// プレイヤー陣営以外のオブジェクト全てをストップ
-						if (item.family !== Family.Player) {
-							item.stop();
-						}
-					}
-					this.once('becomeidle', () => {
-						// モーションが終わったら次へ
-						this.next();
-					});
-				} else {
-					// ストッパー解除
-					for (const item of RPGObject.collection) {
-						// 元に戻す
-						if (item.family !== Family.Player) {
-							item.resume();
-						}
-					}
-					// すぐに次へ
-					this.next();
-				}
+				this.toggleTimeStopper();
 				break;
 			default:
 				log(command.message);
@@ -461,12 +437,7 @@ ${weapon} は正しい武器の名前ではないからです`;
 		}
 		// タイムストッパー解除
 		if (this._timeStopper) {
-			for (const item of RPGObject.collection) {
-				// 元に戻す
-				if (item.family !== Family.Player) {
-					item.resume();
-				}
-			}
+			this.toggleTimeStopper();
 		}
 		// アトミックファイヤー消去
 		if (this._atomicFireInstance) {
@@ -512,6 +483,39 @@ ${weapon} は正しい武器の名前ではないからです`;
 			// 少しのディレイののち, 次の動作へ
 			this.next();
 		}, 6);
+	}
+	/**
+	 * タイムストッパー
+	 */
+	toggleTimeStopper() {
+		this._timeStopper = !this._timeStopper; // フラグ反転
+		if (this._timeStopper) {
+			this.become('TimeStopper');
+			// ストップ
+			this._timeStopperInstances = new WeakSet(); // 止めたオブジェクトを弱参照で保持
+			for (const item of RPGObject.collection) {
+				// プレイヤー陣営以外のオブジェクト全てをストップ
+				if (item.family !== Family.Player) {
+					item.stop();
+					console.log(item);
+					this._timeStopperInstances.add(item);
+				}
+			}
+			this.once('becomeidle', () => {
+				// モーションが終わったら次へ
+				this.next();
+			});
+		} else {
+			// ストッパー解除
+			for (const item of RPGObject.collection) {
+				// 元に戻す
+				if (this._timeStopperInstances.has(item)) {
+					item.resume();
+				}
+			}
+			// すぐに次へ
+			this.next();
+		}
 	}
 }
 
