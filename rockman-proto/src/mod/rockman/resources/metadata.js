@@ -52,7 +52,7 @@ export const metadatas = {
 		frames: {
 			appear: fill(9, 10).concat(8, 7, 6, null),
 			idle: fill(6, 30 * 6).concat(fill(5, 6)),
-			walk: [4, 1, 1, 2, 2, 2, 3, 3, 2, 2, 2],
+			walk: [1, 1, 1, 2, 2, 2, 3, 3, 2, 2, 2],
 			attack: [null],
 			damaged: [11, 11, 11, 11, 10, 10, 10, null],
 			dead: fill(5, 13).concat([6, 7, 8], fill(9, 10)),
@@ -60,7 +60,7 @@ export const metadatas = {
 			AtomicFire: [4],
 			GeminiLaser: fill(4, 8).concat(null),
 			HyperBomb: fill(0, 8).concat(null),
-			LeafShield: fill(6, 6).concat(null),
+			LeafShield: [6],
 			SuperArm: [1, 1, 1, 2, 2, 2].concat(null),
 			ThunderBeam: fill(4, 8).concat(null),
 			TimeStopper: fill(0, 6).concat(null)
@@ -107,6 +107,18 @@ export const metadatas = {
 			dead: [8, 7, 6, 5, 4, 3, 2, 1, 0, 19, 18, 17, 16, 15, 14, 13, 12, 11, 10]
 		},
 		directionType: 'double'
+	},
+	LeafShield: {
+		name: 'リーフシールド',
+		fileName: abs('./LeafShield.png'),
+		width: 48,
+		height: 48,
+		offsetX: -12,
+		offsetY: -6,
+		frames: {
+			idle: [].concat(fill(3, 2), fill(2, 2), fill(1, 2), fill(0, 2))
+		},
+		directionType: 'single'
 	},
 	ThunderBeam: {
 		name: 'サンダービーム',
