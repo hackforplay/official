@@ -23,7 +23,8 @@ module.exports = {
 	plugins: [
 		new HtmlWebpackPlugin({
 			filename: './rockman-proto/index.html',
-			template: './rockman-proto/template.hbs'
+			template: './rockman-proto/template.hbs',
+			inject: 'head'
 		}),
 		new FeelesWebpackPlugin({
 			paths: ['./rockman-proto/src', './common/src'],
@@ -33,7 +34,8 @@ module.exports = {
 
 		new HtmlWebpackPlugin({
 			filename: './hack-rpg/index.html',
-			template: './hack-rpg/template.hbs'
+			template: './hack-rpg/template.hbs',
+			inject: 'head'
 		}),
 		new FeelesWebpackPlugin({
 			paths: ['./hack-rpg/src', './common/src'],
@@ -43,7 +45,8 @@ module.exports = {
 
 		new HtmlWebpackPlugin({
 			filename: './make-rpg/index.html',
-			template: './make-rpg/template.hbs'
+			template: './make-rpg/template.hbs',
+			inject: 'head'
 		}),
 		new FeelesWebpackPlugin({
 			paths: ['./make-rpg/src', './common/src'],

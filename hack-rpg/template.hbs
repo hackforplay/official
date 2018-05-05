@@ -28,11 +28,18 @@
 			height: 100vh;
 		}
 	</style>
+	<script src="https://unpkg.com/feeles-ide@latest/umd/index.js" />
 </head>
 
 <body>
 	<!-- Config of the app -->
 	<div class="h4p__app" data-target=".example1"></div>
+	<script>
+		window.h4p({
+			jsonURL: './index.json',
+			rootElement: document.querySelector('.h4p__app')
+		});
+	</script>
 
 </body>
 
