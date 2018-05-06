@@ -235,6 +235,7 @@ ${direction} は正しい向きではないからです`;
 				for (const vx of [2, 3, 4]) {
 					const wind = this.summon(Skin.エアーシューター);
 					this.shoot(wind, this.forward, vx);
+					wind.mod(Hack.createDamageMod(1));
 					wind.force(0, -0.5);
 					wind.destroy(80);
 				}
