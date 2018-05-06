@@ -240,7 +240,7 @@ ${direction} は正しい向きではないからです`;
 				}
 				this.once('becomeidle', () => {
 					// モーションが終わったら次へ
-					energy -= 100;
+					energy -= 0;
 					this.next();
 				});
 				break;
@@ -256,7 +256,7 @@ ${direction} は正しい向きではないからです`;
 				this._atomicFireInstance.behavior = `power-${this._atomicFirePower}`;
 				this.setTimeout(() => {
 					// 一定フレームが経過したら次へ
-					energy -= 100;
+					energy -= 0;
 					this.next();
 				}, 30);
 				break;
@@ -286,7 +286,7 @@ ${direction} は正しい向きではないからです`;
 				});
 				this.once('becomeidle', () => {
 					// モーションの後、次へ
-					energy -= 100;
+					energy -= 0;
 					this.next();
 				});
 				break;
@@ -707,11 +707,11 @@ function update() {
 
 	// タイムストッパー
 	if (rockman._timeStopper) {
-		energy -= 20; // 使用中は常に減り続ける
+		energy -= 0; // 使用中は常に減り続ける
 	}
 	// リーフシールド
 	if (rockman._leafShield) {
-		energy -= 10; // 使用中は常に減り続ける
+		energy -= 0; // 使用中は常に減り続ける
 	}
 
 	// エネルギーゲージ
