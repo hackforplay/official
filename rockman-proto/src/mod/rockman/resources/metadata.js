@@ -95,6 +95,19 @@ export const metadatas = {
 		},
 		directionType: 'single'
 	},
+	GeminiLaser: {
+		// ジェミニレーザーのドット絵は実際には使われていないので注意
+		name: 'ジェミニレーザー',
+		fileName: abs('./GeminiLaser.png'),
+		width: 40,
+		height: 40,
+		offsetX: -4,
+		offsetY: -4,
+		frames: {
+			idle: [0]
+		},
+		directionType: 'single'
+	},
 	HyperBomb: {
 		name: 'ハイパーボム',
 		fileName: abs('./HyperBomb.png'),
@@ -117,6 +130,19 @@ export const metadatas = {
 		offsetY: -6,
 		frames: {
 			idle: [].concat(fill(3, 2), fill(2, 2), fill(1, 2), fill(0, 2))
+		},
+		directionType: 'single'
+	},
+	SuperArm: {
+		// スーパーアームのドット絵は実際には使われていないので注意
+		name: 'スーパーアーム',
+		fileName: abs('./SuperArm.png'),
+		width: 32,
+		height: 32,
+		offsetX: 0,
+		offsetY: 0,
+		frames: {
+			idle: [0]
 		},
 		directionType: 'single'
 	},
