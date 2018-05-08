@@ -24,6 +24,10 @@ function gameStartLazy() {
 		x: -32,
 		y: -60
 	};
+	item1.colliderOffset = {
+		x: 16,
+		y: 48
+	};
 	// ドラゴンを 11, 5 の位置に移動する ( map2 )
 	item1.locate(11, 5, 'map2');
 	// ドラゴンを拡大する ( ２　倍に　)
