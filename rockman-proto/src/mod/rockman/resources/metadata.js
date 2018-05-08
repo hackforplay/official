@@ -1,6 +1,9 @@
 const cwd = 'mod/rockman/resources/';
 const abs = rel => rel.replace('./', cwd);
-const fill = (num, length) => Array.from({ length }).fill(num);
+const fill = (num, length) =>
+	Array.from({
+		length
+	}).fill(num);
 
 export const metadatas = {
 	AirShooterEffect: {
@@ -61,7 +64,8 @@ export const metadatas = {
 			GeminiLaser: fill(4, 8).concat(null),
 			HyperBomb: fill(0, 8).concat(null),
 			LeafShield: [6],
-			SuperArm: [1, 1, 1, 2, 2, 2].concat(null),
+			SuperArmIdle: [19],
+			SuperArmWalk: [12, 12, 12, 13, 13, 13, 14, 14, 13, 13, 13],
 			ThunderBeam: fill(4, 8).concat(null),
 			TimeStopper: fill(0, 6).concat(null)
 		},

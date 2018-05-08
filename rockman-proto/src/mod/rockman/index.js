@@ -194,7 +194,7 @@ ${direction} は正しい向きではないからです`;
 
 		// コマンドがない
 		if (!command) {
-			this.behavior = BehaviorTypes.Idle;
+			this.behavior = this._superArm ? 'SuperArmIdle' : BehaviorTypes.Idle;
 			return; // 待機
 		}
 
@@ -225,7 +225,7 @@ ${direction} は正しい向きではないからです`;
 					this.shootLeafShield(dir);
 				} else {
 					// 歩行開始
-					this.behavior = BehaviorTypes.Walk; // 歩き始める
+					this.behavior = this._superArm ? 'SuperArmWalk' : BehaviorTypes.Walk; // 歩き始める
 					this._target = target;
 				}
 				break;
@@ -299,7 +299,7 @@ ${direction} は正しい向きではないからです`;
 				break;
 			case 'スーパーアーム':
 				if (!this._superArm) {
-					this.become('SuperArm');
+					this.become('SuperArmIdle');
 					// 手元のオブジェクトを持ち上げる
 					const hand = getHandyObject(this.mapX, this.mapY);
 					if (hand) {
@@ -310,6 +310,10 @@ ${direction} は正しい向きではないからです`;
 						hand.collisionFlag = false;
 						this._superArmInstance = hand;
 						this._superArm = true;
+						this.setTimeout(() => {
+							// 少しのディレイのあと, 次へ
+							this.next();
+						}, 5);
 					} else {
 						// 平常時に戻る
 						this.behavior = BehaviorTypes.Idle;
@@ -318,7 +322,7 @@ ${direction} は正しい向きではないからです`;
 					}
 				} else {
 					// 持っているオブジェクトをそこに置く
-					this.become('SuperArm');
+					this.behavior = BehaviorTypes.Idle;
 					this._superArmInstance.collisionFlag = true;
 					this._superArmInstance.locate(this.mapX, this.mapY);
 					this._superArmInstance.onenterframe = null;
@@ -686,7 +690,10 @@ function update() {
 
 	// 移動処理
 	const rockmanSpeed = 4; // ロックマンのスピード [px/frame]
-	if (rockman.behavior === BehaviorTypes.Walk) {
+	if (
+		rockman.behavior === BehaviorTypes.Walk ||
+		rockman.behavior === 'SuperArmWalk'
+	) {
 		const pos = new Vector2(rockman.x, rockman.y);
 		const distance = pos.distance(rockman._target);
 		// rockmanSpeed [px] だけ進む
