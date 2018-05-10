@@ -347,7 +347,7 @@ ${direction} は正しい向きではないからです`;
 					const hand = getHandyObject(this.mapX, this.mapY);
 					if (hand) {
 						hand.onenterframe = () => {
-							hand.moveTo(this.x, this.y - 24);
+							hand.moveTo(this.x, this.y - 18);
 							hand.updateCollider();
 						};
 						hand.collisionFlag = false;
