@@ -20,10 +20,10 @@ export default class Rockman extends RPGObject {
 	constructor() {
 		super(Skin.ロックマン);
 
+		this._atomicFire = false; // アトミックファイヤーを使っているフラグ
 		this._timeStopper = false; // タイムストッパーを使っているフラグ
 		this._leafShield = false; // リーフシールドを使っているフラグ
 		this._superArm = false; // スーパーアーム使用中フラグ
-		this._atomicFirePower = 0; // アトミックファイヤーの段階
 		this._commandChunks = []; // コマンドのチャンク
 		this._commandNum = 0; // キューイングされている全コマンドの数
 		this._chunkName = ''; // 現在追加中のチャンクに紐づいたイベント名
@@ -99,8 +99,52 @@ export default class Rockman extends RPGObject {
 		// チャンクに追加
 		this.lastChunk.push(command);
 		this._commandNum++; // インクリメント
-		if (this._commandNum === 1) {
-			// これが唯一のコマンドである場合, その瞬間に実行する
+	}
+	/**
+	 * あるイベントで作られたコマンドが全て追加された時, 修正を行う
+	 */
+	afterDispatch() {
+		const commands = this.lastChunk;
+		// アトミックファイヤーのカウントを設定, 発射コマンドを挿入
+		let atomicCount = 0;
+		for (let index = 0; index < commands.length; index++) {
+			const item = commands[index];
+			if (item.type === 'アトミックファイヤー') {
+				item.value = ++atomicCount; // カウントをインクリメント
+			}
+			if (atomicCount === 3) {
+				// 発射コマンドを追加
+				const shootCommand = {
+					chunkName: this._chunkName,
+					type: 'shootAtomicFire',
+					message: `{Shoot Atomic Fire}`,
+					value: atomicCount
+				};
+				// 現在のコマンドの次の位置に追加
+				commands.splice(index + 1, 0, shootCommand);
+				atomicCount = 0; // カウントリセット
+				this._commandNum++; // コマンド数をインクリメント
+			}
+		}
+		if (atomicCount > 0) {
+			// 溜まったまま残っている => 発射コマンドを追加
+			const shootCommand = {
+				chunkName: this._chunkName,
+				type: 'shootAtomicFire',
+				message: `{Shoot Atomic Fire}`,
+				value: atomicCount
+			};
+			// 末尾に追加
+			commands.push(shootCommand);
+			atomicCount = 0; // カウントリセット
+			this._commandNum++; // コマンド数をインクリメント
+		}
+		// もしチャンクの中身が空なら撤去
+		if (commands.length === 0) {
+			this._commandChunks.pop(); // lastChunk を削除
+		}
+		// もし, これが唯一のコマンドチャンクである場合, その瞬間に実行する
+		if (this._commandChunks.length === 1) {
 			this.executeNextCommand();
 		}
 	}
@@ -165,13 +209,7 @@ ${direction} は正しい向きではないからです`;
 			return; // もう死んでいる
 		}
 		if (this.currentChunk.length < 1) {
-			// チャンクが空になった
-			// アトミックファイヤーが残っていれば発射
-			if (this._atomicFirePower > 0) {
-				this.shootAtomicFire(); // アトミックファイヤー発射
-				return;
-			}
-			// 空のチャンクの消去
+			// チャンクが空になったので消去
 			this._commandChunks.shift();
 			if (this._commandChunks.length > 0) {
 				// まだ残っていれば再帰的に実行
@@ -182,15 +220,6 @@ ${direction} は正しい向きではないからです`;
 
 		const rockman = this;
 		const command = this.currentChunk[0];
-
-		// アトミックファイヤー
-		if (this._atomicFirePower > 0) {
-			if (!command || command.type !== 'アトミックファイヤー') {
-				// アトミックファイヤー発射
-				this.shootAtomicFire();
-				return;
-			}
-		}
 
 		// コマンドがない
 		if (!command) {
@@ -219,15 +248,26 @@ ${direction} は正しい向きではないからです`;
 				if (towardX !== 0) {
 					this.forward.x = towardX;
 				}
-				if (this._leafShield && this._leafShieldInstance) {
-					// こことのベクトルを定める
-					const dir = target.subtract(new Vector2(this.x, this.y));
+				// 今いる地点とのベクトル
+				const dir = target.subtract(new Vector2(this.x, this.y));
+				if (
+					this._leafShield &&
+					this._leafShieldInstance &&
+					dir.magnitudeSqr() >= 1
+				) {
 					this.shootLeafShield(dir);
 				} else {
 					// 歩行開始
-					this.behavior = this._superArm ? 'SuperArmWalk' : BehaviorTypes.Walk; // 歩き始める
+					this.behavior = this._atomicFire
+						? 'AtomicFireWalk'
+						: this._superArm
+							? 'SuperArmWalk'
+							: BehaviorTypes.Walk; // 歩き始める
 					this._target = target;
 				}
+				break;
+			case 'shootAtomicFire':
+				this.shootAtomicFire(command.value); // アトミックファイヤー発射
 				break;
 			case 'エアーシューター':
 				// WIP
@@ -247,14 +287,21 @@ ${direction} は正しい向きではないからです`;
 				break;
 			case 'アトミックファイヤー':
 				// WIP
-				this.become('AtomicFire');
-				this._atomicFirePower = Math.min(3, this._atomicFirePower + 1);
-				if (this._atomicFirePower === 1) {
+				this._atomicFire = true;
+				this.become('AtomicFireIdle');
+				if (!this._atomicFireInstance) {
+					// アトミックファイヤーのインスタンスを生成
 					const fire = this.summon(Skin.アトミックファイヤー);
-					fire.x += this.forward.x * 32;
+					fire.onenterframe = () => {
+						// ロックマンの前に火球を固定
+						fire.moveTo(this.x, this.y);
+						fire.moveBy(-this.offset.x, -this.offset.y);
+						fire.moveBy(fire.offset.x, fire.offset.y);
+						fire.moveBy(this.forward.x * 32, 0);
+					};
 					this._atomicFireInstance = fire;
 				}
-				this._atomicFireInstance.behavior = `power-${this._atomicFirePower}`;
+				this._atomicFireInstance.behavior = `power-${command.value}`;
 				this.setTimeout(() => {
 					// 一定フレームが経過したら次へ
 					energy -= 0;
@@ -304,7 +351,7 @@ ${direction} は正しい向きではないからです`;
 					const hand = getHandyObject(this.mapX, this.mapY);
 					if (hand) {
 						hand.onenterframe = () => {
-							hand.moveTo(this.x, this.y - 24);
+							hand.moveTo(this.x, this.y - 18);
 							hand.updateCollider();
 						};
 						hand.collisionFlag = false;
@@ -451,21 +498,24 @@ ${weapon} は正しい武器の名前ではないからです`;
 			// "〜たら" をコール
 			this[name].apply(this, args);
 		}
+		this.afterDispatch();
 	}
 	/**
 	 * アトミックファイヤー発射
 	 */
-	shootAtomicFire() {
-		const damage = this._atomicFirePower;
+	shootAtomicFire(power) {
+		this.become('AtomicFireAttack');
+		const damage = power;
+		this._atomicFireInstance.onenterframe = null;
 		this._atomicFireInstance.mod(Hack.createDamageMod(damage));
 		this.shoot(this._atomicFireInstance, this.forward, 10);
 		this._atomicFireInstance.destroy(50);
-		this._atomicFirePower = 0;
 		this._atomicFireInstance = null;
-		this.setTimeout(() => {
+		this._atomicFire = false;
+		this.once('becomeidle', () => {
 			// 少しのディレイののち, 次の動作へ
 			this.next();
-		}, 6);
+		});
 	}
 	/**
 	 * ハイパーボムを投げる/爆破させる
@@ -535,20 +585,22 @@ ${weapon} は正しい武器の名前ではないからです`;
 	 * リーフシールドの発射
 	 */
 	shootLeafShield(dir) {
-		// 大きさを 10 にして発射
-		if (dir.magnitudeSqr() < 1) {
-			dir.set(this.forward.x, 0);
-		}
 		// リーフシールドの発射
-		const v = dir.normalize().scale(10);
+		this.become('LeafShieldAttack');
+		const speed = 10;
+		const v = dir.normalize().scale(speed);
 		this._leafShieldInstance.velocity(v.x, v.y);
 		this._leafShieldInstance.destroy(50);
 		this._leafShieldInstance = null;
 		this._leafShield = false;
-		this.setTimeout(() => {
-			// 少しのディレイの後、次へ
-			this.next();
-		}, 5);
+		this.once(
+			'becomeidle',
+			() => {
+				// モーションのあと、歩行に戻る
+				this.executeNextCommand();
+			},
+			5
+		);
 	}
 	/**
 	 * タイムストッパー
@@ -692,6 +744,7 @@ function update() {
 	const rockmanSpeed = 4; // ロックマンのスピード [px/frame]
 	if (
 		rockman.behavior === BehaviorTypes.Walk ||
+		rockman.behavior === 'AtomicFireWalk' ||
 		rockman.behavior === 'SuperArmWalk'
 	) {
 		const pos = new Vector2(rockman.x, rockman.y);
@@ -704,6 +757,7 @@ function update() {
 		if (t >= 1) {
 			// distance <= rockmanSpeed, つまりこのフレームで到達
 			// 次のコマンドへ
+			console.log('---- stop ----');
 			rockman.next();
 		}
 		// 向きを変更する
