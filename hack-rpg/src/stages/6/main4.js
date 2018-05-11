@@ -52,10 +52,14 @@ function gameStartLazy() {
 				textArea.show();
 
 				button('ほかのステージであそぶ', 130).ontouchend = () => {
-					feeles.openWindow('https://www.hackforplay.xyz/lists/trending');
+					feeles.dispatchOnMessage({
+						href: '/lists/trending'
+					});
 				};
 				button('自分のステージをつくる', 180).ontouchend = () => {
-					feeles.openWindow('https://www.hackforplay.xyz/officials/make-rpg');
+					feeles.dispatchOnMessage({
+						href: '/contents/kit'
+					});
 				};
 				button('もういちどあそぶ', 230).ontouchend = () => {
 					feeles.replace('stages/1/index.html');
