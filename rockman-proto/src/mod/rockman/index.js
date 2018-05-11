@@ -248,9 +248,13 @@ ${direction} は正しい向きではないからです`;
 				if (towardX !== 0) {
 					this.forward.x = towardX;
 				}
-				if (this._leafShield && this._leafShieldInstance) {
-					// こことのベクトルを定める
-					const dir = target.subtract(new Vector2(this.x, this.y));
+				// 今いる地点とのベクトル
+				const dir = target.subtract(new Vector2(this.x, this.y));
+				if (
+					this._leafShield &&
+					this._leafShieldInstance &&
+					dir.magnitudeSqr() >= 1
+				) {
 					this.shootLeafShield(dir);
 				} else {
 					// 歩行開始
@@ -581,20 +585,22 @@ ${weapon} は正しい武器の名前ではないからです`;
 	 * リーフシールドの発射
 	 */
 	shootLeafShield(dir) {
-		// 大きさを 10 にして発射
-		if (dir.magnitudeSqr() < 1) {
-			dir.set(this.forward.x, 0);
-		}
 		// リーフシールドの発射
-		const v = dir.normalize().scale(10);
+		this.become('LeafShieldAttack');
+		const speed = 10;
+		const v = dir.normalize().scale(speed);
 		this._leafShieldInstance.velocity(v.x, v.y);
 		this._leafShieldInstance.destroy(50);
 		this._leafShieldInstance = null;
 		this._leafShield = false;
-		this.setTimeout(() => {
-			// 少しのディレイの後、次へ
-			this.next();
-		}, 5);
+		this.once(
+			'becomeidle',
+			() => {
+				// モーションのあと、歩行に戻る
+				this.executeNextCommand();
+			},
+			5
+		);
 	}
 	/**
 	 * タイムストッパー
@@ -751,6 +757,7 @@ function update() {
 		if (t >= 1) {
 			// distance <= rockmanSpeed, つまりこのフレームで到達
 			// 次のコマンドへ
+			console.log('---- stop ----');
 			rockman.next();
 		}
 		// 向きを変更する

@@ -66,6 +66,7 @@ export const metadatas = {
 			GeminiLaser: fill(4, 8).concat(null),
 			HyperBomb: fill(0, 8).concat(null),
 			LeafShield: [6],
+			LeafShieldAttack: fill(0, 6).concat(null),
 			SuperArmIdle: [19],
 			SuperArmWalk: [12, 12, 12, 13, 13, 13, 14, 14, 13, 13, 13],
 			ThunderBeam: fill(4, 8).concat(null),
