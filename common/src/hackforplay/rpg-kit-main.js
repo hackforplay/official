@@ -270,7 +270,7 @@ game.onawake = () => {
 
 	// Feeles の Stop/Resume 機能
 	feeles.connected.then(({ port }) => {
-		port.on('message', e => {
+		port.addEventListener('message', e => {
 			switch (e.data.query) {
 				case 'stop':
 					if (typeof Hack.world.stop === 'function') {
