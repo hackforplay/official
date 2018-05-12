@@ -2,6 +2,7 @@ import { Core, Node, Event, Sprite, Surface, Group } from 'enchantjs/enchant';
 import 'enchantjs/ui.enchant';
 import 'enchantjs/fix';
 import 'hackforplay/rpg-kit-main';
+import Hack from './hack';
 
 import { clamp } from 'hackforplay/utils/math-utils';
 

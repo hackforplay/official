@@ -6,6 +6,7 @@ import 'hackforplay/rpg-kit-rpgobjects';
 import 'hackforplay/rpg-kit-color';
 import Vector2 from 'hackforplay/math/vector2';
 import Line from 'hackforplay/shapes/line';
+import MapObject from './object/map-object';
 
 /*
  * RPGMap
