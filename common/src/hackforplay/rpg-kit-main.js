@@ -268,6 +268,25 @@ game.onawake = () => {
 	Hack.world = world;
 	game.rootScene.addChild(world);
 
+	// Feeles の Stop/Resume 機能
+	feeles.connected.then(({ port }) => {
+		port.on('message', e => {
+			switch (e.data.query) {
+				case 'stop':
+					if (typeof Hack.world.stop === 'function') {
+						Hack.world.stop();
+					}
+					break;
+				case 'resume':
+					if (typeof Hack.world.resume === 'function') {
+						Hack.world.resume();
+					}
+				default:
+					break;
+			}
+		});
+	});
+
 	// ワールドが描画される前に描画先をマップのサーフェイスに差し替える
 	world.on('prerender', ({ canvasRenderer }) => {
 		canvasRenderer.targetSurface = Hack.map._surface;
