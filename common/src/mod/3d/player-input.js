@@ -1,5 +1,7 @@
 import 'hackforplay/core';
 import 'mod/key';
+import Player from '../../hackforplay/object/player';
+import BehaviorTypes from '../../hackforplay/behavior-types';
 
 import { Vec2 } from 'mod/3d/math';
 

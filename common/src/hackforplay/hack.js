@@ -1,6 +1,5 @@
-import 'hackforplay/enchantjs-kit';
+import enchant from '../enchantjs/enchant';
 import TextArea from 'hackforplay/ui/textarea';
-import find from './find';
 
 function refocus() {
 	window.document.activeElement.blur(); // Blur an enchantBook
@@ -12,7 +11,27 @@ function getEditor() {
 	return Hack.enchantBook;
 }
 
-module.exports = Hack;
+const Hack = self.Hack || new enchant.EventTarget();
+const game = enchant.Core.instance;
+
+// Hack.start
+Hack.start = function() {
+	// game start
+	Hack.maps = Hack.maps || {};
+	Hack.dispatchEvent(new Event('load'));
+	game.start();
+	window.focus();
+};
+
+// クリック時に再度フォーカス
+Hack.focusOnClick = true;
+window.addEventListener('click', function() {
+	if (Hack.focusOnClick) {
+		window.document.activeElement.blur(); // Blur an enchantBook
+		window.parent.focus(); // Blur an input in parent window
+		window.focus(); // focus game
+	}
+});
 
 Hack.on('error', function(event) {
 	Hack.log('It was slient. // うまく うごかなかった');
@@ -634,9 +653,27 @@ game.addEventListener('load', function() {
 	};
 })();
 
-/**
- * その name をもつオブジェクトを取得する
- * @param {string} name オブジェクトの名前
- * @returns {RPGObject|null} オブジェクトあるいは null
- */
-Hack.find = find;
+/*  Vec2Dir
+forwardをdirectionに変換する。およそのベクトルをまるめて近い向きに直す
+*/
+Hack.Vec2Dir = function(vec) {
+	if (vec.x === undefined || vec.y === undefined) {
+		return null;
+	}
+	if (vec.x === 0 && vec.y === 0) {
+		return null;
+	}
+	var deg = Math.atan2(vec.y, vec.x) / Math.PI * 180;
+	if (-135 <= deg && deg <= -45) {
+		return 3;
+	} // up
+	if (-45 <= deg && deg <= 45) {
+		return 2;
+	} // right
+	if (45 <= deg && deg <= 135) {
+		return 0;
+	} // down
+	return 1; // left
+};
+
+export default Hack;

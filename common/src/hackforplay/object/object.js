@@ -1,11 +1,11 @@
-import 'hackforplay/rpg-kit-main';
 import { Sprite } from 'enchantjs/enchant';
 import 'enchantjs/ui.enchant';
-import 'hackforplay/hack';
+import Hack from '../../hackforplay/hack';
 import * as synonyms from 'hackforplay/synonyms';
 import Skin from '../skin';
 import Family, { isOpposite, registerServant } from '../family';
 import SAT from 'lib/sat.min';
+import BehaviorTypes from '../behavior-types';
 
 // 1 フレーム ( enterframe ) 間隔で next する
 // Unity の StartCoroutine みたいな仕様

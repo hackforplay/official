@@ -1,9 +1,12 @@
 import 'hackforplay/rpg-kit-main';
 import 'enchantjs/enchant';
 import 'enchantjs/ui.enchant';
-import 'hackforplay/hack';
+import Hack from './hack';
 import * as synonyms from './synonyms';
 import SAT from 'lib/sat.min';
+import RPGObject from './object/object';
+import MapObject, { dictionary } from './object/map-object';
+import BehaviorTypes from './behavior-types';
 
 /**
 * RPGObject
@@ -47,76 +50,10 @@ bs.onbecomedead = function () {};
  * Kinematics ===> Player		: onplayerenter	: Need collisionFlag is false, Dispatch onnly kinematics
  */
 
-// Classes and Enums
-var _def = function(name, getter) {
-	Object.defineProperty(window, name, {
-		configurable: true,
-		get: getter
-	});
-};
-
-_def('BehaviorTypes', function() {
-	return __BehaviorTypes;
-});
-_def('RPGObject', function() {
-	return __RPGObject;
-});
-_def('Player', function() {
-	return __Player;
-});
-_def('BlueSlime', function() {
-	return __BlueSlime;
-});
-_def('Insect', function() {
-	return __Insect;
-});
-_def('Spider', function() {
-	return __Spider;
-});
-_def('Bat', function() {
-	return __Bat;
-});
-_def('Dragon', function() {
-	return __Dragon;
-});
-_def('Minotaur', function() {
-	return __Minotaur;
-});
-_def('Boy', function() {
-	return __Boy;
-});
-_def('Girl', function() {
-	return __Girl;
-});
-_def('Woman', function() {
-	return __Woman;
-});
-_def('MapObject', function() {
-	return __MapObject;
-});
-_def('Effect', function() {
-	return __Effect;
-});
-
 var game = enchant.Core.instance;
 
 Hack.assets = Hack.assets || {};
 Hack.skills = Hack.skills || {};
-
-// [注意] BehaviorTypesは排他的なプロパティになりました
-var __BehaviorTypes = {
-	None: null, // 無状態 (デフォルトではEventは発火されません)[deprecated]
-	Idle: 'idle', // 立ち状態
-	Walk: 'walk', // 歩き状態
-	Attack: 'attack', // 攻撃状態
-	Damaged: undefined, // 被撃状態[deprecated]
-	Dead: 'dead' // 死亡状態
-};
-
-export const BehaviorTypes = __BehaviorTypes;
-
-import __RPGObject from './object/object';
-import __Player from './object/player';
 
 Hack.assets.knight = function() {
 	this.image = game.assets['enchantjs/x1.5/chara5.png'];
@@ -230,14 +167,6 @@ Hack.assets.slime = function() {
 	this.colliderOffset = new SAT.V(10, 10);
 	this.collider = new SAT.Box(this.colliderOffset, 28, 28).toPolygon();
 };
-var __BlueSlime = enchant.Class(RPGObject, {
-	initialize: function() {
-		RPGObject.call(this);
-		this.mod(Hack.assets.slime);
-		this.hp = 3;
-		this.atk = 1;
-	}
-});
 
 Hack.assets.insect = function() {
 	this.image = game.assets['enchantjs/monster1.gif'];
@@ -276,14 +205,6 @@ Hack.assets.insect = function() {
 	this.colliderOffset = new SAT.V(6, 18);
 	this.collider = new SAT.Box(this.colliderOffset, 36, 28).toPolygon();
 };
-var __Insect = enchant.Class(RPGObject, {
-	initialize: function() {
-		RPGObject.call(this);
-		this.mod(Hack.assets.insect);
-		this.hp = 3;
-		this.atk = 1;
-	}
-});
 
 Hack.assets.spider = function() {
 	this.image = game.assets['enchantjs/monster2.gif'];
@@ -322,14 +243,6 @@ Hack.assets.spider = function() {
 	this.colliderOffset = new SAT.V(4, 18);
 	this.collider = new SAT.Box(this.colliderOffset, 56, 40).toPolygon();
 };
-var __Spider = enchant.Class(RPGObject, {
-	initialize: function() {
-		RPGObject.call(this);
-		this.mod(Hack.assets.spider);
-		this.hp = 3;
-		this.atk = 1;
-	}
-});
 
 Hack.assets.bat = function() {
 	this.image = game.assets['enchantjs/monster3.gif'];
@@ -399,15 +312,6 @@ Hack.assets.shadowMod = function() {
 		this.moveTo(this.ref.x + o.x, this.ref.y + o.y);
 	});
 };
-var __Bat = enchant.Class(RPGObject, {
-	initialize: function() {
-		RPGObject.call(this);
-		this.mod(Hack.assets.bat);
-		this.mod(Hack.assets.shadowMod);
-		this.hp = 3;
-		this.atk = 1;
-	}
-});
 
 Hack.assets.dragon = function() {
 	this.image = game.assets['enchantjs/bigmonster1.gif'];
@@ -528,14 +432,6 @@ Hack.assets.dragon = function() {
 	this.colliderOffset = new SAT.V(16, 16);
 	this.collider = new SAT.Box(this.colliderOffset, 48, 48).toPolygon();
 };
-var __Dragon = enchant.Class(RPGObject, {
-	initialize: function() {
-		RPGObject.call(this);
-		this.mod(Hack.assets.dragon);
-		this.hp = 3;
-		this.atk = 1;
-	}
-});
 
 Hack.assets.minotaur = function() {
 	this.image = game.assets['enchantjs/bigmonster2.gif'];
@@ -664,14 +560,6 @@ Hack.assets.minotaur = function() {
 	this.colliderOffset = new SAT.V(16, 16);
 	this.collider = new SAT.Box(this.colliderOffset, 48, 48).toPolygon();
 };
-var __Minotaur = enchant.Class(RPGObject, {
-	initialize: function() {
-		RPGObject.call(this);
-		this.mod(Hack.assets.minotaur);
-		this.hp = 3;
-		this.atk = 1;
-	}
-});
 
 Hack.assets.boy = function() {
 	this.image = game.assets['enchantjs/x1.5/chara0.png'];
@@ -723,14 +611,6 @@ Hack.assets.boy = function() {
 	this.colliderOffset = new SAT.V(12, 14);
 	this.collider = new SAT.Box(this.colliderOffset, 24, 34).toPolygon();
 };
-var __Boy = enchant.Class(RPGObject, {
-	initialize: function() {
-		RPGObject.call(this);
-		this.mod(Hack.assets.boy);
-		this.hp = 3;
-		this.atk = 1;
-	}
-});
 
 Hack.assets.girl = function() {
 	this.image = game.assets['enchantjs/x1.5/chara0.png'];
@@ -782,14 +662,6 @@ Hack.assets.girl = function() {
 	this.colliderOffset = new SAT.V(12, 14);
 	this.collider = new SAT.Box(this.colliderOffset, 24, 34).toPolygon();
 };
-var __Girl = enchant.Class(RPGObject, {
-	initialize: function() {
-		RPGObject.call(this);
-		this.mod(Hack.assets.girl);
-		this.hp = 3;
-		this.atk = 1;
-	}
-});
 
 Hack.assets.woman = function() {
 	this.image = game.assets['enchantjs/x1.5/chara0.png'];
@@ -841,45 +713,6 @@ Hack.assets.woman = function() {
 	this.colliderOffset = new SAT.V(12, 14);
 	this.collider = new SAT.Box(this.colliderOffset, 24, 34).toPolygon();
 };
-var __Woman = enchant.Class(RPGObject, {
-	initialize: function() {
-		RPGObject.call(this);
-		this.mod(Hack.assets.woman);
-		this.hp = 3;
-		this.atk = 1;
-	}
-});
-
-var __MapObject = enchant.Class(RPGObject, {
-	initialize: function(value) {
-		RPGObject.call(this, 32, 32, 0, 0);
-		this.image = game.assets['enchantjs/x2/dotmat.gif'];
-		if (typeof value === 'number') {
-			this.frame = value;
-		} else {
-			this.name = value;
-		}
-		this.directionType = 'single';
-		this.forward = [0, -1];
-	},
-	name: {
-		get: function() {
-			var search = '';
-			Object.keys(MapObject.dictionary).forEach(function(key) {
-				if (MapObject.dictionary[key] === this.frame) {
-					search = key;
-				}
-			}, this);
-			return search;
-		},
-		set: function(key) {
-			if (MapObject.dictionary.hasOwnProperty(key)) {
-				this.frame = MapObject.dictionary[key];
-			}
-		}
-	},
-	onenterframe: function() {}
-});
 
 Hack.assets.enchantBookItem = function() {
 	this.image = game.assets['hackforplay/madosyo_small.png'];
@@ -992,42 +825,21 @@ Hack.assets.ouroboros = function() {
 	this.collider = new SAT.Box(this.colliderOffset, 60, 36).toPolygon();
 };
 
-var __Effect = enchant.Class(RPGObject, {
-	initialize: function(velocityX, velocityY, lifetime, randomize) {
-		RPGObject.call(this);
+Object.keys(dictionary).forEach(function(name) {
+	Hack.assets[name] = function() {
+		this.image = MapObject.surfaces[name];
 		this.width = 32;
 		this.height = 32;
-		this.image = game.assets['enchantjs/x2/effect0.png'];
-		this.isKinematic = false;
-		this.velocity(velocityX, velocityY);
-		var frame = new Array(lifetime);
-		for (var i = frame.length - 1; i >= 0; i--) {
-			frame[i] = (i / lifetime * 5) >> 0;
-		}
-		this.frame = frame;
-		this.destroy(frame.length);
-		if (randomize) {
-			this._random = {
-				x: velocityX * 10 * Math.random(),
-				y: velocityY * 10 * Math.random()
-			};
-			this.velocityX *= 0.5 + Math.random();
-			this.velocityY *= 0.5 + Math.random();
-		}
-		/*
-		if (Effect.lastNode && Effect.lastNode.parentNode === this.parentNode) {
-			this.destroy();
-			Effect.lastNode.parentNode.insertBefore(this, Effect.lastNode);
-		}
-		Effect.lastNode = this;
-		*/
-	},
-	locate: function(left, top, effect) {
-		RPGObject.prototype.locate.call(this, left, top, effect);
-		if (this._random) {
-			this.moveBy(this._random.x, this._random.y);
-		}
-	}
+		this.offset = {
+			x: 0,
+			y: 0
+		};
+		// 衝突判定用のポリゴン
+		this.colliderOffset = new SAT.V(0, 0);
+		this.collider = new SAT.Box(this.colliderOffset, 32, 32).toPolygon();
+		this.directionType = 'single';
+		this.forward = [0, -1];
+	};
 });
 
 // Hack.skills

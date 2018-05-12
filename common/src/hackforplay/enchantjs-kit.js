@@ -14,18 +14,7 @@ feeles.env.VIEW = {
 	height: 320
 };
 
-// コアインスタンスを生成
-window.Hack = new EventTarget();
 window.game = new Core(feeles.env.VIEW.width, feeles.env.VIEW.height);
-
-// Hack.start
-Hack.start = function() {
-	// game start
-	Hack.maps = Hack.maps || {};
-	Hack.dispatchEvent(new Event('load'));
-	game.start();
-	window.focus();
-};
 
 // リサイズ時にゲームの scale を調節
 document.documentElement.style.overflow = 'hidden';
@@ -36,16 +25,6 @@ window.addEventListener('resize', function() {
 		game.scale = Math.min(fWidth / game.width, fHeight / game.height);
 	} else {
 		game.scale = 1;
-	}
-});
-
-// クリック時に再度フォーカス
-Hack.focusOnClick = true;
-window.addEventListener('click', function() {
-	if (Hack.focusOnClick) {
-		window.document.activeElement.blur(); // Blur an enchantBook
-		window.parent.focus(); // Blur an input in parent window
-		window.focus(); // focus game
 	}
 });
 

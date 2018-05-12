@@ -3,7 +3,7 @@ import 'mod/stop';
 import 'mod/coordinate';
 import SAT from 'lib/sat.min';
 
-import 'hackforplay/hack';
+import Hack from './hack';
 import 'hackforplay/rpg-kit-rpgobjects';
 import 'hackforplay/rpg-kit-color';
 
@@ -13,6 +13,7 @@ import Camera from 'hackforplay/camera';
 import { CanvasRenderer } from 'enchantjs/enchant';
 import { KeyClass } from 'mod/key';
 import { isOpposite } from './family';
+import BehaviorTypes from './behavior-types';
 
 import Keyboard from 'hackforplay/keyboard';
 import {
@@ -270,7 +271,7 @@ game.onawake = () => {
 
 	// Feeles の Stop/Resume 機能
 	feeles.connected.then(({ port }) => {
-		port.on('message', e => {
+		port.addEventListener('message', e => {
 			switch (e.data.query) {
 				case 'stop':
 					if (typeof Hack.world.stop === 'function') {
@@ -371,11 +372,13 @@ game.onawake = () => {
 	Hack.menuGroup.addChild(lifeLabel);
 	Hack.lifeLabel.moveTo(Hack.menuGroup.x + 10, Hack.menuGroup.y + 72);
 	game.once('enterframe', () => {
-		const player = player || Hack.player;
-		lifeLabel.score = player.hp;
-		player.on('hpchange', () => {
+		const player = self.player || Hack.player;
+		if (player) {
 			lifeLabel.score = player.hp;
-		});
+			player.on('hpchange', () => {
+				lifeLabel.score = player.hp;
+			});
+		}
 	});
 
 	Hack.scoreLabel = (function(self, source) {
@@ -397,120 +400,6 @@ game.onawake = () => {
 	feeles.setAlias('Hack', Hack);
 	feeles.setAlias('game', game);
 };
-
-// 互換性維持
-MapObject._dictionary = {};
-Object.defineProperty(MapObject, 'dictionary', {
-	configurable: true,
-	enumerable: true,
-	get: function() {
-		return this._dictionary;
-	},
-	set: function(value) {
-		Object.keys(value).forEach(function(key) {
-			this._dictionary[key] = value[key];
-		}, this);
-	}
-});
-MapObject.dictionary = MapObject.Dictionaly || {}; // 旧仕様ユーザー定義
-MapObject.dictionary = {
-	// 新仕様公式定義
-	clay: 320,
-	clayWall: 340,
-	clayFloor: 323,
-	stone: 321,
-	stoneWall: 341,
-	stoneFloor: 342,
-	warp: 324,
-	warpRed: 325,
-	warpGreen: 326,
-	warpYellow: 327,
-	magic: 328,
-	usedMagic: 329,
-	pot: 400,
-	rock: 401,
-	upStair: 402,
-	box: 420,
-	flower: 421,
-	downStair: 422,
-	trap: 440,
-	usedTrap: 441,
-	step: 442,
-	castle: 500,
-	village: 501,
-	caveGate: 502,
-	tree: 520,
-	table: 521,
-	openedBox: 522,
-	beam: 540,
-	diamond: 560,
-	sapphire: 561,
-	ruby: 562,
-	heart: 563,
-	skull: 564,
-	coin: 565,
-	star: 566,
-	key: 567,
-	bomb: 580,
-	coldBomb: 581,
-	egg: 582,
-	poo: 583,
-	sandySoil: 45,
-	claySoil: 323,
-	grassland: 322,
-	waterside: 205,
-	flatGray: 135,
-	squareGray: 93
-};
-
-// １枚ずつ切り分けたsurface
-MapObject.surfaces = {};
-Object.keys(MapObject.dictionary).forEach(function(name) {
-	Object.defineProperty(MapObject.surfaces, name, {
-		enumerable: true,
-		configurable: true,
-		get: function() {
-			return tryFetchMapImage(name);
-		},
-		set: function(value) {
-			Object.defineProperty(MapObject.surfaces, name, {
-				value: value
-			});
-		}
-	});
-});
-
-function tryFetchMapImage(name) {
-	if (game.assets['enchantjs/x2/dotmat.gif']) {
-		var length = 20,
-			w = 32,
-			h = 32;
-		var frame = MapObject.dictionary[name],
-			x = (frame % length) * w,
-			y = ((frame / length) >> 0) * h;
-		var s = new Surface(w, h);
-		s.draw(game.assets['enchantjs/x2/dotmat.gif'], x, y, w, h, 0, 0, w, h);
-		return (MapObject.surfaces[name] = s);
-	}
-	return undefined;
-}
-
-Object.keys(MapObject.dictionary).forEach(function(name) {
-	Hack.assets[name] = function() {
-		this.image = MapObject.surfaces[name];
-		this.width = 32;
-		this.height = 32;
-		this.offset = {
-			x: 0,
-			y: 0
-		};
-		// 衝突判定用のポリゴン
-		this.colliderOffset = new SAT.V(0, 0);
-		this.collider = new SAT.Box(this.colliderOffset, 32, 32).toPolygon();
-		this.directionType = 'single';
-		this.forward = [0, -1];
-	};
-});
 
 Object.defineProperty(window, 'RPGMap', {
 	get: function() {
@@ -624,28 +513,6 @@ Hack.Dir2Vec = function(dir) {
 		default:
 			return null;
 	}
-};
-/*  Vec2Dir
-forwardをdirectionに変換する。およそのベクトルをまるめて近い向きに直す
-*/
-Hack.Vec2Dir = function(vec) {
-	if (vec.x === undefined || vec.y === undefined) {
-		return null;
-	}
-	if (vec.x === 0 && vec.y === 0) {
-		return null;
-	}
-	var deg = Math.atan2(vec.y, vec.x) / Math.PI * 180;
-	if (-135 <= deg && deg <= -45) {
-		return 3;
-	} // up
-	if (-45 <= deg && deg <= 45) {
-		return 2;
-	} // right
-	if (45 <= deg && deg <= 135) {
-		return 0;
-	} // down
-	return 1; // left
 };
 
 Hack.Attack = function(x, y, damage, pushX, pushY) {

@@ -4,6 +4,7 @@ import 'mod/3d/player-input';
 
 import MapObjectConfig from 'mod/3d/mapObjectConfig';
 import { initializeMapObjectConfig } from 'mod/3d/mapObjectConfig';
+import BehaviorTypes from '../../hackforplay/behavior-types';
 
 // MapObject が RPGObject になったアプデの対策
 (function() {

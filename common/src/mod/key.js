@@ -1,4 +1,6 @@
-import 'hackforplay/core';
+import enchant from '../enchantjs/enchant';
+import '../hackforplay/core';
+
 /*
 
 ◆ 使い方
