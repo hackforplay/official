@@ -4,6 +4,8 @@ import 'enchantjs/ui.enchant';
 import 'hackforplay/hack';
 import * as synonyms from './synonyms';
 import SAT from 'lib/sat.min';
+import RPGObject from './object/object';
+import Player from './object/player';
 
 /**
 * RPGObject
@@ -59,10 +61,10 @@ _def('BehaviorTypes', function() {
 	return __BehaviorTypes;
 });
 _def('RPGObject', function() {
-	return __RPGObject;
+	return RPGObject;
 });
 _def('Player', function() {
-	return __Player;
+	return Player;
 });
 _def('BlueSlime', function() {
 	return __BlueSlime;
@@ -114,9 +116,6 @@ var __BehaviorTypes = {
 };
 
 export const BehaviorTypes = __BehaviorTypes;
-
-import __RPGObject from './object/object';
-import __Player from './object/player';
 
 Hack.assets.knight = function() {
 	this.image = game.assets['enchantjs/x1.5/chara5.png'];
