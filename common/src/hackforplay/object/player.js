@@ -1,6 +1,6 @@
-import enchant from 'enchantjs/enchant';
+import enchant from '../../enchantjs/enchant';
 import RPGObject from './object';
-import Key from 'mod/key';
+import Key from '../key';
 import BehaviorTypes from '../behavior-types';
 
 class Player extends RPGObject {

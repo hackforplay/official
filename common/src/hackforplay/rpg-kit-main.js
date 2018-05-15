@@ -11,7 +11,7 @@ import { Group } from 'enchantjs/enchant';
 import Camera from 'hackforplay/camera';
 
 import { CanvasRenderer } from 'enchantjs/enchant';
-import { KeyClass } from 'mod/key';
+import { KeyClass } from './key';
 import { isOpposite } from './family';
 import BehaviorTypes from './behavior-types';
 

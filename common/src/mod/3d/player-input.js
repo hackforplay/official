@@ -1,5 +1,5 @@
-import 'hackforplay/core';
-import 'mod/key';
+import '../../hackforplay/core';
+import '../../hackforplay/key';
 import Player from '../../hackforplay/object/player';
 import BehaviorTypes from '../../hackforplay/behavior-types';
 
