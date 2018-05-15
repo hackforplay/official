@@ -14,6 +14,7 @@ import Player from './object/player';
 import Effect from './object/effect';
 import BehaviorTypes from './behavior-types';
 import find from './find';
+import Key from './key';
 
 // Global
 self.Hack = self.Hack || Hack;
@@ -24,6 +25,7 @@ self.BehaviorTypes = self.BehaviorTypes || BehaviorTypes;
 self.MapObject = self.MapObject || MapObject;
 self.Player = self.Player || Player;
 self.Effect = self.Effect || Effect;
+self.Key = self.Key || Key;
 
 // Assign synonyms
 Hack.assets = Hack.assets || {};
