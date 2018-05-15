@@ -78,7 +78,7 @@ Key.v.observe(function(key) {
 
 var core = enchant.Core.instance;
 
-var Key = (window.Key = {});
+var Key = {};
 
 var keyCode = {
 	num0: 48,
