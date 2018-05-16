@@ -184,28 +184,18 @@ var KeyClass = enchant.Class.create({
 	},
 
 	update: function(input) {
+		// 前フレームの状態を保持する
 		var pressed = this.pressed;
 		var released = this.released;
-
-		this.press = this.release = this.click = false;
-
+		// 入力の状態を更新する
 		this.count = input ? this.count + 1 : 0;
-
+		// press, release, observe を呼び出す
 		if (pressed && this.released) {
-			this.release = true;
 			this.dispatch('release');
 		}
-
 		if (released && this.pressed) {
-			this.press = true;
 			this.dispatch('press');
 		}
-
-		if (this.clicked) {
-			this.click = true;
-			this.dispatch('click');
-		}
-
 		this.dispatch('observe');
 	},
 
