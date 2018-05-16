@@ -1,5 +1,5 @@
 import enchant from '../enchantjs/enchant';
-import '../hackforplay/core';
+import './enchantjs-kit'; // core の生成を待つ
 
 /*
 
