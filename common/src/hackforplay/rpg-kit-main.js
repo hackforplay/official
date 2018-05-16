@@ -2,27 +2,23 @@ import 'hackforplay/enchantjs-kit';
 import 'mod/stop';
 import 'mod/coordinate';
 import SAT from 'lib/sat.min';
-
 import Hack from './hack';
 import 'hackforplay/rpg-kit-rpgobjects';
 import 'hackforplay/rpg-kit-color';
-
 import { Group } from 'enchantjs/enchant';
 import Camera from 'hackforplay/camera';
-
 import { CanvasRenderer } from 'enchantjs/enchant';
 import { KeyClass } from './key';
 import { isOpposite } from './family';
 import BehaviorTypes from './behavior-types';
-
 import Keyboard from 'hackforplay/keyboard';
 import {
 	stringToArray,
 	dakuten,
 	handakuten
 } from 'hackforplay/utils/string-utils';
-
 import RPGMap from './rpg-map';
+import './enchantjs-kit'; // Core の生成を待つ
 
 const game = enchant.Core.instance;
 

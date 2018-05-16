@@ -7,6 +7,7 @@ import SAT from 'lib/sat.min';
 import RPGObject from './object/object';
 import MapObject, { dictionary } from './object/map-object';
 import BehaviorTypes from './behavior-types';
+import './enchantjs-kit'; // Core の生成を待つ
 
 /**
 * RPGObject

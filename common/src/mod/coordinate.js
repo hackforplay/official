@@ -2,6 +2,7 @@
 import enchant from 'enchantjs/enchant';
 import Hack from 'hackforplay/hack';
 import 'hackforplay/core';
+import '../hackforplay/enchantjs-kit'; // Core の生成を待つ
 
 const game = enchant.Core.instance;
 const { MutableText } = enchant.ui;

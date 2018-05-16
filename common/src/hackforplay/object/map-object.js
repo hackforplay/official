@@ -1,10 +1,8 @@
 import enchant from '../../enchantjs/enchant';
 import RPGObject from './object';
 
-const game = enchant.Core.instance;
-
 function skin() {
-	this.image = game.assets['enchantjs/x2/dotmat.gif'];
+	this.image = enchant.Core.instance.assets['enchantjs/x2/dotmat.gif'];
 	this.directionType = 'single';
 	this.forward = [0, -1];
 }
@@ -124,6 +122,7 @@ Object.keys(dictionary).forEach(function(name) {
 });
 
 function tryFetchMapImage(name) {
+	const game = enchant.Core.instance;
 	if (game.assets['enchantjs/x2/dotmat.gif']) {
 		var length = 20,
 			w = 32,

@@ -1,4 +1,5 @@
 import enchant from '../enchantjs/enchant';
+import './enchantjs-kit'; // Core 生成を待つ
 import TextArea from 'hackforplay/ui/textarea';
 
 function refocus() {
