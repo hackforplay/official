@@ -7,7 +7,7 @@ import Vector2 from 'hackforplay/math/vector2';
 import Family from 'hackforplay/family';
 
 const game = Core.instance;
-game._debug = false;
+game._debug = true;
 
 async function gameFunc() {
 	game.rootScene.removeChild(Hack.controllerGroup); // バーチャルパッドを消す

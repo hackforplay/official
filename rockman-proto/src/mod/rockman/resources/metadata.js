@@ -72,6 +72,12 @@ export const metadatas = {
 			ThunderBeam: fill(4, 8).concat(null),
 			TimeStopper: fill(0, 6).concat(null)
 		},
+		collider: {
+			x: 2,
+			y: 2,
+			width: 28,
+			height: 28
+		},
 		directionType: 'double'
 	},
 	NeoMetall: {

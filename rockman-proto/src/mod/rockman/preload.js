@@ -1,7 +1,7 @@
 import { Core } from 'enchantjs/enchant';
 import { addSkin } from 'hackforplay/skin';
-
 import { fileNames, metadatas } from './resources/metadata';
+import SAT from '../../lib/sat.min';
 
 const game = Core.instance;
 if (game) {
@@ -40,6 +40,16 @@ if (game) {
 					case 'quadruple':
 						this.forward = [0, 1];
 						break;
+				}
+				if (metadata.collider) {
+					const { x, y, width, height } = metadata.collider;
+					// ダメージ判定用のポリゴン
+					this.colliderOffset = new SAT.V(x, y);
+					this.collider = new SAT.Box(
+						this.colliderOffset,
+						width,
+						height
+					).toPolygon();
 				}
 			});
 		}
