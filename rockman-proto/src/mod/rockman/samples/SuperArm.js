@@ -4,7 +4,7 @@ class MyRockman extends Rockman {
 		this.move(('▼ いどう', 'うえから'), 3);
 		this.cmd(('▼ ブキ', 'スーパーアーム'));
 	}
-	プレイヤーがあるいたら(left, top, pleft, ptop) {
+	プレイヤーがあるいたら(x, y) {
 		this.move(('▼ いどう', 'したへ'), 3);
 		this.move(('▼ いどう', 'みぎへ'), 5);
 		this.cmd(('▼ ブキ', 'スーパーアーム'));

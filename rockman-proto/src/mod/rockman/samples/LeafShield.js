@@ -2,9 +2,9 @@ class MyRockman extends Rockman {
 	しょうかんされたら() {
 		this.cmd(('▼ ブキ', 'リーフシールド'));
 	}
-	プレイヤーがあるいたら(left, top, pleft, ptop) {
-		this.move(('▼ いどう', 'ひだりから'), left);
-		this.move(('▼ いどう', 'うえから'), top);
+	プレイヤーがあるいたら(x, y) {
+		this.move(('▼ いどう', 'みぎへ'), x);
+		this.move(('▼ いどう', 'したへ'), y);
 		this.cmd(('▼ ブキ', 'リーフシールド'));
 	}
 }

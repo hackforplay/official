@@ -43,17 +43,15 @@ export default class Rockman extends RPGObject {
 		this.collisionFlag = false;
 		this.become('appear');
 
-		this._pMapX = player.mapX;
-		this._pMapY = player.mapY;
+		let _pMapX = player.mapX;
+		let _pMapY = player.mapY;
 		player.on('walkend', () => {
 			this.dispatch('プレイヤーがあるいたら', [
-				player.mapX,
-				player.mapY,
-				this._pMapX,
-				this._pMapY
+				player.mapX - _pMapX,
+				player.mapY - _pMapY
 			]);
-			this._pMapX = player.mapX;
-			this._pMapY = player.mapY;
+			_pMapX = player.mapX;
+			_pMapY = player.mapY;
 		});
 
 		this.once('becomeidle', () => {
