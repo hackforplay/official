@@ -1,7 +1,7 @@
 import { Core, Sprite } from 'enchantjs/enchant';
 import Hack from 'hackforplay/hack';
 import RPGObject from 'hackforplay/object/object';
-import { BehaviorTypes } from 'hackforplay/rpg-kit-rpgobjects';
+import BehaviorTypes from 'hackforplay/behavior-types';
 import Skin from 'hackforplay/skin';
 import { registerServant } from 'hackforplay/family';
 import Vector2 from 'hackforplay/math/vector2';
