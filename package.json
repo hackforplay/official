@@ -42,6 +42,7 @@
 	"dependencies": {
 		"compression": "^1.7.2",
 		"connect": "^3.6.6",
+		"cors": "^2.8.4",
 		"feeles-ide": "^0.3.11",
 		"morgan": "^1.9.0",
 		"serve-static": "^1.13.2"
