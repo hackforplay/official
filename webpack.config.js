@@ -57,13 +57,15 @@ module.exports = {
 		// https://medium.com/webpack/webpack-3-official-release-15fd2dd8f07b
 		new webpack.optimize.ModuleConcatenationPlugin(),
 
-		new OpenBrowserPlugin({
-			url: `http://localhost:${port}/make-rpg/`
-		}),
-
 		// Cache and proxy this whole site
 		new OfflinePlugin()
-	],
+	].concat(
+		process.env.HEROKU ? [] : (
+			new OpenBrowserPlugin({
+				url: `http://localhost:${port}/make-rpg/`
+			})
+		)
+	),
 	devServer: {
 		contentBase: dist,
 		port,
