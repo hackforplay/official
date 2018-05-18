@@ -8,6 +8,7 @@
 		"build": "NODE_ENV=production webpack -p",
 		"test": "npm start",
 		"prettier": "./node_modules/.bin/prettier --config ./.prettierrc --write '**/*.js'"
+		"postinstall": "npm run build",
 	},
 	"pre-commit": [
 		"prettier"
