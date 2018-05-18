@@ -1,12 +1,12 @@
-var express = require('express');
-var app = express();
+var connect = require('connect');
+var app = connect();
 
-app.set('port', process.env.PORT || 3000);
+const port = process.env.PORT || 3000;
 
-app.use(express.logger('dev'));
-app.use(express.compress());
-app.use(express.static(__dirname + '/public'));
+app.use(require('morgan')('dev'));
+app.use(require('compression')());
+app.use(require('serve-static')(__dirname + '/public'));
 
-app.listen(app.get('port'), function() {
-	console.log('Server listening on port %s', app.get('port'));
+app.listen(port, function() {
+	console.log('Server listening on port %s', port);
 });
