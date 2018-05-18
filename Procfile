@@ -1,1 +1,1 @@
-web: serve public --cors --port $PORT
+web: node server.js
