@@ -22,17 +22,6 @@ module.exports = {
 	},
 	plugins: [
 		new HtmlWebpackPlugin({
-			filename: './rockman-proto/index.html',
-			template: './rockman-proto/template.hbs',
-			inject: 'head'
-		}),
-		new FeelesWebpackPlugin({
-			paths: ['./rockman-proto/src', './common/src'],
-			output: './rockman-proto/index.json',
-			ignore: /\.DS_Store$/
-		}),
-
-		new HtmlWebpackPlugin({
 			filename: './hack-rpg/index.html',
 			template: './hack-rpg/template.hbs',
 			inject: 'head'
