@@ -6,7 +6,7 @@
 	"scripts": {
 		"start": "webpack-dev-server",
 		"build": "NODE_ENV=production webpack -p",
-		"test": "npm start",
+		"test": "exit 0",
 		"postinstall": "npm run build",
 		"prettier": "./node_modules/.bin/prettier --config ./.prettierrc --write '**/*.js'"
 	},
