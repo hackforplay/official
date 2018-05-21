@@ -3,6 +3,3 @@ node_modules
 
 # production
 public
-
-# firebase
-firebase-debug.log
