@@ -4,9 +4,11 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FeelesWebpackPlugin = require('./feeles-webpack-plugin');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
+const config = process.env.NODE_ENV === 'production' ? require('./config.prod') : require('./config.dev');
 
-const port = process.env.PORT || 8083;
+const port = process.env.PORT || config.port;
 const dist = 'public/';
+
 
 module.exports = {
 	entry: './entry.js',
@@ -21,26 +23,20 @@ module.exports = {
 		}]
 	},
 	plugins: [
-		new HtmlWebpackPlugin({
-			filename: './hack-rpg/index.html',
-			template: './hack-rpg/template.hbs',
-			inject: 'head'
-		}),
-		new FeelesWebpackPlugin({
-			paths: ['./hack-rpg/src', './common/src'],
-			output: './hack-rpg/index.json',
-			ignore: /\.DS_Store$/
-		}),
+		...config.source.map(dir => new HtmlWebpackPlugin({
+			filename: `${dir}/index.html`,
+			template: `./template.hbs`,
+			inject: `body`
+		})),
 
-		new HtmlWebpackPlugin({
-			filename: './make-rpg/index.html',
-			template: './make-rpg/template.hbs',
-			inject: 'head'
-		}),
-		new FeelesWebpackPlugin({
-			paths: ['./make-rpg/src', './common/src'],
-			output: './make-rpg/index.json',
+		...config.source.map(dir => new FeelesWebpackPlugin({
+			paths: [`${dir}`, `./common`],
+			output: `${dir}/index.json`,
 			ignore: /\.DS_Store$/
+		})),
+
+		new webpack.DefinePlugin({
+			FEELES_OFFILE_MODE: config.offline
 		}),
 
 		// https://medium.com/webpack/webpack-3-official-release-15fd2dd8f07b
