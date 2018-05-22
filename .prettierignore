@@ -2,3 +2,4 @@ hack-rpg/**/code*.js
 public
 webpack.config.js
 **/*.min.js
+package.json
