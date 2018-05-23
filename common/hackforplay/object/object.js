@@ -221,7 +221,10 @@ class RPGObject extends Sprite {
 			// becomeイベント内でbehaviorが変更された場合、
 			// 次のフレームで１度だけbecomeイベントが発火します。
 			this.isBehaviorChanged = false;
-			this.dispatchEvent(new Event('become' + this.behavior));
+			const event = new Event('become' + this.behavior, {
+				item: this // イベント引数の統一
+			});
+			this.dispatchEvent(event);
 		}
 	}
 
