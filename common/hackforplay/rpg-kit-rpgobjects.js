@@ -1032,6 +1032,7 @@ function __physicsUpdateOnFrame(tick, frame, physics) {
 				calc.vy = (mapHitY ? -1 : 1) * self.velocityY;
 				event.map = mapHitX || mapHitY;
 			}
+			event.item = event.hit; // イベント引数の統一
 			return event.map || hits.length > 0;
 		})
 		.filter(function(item) {

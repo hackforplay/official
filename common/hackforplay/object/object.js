@@ -466,6 +466,7 @@ class RPGObject extends Sprite {
 		event.map = map;
 		event.hit = hits[0];
 		event.hits = hits;
+		event.item = event.hit; // イベント引数の統一
 		this.dispatchEvent(event);
 		if (hits.length) {
 			// 相手に対してイベントを dispatch
@@ -473,6 +474,7 @@ class RPGObject extends Sprite {
 			event.map = false;
 			event.hit = this;
 			event.hits = [this];
+			event.item = event.hit; // イベント引数の統一
 			hits.forEach(hitObj => {
 				hitObj.dispatchEvent(event);
 			});
