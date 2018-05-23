@@ -1,8 +1,7 @@
-import 'hackforplay/rpg-kit-main';
-import 'hackforplay/camera';
-import 'hackforplay/loader';
-import 'hackforplay/rpg-kit-rpgobjects';
-
+import './rpg-kit-main';
+import './camera';
+import './loader';
+import './rpg-kit-rpgobjects';
 import Hack from './hack';
 import * as synonyms from './synonyms';
 import Skin from './skin';
