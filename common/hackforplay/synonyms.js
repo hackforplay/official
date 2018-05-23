@@ -62,6 +62,8 @@ export const events = {
 	becomeattack: 'こうげきするとき',
 	becomedamaged: 'くらったとき',
 	becomedead: 'たおれたとき',
+	addtrodden: 'ふまれた',
+	removetrodden: 'どかれた',
 	attacked: 'こうげきされた',
 	enterframe: 'つねに'
 };
