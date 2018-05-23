@@ -720,6 +720,9 @@ Hack.assets.enchantBookItem = function() {
 	};
 	this.directionType = 'single';
 	this.forward = [0, -1];
+	// ダメージ判定用のポリゴン
+	this.colliderOffset = new SAT.V(2, 2);
+	this.collider = new SAT.Box(this.colliderOffset, 28, 28).toPolygon();
 };
 
 Hack.assets.explosion = function() {
