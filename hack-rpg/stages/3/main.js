@@ -16,14 +16,16 @@ function gameStart() {
 	const youtube = new RPGObject();
 	youtube.mod(Hack.assets.village);
 	youtube.locate(0, 4);
-	youtube.onplayerenter = () => {
-		feeles.openMedia({
-			url: 'https://youtu.be/Xvnw8kE-EXw',
-			playing: true,
-			controls: true,
-			volume: 0.2
-		});
-	};
+	youtube.on('addtrodden', event => {
+		if (event.item === Hack.player) {
+			feeles.openMedia({
+				url: 'https://youtu.be/Xvnw8kE-EXw',
+				playing: true,
+				controls: true,
+				volume: 0.2
+			});
+		}
+	});
 
 	// 説明書を表示する
 	// feeles.openReadme('stages/3/README.md');
@@ -32,7 +34,7 @@ function gameStart() {
 	const player = (Hack.player = new Player(('▼ スキン', _kきし)));
 	player.mod(('▼ スキン', _kきし));
 	// プレイヤーを 3, 5 の位置に移動する
-	player.locate(3, 5);
+	player.locate(5, 2);
 	// プレイヤーの体力
 	player.hp = 3;
 	// プレイヤーの攻撃力
@@ -50,25 +52,27 @@ function gameStart() {
 
 	// まどうしょ
 	const item1 = new RPGObject();
-	item1.mod(('▼ スキン', _m魔道書));
+	item1.mod(('▼ スキン', Skin.マドウショ));
 	// 魔道書を 5, 3 の位置に移動する
 	item1.locate(5, 3);
 	// 魔道書にプレイヤーが乗ったら...
-	item1.onのった = () => {
-		// 説明書 2 を開く
-		// feeles.openReadme('stages/3/README2.md');
-		// 魔道書を開く
-		feeles.openCode('stages/3/code.js');
-		// 魔道書を削除
-		item1.destroy();
-		log(
-			() =>
-				item2.hp > 900
-					? `
+	item1.onふまれた = event => {
+		if (event.item === Hack.player) {
+			// 説明書 2 を開く
+			// feeles.openReadme('stages/3/README2.md');
+			// 魔道書を開く
+			feeles.openCode('stages/3/code.js');
+			// 魔道書を削除
+			item1.destroy();
+			log(
+				() =>
+					item2.hp > 900
+						? `
 マドウショが あらわれた！
 じっくりと よんでみよう`
-					: ''
-		);
+						: ''
+			);
+		}
 	};
 
 	// スライム
@@ -101,9 +105,11 @@ function gameStart() {
 	// 階段は下の方に配置する ( Under )
 	item4.layer = RPGMap.Layer.Under;
 	// 階段にプレイヤーが乗ったら...
-	item4.onのった = () => {
-		// 次のステージに！
-		gameclear('stages/4/index.html');
+	item4.onふまれた = event => {
+		if (event.item === Hack.player) {
+			// 次のステージに！
+			gameclear('stages/4/index.html');
+		}
 	};
 
 	// まどうしょがやってくるぞ…

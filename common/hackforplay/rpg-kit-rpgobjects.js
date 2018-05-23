@@ -15,10 +15,6 @@ import './enchantjs-kit'; // Core の生成を待つ
 
 var bs = new BlueSlime();
 bs.locate(5, 5);
-bs.onplayerenter = function () {
-	// When player will step on bs
-	// プレイヤーが上に乗ったとき
-};
 bs.onplayerestay = function () {
 	// When player still stay in bs
 	// プレイヤーが上に乗っている間
@@ -48,7 +44,6 @@ bs.onbecomedead = function () {};
  * Kinematics ===> Kinematics	: oncollided	: Need collisionFlag is true
  * Physics ===> Physics			: oncollided	: Need collisionFlag is true, Change velocity
  * Physics ===> Kinematics		: ontriggered	: Ignore collisionFlag, Don't change velocity
- * Kinematics ===> Player		: onplayerenter	: Need collisionFlag is false, Dispatch onnly kinematics
  */
 
 var game = enchant.Core.instance;
@@ -725,6 +720,9 @@ Hack.assets.enchantBookItem = function() {
 	};
 	this.directionType = 'single';
 	this.forward = [0, -1];
+	// ダメージ判定用のポリゴン
+	this.colliderOffset = new SAT.V(2, 2);
+	this.collider = new SAT.Box(this.colliderOffset, 28, 28).toPolygon();
 };
 
 Hack.assets.explosion = function() {
@@ -1037,6 +1035,7 @@ function __physicsUpdateOnFrame(tick, frame, physics) {
 				calc.vy = (mapHitY ? -1 : 1) * self.velocityY;
 				event.map = mapHitX || mapHitY;
 			}
+			event.item = event.hit; // イベント引数の統一
 			return event.map || hits.length > 0;
 		})
 		.filter(function(item) {
@@ -1055,6 +1054,7 @@ function __physicsUpdateOnFrame(tick, frame, physics) {
 	function dispatchTriggerEvent(type, self, hit) {
 		var event = new Event('trigger' + type);
 		event.hit = hit;
+		event.item = hit; // 引数名の統一
 		event.mapX = hit.mapX;
 		event.mapY = hit.mapY;
 		self.dispatchEvent(event);

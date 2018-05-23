@@ -13,14 +13,16 @@ function gameStart() {
 	const youtube = new RPGObject();
 	youtube.mod(Hack.assets.village);
 	youtube.locate(6, 3);
-	youtube.onplayerenter = () => {
-		feeles.openMedia({
-			url: 'https://youtu.be/VDPRV91o984',
-			playing: true,
-			controls: true,
-			volume: 0.2
-		});
-	};
+	youtube.on('addtrodden', event => {
+		if (event.item === Hack.player) {
+			feeles.openMedia({
+				url: 'https://youtu.be/VDPRV91o984',
+				playing: true,
+				controls: true,
+				volume: 0.2
+			});
+		}
+	});
 
 	// 説明書を表示する
 	// feeles.openReadme('stages/1/README.md');
@@ -69,9 +71,11 @@ function gameStart() {
 	// 階段を 12, 5 の位置に移動 ( map1 )
 	item2.locate(12, 5, 'map1');
 	// 階段にプレイヤーが乗ったら...
-	item2.onのった = () => {
-		// 次のステージに！
-		feeles.replace('stages/3/index.html');
+	item2.onふまれた = event => {
+		if (event.item === Hack.player) {
+			// 次のステージに！
+			feeles.replace('stages/3/index.html');
+		}
 	};
 
 	// そうさせつめい (1)

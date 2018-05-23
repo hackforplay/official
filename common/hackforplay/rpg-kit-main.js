@@ -529,7 +529,7 @@ Hack.Attack = function(x, y, damage, pushX, pushY) {
 				}
 			}
 			var e = new Event('attacked');
-			e.attacker = this;
+			e.attacker = e.item = this;
 			e.damage = damage || 0;
 			item.dispatchEvent(e);
 		}, this);

@@ -83,12 +83,14 @@ function gameStartLazy() {
 	// ルビーを 11, 5 の位置に移動する ( map2 )
 	item2.locate(11, 5, 'map2');
 	// ルビーにプレイヤーが乗ったら...
-	item2.onのった = () => {
-		// 階段を作る！
-		// もう少し下のところに階段を作るコードが書いてあるよ！
-		appearDownStair();
-		// ルビーを削除する
-		item2.destroy();
+	item2.onふまれた = event => {
+		if (event.item === Hack.player) {
+			// 階段を作る！
+			// もう少し下のところに階段を作るコードが書いてあるよ！
+			appearDownStair();
+			// ルビーを削除する
+			item2.destroy();
+		}
 	};
 
 	// ruby をコードから利用可能に
@@ -102,13 +104,15 @@ function gameStartLazy() {
 		// 階段を 14, 5 の位置に移動する ( map2 )
 		item3.locate(14, 5, 'map2');
 		// 階段にプレイヤーが乗ったら...
-		item3.onのった = () => {
-			// マップ map3 に移動する
-			Hack.changeMap('map3');
-			// プレイヤーを 2, 5 の位置に移動する ( map3 )
-			Hack.player.locate(2, 5, 'map3');
-			// 説明書 3 を表示する
-			// feeles.openReadme('stages/6/README3.md');
+		item3.onふまれた = event => {
+			if (event.item === Hack.player) {
+				// マップ map3 に移動する
+				Hack.changeMap('map3');
+				// プレイヤーを 2, 5 の位置に移動する ( map3 )
+				Hack.player.locate(2, 5, 'map3');
+				// 説明書 3 を表示する
+				// feeles.openReadme('stages/6/README3.md');
+			}
 		};
 	}
 
