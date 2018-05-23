@@ -15,10 +15,6 @@ import './enchantjs-kit'; // Core の生成を待つ
 
 var bs = new BlueSlime();
 bs.locate(5, 5);
-bs.onplayerenter = function () {
-	// When player will step on bs
-	// プレイヤーが上に乗ったとき
-};
 bs.onplayerestay = function () {
 	// When player still stay in bs
 	// プレイヤーが上に乗っている間
@@ -48,7 +44,6 @@ bs.onbecomedead = function () {};
  * Kinematics ===> Kinematics	: oncollided	: Need collisionFlag is true
  * Physics ===> Physics			: oncollided	: Need collisionFlag is true, Change velocity
  * Physics ===> Kinematics		: ontriggered	: Ignore collisionFlag, Don't change velocity
- * Kinematics ===> Player		: onplayerenter	: Need collisionFlag is false, Dispatch onnly kinematics
  */
 
 var game = enchant.Core.instance;
