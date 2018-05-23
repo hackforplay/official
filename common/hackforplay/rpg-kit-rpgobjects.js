@@ -1050,6 +1050,7 @@ function __physicsUpdateOnFrame(tick, frame, physics) {
 	function dispatchTriggerEvent(type, self, hit) {
 		var event = new Event('trigger' + type);
 		event.hit = hit;
+		event.item = hit; // 引数名の統一
 		event.mapX = hit.mapX;
 		event.mapY = hit.mapY;
 		self.dispatchEvent(event);
