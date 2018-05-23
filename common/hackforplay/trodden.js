@@ -23,17 +23,16 @@ export default function trodden() {
 	// 2
 	for (const item of collection) {
 		if (walkingRPGObjects.has(item) && item.behavior === BehaviorTypes.Idle) {
-			for (const target of collection) {
-				if (isTrodden(target, item)) {
-					dispatch('addtrodden', target, item);
-					if (!targetItemSetMap.has(target)) {
-						const itemSet = new Set();
-						itemSet.add(item);
-						targetItemSetMap.set(target, itemSet);
-					} else {
-						const itemSet = targetItemSetMap.get(target);
-						itemSet.add(item);
-					}
+			const targets = collection.filter(target => isTrodden(target, item));
+			for (const target of targets) {
+				dispatch('addtrodden', target, item);
+				if (!targetItemSetMap.has(target)) {
+					const itemSet = new Set();
+					itemSet.add(item);
+					targetItemSetMap.set(target, itemSet);
+				} else {
+					const itemSet = targetItemSetMap.get(target);
+					itemSet.add(item);
 				}
 			}
 		}
