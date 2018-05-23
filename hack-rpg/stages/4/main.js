@@ -18,14 +18,16 @@ function gameStart() {
 	const youtube = new RPGObject();
 	youtube.mod(Hack.assets.village);
 	youtube.locate(0, 4);
-	youtube.onplayerenter = () => {
-		feeles.openMedia({
-			url: 'https://youtu.be/laR6MY6IiJQ',
-			playing: true,
-			controls: true,
-			volume: 0.2
-		});
-	};
+	youtube.on('addtrodden', event => {
+		if (event.item === Hack.player) {
+			feeles.openMedia({
+				url: 'https://youtu.be/laR6MY6IiJQ',
+				playing: true,
+				controls: true,
+				volume: 0.2
+			});
+		}
+	});
 
 	// 説明書を開く
 	// feeles.openReadme('stages/4/README.md');
@@ -90,15 +92,17 @@ function gameStart() {
 	// 階段を下の方に置く ( Under )
 	item2.layer = RPGMap.Layer.Under;
 	// 階段にプレイヤーが乗ったら...
-	item2.onのった = () => {
-		// 説明書 2 を表示する
-		// feeles.openReadme('stages/4/README2.md');
-		// 魔道書を開く
-		feeles.openCode('stages/4/code.js');
-		// マップ map2 に移動する
-		Hack.changeMap('map2');
-		// プレイヤーを 7, 7 の位置に移動する ( map2 )
-		Hack.player.locate(7, 7, 'map2');
+	item2.onふまれた = event => {
+		if (event.item === Hack.player) {
+			// 説明書 2 を表示する
+			// feeles.openReadme('stages/4/README2.md');
+			// 魔道書を開く
+			feeles.openCode('stages/4/code.js');
+			// マップ map2 に移動する
+			Hack.changeMap('map2');
+			// プレイヤーを 7, 7 の位置に移動する ( map2 )
+			Hack.player.locate(7, 7, 'map2');
+		}
 	};
 
 	// このステージを改造

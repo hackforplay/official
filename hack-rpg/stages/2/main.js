@@ -46,13 +46,15 @@ function gameStart() {
 	// 魔道書を 4, 4 の位置に移動する
 	item1.locate(4, 4);
 	// 魔道書にプレイヤーが乗ったら...
-	item1.onのった = () => {
-		// 説明書 2 を開く
-		// feeles.openReadme('stages/2/README2.md');
-		// 魔道書を開く
-		feeles.openCode('stages/2/code.js');
-		// 魔道書を削除
-		item1.destroy();
+	item1.onふまれた = event => {
+		if (event.item === Hack.player) {
+			// 説明書 2 を開く
+			// feeles.openReadme('stages/2/README2.md');
+			// 魔道書を開く
+			feeles.openCode('stages/2/code.js');
+			// 魔道書を削除
+			item1.destroy();
+		}
 	};
 
 	// かいだん
@@ -63,9 +65,11 @@ function gameStart() {
 	// 階段は下の方に配置する ( Under )
 	item4.layer = RPGMap.Layer.Under;
 	// 階段にプレイヤーが乗ったら...
-	item4.onのった = () => {
-		// 次のステージに！
-		feeles.replace('stages/3/index.html');
+	item4.onふまれた = event => {
+		if (event.item === Hack.player) {
+			// 次のステージに！
+			feeles.replace('stages/3/index.html');
+		}
 	};
 
 	// このステージを改造

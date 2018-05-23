@@ -9,14 +9,16 @@ function gameStartLazy() {
 	// サファイアを 13, 2 の位置に移動する ( map2 )
 	item1.locate(13, 2, 'map2');
 	// サファイアにプレイヤーが乗ったら...
-	item1.onのった = () => {
-		// サファイアを削除する
-		item1.destroy();
-		// スコアを　１００ アップ！
-		Hack.score += 100;
-		log(`
+	item1.onふまれた = event => {
+		if (event.item === Hack.player) {
+			// サファイアを削除する
+			item1.destroy();
+			// スコアを　１００ アップ！
+			Hack.score += 100;
+			log(`
 サファイアを 手に入れた！
 さっきのへやに もどろう`);
+		}
 	};
 
 	// 魔道書にサファイアを登録
@@ -30,15 +32,17 @@ function gameStartLazy() {
 	// 階段は下の方に置く ( Under )
 	item2.layer = RPGMap.Layer.Under;
 	// 階段にプレイヤーが乗ったら...
-	item2.onのった = () => {
-		// マップ map1 に移動する
-		Hack.changeMap('map1');
-		// プレイヤーを 7, 2 の位置に移動する ( map1 )
-		Hack.player.locate(7, 2, 'map1');
-		// もしスコアが 100 以上なら...
-		if (Hack.score >= 100) {
-			// 次のステージに！
-			gameclear('stages/5/index.html');
+	item2.onふまれた = event => {
+		if (event.item === Hack.player) {
+			// マップ map1 に移動する
+			Hack.changeMap('map1');
+			// プレイヤーを 7, 2 の位置に移動する ( map1 )
+			Hack.player.locate(7, 2, 'map1');
+			// もしスコアが 100 以上なら...
+			if (Hack.score >= 100) {
+				// 次のステージに！
+				gameclear('stages/5/index.html');
+			}
 		}
 	};
 
