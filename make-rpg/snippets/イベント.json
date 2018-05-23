@@ -28,6 +28,22 @@
 			"description": "item.hp が0以下になったときに発生するイベント",
 			"descriptionMoreURL": "https://github.com/hackforplay/wiki-RPG/wiki/倒れたとき"
 		},
+		"onふまれた": {
+			"prefix": "onふまれた",
+			"body": "onふまれた = () => {\n\t\n};",
+			"leftLabel": "ふまれた",
+			"description": "何か別のものにふまれたときに発生するイベント",
+			"descriptionMoreURL":
+				"https://github.com/hackforplay/wiki-RPG/wiki/ふまれた"
+		},
+		"onどかれた": {
+			"prefix": "onどかれた",
+			"body": "onどかれた = () => {\n\t\n};",
+			"leftLabel": "どかれた",
+			"description": "自分をふんでいた何かがどいたときに発生するイベント",
+			"descriptionMoreURL":
+				"https://github.com/hackforplay/wiki-RPG/wiki/どかれた"
+		},
 		"onこうげきされたとき": {
 			"prefix": "onこうげきされたとき",
 			"body": "onこうげきされたとき = () => {\n\t\n};",
