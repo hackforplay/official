@@ -2,6 +2,7 @@ import './rpg-kit-main';
 import './camera';
 import './loader';
 import './rpg-kit-rpgobjects';
+import './trodden';
 import Hack from './hack';
 import * as synonyms from './synonyms';
 import Skin from './skin';
