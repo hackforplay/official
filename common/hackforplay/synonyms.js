@@ -45,10 +45,9 @@ export const assets = [
 ];
 
 export const events = {
-	/* onplayerenter => onのった */
-	playerenter: 'のった',
-	playerstay: 'いる',
-	playerexit: 'おりた',
+	playerenter: 'のった', // Deprecated
+	playerstay: 'いる', // Deprecated
+	playerexit: 'おりた', // Deprecated
 	walkstart: 'あるきはじめた',
 	walkmove: 'あるいている',
 	walkend: 'あるきおわった',
