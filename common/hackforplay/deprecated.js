@@ -10,13 +10,13 @@ export default function deprecated() {
 		// for Japanese (synonym)
 		for (const type of deprecated.map(type => synonyms.events[type])) {
 			if (isListening(item, type)) {
-				return `Deprecated: "${type}" は廃止予定です. 代わりに "ふまれた" か "どかれた" を使ってください`;
+				return `Deprecated: '${type}' は廃止予定です. 代わりに 'ふまれた' か 'どかれた' を使ってください`;
 			}
 		}
 		// for English (origin)
 		for (const type of deprecated) {
 			if (isListening(item, type)) {
-				return `Deprecated: "${type}" is deprecated. Please use "addtrodden" or "removetrodden" instead.`;
+				return `Deprecated: '${type}' is deprecated. Please use 'addtrodden' or 'removetrodden' instead.`;
 			}
 		}
 	}
