@@ -878,6 +878,7 @@ Hack.createDamageMod = damage =>
 				object.dispatchEvent(
 					new Event('attacked', {
 						attacker: this, // attacker は弾などのエフェクトの場合もある
+						item: this, // 引数名の統一
 						damage
 					})
 				);
