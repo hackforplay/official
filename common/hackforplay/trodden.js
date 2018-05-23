@@ -18,12 +18,12 @@ const targetItemSetMap = new WeakMap();
  * NOTICE: "removetrodden" イベント中に locate で移動すると, うまく移動できない
  */
 export default function trodden() {
-	const { collection } = RPGObject;
+	const collection = [...RPGObject.collection];
 
 	// 2
-	for (const item of RPGObject.collection) {
+	for (const item of collection) {
 		if (walkingRPGObjects.has(item) && item.behavior === BehaviorTypes.Idle) {
-			for (const target of RPGObject.collection) {
+			for (const target of collection) {
 				if (isTrodden(target, item)) {
 					dispatch('addtrodden', target, item);
 					if (!targetItemSetMap.has(target)) {
@@ -42,7 +42,7 @@ export default function trodden() {
 	// 3
 	// さっきまで踏んでいたオブジェクトが今も残っているか調べる
 	// オブジェクトは collection から削除されている可能性があることに注意する
-	for (const target of RPGObject.collection) {
+	for (const target of collection) {
 		if (targetItemSetMap.has(target)) {
 			const itemSet = targetItemSetMap.get(target);
 			for (const item of new Set(itemSet)) {
@@ -58,7 +58,7 @@ export default function trodden() {
 	}
 
 	// 1
-	for (const item of RPGObject.collection) {
+	for (const item of collection) {
 		if (item.behavior === BehaviorTypes.Walk) {
 			walkingRPGObjects.add(item);
 		} else {
