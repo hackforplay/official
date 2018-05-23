@@ -208,7 +208,10 @@ class RPGObject extends Sprite {
 			}
 		}
 		if (this.hpchangeFlag) {
-			this.dispatchEvent(new Event('hpchange'));
+			const event = new Event('hpchange', {
+				item: this // イベント引数の統一
+			});
+			this.dispatchEvent(event);
 			this.hpchangeFlag = false;
 		}
 		if (this.isBehaviorChanged) {
