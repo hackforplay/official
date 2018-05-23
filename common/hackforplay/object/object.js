@@ -43,6 +43,8 @@ class RPGObject extends Sprite {
 
 		var collisionFlag = null; // this.collisionFlag (Default:true)
 		var noCollisionEvents = [
+			'addtrodden',
+			'removetrodden',
 			'playerenter',
 			'playerstay',
 			'playerexit',
