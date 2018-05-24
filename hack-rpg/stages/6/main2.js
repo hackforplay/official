@@ -1,6 +1,7 @@
 import 'hackforplay/core';
 import { gameclear, mergeBMap, log } from 'utils';
 import extra from '../extra';
+import { registerServant } from 'hackforplay/family';
 
 function gameStartLazy() {
 	Hack.player.on('hpchange', () => {
@@ -24,10 +25,10 @@ function gameStartLazy() {
 		x: -32,
 		y: -60
 	};
-	item1.colliderOffset = {
+	item1.collider.setOffset({
 		x: 16,
 		y: 48
-	};
+	});
 	// ドラゴンを 11, 5 の位置に移動する ( map2 )
 	item1.locate(11, 5, 'map2');
 	// ドラゴンを拡大する ( ２　倍に　)
@@ -38,6 +39,7 @@ function gameStartLazy() {
 	item1.onつねに = () => {
 		// 炎を作る
 		const effect1 = new Effect(-3, 5, 40, true);
+		registerServant(item1, effect1);
 		effect1.mod(Hack.createDamageMod(1));
 		// 炎の位置をドラゴンの位置から -2, -1 の位置に移動する ( map 2 )
 		effect1.locate(item1.mapX - 2, item1.mapY - 1, 'map2');
@@ -48,6 +50,7 @@ function gameStartLazy() {
 
 		//　炎を作る
 		const effect2 = new Effect(-3, 5, 40);
+		registerServant(item1, effect2);
 		effect2.mod(Hack.createDamageMod(450));
 		// 炎の位置をドラゴンの位置から -1, -1 の位置に移動する ( map 2 )
 		effect2.locate(item1.mapX - 1, item1.mapY - 1, 'map2');
