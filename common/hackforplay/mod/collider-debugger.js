@@ -18,9 +18,10 @@ function render(event) {
 			// if (width) context.lineWidth = width;
 			context.beginPath();
 			const [start, ...points] = collider.calcPoints;
-			context.moveTo(start.x, start.y);
+			const { x, y } = collider.pos;
+			context.moveTo(start.x + x, start.y + y);
 			for (const point of points) {
-				context.lineTo(point.x, point.y);
+				context.lineTo(point.x + x, point.y + y);
 			}
 			context.fillStyle = item.isDamageObject
 				? 'rgba(255, 0, 0, 0.5)'
