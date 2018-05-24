@@ -31,6 +31,7 @@ function gameStartLazy() {
 	item1.onつねに = () => {
 		// クモの横の位置をプレイヤーと同じにする
 		item1.x = Hack.player.x;
+		item1.updateCollider();
 	};
 	item1.onattacked = () => {
 		log(`

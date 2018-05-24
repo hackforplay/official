@@ -72,6 +72,7 @@ function gameStart() {
 	item4.onつねに = () => {
 		// コウモリの縦の位置をプレイヤーと同じにする
 		item4.y = Hack.player.y;
+		item4.updateCollider();
 	};
 
 	// 魔道書にコウモリを登録する
