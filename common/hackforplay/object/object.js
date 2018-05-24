@@ -141,15 +141,9 @@ class RPGObject extends Sprite {
 		}
 
 		// 後方互換性保持
-		this.colliderOffset = this.colliderOffset || new SAT.V(2, 2);
-		// 衝突判定用のポリゴン
 		this.collider =
 			this.collider ||
-			new SAT.Box(
-				this.colliderOffset,
-				this.width - 4,
-				this.height - 4
-			).toPolygon();
+			new SAT.Box(new SAT.V(0, 0), this.width, this.height).toPolygon();
 
 		// ツリーに追加
 		Hack.defaultParentNode.addChild(this);
@@ -175,10 +169,8 @@ class RPGObject extends Sprite {
 	}
 
 	updateCollider() {
-		this.collider.setOffset({
-			x: this.x + this.colliderOffset.x,
-			y: this.y + this.colliderOffset.y
-		});
+		this.collider.pos.x = this.x;
+		this.collider.pos.y = this.y;
 	}
 
 	get directionType() {
@@ -322,8 +314,8 @@ class RPGObject extends Sprite {
 
 		// ダメージを与えるオブジェクトを生成する
 		const damageObject = this.summon(function() {
-			this.colliderOffset = new SAT.V(12, 12);
-			this.collider = new SAT.Box(this.colliderOffset, 8, 8).toPolygon();
+			this.collider = new SAT.Box(new SAT.V(0, 0), 8, 8).toPolygon();
+			this.collider.setOffset(new SAT.V(12, 12));
 		});
 		damageObject.mod(Hack.createDamageMod(this.atk));
 		damageObject.locate(dx, dy);

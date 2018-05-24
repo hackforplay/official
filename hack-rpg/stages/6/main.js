@@ -82,6 +82,7 @@ function gameStart() {
 	item1.onつねに = () => {
 		//　コウモリの横の位置をプレイヤーと同じにする
 		item1.y = Hack.player.y;
+		item1.updateCollider();
 	};
 	item1.onattacked = () => {
 		log(`

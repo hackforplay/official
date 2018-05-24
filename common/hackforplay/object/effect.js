@@ -1,5 +1,6 @@
 import enchant from '../../enchantjs/enchant';
 import RPGObject from './object';
+import SAT from '../../lib/sat.min';
 
 class Effect extends RPGObject {
 	constructor(velocityX, velocityY, lifetime, randomize) {
@@ -23,6 +24,8 @@ class Effect extends RPGObject {
 			this.velocityX *= 0.5 + Math.random();
 			this.velocityY *= 0.5 + Math.random();
 		}
+		this.collider = new SAT.Box(new SAT.V(0, 0), 28, 28).toPolygon();
+		this.collider.setOffset(new SAT.V(2, 2));
 	}
 
 	locate(left, top, effect) {

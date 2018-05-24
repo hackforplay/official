@@ -34,7 +34,7 @@ function gameStart() {
 	const player = (Hack.player = new Player(('▼ スキン', _kきし)));
 	player.mod(('▼ スキン', _kきし));
 	// プレイヤーを 3, 5 の位置に移動する
-	player.locate(5, 2);
+	player.locate(3, 5);
 	// プレイヤーの体力
 	player.hp = 3;
 	// プレイヤーの攻撃力
