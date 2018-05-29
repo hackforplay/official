@@ -1,7 +1,7 @@
 {
-	"name": "corporate",
+	"name": "official",
 	"version": "1.0.0",
-	"description": "The kit to create new game in HackforPlay",
+	"description": "Official stages of HackforPlay",
 	"main": "entry.js",
 	"scripts": {
 		"start": "webpack-dev-server",
@@ -15,7 +15,7 @@
 	],
 	"repository": {
 		"type": "git",
-		"url": "git+https://github.com/hackforplay/corporate.git"
+		"url": "git+https://github.com/hackforplay/official.git"
 	},
 	"keywords": [
 		"HackforPlay"
@@ -23,9 +23,9 @@
 	"author": "teramotodaiki",
 	"license": "MIT",
 	"bugs": {
-		"url": "https://github.com/hackforplay/corporate/issues"
+		"url": "https://github.com/hackforplay/official/issues"
 	},
-	"homepage": "https://github.com/hackforplay/corporate#readme",
+	"homepage": "https://github.com/hackforplay/official#readme",
 	"devDependencies": {
 		"es6-promisify": "^5.0.0",
 		"handlebars": "^4.0.11",
