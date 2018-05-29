@@ -4,8 +4,8 @@ const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FeelesWebpackPlugin = require('./feeles-webpack-plugin');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 const OfflinePlugin = require('offline-plugin');
-const config = process.env.NODE_ENV === 'production' ? require('./config.prod') : require('./config.dev');
 
+const config = loadConfig();
 const port = process.env.PORT || config.port;
 const dist = 'public/';
 
@@ -63,3 +63,17 @@ module.exports = {
 		}
 	}
 };
+
+function loadConfig() {
+	if (process.env.NODE_ENV === 'production') {
+		return require('./config.prod');
+	}
+	try {
+		return require('./config.dev');
+	} catch (error) {}
+	try {
+		const fs = require('fs');
+		fs.copyFileSync('./config.prod.js', './config.dev.js', fs.constants.COPYFILE_EXCL);
+	} catch (error) {}
+	return require('./config.prod');
+}
