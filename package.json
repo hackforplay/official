@@ -7,7 +7,7 @@
 		"start": "webpack-dev-server",
 		"build": "NODE_ENV=production webpack -p",
 		"test": "exit 0",
-		"postinstall": "cp config.prod.js config.dev.js && npm run build",
+		"postinstall": "npm run build",
 		"prettier": "./node_modules/.bin/prettier --config ./.prettierrc --write '**/*.js'"
 	},
 	"pre-commit": [
