@@ -555,7 +555,7 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ルーレット'
   - label: バクエン
     code: |
-      const item1 = new RPGObject(('▼ スキン', Skin.バクエン);
+      const item1 = new RPGObject(('▼ スキン', Skin.バクエン));
       item1.mod(Hack.createDamageMod(item1.atk)); // ダメージオブジェクトにする
       item1.family = ('▼ ファミリー', Family.マップ);
       item1.locate(7, 5, 'map1');

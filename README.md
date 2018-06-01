@@ -1,17 +1,15 @@
-# corporate
+# official stages of HackforPlay
 
 ![ScreenShot](https://i.gyazo.com/bd5afe9765f88241f5aad20c94a26280.png)
 
 * We are sorry but now Japanese only
 
-# Getting Started
+## Contributes
 
-* > git clone https://github.com/teramotodaiki/corporate.git `corporate`
-* > cd `corporate`
+* clone this repo
+* change directory
 * > npm install
 * > npm start
-
-# Contributes
 
 ## Importants
 
@@ -27,6 +25,7 @@
 
 ## Deploy
 
+* Members only
 * > git push origin earlybird
   * Publish to https://hackforplayofficial-earlybird.herokuapp.com/make-rpg/
 * > git push origin master
