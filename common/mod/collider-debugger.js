@@ -1,6 +1,6 @@
-import { Core } from '../../enchantjs/enchant';
-import Hack from '../hack';
-import RPGObject from '../object/object';
+import { Core } from '../enchantjs/enchant';
+import Hack from '../hackforplay/hack';
+import RPGObject from '../hackforplay/object/object';
 
 const game = Core.instance;
 
