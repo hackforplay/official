@@ -136,9 +136,7 @@
       const item1 = new RPGObject(('▼ スキン', Skin.ハート));
       item1.locate(7, 5, 'map1');
       item1.on(('▼ イベント', 'ふまれた'), event => {
-        if (event.item === player) {
-          event.item.hp += 1;
-        }
+        event.item.hp += 1;
         item1.destroy();
       });
     image: trimmed/map-28-3.png
@@ -162,9 +160,7 @@
       const item1 = new RPGObject(('▼ スキン', Skin.スター));
       item1.locate(7, 5, 'map1');
       item1.on(('▼ イベント', 'ふまれた'), event => {
-        if (event.item === player) {
-          event.item.damageTime = 100;
-        }
+        event.item.damageTime = 100;
         item1.destroy();
       });
     image: trimmed/map-28-6.png
@@ -198,9 +194,7 @@
       item1.locate(7, 5, 'map1');
       item1.color = ('▼ カラー', 'white');
       item1.on(('▼ イベント', 'ふまれた'), event => {
-        if (event.item === player) {
-          event.item.hp += 1;
-        }
+        event.item.hp += 1;
         item1.destroy();
       });
     image: trimmed/colorful.png
@@ -252,9 +246,7 @@
       item1.locate(7, 5, 'map1');
       item1.layer = RPGMap.Layer.Under;
       item1.on(('▼ イベント', 'ふまれた'), event => {
-        if (event.item === player) {
-          event.item.locate(11, 5);
-        }
+        event.item.locate(11, 5);
       });
     image: trimmed/map-16-4.png
     description: ふむとワープできる すごいゆか。あかいろや みどりいろも そんざいするという うわさ
@@ -331,9 +323,6 @@
       item1.on(('▼ イベント', 'ふまれた'), event => {
         event.item.hp = 0;
       });
-      item1.on(('▼ イベント', 'こうげきされた'), event => {
-        event.item.hp = 0;
-      });
     image: trimmed/map-28-4.png
     description: ぜったいに ふんづけたり こうげきしたり してはいけない。ぜったいにだ
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/タタリ'
@@ -393,10 +382,8 @@
       item1.layer = RPGMap.Layer.Under;
       item1.on(('▼ イベント', 'ふまれた'), event => {
         item1.mod(('▼ スキン', Skin.トラップ2));
-        if (event.item === player) {
-          event.item.hp -= 1;
-          event.item.damageTime = 30;
-        }
+        event.item.hp -= 1;
+        event.item.damageTime = 30;
       });
       item1.on(('▼ イベント', 'どかれた'), () => {
         item1.mod(('▼ スキン', Skin.トラップ));
