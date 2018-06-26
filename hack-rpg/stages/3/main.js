@@ -118,8 +118,10 @@ function gameStart() {
 		item1.tl
 			.delay(60)
 			.moveBy(0, 32, 30)
+			.then(() => item1.updateCollider())
 			.delay(45)
 			.moveBy(0, 32, 30)
+			.then(() => item1.updateCollider())
 			.then(() => {
 				log(
 					() =>
