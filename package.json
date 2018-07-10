@@ -6,7 +6,7 @@
 	"scripts": {
 		"start": "webpack-dev-server",
 		"build": "NODE_ENV=production webpack -p",
-		"test": "exit 0",
+		"test": "ava",
 		"postinstall": "npm run build",
 		"prettier": "./node_modules/.bin/prettier --config ./.prettierrc --write '**/*.js'"
 	},
@@ -27,6 +27,12 @@
 	},
 	"homepage": "https://github.com/hackforplay/official#readme",
 	"devDependencies": {
+		"@babel/preset-env": "^7.0.0-beta.52",
+		"@babel/preset-es2015": "^7.0.0-beta.52",
+		"@babel/preset-stage-3": "^7.0.0-beta.52",
+		"@babel/register": "^7.0.0-beta.52",
+		"ava": "1.0.0-beta.6",
+		"canvas-prebuilt": "^1.6.5-prerelease.1",
 		"es6-promisify": "^5.0.0",
 		"handlebars": "^4.0.11",
 		"handlebars-loader": "^1.7.0",
@@ -37,7 +43,8 @@
 		"prettier": "^1.12.1",
 		"unorm": "^1.4.1",
 		"webpack": "^3.11.0",
-		"webpack-dev-server": "^2.11.2"
+		"webpack-dev-server": "^2.11.2",
+		"window": "^4.2.5"
 	},
 	"dependencies": {
 		"compression": "^1.7.2",
@@ -46,5 +53,27 @@
 		"feeles-ide": "^0.3.11",
 		"morgan": "^1.9.0",
 		"serve-static": "^1.13.2"
+	},
+	"ava": {
+		"files": [
+			"test/**/*.spec.js",
+			"!test/helpers/**/*.js"
+		],
+		"cache": true,
+		"concurrency": 5,
+		"failFast": true,
+		"failWithoutAssertions": false,
+		"tap": true,
+		"compileEnhancements": false,
+		"require": [
+			"@babel/register"
+		],
+		"babel": {
+			"testOptions": {
+				"presets": [
+					"@babel/preset-env"
+				]
+			}
+		}
 	}
 }
