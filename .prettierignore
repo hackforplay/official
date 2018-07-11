@@ -3,3 +3,5 @@ public
 webpack.config.js
 **/*.min.js
 package.json
+enchant.js
+ui.enchant.js
