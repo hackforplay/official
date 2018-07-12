@@ -113,7 +113,7 @@ ObjectRenderer.render[ObjectType.BLOCK] = function(node) {
 
 		var matrixS = Matrix.scale([
 			node.width * node.scaleX,
-			32 * (node.scaleX + node.scaleY) / 2,
+			(32 * (node.scaleX + node.scaleY)) / 2,
 			node.height * node.scaleY
 		]);
 
@@ -195,7 +195,7 @@ ObjectRenderer.render[ObjectType.OBJ_MODEL] = function(node) {
 
 		var matrixS = Matrix.scale([
 			node.width * node.scaleX,
-			32 * (node.scaleX + node.scaleY) / 2,
+			(32 * (node.scaleX + node.scaleY)) / 2,
 			node.height * node.scaleY
 		]);
 

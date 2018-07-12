@@ -204,8 +204,8 @@ Texture.fromNode = function(node) {
 
 	const texture = Texture.list[source];
 
-	const sx = 1.0 / texture.w * (texture.w / texture.baseW);
-	const sy = 1.0 / texture.h * (texture.h / texture.baseH);
+	const sx = (1.0 / texture.w) * (texture.w / texture.baseW);
+	const sy = (1.0 / texture.h) * (texture.h / texture.baseH);
 
 	// 3D 描画時の frame を上書きする
 	if (node.frameOverride) {

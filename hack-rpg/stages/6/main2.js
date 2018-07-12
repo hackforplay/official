@@ -76,7 +76,7 @@ function gameStartLazy() {
 		bar1.visible = Hack.map === Hack.maps['map2'];
 		item1.hp = Math.min(item1.hp, MAX);
 		// ゲージの長さを設定する
-		bar1.width = 480 * item1.hp / MAX;
+		bar1.width = (480 * item1.hp) / MAX;
 	};
 	Hack.menuGroup.addChild(bar1);
 

@@ -26,10 +26,13 @@ Player.prototype.onenterframe = function() {
 		var forward = null;
 
 		for (var i = 0; i < 5; ++i) {
-			var an = 1 / 4 * i;
+			var an = (1 / 4) * i;
 
 			if (Math.abs(an - d) <= 1 / 4 / 2) {
-				forward = Vec2.rotate([hor, ver], Math.PI - Math.PI * 2 / 4 * (i % 4));
+				forward = Vec2.rotate(
+					[hor, ver],
+					Math.PI - ((Math.PI * 2) / 4) * (i % 4)
+				);
 
 				break;
 			}

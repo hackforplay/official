@@ -8,11 +8,8 @@
 		"build": "NODE_ENV=production webpack -p",
 		"test": "ava",
 		"postinstall": "npm run build",
-		"prettier": "./node_modules/.bin/prettier --config ./.prettierrc --write '**/*.js'"
+		"prettier": "prettier --config ./.prettierrc --write '**/*.js'"
 	},
-	"pre-commit": [
-		"prettier"
-	],
 	"repository": {
 		"type": "git",
 		"url": "git+https://github.com/hackforplay/official.git"
@@ -28,8 +25,6 @@
 	"homepage": "https://github.com/hackforplay/official#readme",
 	"devDependencies": {
 		"@babel/preset-env": "^7.0.0-beta.52",
-		"@babel/preset-es2015": "^7.0.0-beta.52",
-		"@babel/preset-stage-3": "^7.0.0-beta.52",
 		"@babel/register": "^7.0.0-beta.52",
 		"ava": "1.0.0-beta.6",
 		"canvas-prebuilt": "^1.6.5-prerelease.1",
@@ -39,7 +34,6 @@
 		"html-webpack-plugin": "^2.30.1",
 		"offline-plugin": "^4.9.0",
 		"open-browser-webpack-plugin": "0.0.5",
-		"pre-commit": "^1.2.2",
 		"prettier": "^1.12.1",
 		"unorm": "^1.4.1",
 		"webpack": "^3.11.0",
@@ -71,11 +65,14 @@
 		"babel": {
 			"testOptions": {
 				"presets": [
-					["@babel/preset-env", {
-						"targets": {
-							"node": "current"
+					[
+						"@babel/preset-env",
+						{
+							"targets": {
+								"node": "current"
+							}
 						}
-					}]
+					]
 				]
 			}
 		}
