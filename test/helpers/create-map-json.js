@@ -41,7 +41,7 @@ export default function createMapJson() {
 					isAutoTile: false,
 					isAnimation: false,
 					collider: [false, false, false, false],
-					authors: {
+					author: {
 						name: 'ぴぽや',
 						url: 'http://blog.pipoya.net/'
 					}
@@ -59,7 +59,7 @@ export default function createMapJson() {
 					isAutoTile: false,
 					isAnimation: false,
 					collider: [true, true, true, true],
-					authors: {
+					author: {
 						name: 'ぴぽや',
 						url: 'http://blog.pipoya.net/'
 					}
@@ -77,7 +77,7 @@ export default function createMapJson() {
 					isAutoTile: false,
 					isAnimation: false,
 					collider: [],
-					authors: {
+					author: {
 						name: 'ぴぽや',
 						url: 'http://blog.pipoya.net/'
 					}
@@ -95,7 +95,7 @@ export default function createMapJson() {
 					isAutoTile: false,
 					isAnimation: false,
 					collider: [], // Inherit
-					authors: {
+					author: {
 						name: 'ぴぽや',
 						url: 'http://blog.pipoya.net/'
 					}
