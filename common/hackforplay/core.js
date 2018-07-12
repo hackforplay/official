@@ -1,8 +1,9 @@
-import 'hackforplay/rpg-kit-main';
-import 'hackforplay/camera';
-import 'hackforplay/loader';
-import 'hackforplay/rpg-kit-rpgobjects';
-
+import enchant from '../enchantjs/enchant';
+import './rpg-kit-main';
+import './camera';
+import './loader';
+import './rpg-kit-rpgobjects';
+import './trodden';
 import Hack from './hack';
 import * as synonyms from './synonyms';
 import Skin from './skin';
@@ -15,6 +16,7 @@ import Effect from './object/effect';
 import BehaviorTypes from './behavior-types';
 import find from './find';
 import Key from './key';
+import deprecated from './deprecated';
 
 // Global
 self.Hack = self.Hack || Hack;
@@ -36,6 +38,18 @@ for (const [from, _global, _skin] of synonyms.assets) {
 		Skin.__name.set(mod, _skin); // Skin.__name.get(mod) === 'mod name'
 	}
 }
+
+// Notice to deprecated event
+function checkDeprecated() {
+	const message = deprecated();
+	if (message) {
+		console.error(message);
+	} else {
+		// また調べる
+		feeles.setTimeout(checkDeprecated, 1000);
+	}
+}
+enchant.Core.instance.on('load', checkDeprecated);
 
 // find
 /**

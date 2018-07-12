@@ -31,6 +31,7 @@ function gameStartLazy() {
 	item1.onつねに = () => {
 		// クモの横の位置をプレイヤーと同じにする
 		item1.x = Hack.player.x;
+		item1.updateCollider();
 	};
 	item1.onattacked = () => {
 		log(`
@@ -48,14 +49,16 @@ function gameStartLazy() {
 	// ダイアモンドを 4, 7 の位置に移動する ( map2 )
 	item2.locate(4, 7, 'map2');
 	// ダイアモンドにプレイヤーが乗ったら...
-	item2.onのった = () => {
-		// ダイアモンドを削除する
-		item2.destroy();
-		// スコアを 100 アップ！
-		Hack.score += 100;
-		log(`
+	item2.onふまれた = event => {
+		if (event.item === Hack.player) {
+			// ダイアモンドを削除する
+			item2.destroy();
+			// スコアを 100 アップ！
+			Hack.score += 100;
+			log(`
 ダイヤモンドを 手に入れた！
 さっきのへやに もどろう`);
+		}
 	};
 
 	// 魔道書にクモを登録する
@@ -69,15 +72,17 @@ function gameStartLazy() {
 	//　階段を下の方に置く ( Under )
 	item3.layer = RPGMap.Layer.Under;
 	// 階段にプレイヤーが乗ったら
-	item3.onのった = () => {
-		// マップ map1 に移動
-		Hack.changeMap('map1');
-		// プレイヤーを 7, 8 の位置に移動する ( map1 )
-		Hack.player.locate(7, 8, 'map1');
-		// もしスコアが 100 以上なら...
-		if (Hack.score >= 100) {
-			// 次のステージに！
-			gameclear('stages/6/index.html');
+	item3.onふまれた = event => {
+		if (event.item === Hack.player) {
+			// マップ map1 に移動
+			Hack.changeMap('map1');
+			// プレイヤーを 7, 8 の位置に移動する ( map1 )
+			Hack.player.locate(7, 8, 'map1');
+			// もしスコアが 100 以上なら...
+			if (Hack.score >= 100) {
+				// 次のステージに！
+				gameclear('stages/6/index.html');
+			}
 		}
 	};
 

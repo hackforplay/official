@@ -135,8 +135,8 @@
     code: |
       const item1 = new RPGObject(('▼ スキン', Skin.ハート));
       item1.locate(7, 5, 'map1');
-      item1.on(('▼ イベント', 'のった'), () => {
-        player.hp += 1;
+      item1.on(('▼ イベント', 'ふまれた'), event => {
+        event.item.hp += 1;
         item1.destroy();
       });
     image: trimmed/map-28-3.png
@@ -159,8 +159,8 @@
     code: |
       const item1 = new RPGObject(('▼ スキン', Skin.スター));
       item1.locate(7, 5, 'map1');
-      item1.on(('▼ イベント', 'のった'), () => {
-        player.damageTime = 100;
+      item1.on(('▼ イベント', 'ふまれた'), event => {
+        event.item.damageTime = 100;
         item1.destroy();
       });
     image: trimmed/map-28-6.png
@@ -170,7 +170,7 @@
     code: |
       const item1 = new RPGObject(('▼ スキン', Skin.キー));
       item1.locate(random(0, 15), random(0, 10), 'map1');
-      item1.on(('▼ イベント', 'のった'), () => {
+      item1.on(('▼ イベント', 'ふまれた'), event => {
         Hack.log('カチャリ という おと が きこえた');
         item1.destroy();
       });
@@ -181,7 +181,7 @@
     code: |
       const item1 = new RPGObject(('▼ スキン', Skin.ダイヤモンド));
       item1.locate(7, 5, 'map1');
-      item1.on(('▼ イベント', 'のった'), () => {
+      item1.on(('▼ イベント', 'ふまれた'), event => {
         item1.destroy();
         Hack.score += 1;
       });
@@ -193,8 +193,8 @@
       const item1 = new RPGObject(('▼ スキン', Skin.ハート));
       item1.locate(7, 5, 'map1');
       item1.color = ('▼ カラー', 'white');
-      item1.on(('▼ イベント', 'のった'), () => {
-        player.hp += 1;
+      item1.on(('▼ イベント', 'ふまれた'), event => {
+        event.item.hp += 1;
         item1.destroy();
       });
     image: trimmed/colorful.png
@@ -204,12 +204,9 @@
     code: |
       const item1 = new RPGObject(('▼ スキン', Skin.マドウショ));
       item1.locate(7, 5);
-      item1.on(('▼ イベント', 'のった'), () => {
-        // 魔道書のコードをひらく
-        feeles.openCode('code.js');
-
-        // なくなる
-        item1.destroy();
+      item1.on(('▼ イベント', 'ふまれた'), event => {
+        feeles.openCode('code.js'); // 魔道書のコードをひらく
+        item1.destroy(); // なくなる
       });
     image: hackforplay/enchantbook.png
     description: 魔道書を使えるようにする。魔道書のコードは code.js で書きかえることができる
@@ -220,10 +217,12 @@
 
       const item1 = new RPGObject(('▼ スキン', Skin.キャッスル));
       item1.locate(10, 5, 'map1');
-      item1.on(('▼ イベント', 'のった'), () => {        
-        Hack.gameclear(); // ゲームクリア
-        player.destroy(); // プレイヤーをけす
-        Hack.log('ゲームクリアです。おめでとう！'); // メッセージを出す
+      item1.on(('▼ イベント', 'ふまれた'), event => {
+        if (event.item === player) {
+          Hack.gameclear(); // ゲームクリア
+          player.destroy(); // プレイヤーをけす
+          Hack.log('ゲームクリアです。おめでとう！'); // メッセージを出す
+        }
       });
     image: trimmed/map-25-0.png
     description: あなたのかえりを まちわびている おしろ。ここへ たどりつくと ゲームクリアになる
@@ -233,8 +232,10 @@
       const item1 = new RPGObject(('▼ スキン', Skin.クダリカイダン));
       item1.locate(7, 5, 'map1');
       item1.layer = RPGMap.Layer.Under;
-      item1.on(('▼ イベント', 'のった'), () => {
-        Hack.changeMap('map2');
+      item1.on(('▼ イベント', 'ふまれた'), event => {
+        if (event.item === player) {
+          Hack.changeMap('map2');
+        }
       });
     image: trimmed/map-21-2.png
     description: つぎのマップに つながっている くだりせんようの かいだん。カイゾウすると、つぎのマップからつぎのつぎのマップに つなげることも…
@@ -244,8 +245,8 @@
       const item1 = new RPGObject(('▼ スキン', Skin.ワープ));
       item1.locate(7, 5, 'map1');
       item1.layer = RPGMap.Layer.Under;
-      item1.on(('▼ イベント', 'のった'), () => {
-        player.locate(11, 5);
+      item1.on(('▼ イベント', 'ふまれた'), event => {
+        event.item.locate(11, 5);
       });
     image: trimmed/map-16-4.png
     description: ふむとワープできる すごいゆか。あかいろや みどりいろも そんざいするという うわさ
@@ -319,11 +320,8 @@
     code: |
       const item1 = new RPGObject(('▼ スキン', Skin.ドクロ));
       item1.locate(7, 5, 'map1');
-      item1.on(('▼ イベント', 'のった'), () => {
-        player.hp = 0;
-      });
-      item1.on(('▼ イベント', 'こうげきされた'), (event) => {
-        event.attacker.hp = 0;
+      item1.on(('▼ イベント', 'ふまれた'), event => {
+        event.item.hp = 0;
       });
     image: trimmed/map-28-4.png
     description: ぜったいに ふんづけたり こうげきしたり してはいけない。ぜったいにだ
@@ -341,7 +339,7 @@
             ('▼ スキン', Skin.ルビー)
           ])
         );
-        なかみ.on(('▼ イベント', 'のった'), () => {
+        なかみ.on(('▼ イベント', 'ふまれた'), event => {
           なかみ.velocity(0, -8);
           なかみ.force(0, 0.8);
           なかみ.destroy(16);
@@ -382,12 +380,12 @@
       const item1 = new RPGObject(('▼ スキン', Skin.トラップ));
       item1.locate(7, 5, 'map1');
       item1.layer = RPGMap.Layer.Under;
-      item1.on(('▼ イベント', 'のった'), () => {
+      item1.on(('▼ イベント', 'ふまれた'), event => {
         item1.mod(('▼ スキン', Skin.トラップ2));
-        player.hp -= 1;
-        player.damageTime = 30;
+        event.item.hp -= 1;
+        event.item.damageTime = 30;
       });
-      item1.on(('▼ イベント', 'おりた'), () => {
+      item1.on(('▼ イベント', 'どかれた'), () => {
         item1.mod(('▼ スキン', Skin.トラップ));
       });
     image: trimmed/map-22-0.png
@@ -399,12 +397,12 @@
         const item1 = new RPGObject(('▼ スキン', Skin.トラップ));
         item1.locate(x, 5, 'map1');
         item1.layer = RPGMap.Layer.Under;
-        item1.on(('▼ イベント', 'のった'), () => {
+        item1.on(('▼ イベント', 'ふまれた'), event => {
           item1.mod(('▼ スキン', Skin.トラップ2));
-          player.hp -= 1;
-          player.damageTime = 30;
+          event.item.hp -= 1;
+          event.item.damageTime = 30;
         });
-        item1.on(('▼ イベント', 'おりた'), () => {
+        item1.on(('▼ イベント', 'どかれた'), () => {
           item1.mod(('▼ スキン', Skin.トラップ));
         });
       }
@@ -416,8 +414,10 @@
       const item1 = new RPGObject(('▼ スキン', Skin.ノボリカイダン));
       item1.locate(7, 5, 'map2');
       item1.layer = RPGMap.Layer.Under;
-      item1.on(('▼ イベント', 'のった'), () => {
-        Hack.changeMap('map1');
+      item1.on(('▼ イベント', 'ふまれた'), event => {
+        if (event.item === player) {
+          Hack.changeMap('map1');
+        }
       });
     image: trimmed/map-20-2.png
     descriptionMoreURL: 'https://github.com/hackforplay/wiki-RPG,/wiki/上り階段'
@@ -442,7 +442,7 @@
       const item1 = new RPGObject(('▼ スキン', Skin.マホウジン));
       item1.locate(7, 5, 'map1');
       item1.layer = RPGMap.Layer.Under;
-      item1.on(('▼ イベント', 'のった'), () => {
+      item1.on(('▼ イベント', 'ふまれた'), event => {
         if (Hack.score >= 7) {
           item1.mod(('▼ スキン', Skin.マホウジン2));
         }
@@ -480,7 +480,7 @@
           const フラワー = item1.summon(('▼ スキン', Skin.フラワー));
           フラワー.locate(item1.mapX, item1.mapY + 1, 'map1');
           フラワー.layer = RPGMap.Layer.Under;
-          フラワー.on(('▼ イベント', 'のった'), () => {
+          フラワー.on(('▼ イベント', 'ふまれた'), event => {
             フラワー.destroy();
           });
         }

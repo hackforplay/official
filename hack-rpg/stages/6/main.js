@@ -22,14 +22,16 @@ function gameStart() {
 	const youtube = new RPGObject();
 	youtube.mod(Hack.assets.village);
 	youtube.locate(0, 4);
-	youtube.onplayerenter = () => {
-		feeles.openMedia({
-			url: 'https://youtu.be/yfwUHmf0DYA',
-			playing: true,
-			controls: true,
-			volume: 0.2
-		});
-	};
+	youtube.on('addtrodden', event => {
+		if (event.item === Hack.player) {
+			feeles.openMedia({
+				url: 'https://youtu.be/yfwUHmf0DYA',
+				playing: true,
+				controls: true,
+				volume: 0.2
+			});
+		}
+	});
 
 	// 説明書を開く
 	// feeles.openReadme('stages/6/README.md');
@@ -80,6 +82,7 @@ function gameStart() {
 	item1.onつねに = () => {
 		//　コウモリの横の位置をプレイヤーと同じにする
 		item1.y = Hack.player.y;
+		item1.updateCollider();
 	};
 	item1.onattacked = () => {
 		log(`
@@ -108,15 +111,17 @@ function gameStart() {
 	// 階段を下の方に置く
 	item2.layer = RPGMap.Layer.Under;
 	// 階段にプレイヤーが乗ったら...
-	item2.onのった = () => {
-		// 説明書 2 を開く
-		// feeles.openReadme('stages/6/README2.md');
-		// 魔道書の 2 ページ目を開く
-		feeles.openCode('stages/6/code2.js');
-		// マップ map2 に移動する
-		Hack.changeMap('map2');
-		// プレイヤーを 0, 5 の位置に移動する ( map2 )
-		Hack.player.locate(0, 5, 'map2');
+	item2.onふまれた = event => {
+		if (event.item === Hack.player) {
+			// 説明書 2 を開く
+			// feeles.openReadme('stages/6/README2.md');
+			// 魔道書の 2 ページ目を開く
+			feeles.openCode('stages/6/code2.js');
+			// マップ map2 に移動する
+			Hack.changeMap('map2');
+			// プレイヤーを 0, 5 の位置に移動する ( map2 )
+			Hack.player.locate(0, 5, 'map2');
+		}
 	};
 
 	// このステージを改造

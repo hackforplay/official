@@ -50,9 +50,11 @@ function gameStart() {
 	// 階段は下の方に置く ( Under )
 	item1.layer = RPGMap.Layer.Under;
 	// 階段にプレイヤーが乗ったら...
-	item1.onのった = () => {
-		// 次のステージに！
-		gameclear('stages/4/index.html');
+	item1.onふまれた = event => {
+		if (event.item === Hack.player) {
+			// 次のステージに！
+			gameclear('stages/4/index.html');
+		}
 	};
 
 	// 魔道書に階段を登録する

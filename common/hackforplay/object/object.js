@@ -43,6 +43,8 @@ class RPGObject extends Sprite {
 
 		var collisionFlag = null; // this.collisionFlag (Default:true)
 		var noCollisionEvents = [
+			'addtrodden',
+			'removetrodden',
 			'playerenter',
 			'playerstay',
 			'playerexit',
@@ -139,15 +141,9 @@ class RPGObject extends Sprite {
 		}
 
 		// 後方互換性保持
-		this.colliderOffset = this.colliderOffset || new SAT.V(2, 2);
-		// 衝突判定用のポリゴン
 		this.collider =
 			this.collider ||
-			new SAT.Box(
-				this.colliderOffset,
-				this.width - 4,
-				this.height - 4
-			).toPolygon();
+			new SAT.Box(new SAT.V(0, 0), this.width, this.height).toPolygon();
 
 		// ツリーに追加
 		Hack.defaultParentNode.addChild(this);
@@ -173,10 +169,8 @@ class RPGObject extends Sprite {
 	}
 
 	updateCollider() {
-		this.collider.setOffset({
-			x: this.x + this.colliderOffset.x,
-			y: this.y + this.colliderOffset.y
-		});
+		this.collider.pos.x = this.x;
+		this.collider.pos.y = this.y;
 	}
 
 	get directionType() {
@@ -206,7 +200,10 @@ class RPGObject extends Sprite {
 			}
 		}
 		if (this.hpchangeFlag) {
-			this.dispatchEvent(new Event('hpchange'));
+			const event = new Event('hpchange', {
+				item: this // イベント引数の統一
+			});
+			this.dispatchEvent(event);
 			this.hpchangeFlag = false;
 		}
 		if (this.isBehaviorChanged) {
@@ -216,7 +213,10 @@ class RPGObject extends Sprite {
 			// becomeイベント内でbehaviorが変更された場合、
 			// 次のフレームで１度だけbecomeイベントが発火します。
 			this.isBehaviorChanged = false;
-			this.dispatchEvent(new Event('become' + this.behavior));
+			const event = new Event('become' + this.behavior, {
+				item: this // イベント引数の統一
+			});
+			this.dispatchEvent(event);
 		}
 	}
 
@@ -314,8 +314,8 @@ class RPGObject extends Sprite {
 
 		// ダメージを与えるオブジェクトを生成する
 		const damageObject = this.summon(function() {
-			this.colliderOffset = new SAT.V(12, 12);
-			this.collider = new SAT.Box(this.colliderOffset, 8, 8).toPolygon();
+			this.collider = new SAT.Box(new SAT.V(0, 0), 8, 8).toPolygon();
+			this.collider.setOffset(new SAT.V(12, 12));
 		});
 		damageObject.mod(Hack.createDamageMod(this.atk));
 		damageObject.locate(dx, dy);
@@ -464,6 +464,7 @@ class RPGObject extends Sprite {
 		event.map = map;
 		event.hit = hits[0];
 		event.hits = hits;
+		event.item = event.hit; // イベント引数の統一
 		this.dispatchEvent(event);
 		if (hits.length) {
 			// 相手に対してイベントを dispatch
@@ -471,6 +472,7 @@ class RPGObject extends Sprite {
 			event.map = false;
 			event.hit = this;
 			event.hits = [this];
+			event.item = event.hit; // イベント引数の統一
 			hits.forEach(hitObj => {
 				hitObj.dispatchEvent(event);
 			});
@@ -876,6 +878,7 @@ Hack.createDamageMod = damage =>
 				object.dispatchEvent(
 					new Event('attacked', {
 						attacker: this, // attacker は弾などのエフェクトの場合もある
+						item: this, // 引数名の統一
 						damage
 					})
 				);

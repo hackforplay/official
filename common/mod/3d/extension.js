@@ -295,10 +295,12 @@ Object.defineProperty(RPGObject.prototype, 'opacity', {
 				);
 			}, this);
 			e.hit = e.hits.length > 0 ? e.hits[0] : undefined;
+			e.item = e.hit; // イベント引数の統一
 			if (e.hit || e.map) {
 				var e2 = new Event('collided');
 				e2.map = false;
 				e2.hits = [(e2.hit = this)];
+				e.item = e.hit; // イベント引数の統一
 				this.dispatchEvent(e);
 				e.hits.forEach(function(item) {
 					item.dispatchEvent(e2);

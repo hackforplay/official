@@ -11,11 +11,13 @@ function gameStartLazy() {
 	// 城を 13, 5 の位置に移動する ( map4 )
 	item1.locate(13, 5, 'map4');
 	// 城にプレイヤーが乗ったら...
-	item1.onのった = () => {
-		// 城を削除する
-		item1.destroy();
-		// ゲームクリアー！！！！！！
-		gameclear();
+	item1.onふまれた = event => {
+		if (event.item === Hack.player) {
+			// 城を削除する
+			item1.destroy();
+			// ゲームクリアー！！！！！！
+			gameclear();
+		}
 	};
 
 	// ゲームクリアのコード　（　関数 )

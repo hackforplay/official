@@ -23,23 +23,27 @@ export default function makeMagic(x, y, map, fileName) {
 	magic.collisionFlag = false;
 	if (flag) {
 		magic.mod(('▼ スキン', _mまほうじんひかった));
-		magic.onのった = () => {
-			if (confirm('このステージを 改造(かいぞう) しますか？')) {
-				feeles.openEditor(fileName);
-			} else if (confirm('もどりますか？')) {
-				feeles.replace('stages/7/index.html');
+		magic.onふまれた = event => {
+			if (event.item === Hack.player) {
+				if (confirm('このステージを 改造(かいぞう) しますか？')) {
+					feeles.openEditor(fileName);
+				} else if (confirm('もどりますか？')) {
+					feeles.replace('stages/7/index.html');
+				}
 			}
 		};
 	} else {
 		magic.mod(('▼ スキン', _mまほうじん));
-		magic.onのった = () => {
-			Hack.log('ふういんのせいで つかえない');
-			const { text } = Hack.textarea;
-			feeles.setTimeout(() => {
-				if (text === Hack.textarea.text) {
-					Hack.textarea.hide();
-				}
-			}, 3000);
+		magic.onふまれた = event => {
+			if (event.item === Hack.player) {
+				Hack.log('ふういんのせいで つかえない');
+				const { text } = Hack.textarea;
+				feeles.setTimeout(() => {
+					if (text === Hack.textarea.text) {
+						Hack.textarea.hide();
+					}
+				}, 3000);
+			}
 		};
 	}
 }

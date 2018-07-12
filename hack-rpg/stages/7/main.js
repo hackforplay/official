@@ -128,11 +128,13 @@ function createWarp(x, y, color, message, next) {
 	// もしフラグが立っていたら...
 	if (flag) {
 		// ワープ床にプレイヤーが乗ったら...
-		warp.onのった = () => {
-			// 確認して...
-			if (confirm(message)) {
-				// ワープ！
-				feeles.replace(next);
+		warp.onふまれた = event => {
+			if (event.item === Hack.player) {
+				// 確認して...
+				if (confirm(message)) {
+					// ワープ！
+					feeles.replace(next);
+				}
 			}
 		};
 	}
@@ -141,9 +143,11 @@ function createWarp(x, y, color, message, next) {
 		// ワープ床の透明度（うすさ）を0.2にする（ちょっと見える）
 		warp.opacity = 0.2;
 		// ワープ床にプレイヤーが乗ったら...
-		warp.onのった = () => {
-			// メッセージ
-			alert('見えない力で 閉ざされている');
+		warp.onふまれた = event => {
+			if (event.item === Hack.player) {
+				// メッセージ
+				alert('見えない力で 閉ざされている');
+			}
 		};
 	}
 	return warp;

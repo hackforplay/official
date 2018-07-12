@@ -19,13 +19,15 @@ function gameStartLazy() {
 	// 階段を下の方に置く ( Under )
 	item1.layer = RPGMap.Layer.Under;
 	// 階段にプレイヤーが乗ったら...
-	item1.onのった = () => {
-		// プレイヤーを 2, 5 の位置に移動する ( map4 )
-		Hack.player.locate(2, 5, 'map4');
-		// マップ map4 に移動する
-		Hack.changeMap('map4');
-		// 説明書 4 を表示する
-		// feeles.openReadme('stages/6/README4.md');
+	item1.onふまれた = event => {
+		if (event.item === Hack.player) {
+			// プレイヤーを 2, 5 の位置に移動する ( map4 )
+			Hack.player.locate(2, 5, 'map4');
+			// マップ map4 に移動する
+			Hack.changeMap('map4');
+			// 説明書 4 を表示する
+			// feeles.openReadme('stages/6/README4.md');
+		}
 	};
 
 	// 宝箱とコインをたくさん作る
@@ -67,11 +69,13 @@ function gameStartLazy() {
 		// 宝箱を x, y の位置に移動する ( map3 )
 		item1.locate(x, y, 'map3');
 		// 宝箱にプレイヤーが乗ったら...
-		item1.onのった = () => {
-			// 宝箱を削除する
-			item1.destroy();
-			// スコアを 400　アップ！！！！
-			Hack.score += 400;
+		item1.onふまれた = event => {
+			if (event.item === Hack.player) {
+				// 宝箱を削除する
+				item1.destroy();
+				// スコアを 400　アップ！！！！
+				Hack.score += 400;
+			}
 		};
 		return item1;
 	}
@@ -84,11 +88,13 @@ function gameStartLazy() {
 		// コインを x, y の位置に作る　( map3 )
 		item1.locate(x, y, 'map3');
 		// コインにプレイヤーが乗ったら...
-		item1.onのった = () => {
-			// コインを削除する
-			item1.destroy();
-			// スコアを 400 アップ！！！！
-			Hack.score += 400;
+		item1.onふまれた = event => {
+			if (event.item === Hack.player) {
+				// コインを削除する
+				item1.destroy();
+				// スコアを 400 アップ！！！！
+				Hack.score += 400;
+			}
 		};
 		return item1;
 	}
