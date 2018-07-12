@@ -1,5 +1,14 @@
 {
-	"presets": ["@babel/preset-es2015", "@babel/preset-stage-3"],
+	"presets": [
+		[
+			"@babel/preset-env",
+			{
+				"targets": {
+					"node": "current"
+				}
+			}
+		]
+	],
 	"ignore": [
 		"stages/*/code*.js",
 		"enchantjs/enchant.js",

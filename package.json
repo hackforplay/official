@@ -28,8 +28,6 @@
 	"homepage": "https://github.com/hackforplay/official#readme",
 	"devDependencies": {
 		"@babel/preset-env": "^7.0.0-beta.52",
-		"@babel/preset-es2015": "^7.0.0-beta.52",
-		"@babel/preset-stage-3": "^7.0.0-beta.52",
 		"@babel/register": "^7.0.0-beta.52",
 		"ava": "1.0.0-beta.6",
 		"canvas-prebuilt": "^1.6.5-prerelease.1",

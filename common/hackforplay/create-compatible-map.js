@@ -152,13 +152,13 @@ class RPGMapImageBuffer {
 				}, callback);
 			};
 		});
+		this.cacheCount = {}; // { [key: string]: number }
+		this.cacheImage = []; // Image[]
 	}
 
 	get height() {
 		return this.bufferCount * 32;
 	}
-
-	cacheCount = {}; // { [key: string]: number }
 
 	/**
 	 * 複数の画像をバッファに加算描画する
@@ -186,8 +186,6 @@ class RPGMapImageBuffer {
 		this.cacheCount[cacheKey] = count;
 		return count;
 	}
-
-	cacheImage = []; // Image[]
 
 	/**
 	 * 新たに画像をロードする
