@@ -14,6 +14,18 @@ const injection = {
 	Image
 };
 
+const tmpDir = path.join(__dirname, 'tmp');
+
+test.before.cb('make tmp directory', t => {
+	fs.stat(tmpDir, err => {
+		if (err && err.code === 'ENOENT') {
+			fs.mkdir(tmpDir, t.end);
+		} else {
+			t.end();
+		}
+	});
+});
+
 test('create new instance from enchant.Game', t => {
 	enchant();
 	const core = new enchant.Game(480, 320);
@@ -60,24 +72,22 @@ test.cb('Hack.createCompatibleMap', t => {
 	t.is(typeof result.fmap._data[0][0][0], 'number');
 });
 
-const tmp = path.join(__dirname, 'tmp');
-
 test.after.cb('save buffer image of RPGMap::image', t => {
 	const dataURL = result.image._element.toDataURL(); // default png
 	const [, base64] = dataURL.split(',');
-	fs.writeFile(path.join(tmp, 'image.png'), base64, 'base64', t.end);
+	fs.writeFile(path.join(tmpDir, 'image.png'), base64, 'base64', t.end);
 });
 
 test.after.cb('save rendered image of RPGMap::bmap', t => {
 	result.bmap.redraw(0, 0, 10 * 32, 6 * 32);
 	const dataURL = result.bmap._surface._element.toDataURL();
 	const [, base64] = dataURL.split(',');
-	fs.writeFile(path.join(tmp, 'bmap.png'), base64, 'base64', t.end);
+	fs.writeFile(path.join(tmpDir, 'bmap.png'), base64, 'base64', t.end);
 });
 
 test.after.cb('save rendered image of RPGMap::fmap', t => {
 	result.fmap.redraw(0, 0, 10 * 32, 6 * 32);
 	const dataURL = result.fmap._surface._element.toDataURL();
 	const [, base64] = dataURL.split(',');
-	fs.writeFile(path.join(tmp, 'fmap.png'), base64, 'base64', t.end);
+	fs.writeFile(path.join(tmpDir, 'fmap.png'), base64, 'base64', t.end);
 });
