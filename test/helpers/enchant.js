@@ -1,4 +1,5 @@
 import Window from 'window';
+// See https://github.com/jsdom/jsdom/blob/master/lib/jsdom/living/nodes/HTMLCanvasElement-impl.js#L16
 import 'canvas-prebuilt';
 
 // enchant.js のための global injection
