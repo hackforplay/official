@@ -130,15 +130,15 @@ var Matrix = {
 	},
 	perspective: function perspective(i, j, o, s) {
 		var N = new Float32Array(16);
-		i = o * Math.tan(i * Math.PI / 360);
+		i = o * Math.tan((i * Math.PI) / 360);
 		var O = s - o;
 		return (
-			(N[0] = 2 * o / (2 * (i * j))),
+			(N[0] = (2 * o) / (2 * (i * j))),
 			(N[1] = 0),
 			(N[2] = 0),
 			(N[3] = 0),
 			(N[4] = 0),
-			(N[5] = 2 * o / (2 * i)),
+			(N[5] = (2 * o) / (2 * i)),
 			(N[6] = 0),
 			(N[7] = 0),
 			(N[8] = 0),

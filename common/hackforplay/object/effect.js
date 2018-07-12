@@ -12,7 +12,7 @@ class Effect extends RPGObject {
 		this.velocity(velocityX, velocityY);
 		var frame = new Array(lifetime);
 		for (var i = frame.length - 1; i >= 0; i--) {
-			frame[i] = (i / lifetime * 5) >> 0;
+			frame[i] = ((i / lifetime) * 5) >> 0;
 		}
 		this.frame = frame;
 		this.destroy(frame.length);

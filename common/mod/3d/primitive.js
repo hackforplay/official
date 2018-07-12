@@ -271,12 +271,12 @@ const Shpere = enchant.Class.create(Primitive, {
 		var normalData = [];
 		var textureCoordData = [];
 		for (var latNumber = 0; latNumber <= latitudeBands; latNumber++) {
-			var theta = latNumber * Math.PI / latitudeBands;
+			var theta = (latNumber * Math.PI) / latitudeBands;
 			var sinTheta = Math.sin(theta);
 			var cosTheta = Math.cos(theta);
 
 			for (var longNumber = 0; longNumber <= longitudeBands; longNumber++) {
-				var phi = longNumber * 2 * Math.PI / longitudeBands;
+				var phi = (longNumber * 2 * Math.PI) / longitudeBands;
 				var sinPhi = Math.sin(phi);
 				var cosPhi = Math.cos(phi);
 

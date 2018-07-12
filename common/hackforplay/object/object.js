@@ -431,7 +431,7 @@ class RPGObject extends Sprite {
 
 		for (let frame = 1; frame <= endFrame; ++frame) {
 			// アニメーション番号を算出
-			this.frame = animation[Math.round(animation.length / endFrame * frame)];
+			this.frame = animation[Math.round((animation.length / endFrame) * frame)];
 
 			const x = beginX + move * tw * frame * forward.x;
 			const y = beginY + move * th * frame * forward.y;
@@ -607,7 +607,7 @@ class RPGObject extends Sprite {
 			(node instanceof MapObject || node.directionType === 'single') &&
 			!(vector.x === 0 && vector.y === 0)
 		) {
-			angle = 90 - Math.atan2(-vector.y, vector.x) * 180 / Math.PI;
+			angle = 90 - (Math.atan2(-vector.y, vector.x) * 180) / Math.PI;
 		}
 
 		// 速度がマイナスなら角度はそのままにする
@@ -652,7 +652,7 @@ class RPGObject extends Sprite {
 			case 'single':
 				// 画像は上向きと想定する
 				var rad = Math.atan2(this._forward.y, this._forward.x);
-				var enchantRot = rad / Math.PI * 180 + 90; // 基準は上,時計回りの度数法
+				var enchantRot = (rad / Math.PI) * 180 + 90; // 基準は上,時計回りの度数法
 				this.rotation = (enchantRot + 360) % 360;
 				break;
 			case 'double':
@@ -663,7 +663,7 @@ class RPGObject extends Sprite {
 				break;
 			case 'quadruple':
 				var dir = Hack.Vec2Dir(this._forward);
-				this.frame = [dir * 9 + this.frame % 9];
+				this.frame = [dir * 9 + (this.frame % 9)];
 				break;
 		}
 	}
@@ -718,7 +718,7 @@ class RPGObject extends Sprite {
 				break;
 			case 'single':
 			case 'quadruple':
-				c = typeof count === 'number' ? count % 4 + 4 : 1;
+				c = typeof count === 'number' ? (count % 4) + 4 : 1;
 				i = [3, 2, 0, 1][this.direction] + c; // direction to turn index
 				this.direction = [2, 3, 1, 0][i % 4]; // turn index to direction
 				break;

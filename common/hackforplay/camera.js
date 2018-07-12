@@ -321,7 +321,7 @@ Camera.arrange = function(x, y, border, filter) {
 		if (index >= cameras.length) return;
 		var camera = cameras[index++];
 
-		camera.moveTo(game.width / x * x2, game.height / y * y2);
+		camera.moveTo((game.width / x) * x2, (game.height / y) * y2);
 		camera.resize(game.width / x, game.height / y);
 	});
 };

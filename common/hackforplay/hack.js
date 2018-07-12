@@ -664,7 +664,7 @@ Hack.Vec2Dir = function(vec) {
 	if (vec.x === 0 && vec.y === 0) {
 		return null;
 	}
-	var deg = Math.atan2(vec.y, vec.x) / Math.PI * 180;
+	var deg = (Math.atan2(vec.y, vec.x) / Math.PI) * 180;
 	if (-135 <= deg && deg <= -45) {
 		return 3;
 	} // up
