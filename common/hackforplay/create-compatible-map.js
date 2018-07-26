@@ -25,7 +25,7 @@ export default function createCompatibleMap(
 	// 依存の注入
 	Surface =
 		Surface || injection.Surface || require('../enchantjs/enchant').Surface;
-	RPGMap = RPGMap || injection.RPGMap || require('./rpg-map');
+	RPGMap = RPGMap || injection.RPGMap || require('./rpg-map').default;
 	Image = Image || injection.Image || window.Image;
 	// 大きさを割り出す
 	const height = mapJson.tables[0].length;
