@@ -44,26 +44,10 @@ test.cb('Hack.createCompatibleMap', t => {
 	if (!(result instanceof RPGMap)) return;
 	t.truthy(result.image._element, 'Canvas が作られていません');
 	t.true(result.image.width * result.image.height > 0, 'バッファが空です');
-	t.is(result.bmap.width, 10 * 32);
-	t.is(result.bmap.height, 6 * 32);
-	t.is(result.fmap.width, 10 * 32);
-	t.is(result.fmap.height, 6 * 32);
-	t.false(result.hitTest(0, 0), 'すべてのテーブルで通路です');
-	t.true(result.hitTest(3 * 32, 2 * 32), '屋根のひさし on 岩');
-	t.true(result.hitTest(4 * 32, 2 * 32), '継承されても壁のままです');
-	t.true(result.hitTest(9 * 32, 5 * 32), '最も手前のタイルが壁です');
-	t.deepEqual(
-		result.cmap,
-		[
-			[0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-			[0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-			[0, 0, 0, 1, 1, 1, 1, 0, 0, 1],
-			[0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-			[0, 0, 0, 0, 0, 0, 0, 0, 0, 1],
-			[0, 0, 0, 0, 0, 0, 0, 0, 0, 1]
-		],
-		'cmap'
-	);
+	t.is(result.bmap.width, 15 * 32);
+	t.is(result.bmap.height, 10 * 32);
+	t.is(result.fmap.width, 15 * 32);
+	t.is(result.fmap.height, 10 * 32);
 	t.true(Array.isArray(result.bmap._data[0]));
 	t.true(Array.isArray(result.bmap._data[0][0]));
 	t.is(typeof result.bmap._data[0][0][0], 'number');

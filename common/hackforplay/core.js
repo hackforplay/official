@@ -17,6 +17,7 @@ import BehaviorTypes from './behavior-types';
 import find from './find';
 import Key from './key';
 import deprecated from './deprecated';
+import createCompatibleMap from './create-compatible-map';
 
 // Global
 self.Hack = self.Hack || Hack;
@@ -58,3 +59,29 @@ enchant.Core.instance.on('load', checkDeprecated);
  * @returns {RPGObject|null} オブジェクトあるいは null
  */
 Hack.find = find;
+
+/**
+ * 完全な JSON 文字列からマップを生成する
+ * @param {String|undefined} mapName マップの名前
+ * @param {String} mapJson stringify された Map JSON
+ * @returns {Promise<RPGMap>}
+ */
+Hack.parseMapJson = function parseMapJson(mapName, mapJson) {
+	// mapName はなくても良いが、第１引数にしたい
+	if (mapJson === undefined) {
+		mapJson = mapName;
+		mapName = undefined;
+	}
+	const parsedMapJson = JSON.parse(mapJson);
+	return new Promise(resolve => {
+		let map;
+		const callback = () => {
+			if (mapName) {
+				Hack.maps = Hack.maps || {};
+				Hack.maps[mapName] = map;
+			}
+			resolve(map);
+		};
+		map = createCompatibleMap(parsedMapJson, {}, callback);
+	});
+};
