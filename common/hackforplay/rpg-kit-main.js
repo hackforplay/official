@@ -286,7 +286,9 @@ game.onawake = () => {
 
 	// ワールドが描画される前に描画先をマップのサーフェイスに差し替える
 	world.on('prerender', ({ canvasRenderer }) => {
-		canvasRenderer.targetSurface = Hack.map._surface;
+		if (Hack.map) {
+			canvasRenderer.targetSurface = Hack.map._surface;
+		}
 	});
 
 	// ワールドが描画されたら描画先をデフォルトのキャンバスに差し替える
