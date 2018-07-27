@@ -1,10 +1,4 @@
 export const size = 32;
-export const TileOrder = {
-	Inherit: 'Inherit',
-	Below: 'Below',
-	Object: 'Object',
-	Above: 'Above'
-};
 
 // 依存の注入
 let Surface;
@@ -25,7 +19,7 @@ export default function createCompatibleMap(
 	// 依存の注入
 	Surface =
 		Surface || injection.Surface || require('../enchantjs/enchant').Surface;
-	RPGMap = RPGMap || injection.RPGMap || require('./rpg-map');
+	RPGMap = RPGMap || injection.RPGMap || require('./rpg-map').default;
 	Image = Image || injection.Image || window.Image;
 	// 大きさを割り出す
 	const height = mapJson.tables[0].length;
@@ -51,13 +45,14 @@ export default function createCompatibleMap(
 			for (const table of mapJson.tables) {
 				const index = table[y][x];
 				if (index < 0) continue; // nope!
-				const tile = indexSquareMap[index].tile;
-				if (!tile) {
+				const square = indexSquareMap[index];
+				if (!square) {
 					throw new Error(notFound(index, x, y));
 				}
 				// 最も手前の結果が優先される
-				if (tile.collider.length > 0) {
-					cmap[y][x] = tile.collider.includes(true) ? 1 : 0;
+				const collider = getCollider(square.placement);
+				if (collider > -1) {
+					cmap[y][x] = collider;
 					break;
 				}
 			}
@@ -84,8 +79,8 @@ export default function createCompatibleMap(
 			const tileIndexes = mapJson.tables.reduce((p, table) => {
 				const index = table[y][x];
 				if (index < 0) return p; // nope!
-				const tile = indexSquareMap[index].tile;
-				if (!tile) {
+				const square = indexSquareMap[index];
+				if (!square) {
 					throw new Error(notFound(table, x, y));
 				}
 				return p.concat(index);
@@ -95,10 +90,11 @@ export default function createCompatibleMap(
 				let minLevelOfFmap = 0;
 				for (let level = 0; level < tileIndexes.length; level++) {
 					const index = tileIndexes[level];
-					const tile = indexSquareMap[index].tile;
-					if (tile.order === TileOrder.Above) {
+					const square = indexSquareMap[index];
+					const height = getHeight(square.placement);
+					if (height === 1) {
 						minLevelOfFmap = level + 1;
-					} else if (tile.order !== TileOrder.Inherit) {
+					} else if (height === 0) {
 						break;
 					}
 				}
@@ -126,6 +122,7 @@ export default function createCompatibleMap(
 	rpgMap.fmap.loadData(fmap);
 	rpgMap.cmap = cmap;
 	rpgMap.image = buffer.surface;
+	console.log('buffer', rpgMap.image.toDataURL());
 
 	return rpgMap;
 }
@@ -152,13 +149,13 @@ class RPGMapImageBuffer {
 				}, callback);
 			};
 		});
+		this.cacheCount = {}; // { [key: string]: number }
+		this.cacheImage = []; // Image[]
 	}
 
 	get height() {
 		return this.bufferCount * 32;
 	}
-
-	cacheCount = {}; // { [key: string]: number }
 
 	/**
 	 * 複数の画像をバッファに加算描画する
@@ -187,8 +184,6 @@ class RPGMapImageBuffer {
 		return count;
 	}
 
-	cacheImage = []; // Image[]
-
 	/**
 	 * 新たに画像をロードする
 	 * @param {Number} index タイルのindex
@@ -210,5 +205,48 @@ class RPGMapImageBuffer {
 		// 同じ画像を何度もロードしないようにキャッシュに追加
 		this.cacheImage[index] = img;
 		return img;
+	}
+}
+
+/**
+ * 当たり判定
+ * @param {Object} placement
+ * @return 壁: 1, 通路: 0, 継承: -1
+ */
+function getCollider(placement) {
+	switch (placement.type) {
+		case 'Wall':
+		case 'Barrier':
+			return 1;
+		case 'Ground':
+		case 'Road':
+			return 0;
+
+		case 'Rug':
+		case 'Float':
+		case 'Sky':
+		default:
+			return -1;
+	}
+}
+
+/**
+ * fmap か bmap か
+ * @param {Object} placement
+ * @return 1: fmap, 0: bmap, -1: inherit
+ */
+function getHeight(placement) {
+	switch (placement.type) {
+		case 'Ground':
+		case 'Wall':
+			return 0;
+		case 'Road':
+		case 'Rug':
+		case 'Barrier':
+			return -1;
+		case 'Float':
+		case 'Sky':
+		default:
+			return 1;
 	}
 }

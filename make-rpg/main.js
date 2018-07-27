@@ -23,7 +23,7 @@ game.onload = async () => {
 	// lifelabel などが gameOnLoad 時に参照できない対策
 	game.dispatchEvent(new enchant.Event('awake'));
 
-	gameOnLoad();
+	await gameOnLoad();
 
 	// Hack.player がないとき self.player を代わりに入れる
 	if (self.player && !Hack.player) {
@@ -57,7 +57,7 @@ game.onload = async () => {
 Hack.onload = () => {
 	// Hack.maps を事前に作っておく
 	Hack.maps = Hack.maps || {};
-	hackOnLoad();
+	await hackOnLoad();
 };
 
 // ゲームスタート
