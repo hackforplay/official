@@ -54,7 +54,7 @@ game.onload = async () => {
 };
 
 // マップをつくる
-Hack.onload = () => {
+Hack.onload = async () => {
 	// Hack.maps を事前に作っておく
 	Hack.maps = Hack.maps || {};
 	await hackOnLoad();
