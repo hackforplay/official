@@ -69,7 +69,7 @@ function gameStart() {
 		// プレイヤーの体力が、体力の最大値を超えないようにする
 		Hack.player.hp = Math.min(Hack.player.hp, MAX);
 		// 体力ゲージの長さを更新する
-		bar.width = 480 * Hack.player.hp / MAX;
+		bar.width = (480 * Hack.player.hp) / MAX;
 	};
 	Hack.menuGroup.addChild(bar);
 
