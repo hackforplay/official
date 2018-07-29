@@ -1,4 +1,4 @@
-import { Sprite } from 'enchantjs/enchant';
+import { Sprite, Surface } from 'enchantjs/enchant';
 import 'enchantjs/ui.enchant';
 import Hack from '../../hackforplay/hack';
 import * as synonyms from 'hackforplay/synonyms';
@@ -813,6 +813,26 @@ class RPGObject extends Sprite {
 			appended.locate(this.mapX, this.mapY, this.map.name);
 		}
 		return appended;
+	}
+
+	set imageUrl(url) {
+		if (typeof url !== 'string') {
+			throw new Error(`${this.name}の imageUrl に文字列以外が代入されました`);
+		}
+		if (url.indexOf('http') === 0) {
+			throw new Error(`http から始まる URL は読み込めません`);
+		}
+		const image = Surface.load(url, () => {
+			this.image = image;
+			this.width = image.width;
+			this.height = image.height;
+			this.offset = {
+				x: (32 - this.width) / 2,
+				y: (32 - this.height) / 2
+			};
+			this.directionType = 'single';
+			this.locate(this.mapX, this.mapY);
+		});
 	}
 }
 
