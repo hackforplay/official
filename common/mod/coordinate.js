@@ -69,8 +69,6 @@ game.on('load', () => {
 		label.visible = value;
 		sprite.visible = value;
 	};
-	// フォーカスが外れたら非表示にする
-	window.addEventListener('blur', visibilitySetter(false));
 	// マウスが離れたら非表示にする
 	game._element.addEventListener('mouseleave', visibilitySetter(false));
 	// マウスが戻ってきたらまた表示する
