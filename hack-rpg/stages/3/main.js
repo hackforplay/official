@@ -1,5 +1,5 @@
 import 'hackforplay/core';
-import { gameclear, log } from 'utils';
+import { gameclear } from 'utils';
 import extra from '../extra';
 import './maps';
 
@@ -64,14 +64,7 @@ function gameStart() {
 			feeles.openCode('stages/3/code.js');
 			// 魔道書を削除
 			item1.destroy();
-			log(
-				() =>
-					item2.hp > 900
-						? `
-マドウショが あらわれた！
-じっくりと よんでみよう`
-						: ''
-			);
+			Hack.logFunc('マドウショが あらわれた！\nじっくりと よんでみよう');
 		}
 	};
 
@@ -113,7 +106,11 @@ function gameStart() {
 	};
 
 	// まどうしょがやってくるぞ…
-	item2.once('attacked', () => {
+	const logほんを = next =>
+		item1.parentNode ? 'ほんを ひろってみよう' : next();
+	let story = () => {
+		item2.removeEventListener('attacked', story);
+		item3.removeEventListener('attacked', story);
 		// 魔道書: 60f まつ -> 下に32 ずれる -> 45f まつ -> 下に32 ずれる
 		item1.tl
 			.delay(60)
@@ -123,27 +120,35 @@ function gameStart() {
 			.moveBy(0, 32, 30)
 			.then(() => item1.updateCollider())
 			.then(() => {
-				log(
-					() =>
-						item1.parentNode
-							? `
-ほんを ひろってみよう`
-							: ''
-				);
+				Hack.logFunc(logほんを);
 			});
-	});
-	item2.on('attacked', () => {
-		if (!item1.parentNode) {
-			// 魔道書を拾ったのに攻撃し続けている
-			log(
-				() =>
-					item2.hp > 900
-						? `
+	};
+	item2.on('attacked', story);
+	item3.on('attacked', story);
+	const logそのままだとスライム = next =>
+		item2.hp > 900
+			? `
 そのままだと あと${item2.hp / Hack.player.atk}回
 こうげきしないと たおせないぞ
 右にある マドウショを よもう`
-						: ''
-			);
+			: next();
+	item2.on('attacked', () => {
+		if (!item1.parentNode) {
+			// 魔道書を拾ったのに攻撃し続けている
+			Hack.logFunc(logそのままだとスライム, true);
+		}
+	});
+	const logそのままだとイモムシ = next =>
+		item3.hp > 9000
+			? `
+そのままだと あと${item3.hp / Hack.player.atk}回
+こうげきしないと たおせないぞ
+右にある マドウショを よもう`
+			: next();
+	item3.on('attacked', () => {
+		if (!item1.parentNode) {
+			// 魔道書を拾ったのに攻撃し続けている
+			Hack.logFunc(logそのままだとイモムシ, true);
 		}
 	});
 

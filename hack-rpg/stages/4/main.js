@@ -1,6 +1,5 @@
 import 'hackforplay/core';
 import './maps';
-import { log } from '../../utils';
 
 import './main2';
 import extra from '../extra';
@@ -76,10 +75,7 @@ function gameStart() {
 		item1.updateCollider();
 	};
 	item1.onattacked = () => {
-		log(`
-こうげきは かわされた
-けんは あたらないようだ`);
-		item1.onattacked = null;
+		Hack.logFunc('こうげきは かわされた\nけんは あたらないようだ', true);
 	};
 
 	// 魔道書にコウモリを登録する
