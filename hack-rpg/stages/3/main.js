@@ -108,7 +108,9 @@ function gameStart() {
 	// まどうしょがやってくるぞ…
 	const logほんを = next =>
 		item1.parentNode ? 'ほんを ひろってみよう' : next();
-	item2.once('attacked', () => {
+	let story = () => {
+		item2.removeEventListener('attacked', story);
+		item3.removeEventListener('attacked', story);
 		// 魔道書: 60f まつ -> 下に32 ずれる -> 45f まつ -> 下に32 ずれる
 		item1.tl
 			.delay(60)
@@ -120,8 +122,10 @@ function gameStart() {
 			.then(() => {
 				Hack.logFunc(logほんを);
 			});
-	});
-	const logそのままだと = next =>
+	};
+	item2.on('attacked', story);
+	item3.on('attacked', story);
+	const logそのままだとスライム = next =>
 		item2.hp > 900
 			? `
 そのままだと あと${item2.hp / Hack.player.atk}回
@@ -131,7 +135,20 @@ function gameStart() {
 	item2.on('attacked', () => {
 		if (!item1.parentNode) {
 			// 魔道書を拾ったのに攻撃し続けている
-			Hack.logFunc(logそのままだと, true);
+			Hack.logFunc(logそのままだとスライム, true);
+		}
+	});
+	const logそのままだとイモムシ = next =>
+		item3.hp > 9000
+			? `
+そのままだと あと${item3.hp / Hack.player.atk}回
+こうげきしないと たおせないぞ
+右にある マドウショを よもう`
+			: next();
+	item3.on('attacked', () => {
+		if (!item1.parentNode) {
+			// 魔道書を拾ったのに攻撃し続けている
+			Hack.logFunc(logそのままだとイモムシ, true);
 		}
 	});
 
