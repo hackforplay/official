@@ -8,7 +8,7 @@ import Hack from './hack';
 import * as synonyms from './synonyms';
 import Skin from './skin';
 import Family from './family';
-import './mod/collider-debugger';
+import '../mod/collider-debugger';
 import * as logFunc from '../mod/logFunc';
 import RPGObject from './object/object';
 import MapObject from './object/map-object';
