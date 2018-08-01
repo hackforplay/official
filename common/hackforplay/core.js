@@ -9,6 +9,7 @@ import * as synonyms from './synonyms';
 import Skin from './skin';
 import Family from './family';
 import './mod/collider-debugger';
+import * as logFunc from '../mod/logFunc';
 import RPGObject from './object/object';
 import MapObject from './object/map-object';
 import Player from './object/player';
@@ -85,3 +86,8 @@ Hack.parseMapJson = function parseMapJson(mapName, mapJson) {
 		map = createCompatibleMap(parsedMapJson, {}, callback);
 	});
 };
+
+// Advanced log
+Hack.logFunc = logFunc.default;
+Hack.logAtPoint = logFunc.logAtPoint;
+logFunc.setHeight(180);
