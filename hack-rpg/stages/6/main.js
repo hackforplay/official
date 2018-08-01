@@ -85,7 +85,6 @@ function gameStart() {
 	};
 	item1.onattacked = () => {
 		Hack.logFunc('こうげきは かわされた\nけんは あたらないようだ`', true);
-		item1.onattacked = null;
 	};
 
 	// 魔道書にコウモリを登録する

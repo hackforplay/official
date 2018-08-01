@@ -74,6 +74,9 @@ function gameStart() {
 		item4.y = Hack.player.y;
 		item4.updateCollider();
 	};
+	item4.onattacked = () => {
+		Hack.logFunc('こうげきは かわされた\nけんは あたらないようだ', true);
+	};
 
 	// 魔道書にコウモリを登録する
 	feeles.setAlias('コウモリ', item4);

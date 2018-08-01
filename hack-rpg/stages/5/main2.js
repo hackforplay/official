@@ -34,10 +34,7 @@ function gameStartLazy() {
 		item1.updateCollider();
 	};
 	item1.onattacked = () => {
-		Hack.logFunc(`
-こうげきは かわされた
-けんは あたらないようだ`);
-		item1.onattacked = null;
+		Hack.logFunc('こうげきは かわされた\nけんは あたらないようだ', true);
 	};
 
 	// 魔道書にクモを登録する
