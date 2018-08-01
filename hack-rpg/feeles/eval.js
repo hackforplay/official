@@ -1,10 +1,15 @@
+import enchant from '../enchantjs/enchant';
 import Hack from '../hackforplay/hack';
 
-export default function(code) {
+export default function(code, raw) {
 	// 魔道書の実行をフック
 	try {
 		// eval
 		eval(code);
+		const event = new enchant.Event('evaled');
+		event.code = raw;
+		event.evaledCode = code;
+		Hack.dispatchEvent(event);
 	} catch (error) {
 		const message = errorMessage(error);
 		// 次に eval されるか, OK ボタンが押されたら消える
