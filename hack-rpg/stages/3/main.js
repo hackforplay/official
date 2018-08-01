@@ -13,19 +13,19 @@ function gameStart() {
 	feeles.closeCode();
 
 	// 解説の youtube を開く
-	const youtube = new RPGObject();
-	youtube.mod(Hack.assets.village);
-	youtube.locate(0, 4);
-	youtube.on('addtrodden', event => {
-		if (event.item === Hack.player) {
-			feeles.openMedia({
-				url: 'https://youtu.be/Xvnw8kE-EXw',
-				playing: true,
-				controls: true,
-				volume: 0.2
-			});
-		}
-	});
+	// const youtube = new RPGObject();
+	// youtube.mod(Hack.assets.village);
+	// youtube.locate(0, 4);
+	// youtube.on('addtrodden', event => {
+	// 	if (event.item === Hack.player) {
+	// 		feeles.openMedia({
+	// 			url: 'https://youtu.be/Xvnw8kE-EXw',
+	// 			playing: true,
+	// 			controls: true,
+	// 			volume: 0.2
+	// 		});
+	// 	}
+	// });
 
 	// 説明書を表示する
 	// feeles.openReadme('stages/3/README.md');
