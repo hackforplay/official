@@ -152,6 +152,15 @@ function gameStart() {
 		}
 	});
 
+	// コードが eval され, SyntaxError がなかったとき
+	Hack.on('evaled', () => {
+		Hack.logFunc(
+			`スライムのたいりょくが ${item2.hp} になった！
+イモムシのたいりょくが ${item3.hp} になった！`,
+			true
+		);
+	});
+
 	// このステージを改造
 	extra(5, 1, 'map1', 'stages/3/main.js');
 }
