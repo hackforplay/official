@@ -9,6 +9,7 @@ import * as synonyms from './synonyms';
 import Skin from './skin';
 import Family from './family';
 import './mod/collider-debugger';
+import stopOnBlur from '../mod/stop-on-blur';
 import * as logFunc from '../mod/logFunc';
 import RPGObject from './object/object';
 import MapObject from './object/map-object';
@@ -91,3 +92,6 @@ Hack.parseMapJson = function parseMapJson(mapName, mapJson) {
 Hack.logFunc = logFunc.default;
 Hack.logAtPoint = logFunc.logAtPoint;
 logFunc.setHeight(180);
+
+// MODs
+enchant.Core.instance.on('awake', stopOnBlur);
