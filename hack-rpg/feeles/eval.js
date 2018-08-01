@@ -1,4 +1,3 @@
-import enchant from '../enchantjs/enchant';
 import Hack from '../hackforplay/hack';
 
 export default function(code) {
@@ -7,11 +6,21 @@ export default function(code) {
 		// eval
 		eval(code);
 	} catch (error) {
-		// Hack.onerror を発火
-		const Event = enchant.Event;
-		const errorEvent = new Event('error');
-		errorEvent.target = Hack;
-		errorEvent.error = error;
-		Hack.dispatchEvent(errorEvent);
+		const message = errorMessage(error);
+		// 次に eval されるか, OK ボタンが押されたら消える
+		Hack.logFunc(message, true);
+	}
+}
+
+function errorMessage(error) {
+	switch (error.message) {
+		// SyntaxError
+		case 'Unexpected end of input':
+			return 'すうじが きえてしまった みたいだ\n「=」の あとに なにか すうじを かこう';
+		case 'Unexpected number':
+			return 'こんなふうに かいてみよう\n〇〇.hp = 1\n「=」は けさずに すうじを かくよ\nこまったら「元にもどす」を つかおう';
+		// Unknown Error
+		default:
+			return 'コードに エラーが あるみたいだ\nこまったら「元にもどす」して もういちど かこう';
 	}
 }

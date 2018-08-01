@@ -1,5 +1,4 @@
 import 'hackforplay/core';
-import { gameclear, log } from 'utils';
 import extra from '../extra';
 import './maps';
 
@@ -79,43 +78,35 @@ function gameStart() {
 	};
 
 	// そうさせつめい (1)
-	log(
-		() =>
-			player.mapX === 3 && player.mapY === 5
-				? `
-やじるしキーを おして
-キャラクターを
-うごしてみよう`
-				: ''
-	);
+	Hack.logAtPoint('やじるしキーを おして\nキャラクターを うごしてみよう', 3, 5);
 
 	// そうさせつめい (2)
 	let attacked = false;
 	player.once('becomeattack', () => {
 		attacked = true;
 	});
-	log(
-		() =>
+	Hack.logFunc(
+		next =>
 			attacked
-				? ''
+				? next()
 				: `
 スペースキーを おして
 こうげき してみよう`
 	);
 
 	// そうさせつめい (3)
-	log(
-		() =>
+	Hack.logFunc(
+		next =>
 			item1.hp >= 3
 				? `
 スライムに ちかづいて
 こうげき してみよう！`
-				: ''
+				: next()
 	);
 
 	// そうさせつめい (4)
 	item1.once('becomedead', () => {
-		log(`
+		Hack.logFunc(`
 スライムは たおれた！
 かいだんを おりよう`);
 	});

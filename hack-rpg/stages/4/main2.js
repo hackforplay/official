@@ -1,5 +1,5 @@
 import 'hackforplay/core';
-import { gameclear, log } from 'utils';
+import { gameclear } from 'utils';
 import extra from '../extra';
 
 function gameStartLazy() {
@@ -15,7 +15,7 @@ function gameStartLazy() {
 			item1.destroy();
 			// スコアを　１００ アップ！
 			Hack.score += 100;
-			log(`
+			Hack.logFunc(`
 サファイアを 手に入れた！
 さっきのへやに もどろう`);
 		}
@@ -48,6 +48,13 @@ function gameStartLazy() {
 
 	// スライム軍団をつくる
 
+	const logもっと = next =>
+		Hack.player.atk < 100
+			? `
+もっと こうげきりょくが ひつようだ
+
+こうげきりょく（atk）：${Hack.player.atk}`
+			: next();
 	// 0 ならスライムは出ないけど、
 	// 1 ならスライムが出る！
 	// ためしに数値を書き換えてみよう！
@@ -80,15 +87,7 @@ function gameStartLazy() {
 				Hack.score++;
 			};
 			item3.on('attacked', function needAtk() {
-				log(
-					() =>
-						Hack.player.atk < 100
-							? `
-もっと こうげきりょくが ひつようだ
-
-こうげきりょく（atk）：${Hack.player.atk}`
-							: ''
-				);
+				Hack.logFunc(logもっと);
 			});
 
 			// 魔道書にスライムを登録する

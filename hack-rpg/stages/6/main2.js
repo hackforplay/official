@@ -1,18 +1,16 @@
 import 'hackforplay/core';
-import { gameclear, mergeBMap, log } from 'utils';
 import extra from '../extra';
 import { registerServant } from 'hackforplay/family';
 
 function gameStartLazy() {
-	Hack.player.on('hpchange', () => {
-		log(
-			() =>
-				Hack.player.hp < 3
-					? ` 
+	const logたいりょく = next =>
+		Hack.player.hp < 3
+			? `
 たいりょくが あぶない！
 のこり hp : ${Hack.player.hp}`
-					: ''
-		);
+			: next();
+	Hack.player.on('hpchange', () => {
+		Hack.logFunc(logたいりょく);
 	});
 
 	// ドラゴン
