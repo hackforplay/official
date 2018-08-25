@@ -88,22 +88,11 @@
       item1.hp = 10;
       item1.atk = 1;
       item1.locate(7, 5, 'map1');
-      item1.scale(2, 2);
-      item1.setFrame('Idle', [10]);
-      item1.endless(async(self, count) => {
-        await self.wait(); // 少しやすむ
-        const バクエン = self.summon(('▼ スキン', Skin.バクエン));
-        バクエン.mod(Hack.createDamageMod(item1.atk)); // ダメージオブジェクトにする
-        self.shoot(バクエン, self.forward, 6);
-        const fx = self.forward.x,
-          fy = self.forward.y;
-        バクエン.moveBy(fx * random(64, 96), fy * random(64, 96));
-        バクエン.velocityX += random(-0.99, 1);
-        バクエン.velocityY += random(-0.99, 1);
-        バクエン.scale(random(0.99, 1.5));
-        バクエン.force(-fx * random(0, 0.199), -fy * random(0, 0.199));
-        バクエン.destroy(20);
-        /*+ じどう*/
+      item1.scale(2); // 大きさ
+      item1.breath({
+        skin: ('▼ スキン', Skin.バクエン),
+        speed: 5,
+        scale: 1,
       });
       // ここまでドラゴン
   - label: ミノタウルス
