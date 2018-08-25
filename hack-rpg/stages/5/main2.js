@@ -1,23 +1,23 @@
 import 'hackforplay/core';
-import { gameclear, log } from 'utils';
+import { gameclear } from 'utils';
 import extra from '../extra';
 
 function gameStartLazy() {
 	Hack.maps['map2'].onload = () => {
 		setTimeout(() => {
-			log(`
+			Hack.logFunc(`
 ダイヤモンドを みつけた！
 しかし クモが じゃまである`);
 		}, 2000);
-		const hint = () =>
+		const hint = next =>
 			Hack.score < 100 && Hack.player.mapY < 4
 				? `
 【ヒント】
 あなたのいる ばしょ (${Hack.player.mapX}, ${Hack.player.mapY})
 ダイヤモンド ばしょ (${item2.mapX}, ${item2.mapY})`
-				: '';
+				: next();
 		setInterval(() => {
-			log(hint);
+			Hack.logFunc(hint);
 		}, 15000);
 		Hack.maps['map2'].onload = null;
 	};
@@ -34,10 +34,7 @@ function gameStartLazy() {
 		item1.updateCollider();
 	};
 	item1.onattacked = () => {
-		log(`
-こうげきは かわされた
-けんは あたらないようだ`);
-		item1.onattacked = null;
+		Hack.logFunc('こうげきは かわされた\nけんは あたらないようだ', true);
 	};
 
 	// 魔道書にクモを登録する
@@ -55,7 +52,7 @@ function gameStartLazy() {
 			item2.destroy();
 			// スコアを 100 アップ！
 			Hack.score += 100;
-			log(`
+			Hack.logFunc(`
 ダイヤモンドを 手に入れた！
 さっきのへやに もどろう`);
 		}

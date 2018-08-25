@@ -3,7 +3,6 @@ import './main2';
 import './main3';
 import './main4';
 import './maps';
-import { log } from '../../utils';
 
 import extra from '../extra';
 
@@ -19,19 +18,19 @@ function gameStart() {
 	feeles.openCode('stages/6/code1.js');
 
 	// 解説の youtube を開く
-	const youtube = new RPGObject();
-	youtube.mod(Hack.assets.village);
-	youtube.locate(0, 4);
-	youtube.on('addtrodden', event => {
-		if (event.item === Hack.player) {
-			feeles.openMedia({
-				url: 'https://youtu.be/yfwUHmf0DYA',
-				playing: true,
-				controls: true,
-				volume: 0.2
-			});
-		}
-	});
+	// const youtube = new RPGObject();
+	// youtube.mod(Hack.assets.village);
+	// youtube.locate(0, 4);
+	// youtube.on('addtrodden', event => {
+	// 	if (event.item === Hack.player) {
+	// 		feeles.openMedia({
+	// 			url: 'https://youtu.be/yfwUHmf0DYA',
+	// 			playing: true,
+	// 			controls: true,
+	// 			volume: 0.2
+	// 		});
+	// 	}
+	// });
 
 	// 説明書を開く
 	// feeles.openReadme('stages/6/README.md');
@@ -85,22 +84,17 @@ function gameStart() {
 		item1.updateCollider();
 	};
 	item1.onattacked = () => {
-		log(`
-こうげきは かわされた
-けんは あたらないようだ`);
-		item1.onattacked = null;
+		Hack.logFunc('こうげきは かわされた\nけんは あたらないようだ`', true);
 	};
 
 	// 魔道書にコウモリを登録する
 	feeles.setAlias('コウモリ', item1);
 
-	log(
-		() =>
-			player.mapX < item1.mapX
-				? `
-今なら あの コウモリを こえて
-かいだんに たどりつけるだろう`
-				: ''
+	Hack.logFunc(
+		next =>
+			player.mapX >= item1.mapX
+				? next()
+				: '今なら あの コウモリを こえて\nかいだんに たどりつけるだろう'
 	);
 
 	// かいだん
