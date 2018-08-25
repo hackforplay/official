@@ -10,9 +10,7 @@
       item1.atk = 1;
       item1.locate(7, 5, 'map1');
       item1.endless(async(self, count) => {
-
         await self.attack(); // こうげきする
-
         /*+ じどう*/
       });
   - label: イモムシ
@@ -29,11 +27,8 @@
         Hack.score += 1;
       });
       item1.endless(async(self, count) => {
-
         await self.walk(); // あるく
-
         await self.turn(1); // ターンする
-
         /*+ じどう*/
       });
   - label: コウモリ
@@ -50,19 +45,13 @@
         Hack.score += 1;
       });
       item1.endless(async(self, count) => {
-
         const ターゲット = player;
-
         const moveX = 32 * Math.sign(ターゲット.mapX - self.mapX);
         const moveY = 32 * Math.sign(ターゲット.mapY - self.mapY);
         self.forward = [moveX, moveY];
-
         await self.walk(); // あるく
-
         await self.attack(); // こうげきする
-
         await self.wait(1); // やすむ
-
         /*+ じどう*/
       });
   - label: ウロボロス
@@ -76,11 +65,8 @@
       item1.atk = 1;
       item1.locate(7, 5, 'map1');
       item1.endless(async(self, count) => {
-
         await self.wait(4); // 少しやすむ
-
         await self.attack(); // こうげきする
-
         /*+ じどう*/
       });
   - label: ドラゴン
@@ -96,9 +82,7 @@
       item1.scale(2, 2);
       item1.setFrame('Idle', [10]);
       item1.endless(async(self, count) => {
-
         await self.wait(); // 少しやすむ
-
         const バクエン = self.summon(('▼ スキン', Skin.バクエン));
         バクエン.mod(Hack.createDamageMod(item1.atk)); // ダメージオブジェクトにする
         self.shoot(バクエン, self.forward, 6);
@@ -110,7 +94,6 @@
         バクエン.scale(random(0.99, 1.5));
         バクエン.force(-fx * random(0, 0.199), -fy * random(0, 0.199));
         バクエン.destroy(20);
-
         /*+ じどう*/
       });
   - label: ミノタウルス
@@ -125,9 +108,7 @@
       item1.locate(7, 5, 'map1');
       item1.scale(2, 2);
       item1.endless(async(self, count) => {
-
         await self.attack(); // こうげきする
-
         /*+ じどう*/
       });
 アイテム:
@@ -367,9 +348,7 @@
         item1.turn();
       });
       item1.endless(async(self, count) => {
-
         await item1.walk();
-
         /*+ じどう*/
       });
     image: trimmed/boy.png
@@ -496,7 +475,6 @@
       item1.on(('▼ イベント', 'こうげきされた'), () => {
         // うごいているかどうかを逆にする
         item1.うごいているか = !item1.うごいているか;
-        
         if (item1.うごいているか) {
           // ルーレット開始
           item1.start(item1.ルーレットプログラム);
@@ -505,7 +483,6 @@
       // ルーレットがストップしたとき
       item1.on('ストップ', (event) => {
         const スキン = event.スキン;
-        
         // スコアのプログラム
         if (スキン === ('▼ スキン', Skin.ルビー)) {
           Hack.score += 1; // rubyなら、SCORE + 1
@@ -515,16 +492,13 @@
         }
       });
       item1.ルーレットプログラム = async(self, count, next) => {
-        
         await self.wait(0.1);
-      
         const スキン = random([
           ('▼ スキン', Skin.ルビー),
           ('▼ スキン', Skin.ドクロ),
           ('▼ スキン', Skin.ウンコ)
         ]);
         self.mod(スキン);
-      
         if (!item1.うごいているか) {
           // 止めたいとき
           const event = new Event('ストップ');
@@ -533,7 +507,6 @@
           // ストップ
           return;
         }
-      
         // くりかえし
         next();
       };
@@ -603,7 +576,6 @@
       feeles.setTimeout(() => {
         // じかんせいげん（ゲームオーバー）
         Hack.gameover();
-
         //    ↓ タイマーのじかん
       }, 1000 * 5);
     description: 時間がたったらゲームオーバーになる
@@ -635,7 +607,6 @@
       feeles.setInterval(() => {
         // すうじを１ふやす
         item1.score = item1.score + 1;
-
       }, 1000);
       // 文字をがめんに出す
       Hack.menuGroup.addChild(item1);
@@ -650,7 +621,6 @@
       feeles.setInterval(() => {
         // すうじをプレイヤーのこうげき力にする
         item1.score = player.atk;
-
       }, 1000);
       // 文字をがめんに出す
       Hack.menuGroup.addChild(item1);
@@ -671,29 +641,23 @@
     code: |
       // キーを押したら
       ('▼ キー', Key.space).press(() => {
-
         // キーを押したとき、一度だけここが実行される
         Hack.log('押されたよ〜');
-
       });
   - label: キー はなした
     code: |
       // キーをはなしたら
       ('▼ キー', Key.space).release(() => {
-
         // キーをはなしたとき、一度だけここが実行される
         Hack.log('はなされたよ〜');
-
       });
   - label: ゲーム内キーボード
     code: |
       // ゲームをストップ
       Hack.world.stop();
       Hack.textarea.hide();
-
       // キーボードを表示
       const value = await Hack.keyboard.get(7);
-
       if (value) {
         // 入力があったとき
         Hack.log(value);
@@ -701,7 +665,6 @@
         // キャンセルしたとき
         Hack.log('キャンセルしました');
       }
-
       // ゲームを再開
       Hack.world.resume();
   - label: くりかえし
