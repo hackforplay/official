@@ -834,6 +834,33 @@ class RPGObject extends Sprite {
 			this.locate(this.mapX, this.mapY);
 		});
 	}
+
+	/**
+	 * ドラゴンのブレス. 暫定
+	 * @param {Object} params
+	 */
+	breath(params) {
+		params = {
+			// デフォルトのパラメータ
+			skin: Skin.バクエン,
+			speed: 5,
+			scale: 1,
+			...params
+		};
+		this.endless((self, count) => {
+			if (count % 2 === 0) return;
+			const effect = self.summon(params.skin);
+			effect.mod(Hack.createDamageMod(self.atk)); // ダメージオブジェクトにする
+			self.shoot(effect, self.forward, params.speed);
+			const fx = self.forward.x;
+			const fy = self.forward.y;
+			effect.moveBy(fx * random(64, 96), fy * random(64, 96));
+			effect.velocityX += random(-0.99, 1);
+			effect.velocityY += random(-0.99, 1);
+			effect.scale(random(params.scale, params.scale * 1.5));
+			effect.destroy(20);
+		});
+	}
 }
 
 function makeHpLabel(self) {

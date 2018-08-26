@@ -8,6 +8,8 @@ async function gameFunc() {
 	player.name = 'プレイヤー';
 	player.family = ('▼ ファミリー', Family.プレイヤー);
 	player.locate(3, 5); // はじめの位置
+	player.hp = 3; // 体力
+	player.atk = 1; // こうげき力
 
 	/*+ モンスター アイテム せっち システム */
 
