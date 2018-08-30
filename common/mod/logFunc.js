@@ -7,27 +7,53 @@ const messages = []; // 一旦メッセージを貯めておくキュー
 // next() を複数回呼べるのはよくない
 // そもそもキューイングは必要か？全部 immediately で良くないか？
 
+class Message {
+	constructor(text) {
+		this.text = text;
+		this.promise = new Promise(resolve => {
+			this._resolver = resolve;
+		});
+		this.buttonPushed = false;
+		this.map = Hack.map;
+	}
+	isEqual(message) {
+		if (!message) return false;
+		// TODO: 参照を比べる方法はよくない. 全部 immediately にするか, 厳密に toString() するなどして比較すべき
+		return this.text === message.text;
+	}
+	pushButton() {
+		this.buttonPushed = true;
+	}
+	resolve() {
+		if (this._resolver) {
+			// Promise<ボタンの名前 | null>
+			this._resolver(this.buttonPushed ? 'OK' : null);
+		}
+	}
+}
+
 /**
  * 画面にメッセージと OK ボタンを表示する
  * @param {string|Function} text
- * @param immediately
+ * @param immediately {Boolean}
  */
 export default function logFunc(text, immediately = false) {
+	const message = new Message(text);
 	if (immediately) {
 		// 他のメッセージを全て消去し, 直ちに表示する
-		messages.splice(0, messages.length, text);
+		messages.splice(0, messages.length, message);
 	} else {
 		// 直前に追加したメッセージと全く同じでなければ追加
-		// 参照を比べる方法はよくない. 全部 immediately にするか,
-		// 厳密に toString() するなどして比較すべき
 		const tail = messages[messages.length - 1];
-		if (tail !== text) {
-			messages.push(text);
+		if (!message.isEqual(tail)) {
+			// 全く同じでなければ追加
+			messages.push(message);
 		}
 	}
 	if (messages.length === 1) {
 		show();
 	}
+	return message.promise;
 }
 
 /**
@@ -79,7 +105,9 @@ okButton.defaultStyle = {
 
 export function goNext() {
 	// OK ボタンが押された時
-	messages.shift();
+	const message = messages.shift();
+	// Promise を resolve する
+	message.resolve();
 	if (messages.length === 0) {
 		// 閉じる
 		hide();
@@ -91,11 +119,14 @@ export function goNext() {
 export function handleOkButtonPush() {
 	if (!okButton.visible) return;
 	// OK ボタンが押された時
-	const [currentMessage] = messages;
+	const [message] = messages;
+	message.pushButton();
+	const currentMessage = message.text;
 	switch (typeof currentMessage) {
 		case 'string':
 			// テキスト送り
 			messages.shift();
+			message.resolve();
 			if (messages.length === 0) {
 				// 閉じる
 				hide();
@@ -116,12 +147,19 @@ Hack.on('gameover', hide); // ゲームオーバー時閉じる
 okButton.push('OK');
 
 game.on('awake', () => {
-	Hack.popupGroup.addChild(textArea);
-	Hack.popupGroup.addChild(okButton);
+	Hack.menuGroup.addChild(textArea);
+	Hack.menuGroup.addChild(okButton);
 });
 
 game.on('enterframe', () => {
-	const [currentMessage] = messages;
+	const [message] = messages;
+	if (!message) return;
+	if (message.map !== Hack.map) {
+		// マップが変わった
+		goNext();
+		return;
+	}
+	const currentMessage = message.text;
 	switch (typeof currentMessage) {
 		case 'string':
 			// テキストをそのまま表示
@@ -142,11 +180,11 @@ game.on('enterframe', () => {
 				goNext();
 				break;
 			}
-			if (text === '' || textArea.source === text) {
-				// もし空文字であれば, 一時的に隠す
+			if (!text || textArea.source === text) {
+				// 一時的に隠す
 				textArea.hide();
 				okButton.hide();
-			} else if (text) {
+			} else {
 				textArea.clear(); // 前の文章をクリア
 				textArea.push(text); // テキストを挿入
 				updateVisibility();
