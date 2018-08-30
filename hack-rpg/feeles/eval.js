@@ -33,7 +33,7 @@ function errorMessage(error) {
 		case 'Unexpected end of input':
 			return 'すうじが きえてしまった みたいだ\n「=」の あとに なにか すうじを かこう';
 		case 'Unexpected number':
-			return 'こんなふうに かいてみよう\n〇〇.hp = 1\n「=」は けさずに すうじを かくよ\nこまったら「元にもどす」を つかおう';
+			return '= を けして いませんか？\nもしくは\n, を けして いませんか？\nこまったら「元にもどす」を つかおう';
 		// Unknown Error
 		default:
 			return 'コードに エラーが あるみたいだ\nこまったら「元にもどす」して もういちど かこう';
