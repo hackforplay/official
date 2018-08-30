@@ -1,12 +1,22 @@
 import Hack from '../hackforplay/hack';
 
 export default function stopOnBlur() {
-	const pause = document.createElement('h1');
-	pause.textContent = 'PAUSE ⏸';
-	pause.style.color = 'white';
-	pause.style.textAlign = 'center';
-	pause.style.position = 'absolute';
-	pause.style.margin = '0';
+	const resume = document.createElement('span');
+	resume.textContent = '▶︎';
+	resume.style.color = 'white';
+	resume.style.position = 'absolute';
+	resume.style.fontSize = '64px';
+	resume.style.left = '210px';
+	resume.style.top = '100px';
+
+	document.body.addEventListener(
+		'mouseenter',
+		() => (resume.style.opacity = 1)
+	);
+	document.body.addEventListener(
+		'mouseleave',
+		() => (resume.style.opacity = 0.6)
+	);
 
 	const updateStyle = () => {
 		if (this._element) {
@@ -20,14 +30,14 @@ export default function stopOnBlur() {
 			}
 		}
 		if (document.hasFocus()) {
-			if (pause.parentElement === document.body) {
-				document.body.removeChild(pause);
+			if (resume.parentElement === document.body) {
+				document.body.removeChild(resume);
 			}
 		} else {
 			if (document.body.hasChildNodes()) {
-				document.body.insertBefore(pause, document.body.firstChild);
+				document.body.insertBefore(resume, document.body.firstChild);
 			} else {
-				document.body.appendChild(pause);
+				document.body.appendChild(resume);
 			}
 		}
 	};
