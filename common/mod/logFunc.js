@@ -41,7 +41,8 @@ export default function logFunc(text, immediately = false) {
 	const message = new Message(text);
 	if (immediately) {
 		// 他のメッセージを全て消去し, 直ちに表示する
-		messages.splice(0, messages.length, message);
+		const removed = messages.splice(0, messages.length, message);
+		removed.forEach(message => message.resolve());
 	} else {
 		// 直前に追加したメッセージと全く同じでなければ追加
 		const tail = messages[messages.length - 1];
