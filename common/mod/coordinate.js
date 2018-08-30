@@ -56,8 +56,8 @@ game.on('load', () => {
 				.map(pos => Math.floor(pos / 32));
 		}
 
-		// "2 3" のように表示
-		label.text = x + ' ' + y;
+		// "(2, 3)" のように表示
+		label.text = `(${x}, ${y})`;
 		// マウスの位置より上にラベルをおく
 		const labelX = clientX - label.width / 2; // マウスの中心
 		label.moveTo(labelX, clientY);
