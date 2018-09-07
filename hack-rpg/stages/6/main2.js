@@ -37,6 +37,12 @@ export default function gameStartLazy() {
 		speed: 5,
 		scale: 1
 	});
+	Object.defineProperty(item1, 'atk', {
+		get: function() {
+			const damage = Hack.player.hp <= 3 ? 1 : 450;
+			return damage;
+		}
+	});
 
 	// dragon をコードから利用可能に
 	feeles.setAlias('ドラゴン', item1);
