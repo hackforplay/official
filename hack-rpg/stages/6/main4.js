@@ -1,8 +1,6 @@
-import 'hackforplay/core';
 import extra from '../extra';
-import TextArea from 'hackforplay/ui/textarea';
 
-function gameStartLazy() {
+export default function gameStartLazy() {
 	// しろ
 	const item1 = new RPGObject();
 	item1.mod(('▼ スキン', _sしろ));
@@ -95,5 +93,3 @@ function gameStartLazy() {
 	// このステージを改造
 	extra(13, 7, 'map4', 'stages/6/main4.js');
 }
-
-game.on('load', gameStartLazy);

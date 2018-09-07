@@ -1,8 +1,6 @@
-import 'hackforplay/core';
 import extra from '../extra';
-import { registerServant } from 'hackforplay/family';
 
-function gameStartLazy() {
+export default function gameStartLazy() {
 	const logたいりょく = next =>
 		Hack.player.hp < 3
 			? `
@@ -34,29 +32,17 @@ function gameStartLazy() {
 	// ドラゴンの動きを設定する
 	item1.setFrame('Idle', [10]);
 	//　ドラゴンを更新する...
-	item1.onつねに = () => {
-		// 炎を作る
-		const effect1 = new Effect(-3, 5, 40, true);
-		registerServant(item1, effect1);
-		effect1.mod(Hack.createDamageMod(1));
-		// 炎の位置をドラゴンの位置から -2, -1 の位置に移動する ( map 2 )
-		effect1.locate(item1.mapX - 2, item1.mapY - 1, 'map2');
-		// 炎の動きを設定する
-		effect1.force(0, -0.1);
-
-		if (game.frame % 30 > 0) return;
-
-		//　炎を作る
-		const effect2 = new Effect(-3, 5, 40);
-		registerServant(item1, effect2);
-		effect2.mod(Hack.createDamageMod(450));
-		// 炎の位置をドラゴンの位置から -1, -1 の位置に移動する ( map 2 )
-		effect2.locate(item1.mapX - 1, item1.mapY - 1, 'map2');
-		// 炎の動きを設定する 1
-		effect2.force(0, -0.1);
-		// 炎の動きを設定する 2
-		effect2.velocityX = 0;
-	};
+	item1.breath({
+		skin: ('▼ スキン', Skin.バクエン),
+		speed: 5,
+		scale: 1
+	});
+	Object.defineProperty(item1, 'atk', {
+		get: function() {
+			const damage = Hack.player.hp <= 3 ? 1 : 450;
+			return damage;
+		}
+	});
 
 	// dragon をコードから利用可能に
 	feeles.setAlias('ドラゴン', item1);
@@ -120,5 +106,3 @@ function gameStartLazy() {
 	// このステージを改造
 	extra(0, 0, 'map2', 'stages/6/main2.js');
 }
-
-game.on('load', gameStartLazy);

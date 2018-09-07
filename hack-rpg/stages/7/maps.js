@@ -1,6 +1,4 @@
-import 'hackforplay/core';
-
-function createMap() {
+export default function createMap() {
 	// map1 というマップを作る
 	const mapName = 'map1';
 
@@ -376,5 +374,3 @@ function createMap() {
 
 	Hack.maps[mapName] = map;
 }
-
-Hack.on('load', createMap);
