@@ -1,8 +1,7 @@
-import 'hackforplay/core';
-import { gameclear } from 'utils';
+import { gameclear } from '../../utils';
 import extra from '../extra';
 
-function gameStartLazy() {
+export default function gameStartLazy() {
 	// サファイア
 	const item1 = new RPGObject();
 	item1.mod(('▼ スキン', _sサファイア));
@@ -98,5 +97,3 @@ function gameStartLazy() {
 	// このステージを改造
 	extra(9, 9, 'map2', 'stages/4/main2.js');
 }
-
-game.on('load', gameStartLazy);

@@ -1,8 +1,7 @@
-import 'hackforplay/core';
-import { gameclear } from 'utils';
+import { gameclear } from '../../utils';
 import extra from '../extra';
 
-function gameStartLazy() {
+export default function gameStartLazy() {
 	Hack.maps['map2'].onload = () => {
 		setTimeout(() => {
 			Hack.logFunc(`
@@ -86,5 +85,3 @@ function gameStartLazy() {
 	// このステージを改造
 	extra(5, 1, 'map2', 'stages/5/main2.js');
 }
-
-game.on('load', gameStartLazy);

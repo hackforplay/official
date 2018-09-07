@@ -1,10 +1,17 @@
-import 'hackforplay/core';
-import './main2';
-import './main3';
-import './main4';
-import './maps';
-
+import {
+	enchant,
+	Hack,
+	register
+} from 'http://unpkg.com/@hackforplay/common@^0.6';
+import main2 from './main2';
+import main3 from './main3';
+import main4 from './main4';
 import extra from '../extra';
+import { createMap1, createMap2, createMap3, createMap4 } from './maps';
+import { prepareUtils } from '../../utils';
+
+register(window);
+prepareUtils();
 
 game.preload('hackforplay/bar_green.png', 'hackforplay/bar_red.png');
 
@@ -123,5 +130,11 @@ function gameStart() {
 }
 
 game.onload = gameStart;
-
+game.on('load', main2);
+game.on('load', main3);
+game.on('load', main4);
+Hack.on('load', createMap1);
+Hack.on('load', createMap2);
+Hack.on('load', createMap3);
+Hack.on('load', createMap4);
 Hack.start();

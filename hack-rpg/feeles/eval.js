@@ -1,6 +1,3 @@
-import enchant from '../enchantjs/enchant';
-import Hack from '../hackforplay/hack';
-
 export default function(code, raw) {
 	// 魔道書の実行をフック
 	try {
