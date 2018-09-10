@@ -2,7 +2,7 @@ import {
 	enchant,
 	Hack,
 	register
-} from 'http://unpkg.com/@hackforplay/common@^0.6';
+} from 'https://unpkg.com/@hackforplay/common@^0.6';
 import main2 from './main2';
 import main3 from './main3';
 import main4 from './main4';
