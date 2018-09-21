@@ -1,7 +1,14 @@
-import 'hackforplay/core';
-import './maps';
-
+import {
+	enchant,
+	Hack,
+	register
+} from 'https://unpkg.com/@hackforplay/common@^0.7';
+import createMap from './maps';
 import extra, { flag } from '../extra';
+import { prepareUtils } from '../../utils';
+
+register(window);
+prepareUtils();
 
 function gameStart() {
 	game.dispatchEvent(new enchant.Event('awake'));
@@ -159,4 +166,5 @@ feeles.closeReadme();
 feeles.closeCode();
 feeles.closeMedia();
 
+Hack.on('load', createMap);
 Hack.start();

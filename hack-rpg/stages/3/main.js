@@ -1,7 +1,14 @@
-import 'hackforplay/core';
-import { gameclear } from 'utils';
+import {
+	enchant,
+	Hack,
+	register
+} from 'https://unpkg.com/@hackforplay/common@^0.7';
+import { gameclear, prepareUtils } from '../../utils';
 import extra from '../extra';
-import './maps';
+import createMap from './maps';
+
+register(window);
+prepareUtils();
 
 function gameStart() {
 	game.dispatchEvent(new enchant.Event('awake'));
@@ -166,5 +173,5 @@ function gameStart() {
 }
 
 game.onload = gameStart;
-
+Hack.on('load', createMap);
 Hack.start();

@@ -1,7 +1,6 @@
-import 'hackforplay/core';
 import extra from '../extra';
 
-function gameStartLazy() {
+export default function gameStartLazy() {
 	// プレイヤーが map3 に入ったら
 	Hack.maps['map3'].onload = () => {
 		// コードをとじる
@@ -101,5 +100,3 @@ function gameStartLazy() {
 	// このステージを改造
 	extra(0, 0, 'map3', 'stages/6/main3.js');
 }
-
-game.on('load', gameStartLazy);

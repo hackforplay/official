@@ -1,9 +1,14 @@
-import 'hackforplay/core';
+import {
+	enchant,
+	Hack,
+	register
+} from 'https://unpkg.com/@hackforplay/common@^0.7';
 
 import gameFunc from './game';
 import maps from './maps';
 import update from './update';
-import vote from './hackforplay/vote';
+
+register(window);
 
 let gameOnLoad, hackOnLoad;
 
@@ -33,15 +38,6 @@ game.onload = async () => {
 	// update 関数を開始
 	game.on('enterframe', update);
 
-	// ゲームクリアの投票（まだクリアしてない人だけ）（feeles.com の旧仕様）
-	if ((await vote('GAME')) !== 'CLEAR') {
-		vote('GAME', 'START'); // ゲーム「スタート」
-
-		Hack.on('gameclear', () => {
-			vote('GAME', 'CLEAR'); // ゲーム「クリア」
-		});
-	}
-
 	// ゲームクリアの測定（hackforplay.xyz の新仕様）
 	Hack.on('gameclear', () => {
 		if (feeles.dispatchOnMessage) {
@@ -54,10 +50,10 @@ game.onload = async () => {
 };
 
 // マップをつくる
-Hack.onload = async () => {
+Hack.onload = () => {
 	// Hack.maps を事前に作っておく
 	Hack.maps = Hack.maps || {};
-	await hackOnLoad();
+	hackOnLoad();
 };
 
 // ゲームスタート

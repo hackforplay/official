@@ -1,6 +1,3 @@
-import 'hackforplay/core';
-// import 'mod/3d/core';
-
 async function gameFunc() {
 	Hack.changeMap('map1'); // map1 をロード
 
@@ -14,8 +11,8 @@ async function gameFunc() {
 	/*+ モンスター アイテム せっち システム */
 
 	/*+ スキル */
-}
 
-game._debug = ('▼ フラグ', false);
+	game._debug = ('▼ フラグ', false);
+}
 
 export default gameFunc;

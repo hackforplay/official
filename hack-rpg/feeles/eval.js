@@ -1,6 +1,3 @@
-import enchant from '../enchantjs/enchant';
-import Hack from '../hackforplay/hack';
-
 let isShowingErrorMessage = false;
 
 export default function(code, raw) {
