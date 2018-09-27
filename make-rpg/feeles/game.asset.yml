@@ -1,6 +1,6 @@
 モンスター:
   - label: スライム
-    image: trimmed/slime.gif
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/slime.gif
     description: ムチのように からだをふりまわす、キケンなスライム
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/スライム'
     code: |
@@ -16,7 +16,7 @@
       });
       // ここまでスライム
   - label: イモムシ
-    image: trimmed/insect.gif
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/insect.gif
     description: にげあしは おいらの とくぎなのさ。すばやく walk() して  turn() するのが ひけつさ
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/イモムシ'
     code: |
@@ -36,7 +36,7 @@
       });
       // ここまでイモムシ
   - label: コウモリ
-    image: trimmed/bat.gif
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/bat.gif
     description: ねらいをつけて おそってくる おそろしいコウモリ。 ターゲットに、むかってくる らしい
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/コウモリ'
     code: |
@@ -61,7 +61,7 @@
       });
       // ここまでコウモリ
   - label: ウロボロス
-    image: trimmed/ouroboros.gif
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/ouroboros.gif
     description: ４秒おきに こうげきしてくる 大蛇ウロボロス。こうげきまでの秒数を かえることもできる
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ウロボロス'
     code: |
@@ -78,7 +78,7 @@
       });
       // ここまでウロボロス
   - label: ドラゴン
-    image: trimmed/dragon.gif
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/dragon.gif
     description: やつが この めいきゅうの あるじ 獄炎(ごくえん) の ドラゴン だ！
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ドラゴン'
     code: |
@@ -96,7 +96,7 @@
       });
       // ここまでドラゴン
   - label: ミノタウルス
-    image: trimmed/minotaur.gif
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/minotaur.gif
     description: ずっと こうげきをくりかえす きょうぼうな ミノタウルス
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ミノタウルス'
     code: |
@@ -123,7 +123,7 @@
         item1.destroy();
       });
       // ここまでハート
-    image: trimmed/map-28-3.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-28-3.png
     descriptionMoreURL: 'https://github.com/hackforplay/wiki-RPG/wi,ki/ハート'
     description: ライフを かいふくする うれしいアイテム！ += にすると プラスされる。ところで -= にするとどうなるのだろうか
   - label: コイン
@@ -138,7 +138,7 @@
         Hack.score += 1;
       };
       // ここまでコイン
-    image: trimmed/map-28-5.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-28-5.png
     description: がめんを はねまわる コイン。
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/チャリンチャリン'
   - label: スター
@@ -151,7 +151,7 @@
         item1.destroy();
       });
       // ここまでスター
-    image: trimmed/map-28-6.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-28-6.png
     descriptionMoreURL: 'https://github.com/hackforplay/wiki-RPG,/wiki/スター'
     description: ひろってから ３びょうちょい むてきになれる アイテム。３びょうちょい＝１００フレーム？ こも、カイゾウできるらしい
   - label: ふしぎなカギ
@@ -164,7 +164,7 @@
         item1.destroy();
       });
       // ここまでふしぎなカギ
-    image: trimmed/map-28-7.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-28-7.png
     description: いつも ちがうところに でてくる ふしぎなかぎ。なにかと くみあわせて つかえそうだ
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ふしぎなかぎ'
   - label: ダイヤモンド
@@ -177,7 +177,7 @@
         Hack.score += 1;
       });
       // ここまでダイヤモンド
-    image: trimmed/map-28-0.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-28-0.png
     description: ゲットすると、スコアになる
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/うれしいダイヤモンド'
   - label: 色付きハート
@@ -191,7 +191,7 @@
         item1.destroy();
       });
       // ここまで色付きハート
-    image: trimmed/colorful.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/colorful.png
     description: ほかにも blue や orange など、さまざまな色がつかえる
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/色付きハート'
   - label: マドウショ
@@ -222,7 +222,7 @@
         }
       });
       // ここまでゴールちてん
-    image: trimmed/map-25-0.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-25-0.png
     description: あなたのかえりを まちわびている おしろ。ここへ たどりつくと ゲームクリアになる
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ゴールちてん'
   - label: 下りかいだん
@@ -237,7 +237,7 @@
         }
       });
       // ここまで下りかいだん
-    image: trimmed/map-21-2.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-21-2.png
     description: つぎのマップに つながっている くだりせんようの かいだん。カイゾウすると、つぎのマップからつぎのつぎのマップに つなげることも…
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/下り階段'
   - label: ワープ
@@ -250,7 +250,7 @@
         event.item.locate(11, 5);
       });
       // ここまでワープ
-    image: trimmed/map-16-4.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-16-4.png
     description: ふむとワープできる すごいゆか。あかいろや みどりいろも そんざいするという うわさ
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ワープゾーン'
   - label: お花
@@ -264,7 +264,7 @@
         item1.destroy();
       });
       // ここまでお花
-    image: trimmed/map-21-1.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-21-1.png
     description: まえで こうげきすると ちってしまう はかないはな。うえを あるくことができる
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/お花畑'
   - label: 木
@@ -275,7 +275,7 @@
       item1.locate(7, 5, 'map1');
       item1.hp = 1;
       // ここまで木
-    image: trimmed/map-26-0.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-26-0.png
     description: まえで こうげきすると あっけなく おれてしまう キ。うえをあるくことは でキない
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/木'
   - label: バクダン岩
@@ -292,7 +292,7 @@
         item1.destroy();
       });
       // ここまでバクダン岩
-    image: trimmed/map-20-1.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-20-1.png
     description: しげきを あたえると ばくはつするぞ！おすなよ ぜったいに おすなよ！
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/爆弾岩'
   - label: ふしぎなかべ
@@ -302,7 +302,7 @@
       item1.locate(7, 5, 'map1');
       item1.opacity = 0.5;
       // ここまでふしぎなかべ
-    image: trimmed/map-17-0.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-17-0.png
     description: むこうがわが すけてみえる ふしぎなかべ。 opacity （オパシティ）を ０ にすると きえてまう
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/とうめいな壁'
   - label: しゃべるかべ
@@ -314,7 +314,7 @@
         Hack.log('どうだ　おれさまは　かたいだろう！');
       });
       // ここまでしゃべるかべ
-    image: trimmed/map-17-1.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-17-1.png
     description: まえで こうげきすると しゃべる ふしぎなかべ。いっせつによると おおむかしの ざいにんが とこめられている とか
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/しゃべる壁'
   - label: たからばこ
@@ -327,7 +327,7 @@
         item1.mod(('▼ スキン', Skin.トレジャーボックス2));
       };
       // ここまでたからばこ
-    image: trimmed/map-21-0.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-21-0.png
     description: まえで こうげきすると かぱっとひらく (た)からばこ。なかに なにか いれられると いいんだどね
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/からばこ'
   - label: タタリ
@@ -339,7 +339,7 @@
         event.item.hp = 0;
       });
       // ここまでタタリ
-    image: trimmed/map-28-4.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-28-4.png
     description: ぜったいに ふんづけたり こうげきしたり してはいけない。ぜったいにだ
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/タタリ'
   - label: ツボ
@@ -364,7 +364,7 @@
         item1.destroy();
       });
       // ここまでツボ
-    image: trimmed/map-20-0.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-20-0.png
     description: ランダムなアイテムがでてくる ふしぎなツボ。なんでも だせる という ウワサ
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ふしぎなツボ'
   - label: 女の人
@@ -376,7 +376,7 @@
         Hack.log('こんにちは。ここは 1F です');
       });
       // ここまで女の人
-    image: trimmed/woman.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/woman.png
     description: しゃべる ひと。ふだんは、うけつけのしごとを しているらしい。ずっと おなじセリフしか いえないのかな？
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/女の人'
   - label: 男の子
@@ -392,7 +392,7 @@
         /*+ じどう*/
       });
       // ここまで男の子
-    image: trimmed/boy.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/boy.png
     description: ひたすら はしりつづける おとこのこ。めざしているところは じぶんでも よくわかっていない
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/男の子'
   - label: わな
@@ -410,7 +410,7 @@
         item1.mod(('▼ スキン', Skin.トラップ));
       });
       // ここまでわな
-    image: trimmed/map-22-0.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-22-0.png
     descriptionMoreURL: 'https://github.com/hackforplay/wiki-RPG,/wiki/トゲトゲ'
     description: ふむとダメージをうける めいわくなゆか。でも たった１ダメージだね。カイゾウすると なんダメジにも できるらしい
   - label: れんぞくわな
@@ -430,7 +430,7 @@
         });
       }
       // ここまでれんぞくわな
-    image: trimmed/map-22-0.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-22-0.png
     descriptionMoreURL: 'https://github.com/hackforplay/wiki-RPG,/wiki/トゲトゲ'
     description: ふむとダメージをうける めいわくなゆか。でも たった１ダメージだね。カイゾウすると なんダメジにも できるらしい
   - label: 上りかいだん
@@ -445,7 +445,7 @@
         }
       });
       // ここまで上りかいだん
-    image: trimmed/map-20-2.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-20-2.png
     descriptionMoreURL: 'https://github.com/hackforplay/wiki-RPG,/wiki/上り階段'
     description: まえのマップに つながっている のぼりせんようの かいだん。なかみは くだりかいだんと たいてかわらない
   - label: じげんばくだん
@@ -462,7 +462,7 @@
         item1.destroy();
       }, 90);
       // ここまでじげんばくだん
-    image: trimmed/map-29-0.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-29-0.png
     description: じげんしき ばくだん と たちのぼる ばくはつの エフェクト。じかん を ちょうせい できる
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/時限爆弾'
   - label: まほうじん
@@ -477,7 +477,7 @@
         }
       });
       // ここまでまほうじん
-    image: trimmed/map-16-9.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-16-9.png
     description: スコア７以上のとき うえにのると、まほうじんが光る(だけ)
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/スコアで光るまほうじん'
   - label: スコアでひらく たからばこ
@@ -495,7 +495,7 @@
         }
       });
       // ここまでスコアでひらく たからばこ
-    image: trimmed/map-21-0.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-21-0.png
     description: スコアが足りないときは びくともしない ただの からばこ
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/かたいからばこ'
   - label: お花屋さん
@@ -519,7 +519,7 @@
         }
       });
       // ここまでお花屋さん
-    image: trimmed/girl.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/girl.png
     description: おはなを うっている 女の子
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/おはなやさん'
   - label: ルーレット
@@ -567,7 +567,7 @@
         next();
       };
       // ここまでおはなを うっている 女の子
-    image: trimmed/map-28-2.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-28-2.png
     description: こうげきすると、ルーレットがはじまる
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ルーレット'
   - label: バクエン
@@ -580,12 +580,12 @@
       item1.velocityY = -1;
       item1.destroy(20);
       // ここまでバクエン
-    image: trimmed/explosion.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/explosion.png
     description: 立ち昇る爆炎。ふれると１のダメージを受ける
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/爆炎'
 システム:
   - label: プレイヤー2
-    image: trimmed/darknight.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/darknight.png
     description: 2P をついかする
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/プレイヤー2'
     code: |
