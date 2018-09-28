@@ -30,7 +30,7 @@ module.exports = {
 		})),
 
 		...config.source.map(dir => new FeelesWebpackPlugin({
-			paths: [`${dir}`, `./common`],
+			paths: [`${dir}`],
 			output: `${dir}/index.json`,
 			ignore: /\.DS_Store$/
 		})),
