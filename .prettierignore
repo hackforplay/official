@@ -5,3 +5,7 @@ webpack.config.js
 package.json
 enchant.js
 ui.enchant.js
+
+**/game.js
+**/maps.js
+**/update.js
