@@ -7,8 +7,10 @@ import {
 import gameFunc from './game';
 import maps from './maps';
 import update from './update';
+import installHackTime from './time';
 
 register(window);
+installHackTime({ enchant, Hack }); // Hack.time
 
 let gameOnLoad, hackOnLoad;
 
