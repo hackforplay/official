@@ -34,7 +34,7 @@ const hp = () => {
 
 async function gameFunc() {
 	Hack.changeMap('map1'); // map1 をロード
-	
+		
 	// ラベル/UIを消す
 	Hack.lifeLabel.parentNode.removeChild(Hack.lifeLabel);
 	Hack.pad.parentNode.removeChild(Hack.pad);
@@ -49,6 +49,17 @@ async function gameFunc() {
 	player.hp = 1; // 体力
 	player.atk = 1; // こうげき力
 	player.forward = [1, 0];
+	
+	Hack.time = 60;
+	
+	Hack.ontimeup = Hack.gameclear;
+	
+	Hack.on('gameclear', () => {
+		show(current, `☆ ${Hack.score} もじ うった！ ☆`);
+	});
+	Hack.on('gameover', () => {
+		show(current, `☆ ${Hack.score} もじ うった！ ☆`);
+	});
 	
 	const current = new TextArea(480, 90);
 	current.x = (480 - current.w) / 2;
@@ -140,14 +151,7 @@ async function gameFunc() {
 	
 	/*+ スキル */
 	
-	Hack.on('gameclear', () => {
-		show(current, `スコアは${Hack.score}です`);
-	});
-	Hack.on('gameover', () => {
-		show(current, `スコアは${Hack.score}です`);		
-	});
-	
-	game._debug = ('▼ フラグ', false);
+	game._debug = ('▼ フラグ', false);	
 }
 
 export default gameFunc;
