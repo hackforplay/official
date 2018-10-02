@@ -12,7 +12,7 @@ const odaihyou = [
 	// level 5^
 	'qwertyuiopasdfghjklzxcvbnm'
 ];
-const kugiri = ' ';
+const kugiri = '  ';
 
 const level = () => {
 	return Math.floor(Hack.score / 20);
@@ -50,17 +50,6 @@ async function gameFunc() {
 	player.atk = 1; // こうげき力
 	player.forward = [1, 0];
 	
-	Hack.time = 60;
-	
-	Hack.ontimeup = Hack.gameclear;
-	
-	Hack.on('gameclear', () => {
-		showText(`☆ ${Hack.score} もじ うった！ ☆`);
-	});
-	Hack.on('gameover', () => {
-		showText(`☆ ${Hack.score} もじ うった！ ☆`);
-	});
-	
 	const current = new TextArea(480, 104);
 	current.x = (480 - current.w) / 2;
 	current.y = 0;
@@ -75,6 +64,33 @@ async function gameFunc() {
 	};
 	current.rubyStyle.size = 16;
 	Hack.menuGroup.addChild(current);
+	
+	showText('キーを おすと すすむ');
+	await waitKey();
+	
+	showText('ここに でてくる 文字と、');
+	await waitKey();
+	
+	showText('おなじ 文字を うつのだ');
+	await waitKey();
+	
+	showText('１分 生きていれば クリア');
+	await waitKey();
+	
+	showText('では けんとうを いのる！');
+	await waitKey();
+	
+	Hack.time = 60;
+	
+	Hack.ontimeup = Hack.gameclear;
+	
+	Hack.on('gameclear', () => {
+		showText(`☆ ${Hack.score} もじ うった！ ☆`);
+	});
+	Hack.on('gameover', () => {
+		showText(`☆ ${Hack.score} もじ うった！ ☆`);
+	});
+	
 	
 	let odai = getOdai();
 	showOdai(odai);
@@ -161,6 +177,15 @@ async function gameFunc() {
 	/*+ スキル */
 	
 	// game._debug = ('▼ フラグ', false);
+}
+
+function waitKey() {
+	return new Promise(resolve => {
+		window.addEventListener('keydown', function _() {
+			window.removeEventListener('keydown', _);
+			resolve();
+		});
+	});	
 }
 
 export default gameFunc;
