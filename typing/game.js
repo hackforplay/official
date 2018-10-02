@@ -1,16 +1,16 @@
 const odaihyou = [
 	// level 0
-	'FJ',
+	'fj',
 	// level 1
-	'FGHJ',
+	'fghj',
 	// level 2
-	'ASDFGHJKL',
+	'asdfghjkl',
 	// level 3
-	'ZXCVBNM',
+	'zxcvbnm',
 	// level 4
-	'QWERTYUIOP',
+	'qwertyuiop',
 	// level 5^
-	'QWERTYUIOPASDFGHJKLZXCVBNM'
+	'qwertyuiopasdfghjklzxcvbnm'
 ];
 const kugiri = ' ';
 
@@ -82,7 +82,7 @@ async function gameFunc() {
 		if (!Hack.isPlaying) {
 			return;
 		}
-		if (e.key.toUpperCase() === odai[0]) {
+		if (e.key.toLowerCase() === odai[0]) {
 			Hack.score += 1;			
 			odai.shift();
 			showOdai(odai);
@@ -106,8 +106,8 @@ async function gameFunc() {
 	}
 	
 	function showOdai(odai) {
-		current.source = odai.map(capital => `<ruby value="${capital.toLowerCase()}">${capital}</ruby>`).join(kugiri);
-		// current.source = odai.map(capital => `<ruby>${capital}<rt>${capital.toLowerCase()}</rt></ruby>`).join(kugiri);
+		current.source = odai.map(small => `<ruby value="${small.toUpperCase()}">${small}</ruby>`).join(kugiri);
+		// current.source = odai.map(small => `<ruby>${small}<rt>${small.toUpperCase()}</rt></ruby>`).join(kugiri);
 		current.updateDocument();
 		current.updateValues();
 		current.show();
