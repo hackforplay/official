@@ -55,13 +55,13 @@ async function gameFunc() {
 	Hack.ontimeup = Hack.gameclear;
 	
 	Hack.on('gameclear', () => {
-		show(current, `☆ ${Hack.score} もじ うった！ ☆`);
+		showText(`☆ ${Hack.score} もじ うった！ ☆`);
 	});
 	Hack.on('gameover', () => {
-		show(current, `☆ ${Hack.score} もじ うった！ ☆`);
+		showText(`☆ ${Hack.score} もじ うった！ ☆`);
 	});
 	
-	const current = new TextArea(480, 90);
+	const current = new TextArea(480, 100);
 	current.x = (480 - current.w) / 2;
 	current.y = 0;
 	current.margin = 14;
@@ -76,7 +76,7 @@ async function gameFunc() {
 	Hack.menuGroup.addChild(current);
 	
 	let odai = getOdai();
-	show(current, odai.join(kugiri));
+	showOdai(odai);
 	window.addEventListener('keydown', async e => {
 		if (!Hack.isPlaying) {
 			return;
@@ -84,11 +84,11 @@ async function gameFunc() {
 		if (e.key.toUpperCase() === odai[0]) {
 			Hack.score += 1;			
 			odai.shift();
-			show(current, odai.join(kugiri));
+			showOdai(odai);
 			if (odai.length === 0) {
 				player.attack();
 				odai = getOdai();
-				show(current, odai.join(kugiri));
+				showOdai(odai);
 			}
 		}
 	});
@@ -104,11 +104,19 @@ async function gameFunc() {
 		return odai;
 	}
 	
-	function show(textArea, text) {
-		textArea.source = text;
-		textArea.updateDocument();
-		textArea.updateValues();
-		textArea.show();
+	function showOdai(odai) {
+		current.source = odai.map(capital => `<ruby value="${capital.toLowerCase()}">${capital}</ruby>`).join(kugiri);
+		// current.source = odai.map(capital => `<ruby>${capital}<rt>${capital.toLowerCase()}</rt></ruby>`).join(kugiri);
+		current.updateDocument();
+		current.updateValues();
+		current.show();
+	}
+	
+	function showText(text) {
+		current.source = text;
+		current.updateDocument();
+		current.updateValues();
+		current.show();
 	}
 	
 	async function koumori() {
@@ -151,7 +159,7 @@ async function gameFunc() {
 	
 	/*+ スキル */
 	
-	game._debug = ('▼ フラグ', false);	
+	// game._debug = ('▼ フラグ', false);
 }
 
 export default gameFunc;
