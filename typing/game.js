@@ -61,7 +61,7 @@ async function gameFunc() {
 		showText(`☆ ${Hack.score} もじ うった！ ☆`);
 	});
 	
-	const current = new TextArea(480, 100);
+	const current = new TextArea(480, 104);
 	current.x = (480 - current.w) / 2;
 	current.y = 0;
 	current.margin = 14;
@@ -73,6 +73,7 @@ async function gameFunc() {
 		align: 'left',
 		space: 0
 	};
+	current.rubyStyle.size = 16;
 	Hack.menuGroup.addChild(current);
 	
 	let odai = getOdai();
