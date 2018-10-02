@@ -49,6 +49,7 @@ async function gameFunc() {
 	player.hp = 1; // 体力
 	player.atk = 1; // こうげき力
 	player.forward = [1, 0];
+	player.input.attack = 'tab'; // HACK: tab キーを押すとゲームがストップするので、実質このキーは押せない
 	
 	const current = new TextArea(480, 104);
 	current.x = (480 - current.w) / 2;
