@@ -5,7 +5,7 @@ export function createMap1() {
 	// 15, 10 の大きさにする ( 32 の部分は書き換えないでください )
 	const map = new RPGMap(32, 32, 15, 10);
 
-	map.imagePath = 'enchantjs/x2/dotmat.gif';
+	map.imagePath = 'resources/enchantjs/x2/dotmat.gif';
 
 	const ___ = -1;
 
@@ -382,7 +382,7 @@ export function createMap2() {
 	// 15, 10 の大きさにする ( 32 の部分は書き換えないでください )
 	const map = new RPGMap(32, 32, 15, 10);
 
-	map.imagePath = 'enchantjs/x2/dotmat.gif';
+	map.imagePath = 'resources/enchantjs/x2/dotmat.gif';
 
 	const ___ = -1;
 
