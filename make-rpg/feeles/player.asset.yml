@@ -30,7 +30,7 @@
       // とうめい
       player.opacity = 0;
   - label: ビーム
-    image: trimmed/map-27-2.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-27-2.png
     description: プレイヤーがビームを使えるようにする。 player の部分を item1 などにかえれば、他のキャラクターがビームを使えるようにもできる
     descriptionMoreURL: 'https://github.com/hackforplay/wiki-RPG/wiki/ビーム'
     code: |
@@ -45,7 +45,7 @@
         });
       });
   - label: ボム
-    image: trimmed/map-29-0.png
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-29-0.png
     description: プレイヤーがボムを使えるようにする。 player の部分を item1 などにかえれば、他のキャラクターがボムを使えるようにもできる
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ばくだん'
     code: |
