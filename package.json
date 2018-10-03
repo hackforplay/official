@@ -27,7 +27,7 @@
 		"@babel/preset-env": "^7.0.0-beta.52",
 		"@babel/register": "^7.0.0-beta.52",
 		"ava": "^1.0.0-beta.6",
-		"canvas-prebuilt": "^1.6.5-prerelease.1",
+		"canvas-prebuilt": "^1.6.11",
 		"es6-promisify": "^5.0.0",
 		"handlebars": "^4.0.11",
 		"handlebars-loader": "^1.7.0",
