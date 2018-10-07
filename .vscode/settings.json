@@ -62,5 +62,7 @@
 	"javascript.suggestionActions.enabled": true,
 
 	// Enable/disable JavaScript validation.
-	"javascript.validate.enable": true
+	"javascript.validate.enable": true,
+
+	"files.trimTrailingWhitespace": false
 }
