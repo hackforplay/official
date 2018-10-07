@@ -1,6 +1,6 @@
 module.exports = {
 	// ビルド対象のソースコードが入ったディレクトリ
-	source: ['./hack-rpg', './make-rpg'],
+	source: ['./hack-rpg', './make-rpg', './typing'],
 	// Dev server の port
 	port: 3000,
 	// オフラインで開発したい場合 true にする
