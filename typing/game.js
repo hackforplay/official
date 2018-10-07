@@ -42,7 +42,7 @@ async function gameFunc() {
 	
 	Hack.scoreLabel.y = 120;
 	
-	self.player = new Player(('▼ スキン', Skin.ナイト)); // プレイヤーをつくる
+	window.player = new Player(('▼ スキン', Skin.ナイト)); // プレイヤーをつくる
 	player.name = 'プレイヤー';
 	player.family = ('▼ ファミリー', Family.プレイヤー);
 	player.locate(3, 5); // はじめの位置
