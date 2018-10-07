@@ -62,5 +62,6 @@
 	"javascript.validate.enable": true,
 	"editor.trimAutoWhitespace": false,
 	"editor.formatOnSave": true,
-	"files.trimTrailingWhitespace": false
+	"files.trimTrailingWhitespace": false,
+	"editor.renderWhitespace": "boundary"
 }
