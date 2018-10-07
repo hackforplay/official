@@ -32,9 +32,9 @@ game.onload = async () => {
 
 	await gameOnLoad();
 
-	// Hack.player がないとき self.player を代わりに入れる
-	if (self.player && !Hack.player) {
-		Hack.player = self.player;
+	// Hack.player がないとき window.player を代わりに入れる
+	if (window.player && !Hack.player) {
+		Hack.player = window.player;
 	}
 
 	// update 関数を開始
