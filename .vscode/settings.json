@@ -1,7 +1,4 @@
 {
-	"editor.formatOnSave": true,
-
-	// Enable/disable default JavaScript formatter.
 	"javascript.format.enable": true,
 
 	// Defines space handling after a comma delimiter.
@@ -62,5 +59,8 @@
 	"javascript.suggestionActions.enabled": true,
 
 	// Enable/disable JavaScript validation.
-	"javascript.validate.enable": true
+	"javascript.validate.enable": true,
+	"editor.trimAutoWhitespace": false,
+	"files.trimTrailingWhitespace": false,
+	"editor.formatOnSave": true
 }
