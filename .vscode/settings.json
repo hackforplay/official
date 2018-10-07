@@ -61,6 +61,6 @@
 	// Enable/disable JavaScript validation.
 	"javascript.validate.enable": true,
 	"editor.trimAutoWhitespace": false,
-	"editor.formatOnSave": true
+	"editor.formatOnSave": true,
 	"files.trimTrailingWhitespace": false
 }
