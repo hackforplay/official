@@ -51,7 +51,7 @@ export default function gameStartLazy() {
 	// 体力ゲージを作る
 	const MAX = item1.hp;
 	const bar1 = new Sprite(480, 32);
-	bar1.image = game.assets['hackforplay/bar_red.png'];
+	bar1.image = game.assets['resources/hackforplay/bar_red.png'];
 	// 体力ゲージの位置
 	bar1.moveTo(0, 0);
 	// 体力ゲージを更新する...

@@ -13,7 +13,10 @@ import { prepareUtils } from '../../utils';
 register(window);
 prepareUtils();
 
-game.preload('hackforplay/bar_green.png', 'hackforplay/bar_red.png');
+game.preload(
+	'resources/hackforplay/bar_green.png',
+	'resources/hackforplay/bar_red.png'
+);
 
 function gameStart() {
 	game.dispatchEvent(new enchant.Event('awake'));
@@ -67,7 +70,7 @@ function gameStart() {
 	// 体力は最大で 9999
 	const MAX = 9999;
 	const bar = new Sprite(480, 32);
-	bar.image = game.assets['hackforplay/bar_green.png'];
+	bar.image = game.assets['resources/hackforplay/bar_green.png'];
 	// 体力ゲージの位置
 	bar.moveTo(0, 300);
 	// 体力ゲージを更新する...
