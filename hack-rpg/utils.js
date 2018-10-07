@@ -5,7 +5,7 @@ export function gameclear(next) {
 	Hack.gameclear();
 
 	const button = new Sprite(165, 69);
-	button.image = game.assets['hackforplay/new_button_next.png'];
+	button.image = game.assets['resources/hackforplay/new_button_next.png'];
 	button.moveTo(156, 320);
 	button.ontouchend = () => {
 		feeles.replace(next);
@@ -31,6 +31,8 @@ export function log(text) {
 }
 
 export function prepareUtils() {
+	// hack-rpg でしか使わない画像を preload
+	game.preload('resources/hackforplay/new_button_next.png');
 	// canvas のテキストエリアを生成
 	const textArea = new TextArea(480, 160);
 	textArea.x = (480 - textArea.w) / 2;
