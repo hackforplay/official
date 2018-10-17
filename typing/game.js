@@ -34,7 +34,7 @@ const hp = () => {
 
 async function gameFunc() {
 	Hack.changeMap('map1'); // map1 をロード
-		
+	
 	// ラベル/UIを消す
 	Hack.lifeLabel.parentNode.removeChild(Hack.lifeLabel);
 	Hack.pad.parentNode.removeChild(Hack.pad);
@@ -100,7 +100,7 @@ async function gameFunc() {
 			return;
 		}
 		if (e.key.toLowerCase() === odai[0]) {
-			Hack.score += 1;			
+			Hack.score += 1;
 			odai.shift();
 			showOdai(odai);
 			if (odai.length === 0) {
@@ -186,7 +186,7 @@ function waitKey() {
 			window.removeEventListener('keydown', _);
 			resolve();
 		});
-	});	
+	});
 }
 
 export default gameFunc;
