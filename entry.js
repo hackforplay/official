@@ -1,8 +1,3 @@
-if (process.env.NODE_ENV === 'production') {
-	// Offline plugin
-	require('offline-plugin/runtime').install();
-}
-
 if (FEELES_OFFILE_MODE) {
 	window.h4p = require('feeles-ide/umd/index').h4p;
 	load();
