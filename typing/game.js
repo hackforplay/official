@@ -66,6 +66,15 @@ async function gameFunc() {
 	current.rubyStyle.size = 16;
 	Hack.menuGroup.addChild(current);
 	
+	let missCount = 0; // ミスした回数	
+	// ミス回数ラベル
+	const missLabel = new ScoreLabel(10, 104); // あたらしい文字のばしょをきめる
+	missLabel.label = 'MISS:'; // 文字をへんこうする
+	missLabel.onenterframe = () => {
+		missLabel.score = missCount;
+	};
+	Hack.menuGroup.addChild(missLabel); // 文字をがめんに出す
+	
 	showText('キーを おすと すすむ');
 	await waitKey();
 	
@@ -92,7 +101,6 @@ async function gameFunc() {
 		showText(`☆ ${Hack.score} もじ うった！ ☆`);
 	});
 	
-	
 	let odai = getOdai();
 	showOdai(odai);
 	window.addEventListener('keydown', async e => {
@@ -108,6 +116,8 @@ async function gameFunc() {
 				odai = getOdai();
 				showOdai(odai);
 			}
+		} else {
+			missCount += 1;
 		}
 	});
 	
