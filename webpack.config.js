@@ -3,7 +3,6 @@ const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const FeelesWebpackPlugin = require('feeles-ide/lib/feeles-webpack-plugin');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
-const OfflinePlugin = require('offline-plugin');
 
 const config = loadConfig();
 const port = process.env.PORT || config.port;
@@ -42,10 +41,7 @@ module.exports = {
 		}),
 
 		// https://medium.com/webpack/webpack-3-official-release-15fd2dd8f07b
-		new webpack.optimize.ModuleConcatenationPlugin(),
-
-		// Cache and proxy this whole site
-		new OfflinePlugin()
+		new webpack.optimize.ModuleConcatenationPlugin()
 	].concat(
 		process.env.HEROKU ? [] : (
 			new OpenBrowserPlugin({
