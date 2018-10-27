@@ -1,4 +1,4 @@
-async function gameFunc() {
+export default async function gameFunc() {
 	Hack.changeMap('map1'); // map1 をロード
 	
 	
@@ -15,5 +15,3 @@ async function gameFunc() {
 	
 	game._debug = ('▼ フラグ', false);
 }
-
-export default gameFunc;
