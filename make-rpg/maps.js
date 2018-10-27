@@ -1,4 +1,4 @@
-async function maps() {
+export default async function maps() {
 	const map1 = Hack.createMap(`
 322 322 322 322 322 322 322 322 322 322 322 322 322 322 322
 322 322 322 322 322 322 322 322 322 322 322 322 322 322 322
@@ -16,4 +16,3 @@ async function maps() {
 	/*+ マップ */
 }
 
-export default maps;
