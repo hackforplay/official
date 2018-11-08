@@ -51,10 +51,10 @@
 			"descriptionMoreURL":
 				"https://github.com/hackforplay/wiki-RPG/wiki/どかれた"
 		},
-		"onこうげきされたとき": {
-			"prefix": "onこうげきされたとき",
-			"body": "onこうげきされたとき = () => {\n\t\n};",
-			"leftLabel": "攻撃されたとき",
+		"onこうげきされた": {
+			"prefix": "onこうげきされた",
+			"body": "onこうげきされた = () => {\n\t\n};",
+			"leftLabel": "攻撃された",
 			"description": "他のモンスターなどから攻撃されたときに発生するイベント",
 			"descriptionMoreURL":
 				"https://github.com/hackforplay/wiki-RPG/wiki/攻撃されたとき"
