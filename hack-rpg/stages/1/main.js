@@ -2,8 +2,7 @@ import {
 	enchant,
 	Hack,
 	register
-} from 'https://unpkg.com/@hackforplay/common@0.8.9';
-// import { enchant, Hack, register } from 'http://localhost:8080/main.js';
+} from 'https://unpkg.com/@hackforplay/common@0.8.8';
 
 import extra from '../extra';
 import createMap from './maps';
