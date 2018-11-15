@@ -1,0 +1,15 @@
+ゲーム全体になにかする:
+  - label: 文字を出す
+    code: Hack.log('この文字を書きかえよう'); // 文字を出す
+  - label: マップ移動
+    code: Hack.changeMap('map2'); // マップ移動
+  - label: ログ消去
+    code: Hack.clearLog(); // ログ消去
+  - label: ゲームクリア
+    code: Hack.gameclear(); // ゲームクリア
+  - label: ゲームオーバー
+    code: Hack.gameover(); // ゲームオーバー
+  - label: スコアアップ
+    code: Hack.score += 1; // スコアアップ
+  - label: スコアダウン
+    code: Hack.score -= 1; // スコアダウン
