@@ -1,4 +1,5 @@
 import './game'; // ルール定義をロードする
+import './assets'; // ルール定義をロードする
 import maps from './maps';
 
 // import update from './update';
