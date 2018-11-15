@@ -1,0 +1,57 @@
+ルールついか:
+  - label: つくられたとき
+    code: |
+      // ここからキャラクターがつくられたとき
+      rule.つくられたとき(async function () {
+        /*+ このキャラクターになにかする 条件 */
+      });
+      // ここまでキャラクターがつくられたとき
+  - label: つねに
+    code: |
+      // ここからキャラクターがつねに
+      rule.つねに(async function () {
+        /*+ このキャラクターになにかする 条件 */
+      });
+      // ここまでキャラクターがつねに
+  - label: たおされたとき
+    code: |
+      // ここからキャラクターがたおされたとき
+      rule.たおされたとき(async function () {
+        /*+ このキャラクターになにかする 条件 */
+      });
+      // ここまでキャラクターがたおされたとき
+  - label: すすめなかったとき
+    code: |
+      // ここからキャラクターがすすめなかったとき
+      rule.すすめなかったとき(async function () {
+        /*+ このキャラクターになにかする 条件 */
+      });
+      // ここまでキャラクターがすすめなかったとき
+  - label: ふまれたとき
+    code: |
+      // ここからキャラクターがふまれたとき
+      rule.ふまれたとき(async function () {
+        /*+ このキャラクターになにかする 条件 */
+      });
+      // ここまでキャラクターがふまれたとき
+  - label: ぶつかったとき
+    code: |
+      // ここからキャラクターがぶつかったとき
+      rule.ぶつかったとき(async function () {
+        /*+ このキャラクターになにかする 条件 */
+      });
+      // ここまでキャラクターがぶつかったとき
+
+条件:
+  - label: スコアでゲームクリア
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki'
+    code: |
+      if (Hack.score >= 10) {
+        Hack.gameclear(); // ゲームクリア
+      }
+  - label: スコアでゲームオーバー
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki'
+    code: |
+      if (Hack.score < 0) {
+        Hack.gameover(); // ゲームオーバー
+      }
