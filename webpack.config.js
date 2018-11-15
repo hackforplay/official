@@ -1,7 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
-const FeelesWebpackPlugin = require('./feeles-webpack-plugin');
+const FeelesWebpackPlugin = require('feeles-ide/lib/feeles-webpack-plugin');
 const OpenBrowserPlugin = require('open-browser-webpack-plugin');
 
 const config = loadConfig();
@@ -10,13 +10,15 @@ const dist = 'public/';
 
 
 module.exports = {
+	mode: process.env.NODE_ENV || 'development',
+
 	entry: './entry.js',
 	output: {
 		path: path.resolve(dist),
 		filename: '[name].js'
 	},
 	module: {
-		loaders: [{
+		rules: [{
 			test: /\.(html|hbs)$/,
 			loaders: ['handlebars-loader']
 		}]
