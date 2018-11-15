@@ -1,0 +1,89 @@
+このキャラクターになにかする:
+  - label: いち
+    description: いちをかえる
+    code: this.locate(7, 5); // いちをかえる
+
+  - label: 上を向く
+    description: 向きを上にする
+    code: this.forward = [0, -1]; // 向きを上にする
+
+  - label: 右を向く
+    description: 向きを右にする
+    code: this.forward = [1, 0]; // 向きを右にする
+
+  - label: 下を向く
+    description: 向きを下にする
+    code: this.forward = [0, 1]; // 向きを下にする
+
+  - label: 左を向く
+    description: 向きを左にする
+    code: this.forward = [-1, 0]; // 向きを左にする
+
+  - label: 見た目
+    description: 見た目をかえる
+    code: this.mod(('▼ スキン', Skin.ナイト)); // 見た目をかえる
+
+  - label: 削除
+    description: 削除する
+    code: this.destroy(); // 削除する
+
+  - label: 攻撃
+    description: 攻撃する
+    code: await this.attack(); // 攻撃する
+
+  - label: 歩く
+    description: 一歩あるく
+    code: await this.walk(); // 一歩あるく
+
+  - label: 休けい
+    description: 休けいする
+    code: await this.wait(1); // 休けいする
+
+  - label: 回転
+    description: その場で回転する
+    code: await this.turn(); // その場で回転する
+
+相手のキャラクターになにかする:
+  - label: いち
+    description: いちをかえる
+    code: item.locate(7, 5); // いちをかえる
+
+  - label: 上を向く
+    description: 向きを上にする
+    code: item.forward = [0, -1]; // 向きを上にする
+
+  - label: 右を向く
+    description: 向きを右にする
+    code: item.forward = [1, 0]; // 向きを右にする
+
+  - label: 下を向く
+    description: 向きを下にする
+    code: item.forward = [0, 1]; // 向きを下にする
+
+  - label: 左を向く
+    description: 向きを左にする
+    code: item.forward = [-1, 0]; // 向きを左にする
+
+  - label: 見た目
+    description: 見た目をかえる
+    code: item.mod(('▼ スキン', Skin.ナイト)); // 見た目をかえる
+
+  - label: 削除
+    description: 削除する
+    code: item.destroy(); // 削除する
+
+  - label: 攻撃
+    description: 攻撃する
+    code: await item.attack(); // 攻撃する
+
+  - label: 歩く
+    description: 一歩あるく
+    code: await item.walk(); // 一歩あるく
+
+  - label: 休けい
+    description: 休けいする
+    code: await item.wait(1); // 休けいする
+
+  - label: 回転
+    description: その場で回転する
+    code: await item.turn(); // その場で回転する

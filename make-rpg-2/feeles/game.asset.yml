@@ -1,0 +1,76 @@
+キャラクター:
+  - label: スライム
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/slime.gif
+    description: ムチのように からだをふりまわす、キケンなスライム
+    code: |
+      const item1 = rule.つくる('スライム');
+      item1.locate(8, 5, 'map1'); // いる ばしょ
+
+  - label: イモムシ
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/insect.gif
+    description: にげあしは おいらの とくぎなのさ。すばやく walk() して  turn() するのが ひけつさ
+    code: |
+      const item1 = rule.つくる('イモムシ');
+      item1.locate(12, 5, 'map1'); // いる ばしょ
+
+  - label: コウモリ
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/bat.gif
+    description: ねらいをつけて おそってくる おそろしいコウモリ。 ターゲットに、むかってくる らしい
+    code: |
+      const item1 = rule.つくる('コウモリ');
+      item1.locate(9, 2, 'map1'); // いる ばしょ
+
+  - label: ドラゴン
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/dragon.gif
+    description: やつが この めいきゅうの あるじ 獄炎(ごくえん) の ドラゴン だ！
+    code: |
+      const item1 = rule.つくる('ドラゴン');
+      item1.locate(2, 8, 'map1'); // いる ばしょ
+
+  - label: ウロボロス
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/ouroboros.gif
+    description: ４秒おきに こうげきしてくる 大蛇ウロボロス。こうげきまでの秒数を かえることもできる
+    code: |
+      const item1 = rule.つくる('ウロボロス');
+      item1.locate(4, 8, 'map1'); // いる ばしょ
+
+  - label: ミノタウルス
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/minotaur.gif
+    description: ずっと こうげきをくりかえす きょうぼうな ミノタウルス
+    code: |
+      const item1 = rule.つくる('ミノタウルス');
+      item1.locate(6, 8, 'map1'); // いる ばしょ
+
+  - label: ハート
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-28-3.png
+    description: ライフを かいふくする うれしいアイテム！
+    code: |
+      const item1 = rule.つくる('ハート');
+      item1.locate(8, 8, 'map1'); // いる ばしょ
+
+  - label: コイン
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-28-5.png
+    description: がめんを はねまわる コイン。
+    code: |
+      const item1 = rule.つくる('コイン');
+      item1.locate(12, 8, 'map1'); // いる ばしょ
+
+  - label: スター
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-28-6.png
+    description: ひろってから ３びょうちょい むてきになれる アイテム。３びょうちょい＝１００フレーム？ こも、カイゾウできるらしい
+    code: |
+      const item1 = rule.つくる('スター');
+      item1.locate(14, 8, 'map1'); // いる ばしょ
+
+  - label: ふしぎなカギ
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-28-7.png
+    description: いつも ちがうところに でてくる ふしぎなかぎ。なにかと くみあわせて つかえそうだ
+    code: |
+      const item1 = rule.つくる('ふしぎなカギ');
+
+  - label: ゴールちてん
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-25-0.png
+    description: あなたのかえりを まちわびている おしろ。ここへ たどりつくと ゲームクリアになる
+    code: |
+      const item1 = rule.つくる('ゴールちてん');
+      item1.locate(10, 8, 'map1'); // いる ばしょ
