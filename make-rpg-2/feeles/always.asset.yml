@@ -1,0 +1,57 @@
+つねに:
+  - label: いち
+    description: いちをかえる
+    code: this.locate(7, 5); // 自分のいちをかえる
+
+  - label: 上を向く
+    description: 向きを上にする
+    code: this.forward = [0, -1]; // 自分の向きを上にする
+
+  - label: 右を向く
+    description: 向きを右にする
+    code: this.forward = [1, 0]; // 自分の向きを右にする
+
+  - label: 下を向く
+    description: 向きを下にする
+    code: this.forward = [0, 1]; // 自分の向きを下にする
+
+  - label: 左を向く
+    description: 向きを左にする
+    code: this.forward = [-1, 0]; // 自分の向きを左にする
+
+  - label: 見た目
+    description: 見た目をかえる
+    code: this.mod(('▼ スキン', Skin.ナイト)); // 自分の見た目をかえる
+
+  - label: 消す
+    description: このキャラクターを消す
+    code: this.destroy(); // 自分を消す
+
+  - label: 攻撃
+    description: 攻撃する
+    code: await this.attack(); // 自分が攻撃する
+
+  - label: 歩く
+    description: 一歩あるく
+    code: await this.walk(); // 自分が一歩あるく
+
+  - label: 休けい
+    description: 休けいする
+    code: await this.wait(1); // 自分が休けいする
+
+  - label: 回転
+    description: その場で回転する
+    code: await this.turn(); // 自分がその場で回転する
+
+  - label: スコアでゲームクリア
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki'
+    code: |
+      if (Hack.score >= 10) {
+        Hack.gameclear(); // ゲームクリア
+      }
+  - label: スコアでゲームオーバー
+    descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki'
+    code: |
+      if (Hack.score < 0) {
+        Hack.gameover(); // ゲームオーバー
+      }

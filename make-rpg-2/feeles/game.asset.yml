@@ -41,6 +41,7 @@
       const item1 = rule.つくる('ミノタウルス');
       item1.locate(6, 8, 'map1'); // いる ばしょ
 
+アイテム:
   - label: ハート
     image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-28-3.png
     description: ライフを かいふくする うれしいアイテム！
