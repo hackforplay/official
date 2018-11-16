@@ -749,3 +749,8 @@
         }
       }
       // ここから二重くりかえし
+  - label: ボタンを消す
+    description: 十字キーとこうげきボタンを消す
+    code: |
+      Hack.pad.parentNode.removeChild(Hack.pad); // 十字キーを消す
+      Hack.apad.parentNode.removeChild(Hack.apad); // こうげきボタンを消す
