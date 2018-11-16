@@ -3,7 +3,7 @@ import '../game';
 rule.this = 'ゴールちてん';
 
 rule.つくられたとき(function() {
-	this.mod(('▼ スキン', Skin.キャッスル));
+	this.mod(('▼ スキン', Skin.キャッスル)); // 見た目をきめる
 	Hack.log('おしろがみえるだろう あれがゴールだ'); // ヒントをだす
 	/*+ つくられたとき */
 });

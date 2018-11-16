@@ -3,10 +3,10 @@ import '../game';
 rule.this = 'スライム';
 
 rule.つくられたとき(function() {
-	this.mod(('▼ スキン', Skin.スライム));
-	this.family = ('▼ ファミリー', Family.ドクリツ);
-	this.hp = 3;
-	this.atk = 1;
+	this.mod(('▼ スキン', Skin.スライム)); // 見た目を決める
+	this.family = ('▼ ファミリー', Family.ドクリツ); // ファミリーを決める
+	this.hp = 3; // 体力を決める
+	this.atk = 1; // こうげき力を決める
 	/*+ つくられたとき */
 });
 
@@ -16,6 +16,6 @@ rule.つねに(async function() {
 });
 
 rule.たおされたとき(async function() {
-	Hack.score += 1;
+	Hack.score += 1; // スコアをアップする
 	/*+ たおされたとき */
 });
