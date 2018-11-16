@@ -91,3 +91,7 @@
         /*+ じどう*/
 
       });
+  - label: HPを消す
+    description: 'HP:3 というラベルを非表示にする'
+    code: |
+      player.showHpLabel = false;
