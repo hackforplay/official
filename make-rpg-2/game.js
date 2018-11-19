@@ -1,4 +1,4 @@
-import 'https://unpkg.com/@hackforplay/common@0.10.1/dist/register';
+import 'https://unpkg.com/@hackforplay/common@^0.10/dist/register';
 
 // ここからゲームがはじまったときのルール
 rule.ゲームがはじまったとき(async function() {
