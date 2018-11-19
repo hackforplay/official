@@ -8,5 +8,8 @@ import './assets/minotaur';
 import './assets/player';
 import './assets/slime';
 import './assets/snake';
+import './assets/stair';
 import './assets/star';
 import './assets/strange-key';
+import './assets/treasure';
+import './assets/warp';
