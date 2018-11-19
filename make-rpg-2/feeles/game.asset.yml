@@ -75,3 +75,26 @@
     code: |
       const item1 = rule.つくる('ゴールちてん');
       item1.locate(10, 8, 'map1'); // いる ばしょ
+
+  - label: ワープ
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-16-4.png
+    description: ふむとワープできる すごいゆか
+    code: |
+      const item1 = rule.つくる('ワープ');
+      item1.locate(5, 5, 'map1'); // ここからワープ
+      item1.warpTo(11, 6, 'map1'); // ここへワープ
+
+  - label: かいだん
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-20-2.png
+    description: マップとマップをつなぐ かいだん
+    code: |
+      const item1 = rule.つくる('かいだん');
+      item1.locate(12, 5, 'map1'); // ここから のぼれる
+      item1.warpTo(2, 5, 'map2'); // ここへ つながる
+
+  - label: たからばこ
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-21-0.png
+    description: コインが入っているたからばこ
+    code: |
+      const item1 = rule.つくる('たからばこ');
+      item1.locate(12, 2, 'map1'); // いる ばしょ
