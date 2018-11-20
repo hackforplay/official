@@ -1,7 +1,9 @@
 import './assets/bat';
+import './assets/bomb';
 import './assets/caterpillar';
 import './assets/coin';
 import './assets/dragon';
+import './assets/explosion';
 import './assets/gate-yellow';
 import './assets/goal';
 import './assets/heart';
