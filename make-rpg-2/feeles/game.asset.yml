@@ -98,3 +98,18 @@
     code: |
       const item1 = rule.つくる('たからばこ');
       item1.locate(12, 2, 'map1'); // いる ばしょ
+
+  - label: かぎ（きいろ）
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-28-7.png
+    description: ゲートを開けるためのかぎ（きいろ）
+    code: |
+      const item1 = rule.つくる('かぎ（きいろ）');
+      item1.locate(1, 2, 'map1'); // いる ばしょ
+
+  - label: ゲート（きいろ）
+    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-28-7.png
+    description: かぎ（きいろ）で開くゲート
+    code: |
+      const item1 = rule.つくる('ゲート（きいろ）');
+      item1.locate(1, 4, 'map1'); // ここから 入る
+      item1.warpTo(14, 4, 'map1'); // ここへ つながる
