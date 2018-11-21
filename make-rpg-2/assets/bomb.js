@@ -7,7 +7,7 @@ rule.つくられたとき(async function() {
 	this.atk = 1; // ばくはつ の ダメージ
 	await this.wait(3); // この秒数だけまつ
 
-	const item1 = this.つくる('ばくはつ'); // ばくはつ を おこす
+	const item1 = this.しょうかんする('ばくはつ'); // ばくはつ を おこす
 	item1.atk = this.atk;
 	this.destroy(); // ばくだん を けす
 	/*+ つくられたとき */
