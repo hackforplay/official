@@ -14,6 +14,7 @@ rule.つねに(async function() {
 	await this.wait(3); // この秒数だけまつ
 
 	const item1 = this.しょうかんする('スライム'); // スライムをしょうかん
+	item1.family = ('▼ ファミリー', Family.ドクリツ); // 「モンスター」にすると仲間同士こうげきしない
 	item1.locate(random(0, 14), random(0, 9)); // いちをランダムにする
 	/*+ つねに */
 });
