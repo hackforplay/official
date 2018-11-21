@@ -20,6 +20,8 @@
 ![ばくはつ](assets/explosion.js)
 ![ワープ](assets/warp.js)
 ![サモナー](assets/summoner.js)
+![ビーム](assets/beam.js)
+![まほうじん](assets/magic-circle.js)  
 ![魔道書のコード 📖](code.js)  
 ![マップのコード 🗺](maps.js)  
 [マップチップ](https://embed.hackforplay.xyz/open-source/ogp/mapTipIndex.jpg)
