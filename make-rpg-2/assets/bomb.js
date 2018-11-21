@@ -12,3 +12,9 @@ rule.つくられたとき(async function() {
 	this.destroy(); // ばくだん を けす
 	/*+ つくられたとき */
 });
+
+rule.item = Rule.Anyone;
+rule.しょうかんされたとき(async function(item) {
+	this.atk = item.atk; // しょうかんした人と同じこうげき力にする
+	/*+ しょうかんされたとき */
+});
