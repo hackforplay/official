@@ -7,14 +7,13 @@ rule.つくられたとき(async function() {
 	this.family = ('▼ ファミリー', Family.ドクリツ); // ファミリーを決める
 	this.hp = 3; // 体力を決める
 	this.atk = 1; // こうげき力を決める
+	this.ターゲット = 'プレイヤー'; // プレイヤーをのことを追いかける
 	/*+ つくられたとき */
 });
 
 rule.つねに(async function() {
-	const moveX = 32 * Math.sign(player.mapX - this.mapX);
-	const moveY = 32 * Math.sign(player.mapY - this.mapY);
-	this.forward = [moveX, moveY];
-	await this.walk(); // あるく
+	if (this.ターゲット === '') return; // ターゲットがない時はここで終わり
+	await this.chase8(this.ターゲット); // ターゲットを追いかける（ナナメあり）
 	await this.attack(); // こうげきする
 	await this.wait(1); // やすむ
 	/*+ つねに */
