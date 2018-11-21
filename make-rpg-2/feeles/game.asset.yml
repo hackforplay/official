@@ -127,3 +127,15 @@
       item1.locate(7, 8, 'map1'); // いる ばしょ
     image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/explosion.png
     description: ばくはつ。ふれると１のダメージを受ける
+
+  - label: サモナー
+    description: スライムを しょうかんする サモナー
+    code: |
+      const item1 = rule.つくる('サモナー');
+      item1.locate(14, 5, 'map1'); // いる ばしょ
+
+  - label: まほうじん
+    description: ふむとビームが打てるようになるまほうじん
+    code: |
+      const item1 = rule.つくる('まほうじん');
+      item1.locate(9, 8, 'map1'); // いる ばしょ
