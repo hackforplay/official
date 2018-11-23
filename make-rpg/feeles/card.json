@@ -3,10 +3,7 @@
 		"visible": true,
 		"order": 1,
 		"frame": {
-			"size": [
-				480,
-				320
-			]
+			"size": [480, 320]
 		}
 	},
 	"ShotCard": {
@@ -24,7 +21,21 @@
 		"visible": true,
 		"order": 4,
 		"init": {
-			"fileName": "game.js"
+			"fileName": "game.js",
+			"tabs": [
+				{
+					"label": "ゲーム",
+					"filePath": "game.js"
+				},
+				{
+					"label": "マップ",
+					"filePath": "maps.js"
+				},
+				{
+					"label": "マドウショ",
+					"filePath": "code.js"
+				}
+			]
 		}
 	},
 	"ReadmeCard": {
