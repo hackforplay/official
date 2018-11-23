@@ -25,7 +25,7 @@
       item1.family = ('▼ ファミリー', Family.ドクリツ);
       item1.hp = 2;
       item1.atk = 1;
-      item1.locate(7, 5, 'map1');
+      item1.locate(10, 1, 'map1');
       item1.on(('▼ イベント', 'たおれたとき'), () => {
         Hack.score += 1;
       });
@@ -45,7 +45,7 @@
       item1.family = ('▼ ファミリー', Family.ドクリツ);
       item1.hp = 3;
       item1.atk = 1;
-      item1.locate(7, 5, 'map1');
+      item1.locate(13, 1, 'map1');
       item1.on(('▼ イベント', 'たおれたとき'), () => {
         Hack.score += 1;
       });
@@ -70,7 +70,7 @@
       item1.family = ('▼ ファミリー', Family.ドクリツ);
       item1.hp = 10;
       item1.atk = 1;
-      item1.locate(7, 5, 'map1');
+      item1.locate(8, 7, 'map1');
       item1.endless(async(self, count) => {
         await self.wait(4); // 少しやすむ
         await self.attack(); // こうげきする
@@ -87,7 +87,7 @@
       item1.family = ('▼ ファミリー', Family.ドクリツ);
       item1.hp = 10;
       item1.atk = 1;
-      item1.locate(7, 5, 'map1');
+      item1.locate(11, 7, 'map1');
       item1.scale(2); // 大きさ
       item1.breath({
         skin: ('▼ スキン', Skin.バクエン),
@@ -105,7 +105,7 @@
       item1.family = ('▼ ファミリー', Family.ドクリツ);
       item1.hp = 10;
       item1.atk = 1;
-      item1.locate(7, 5, 'map1');
+      item1.locate(7, 2, 'map1');
       item1.scale(2, 2);
       item1.endless(async(self, count) => {
         await self.attack(); // こうげきする
@@ -117,7 +117,7 @@
     code: |
       // ここからハート
       const item1 = new RPGObject(('▼ スキン', Skin.ハート));
-      item1.locate(7, 5, 'map1');
+      item1.locate(5, 6, 'map1');
       item1.on(('▼ イベント', 'ふまれた'), event => {
         event.item.hp += 1;
         item1.destroy();
@@ -130,7 +130,7 @@
     code: |
       // ここからコイン
       const item1 = new RPGObject(('▼ スキン', Skin.コイン));
-      item1.locate(7, 5, 'map1');
+      item1.locate(0, 0, 'map1');
       item1.velocity(1, 0);
       item1.force(0, 0.5);
       item1.onふれはじめた = () => {
@@ -145,7 +145,7 @@
     code: |
       // ここからスター
       const item1 = new RPGObject(('▼ スキン', Skin.スター));
-      item1.locate(7, 5, 'map1');
+      item1.locate(13, 6, 'map1');
       item1.on(('▼ イベント', 'ふまれた'), event => {
         event.item.damageTime = 100;
         item1.destroy();
@@ -171,7 +171,7 @@
     code: |
       // ここからダイヤモンド
       const item1 = new RPGObject(('▼ スキン', Skin.ダイヤモンド));
-      item1.locate(7, 5, 'map1');
+      item1.locate(11, 8, 'map1');
       item1.on(('▼ イベント', 'ふまれた'), event => {
         item1.destroy();
         Hack.score += 1;
@@ -184,7 +184,7 @@
     code: |
       // ここから色付きハート
       const item1 = new RPGObject(('▼ スキン', Skin.ハート));
-      item1.locate(7, 5, 'map1');
+      item1.locate(12, 1, 'map1');
       item1.color = ('▼ カラー', 'white');
       item1.on(('▼ イベント', 'ふまれた'), event => {
         event.item.hp += 1;
@@ -213,7 +213,7 @@
 
       // ここからゴールちてん
       const item1 = new RPGObject(('▼ スキン', Skin.キャッスル));
-      item1.locate(10, 5, 'map1');
+      item1.locate(12, 7, 'map1');
       item1.on(('▼ イベント', 'ふまれた'), event => {
         if (event.item === player) {
           Hack.gameclear(); // ゲームクリア
@@ -229,7 +229,7 @@
     code: |
       // ここから下りかいだん
       const item1 = new RPGObject(('▼ スキン', Skin.クダリカイダン));
-      item1.locate(7, 5, 'map1');
+      item1.locate(3, 1, 'map1');
       item1.layer = RPGMap.Layer.Under;
       item1.on(('▼ イベント', 'ふまれた'), event => {
         if (event.item === player) {
@@ -244,7 +244,7 @@
     code: |
       // ここからワープ
       const item1 = new RPGObject(('▼ スキン', Skin.ワープ));
-      item1.locate(7, 5, 'map1');
+      item1.locate(5, 5, 'map1');
       item1.layer = RPGMap.Layer.Under;
       item1.on(('▼ イベント', 'ふまれた'), event => {
         event.item.locate(11, 5);
@@ -257,7 +257,7 @@
     code: |
       // ここからお花
       const item1 = new RPGObject(('▼ スキン', Skin.フラワー));
-      item1.locate(7, 5, 'map1');
+      item1.locate(2, 5, 'map1');
       item1.layer = RPGMap.Layer.Under;
       item1.collisionFlag = false;
       item1.on(('▼ イベント', 'こうげきされた'), () => {
@@ -272,7 +272,7 @@
       // ここから木
       const item1 = new RPGObject(('▼ スキン', Skin.ツリー));
       item1.family = ('▼ ファミリー', Family.マップ);
-      item1.locate(7, 5, 'map1');
+      item1.locate(5, 3, 'map1');
       item1.hp = 1;
       // ここまで木
     image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-26-0.png
@@ -283,7 +283,7 @@
       // ここからバクダン岩
       const item1 = new RPGObject(('▼ スキン', Skin.ロック));
       item1.family = ('▼ ファミリー', Family.マップ);
-      item1.locate(7, 5, 'map1');
+      item1.locate(8, 5, 'map1');
       item1.on(('▼ イベント', 'こうげきされた'), () => {
         const バクエン = item1.summon(('▼ スキン', Skin.バクエン));
         バクエン.mod(Hack.createDamageMod(1)); // ダメージオブジェクトにする
@@ -299,7 +299,7 @@
     code: |
       // ここからふしぎなかべ
       const item1 = new RPGObject(('▼ スキン', Skin.クレイ));
-      item1.locate(7, 5, 'map1');
+      item1.locate(5, 4, 'map1');
       item1.opacity = 0.5;
       // ここまでふしぎなかべ
     image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-17-0.png
@@ -309,7 +309,7 @@
     code: |
       // ここからしゃべるかべ
       const item1 = new RPGObject(('▼ スキン', Skin.ストーン));
-      item1.locate(7, 5, 'map1');
+      item1.locate(13, 5, 'map1');
       item1.on(('▼ イベント', 'こうげきされた'), () => {
         Hack.log('どうだ　おれさまは　かたいだろう！');
       });
@@ -321,7 +321,7 @@
     code: |
       // ここからたからばこ
       const item1 = new RPGObject(('▼ スキン', Skin.トレジャーボックス));
-      item1.locate(7, 5, 'map1');
+      item1.locate(14, 3, 'map1');
       item1.onこうげきされた = () => {
         delete item1.onこうげきされた;
         item1.mod(('▼ スキン', Skin.トレジャーボックス2));
@@ -334,7 +334,7 @@
     code: |
       // ここからタタリ
       const item1 = new RPGObject(('▼ スキン', Skin.ドクロ));
-      item1.locate(7, 5, 'map1');
+      item1.locate(7, 8, 'map1');
       item1.on(('▼ イベント', 'ふまれた'), event => {
         event.item.hp = 0;
       });
@@ -346,7 +346,7 @@
     code: |
       // ここからツボ
       const item1 = new RPGObject(('▼ スキン', Skin.ツボ));
-      item1.locate(7, 5, 'map1');
+      item1.locate(8, 4, 'map1');
       item1.on(('▼ イベント', 'こうげきされた'), () => {
         // ランダムなアイテムをだす
         const なかみ = item1.summon(
@@ -371,7 +371,7 @@
     code: |
       // ここから女の人
       const item1 = new RPGObject(('▼ スキン', Skin.ウーマン));
-      item1.locate(7, 5, 'map1');
+      item1.locate(4, 3, 'map1');
       item1.on(('▼ イベント', 'ぶつかった'), () => {
         Hack.log('こんにちは。ここは 1F です');
       });
@@ -383,7 +383,7 @@
     code: |
       // ここから男の子
       const item1 = new RPGObject(('▼ スキン', Skin.ボーイ));
-      item1.locate(7, 5, 'map1');
+      item1.locate(0, 1, 'map1');
       item1.on(('▼ イベント', 'ぶつかった'), () => {
         item1.turn();
       });
@@ -399,7 +399,7 @@
     code: |
       // ここからわな
       const item1 = new RPGObject(('▼ スキン', Skin.トラップ));
-      item1.locate(7, 5, 'map1');
+      item1.locate(4, 5, 'map1');
       item1.layer = RPGMap.Layer.Under;
       item1.on(('▼ イベント', 'ふまれた'), event => {
         item1.mod(('▼ スキン', Skin.トラップ2));
@@ -418,7 +418,7 @@
       // ここかられんぞくわな
       for (let x = 4; x <= 10; x++) {
         const item1 = new RPGObject(('▼ スキン', Skin.トラップ));
-        item1.locate(x, 5, 'map1');
+        item1.locate(x, 7, 'map1');
         item1.layer = RPGMap.Layer.Under;
         item1.on(('▼ イベント', 'ふまれた'), event => {
           item1.mod(('▼ スキン', Skin.トラップ2));
@@ -437,7 +437,7 @@
     code: |
       // ここから上りかいだん
       const item1 = new RPGObject(('▼ スキン', Skin.ノボリカイダン));
-      item1.locate(7, 5, 'map2');
+      item1.locate(1, 5, 'map2');
       item1.layer = RPGMap.Layer.Under;
       item1.on(('▼ イベント', 'ふまれた'), event => {
         if (event.item === player) {
@@ -453,7 +453,7 @@
       // ここからじげんばくだん
       const item1 = new RPGObject(('▼ スキン', Skin.ボム));
       item1.family = ('▼ ファミリー', Family.マップ);
-      item1.locate(7, 5, 'map1');
+      item1.locate(4, 6, 'map1');
       item1.setTimeout(() => {
         const バクエン = item1.summon(('▼ スキン', Skin.バクエン));
         バクエン.velocityY = -1;
@@ -469,7 +469,7 @@
     code: |
       // ここからまほうじん
       const item1 = new RPGObject(('▼ スキン', Skin.マホウジン));
-      item1.locate(7, 5, 'map1');
+      item1.locate(12, 4, 'map1');
       item1.layer = RPGMap.Layer.Under;
       item1.on(('▼ イベント', 'ふまれた'), event => {
         if (Hack.score >= 7) {
@@ -484,7 +484,7 @@
     code: |
       // ここからスコアでひらく たからばこ
       const item1 = new RPGObject(('▼ スキン', Skin.トレジャーボックス));
-      item1.locate(7, 5, 'map1');
+      item1.locate(8, 9, 'map1');
       item1.on(('▼ イベント', 'こうげきされた'), () => {
         if (Hack.score < 5) {
           Hack.log('たからばこは びくともしない ');
@@ -502,7 +502,7 @@
     code: |
       // ここからお花屋さん
       const item1 = new RPGObject(('▼ スキン', Skin.ガール));
-      item1.locate(7, 5, 'map1');
+      item1.locate(10, 4, 'map1');
       item1.on(('▼ イベント', 'ぶつかった'), () => {
         if (Hack.score < 100) {
           Hack.log('おはなは100エンです。おカネが たりないよ。');
@@ -524,9 +524,9 @@
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/おはなやさん'
   - label: ルーレット
     code: |
-      // ここからおはなを うっている 女の子
+      // ここからルーレット
       const item1 = new RPGObject(('▼ スキン', Skin.ルビー));
-      item1.locate(7, 5, 'map1');
+      item1.locate(11, 3, 'map1');
       item1.うごいている = ('▼ フラグ', false);
       item1.on(('▼ イベント', 'こうげきされた'), () => {
         // うごいているかどうかを逆にする
@@ -566,7 +566,7 @@
         // くりかえし
         next();
       };
-      // ここまでおはなを うっている 女の子
+      // ここまでルーレット
     image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-28-2.png
     description: こうげきすると、ルーレットがはじまる
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/ルーレット'
@@ -576,7 +576,7 @@
       const item1 = new RPGObject(('▼ スキン', Skin.バクエン));
       item1.mod(Hack.createDamageMod(item1.atk)); // ダメージオブジェクトにする
       item1.family = ('▼ ファミリー', Family.マップ);
-      item1.locate(7, 5, 'map1');
+      item1.locate(7, 6, 'map1');
       item1.velocityY = -1;
       item1.destroy(20);
       // ここまでバクエン
