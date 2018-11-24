@@ -194,18 +194,6 @@
     image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/colorful.png
     description: ほかにも blue や orange など、さまざまな色がつかえる
     descriptionMoreURL: 'https://github.com/Feeles/IDE/wiki/色付きハート'
-  - label: マドウショ
-    code: |
-      // ここからマドウショ
-      const item1 = new RPGObject(('▼ スキン', Skin.マドウショ));
-      item1.locate(7, 5);
-      item1.on(('▼ イベント', 'ふまれた'), event => {
-        feeles.openCode('code.js'); // マドウショのコードをひらく
-        item1.destroy(); // なくなる
-      });
-      // ここまでマドウショ
-    image: hackforplay/enchantbook.png
-    description: マドウショを使えるようにする。マドウショのコードは code.js で書きかえることができる
 せっち:
   - label: ゴールちてん
     code: |
@@ -749,3 +737,14 @@
         }
       }
       // ここから二重くりかえし
+  - label: マドウショ
+    description: マドウショを使えるようにする。マドウショのコードは code.js で書きかえることができる
+    code: |
+      // ここからマドウショ
+      const item1 = new RPGObject(('▼ スキン', Skin.マドウショ));
+      item1.locate(7, 5);
+      item1.on(('▼ イベント', 'ふまれた'), event => {
+        feeles.openCode('code.js'); // マドウショのコードをひらく
+        item1.destroy(); // なくなる
+      });
+      // ここまでマドウショ
