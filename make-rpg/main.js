@@ -2,7 +2,7 @@ import {
 	enchant,
 	Hack,
 	register
-} from 'https://unpkg.com/@hackforplay/common@^0.9';
+} from 'https://unpkg.com/@hackforplay/common@^0.10';
 
 import gameFunc from './game';
 import maps from './maps';
