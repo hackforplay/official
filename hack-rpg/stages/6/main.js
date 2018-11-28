@@ -1,8 +1,4 @@
-import {
-	enchant,
-	Hack,
-	register
-} from 'https://unpkg.com/@hackforplay/common@^0.10';
+import { enchant, Hack, register } from 'http://localhost:8080/main.js';
 import main2 from './main2';
 import main3 from './main3';
 import main4 from './main4';

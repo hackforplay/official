@@ -1,8 +1,4 @@
-import {
-	enchant,
-	Hack,
-	register
-} from 'https://unpkg.com/@hackforplay/common@^0.10';
+import { enchant, Hack, register } from 'http://localhost:8080/main.js';
 import createMap from './maps';
 import extra, { flag } from '../extra';
 import { prepareUtils } from '../../utils';
