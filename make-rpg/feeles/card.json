@@ -58,7 +58,7 @@
 		"order": 8
 	},
 	"HierarchyCard": {
-		"visible": true,
+		"visible": false,
 		"order": 9
 	},
 	"CustomizeCard": {
