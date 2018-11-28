@@ -21,10 +21,10 @@
 		"visible": true,
 		"order": 4,
 		"init": {
-			"filePath": "game.js",
+			"fileName": "game.js",
 			"tabs": [
 				{
-					"label": "ステージ",
+					"label": "ゲーム",
 					"filePath": "game.js"
 				},
 				{
@@ -58,7 +58,7 @@
 		"order": 8
 	},
 	"HierarchyCard": {
-		"visible": false,
+		"visible": true,
 		"order": 9
 	},
 	"CustomizeCard": {

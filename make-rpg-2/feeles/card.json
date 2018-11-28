@@ -3,7 +3,10 @@
 		"visible": true,
 		"order": 1,
 		"frame": {
-			"size": [480, 320]
+			"size": [
+				480,
+				320
+			]
 		}
 	},
 	"ShotCard": {
@@ -21,64 +24,11 @@
 		"visible": true,
 		"order": 4,
 		"init": {
-			"filePath": "game.js",
-			"tabs": [
-				{
-					"label": "ステージ",
-					"filePath": "game.js"
-				},
-				{
-					"label": "マップ",
-					"filePath": "maps.js"
-				},
-				{
-					"label": "キャラクター",
-					"tabs": [
-						{ "label": "プレイヤー", "filePath": "assets/player.js" },
-						{ "label": "スライム", "filePath": "assets/slime.js" },
-						{ "label": "イモムシ", "filePath": "assets/caterpillar.js" },
-						{ "label": "コウモリ", "filePath": "assets/bat.js" },
-						{ "label": "ドラゴン", "filePath": "assets/dragon.js" },
-						{ "label": "ミノタウルス", "filePath": "assets/minotaur.js" },
-						{ "label": "ウロボロス", "filePath": "assets/snake.js" },
-						{ "label": "サモナー", "filePath": "assets/summoner.js" }
-					]
-				},
-				{
-					"label": "アイテム",
-					"tabs": [
-						{ "label": "コイン", "filePath": "assets/coin.js" },
-						{ "label": "ゴール", "filePath": "assets/goal.js" },
-						{ "label": "ハート", "filePath": "assets/heart.js" },
-						{ "label": "スター", "filePath": "assets/star.js" },
-						{ "label": "かいだん", "filePath": "assets/stair.js" },
-						{ "label": "たからばこ", "filePath": "assets/treasure.js" },
-						{ "label": "かぎ（きいろ）", "filePath": "assets/key-yellow.js" },
-						{
-							"label": "ゲート（きいろ）",
-							"filePath": "assets/gate-yellow.js"
-						},
-						{ "label": "ワープ", "filePath": "assets/warp.js" },
-						{ "label": "まほうじん", "filePath": "assets/magic-circle.js" }
-					]
-				},
-				{
-					"label": "スキル",
-					"tabs": [
-						{ "label": "ばくだん", "filePath": "assets/bomb.js" },
-						{ "label": "ばくはつ", "filePath": "assets/explosion.js" },
-						{ "label": "ビーム", "filePath": "assets/beam.js" }
-					]
-				},
-				{
-					"label": "マドウショ",
-					"filePath": "code.js"
-				}
-			]
+			"fileName": "game.js"
 		}
 	},
 	"ReadmeCard": {
-		"visible": false,
+		"visible": true,
 		"order": 5,
 		"init": {
 			"fileName": "README.md"
@@ -97,7 +47,7 @@
 		"order": 8
 	},
 	"HierarchyCard": {
-		"visible": false,
+		"visible": true,
 		"order": 9
 	},
 	"CustomizeCard": {
