@@ -78,7 +78,7 @@
 		}
 	},
 	"ReadmeCard": {
-		"visible": true,
+		"visible": false,
 		"order": 5,
 		"init": {
 			"fileName": "README.md"
@@ -97,7 +97,7 @@
 		"order": 8
 	},
 	"HierarchyCard": {
-		"visible": true,
+		"visible": false,
 		"order": 9
 	},
 	"CustomizeCard": {
