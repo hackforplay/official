@@ -1,4 +1,4 @@
-import 'http://localhost:8080/register.js';
+import 'https://unpkg.com/@hackforplay/common@^0.10/dist/register';
 
 // ここからゲームがはじまったときのルール
 rule.ゲームがはじまったとき(async function() {
