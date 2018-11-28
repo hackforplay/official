@@ -63,12 +63,6 @@
       const item1 = rule.つくる('スター');
       item1.locate(14, 8, 'map1'); // いる ばしょ
 
-  - label: ふしぎなカギ
-    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-28-7.png
-    description: いつも ちがうところに でてくる ふしぎなかぎ。なにかと くみあわせて つかえそうだ
-    code: |
-      const item1 = rule.つくる('ふしぎなカギ');
-
   - label: ゴールちてん
     image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-25-0.png
     description: あなたのかえりを まちわびている おしろ。ここへ たどりつくと ゲームクリアになる
