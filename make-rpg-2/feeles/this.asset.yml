@@ -5,19 +5,19 @@
 
   - label: 上を向く
     description: 向きを上にする
-    code: this.forward = [0, -1]; // 向きを上にする
+    code: this.dir = ('▼ むき', Dir.うえ); // 向きを上にする
 
   - label: 右を向く
     description: 向きを右にする
-    code: this.forward = [1, 0]; // 向きを右にする
+    code: this.dir = ('▼ むき', Dir.みぎ); // 向きを右にする
 
   - label: 下を向く
     description: 向きを下にする
-    code: this.forward = [0, 1]; // 向きを下にする
+    code: this.dir = ('▼ むき', Dir.した); // 向きを下にする
 
   - label: 左を向く
     description: 向きを左にする
-    code: this.forward = [-1, 0]; // 向きを左にする
+    code: this.dir = ('▼ むき', Dir.ひだり); // 向きを左にする
 
   - label: 見た目
     description: 見た目をかえる
@@ -50,19 +50,19 @@
 
   - label: 上を向く
     description: 向きを上にする
-    code: item.forward = [0, -1]; // 向きを上にする
+    code: item.dir = ('▼ むき', Dir.うえ); // 向きを上にする
 
   - label: 右を向く
     description: 向きを右にする
-    code: item.forward = [1, 0]; // 向きを右にする
+    code: item.dir = ('▼ むき', Dir.みぎ); // 向きを右にする
 
   - label: 下を向く
     description: 向きを下にする
-    code: item.forward = [0, 1]; // 向きを下にする
+    code: item.dir = ('▼ むき', Dir.した); // 向きを下にする
 
   - label: 左を向く
     description: 向きを左にする
-    code: item.forward = [-1, 0]; // 向きを左にする
+    code: item.dir = ('▼ むき', Dir.ひだり); // 向きを左にする
 
   - label: 見た目
     description: 見た目をかえる
