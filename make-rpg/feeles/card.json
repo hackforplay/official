@@ -21,10 +21,10 @@
 		"visible": true,
 		"order": 4,
 		"init": {
-			"fileName": "game.js",
+			"filePath": "game.js",
 			"tabs": [
 				{
-					"label": "ゲーム",
+					"label": "ステージ",
 					"filePath": "game.js"
 				},
 				{
