@@ -1,0 +1,13 @@
+むき:
+  - label: がめんの うえを向く
+    body: Dir.うえ
+  - label: がめんの みぎを向く
+    body: Dir.みぎ
+  - label: がめんの したを向く
+    body: Dir.した
+  - label: がめんの ひだりを向く
+    body: Dir.ひだり
+  - label: ４方向のいずれかを向く
+    body: Dir.ランダム
+  # - label: ８方向のいずれかを向く
+  #   body: Dir.ランダム8
