@@ -1,6 +1,6 @@
 import '../game';
 
-rule.this = 'ばくだん';
+rule.this = 'ボム';
 
 rule.つくられたとき(async function() {
 	this.mod(('▼ スキン', Skin.ボム)); // 見た目をきめる
@@ -8,9 +8,9 @@ rule.つくられたとき(async function() {
 	await this.wait(3); // この秒数だけまつ
 
 	const item1 = this.しょうかんする('ばくはつ'); // ばくはつ を おこす
-	item1.locate(this.mapX, this.mapY); // ばくだんと同じ場所にする
+	item1.locate(this.mapX, this.mapY); // ボムと同じ場所にする
 	item1.atk = this.atk;
-	this.destroy(); // ばくだん を けす
+	this.destroy(); // ボム を けす
 	/*+ つくられたとき */
 });
 
