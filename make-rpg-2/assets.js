@@ -22,7 +22,7 @@ import './assets/player';
 import './assets/princess';
 import './assets/slime';
 import './assets/snake';
-import './assets/stair';
+import './assets/stairs';
 import './assets/star';
 import './assets/tbox-blue';
 import './assets/tbox-green';
