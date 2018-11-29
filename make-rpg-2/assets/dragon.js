@@ -7,13 +7,13 @@ rule.つくられたとき(async function() {
 	this.family = ('▼ ファミリー', Family.ドクリツ); // ファミリーを決める
 	this.hp = 10; // 体力を決める
 	this.atk = 1; // こうげき力を決める
-	this.scale(2); // 大きさ
-	this.breath({
-		skin: ('▼ スキン', Skin.バクエン), // ブレスの見た目をきめる
-		speed: 5,
-		scale: 1
-	});
 	/*+ つくられたとき */
+});
+
+rule.つねに(async function() {
+	await this.attack(); // こうげきする
+	await this.wait(1); // やすむ
+	/*+ つねに */
 });
 
 rule.たおされたとき(async function() {
