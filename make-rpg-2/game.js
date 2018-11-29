@@ -4,9 +4,8 @@ import 'http://localhost:8080/register.js';
 rule.ゲームがはじまったとき(async function() {
 	Hack.changeMap('map1'); // map1 をロード
 	
-	const player = rule.つくる('プレイヤー');
+	const player = rule.つくる('プレイヤー', 3, 5, 'map1', ('▼ むき', Dir.した));
 	window.player = player;
-	player.locate(3, 5); // いる ばしょ
 	
 	/*+ キャラクター アイテム */
 });
