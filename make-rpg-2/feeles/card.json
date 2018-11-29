@@ -30,12 +30,12 @@
 				{
 					"label": "キャラクター",
 					"tabs": [
+						{ "label": "プレイヤー", "filePath": "assets/player.js" },
+						{ "label": "スライム", "filePath": "assets/slime.js" },
 						{ "label": "ドラゴン", "filePath": "assets/dragon.js" },
 						{ "label": "しにがみ", "filePath": "assets/grim-reaper.js" },
-						{ "label": "プレイヤー", "filePath": "assets/player.js" },
 						{ "label": "リザードマン", "filePath": "assets/lizardman.js" },
 						{ "label": "プリンセス", "filePath": "assets/princess.js" },
-						{ "label": "スライム", "filePath": "assets/slime.js" },
 						{ "label": "ウィザード", "filePath": "assets/wizard.js" }
 					]
 				},
@@ -67,7 +67,9 @@
 						{
 							"label": "たからばこ_イエロー",
 							"filePath": "assets/tbox-yellow.js"
-						}
+						},
+						{ "label": "ばくはつ", "filePath": "assets/explosion.js" },
+						{ "label": "まほうじん", "filePath": "assets/magic-circle.js" }
 					]
 				},
 				{
