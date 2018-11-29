@@ -3,6 +3,7 @@ import './assets/beam';
 import './assets/bomb';
 import './assets/caterpillar';
 import './assets/coin';
+import './assets/diamond';
 import './assets/dragon';
 import './assets/explosion';
 import './assets/gate-yellow';
