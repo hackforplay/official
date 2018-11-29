@@ -19,6 +19,7 @@ import './assets/lizardman';
 import './assets/magic-circle';
 import './assets/minotaur';
 import './assets/player';
+import './assets/princess';
 import './assets/slime';
 import './assets/snake';
 import './assets/stair';
