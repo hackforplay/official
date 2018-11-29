@@ -11,7 +11,8 @@ rule.つくられたとき(function() {
 });
 
 rule.つねに(async function() {
-	await this.attack();
+	await this.attack(); // こうげきする
+	await this.wait(1); // やすむ
 	/*+ つねに */
 });
 
