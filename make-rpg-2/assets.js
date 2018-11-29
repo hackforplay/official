@@ -1,4 +1,3 @@
-import './assets/bat';
 import './assets/beam';
 import './assets/bomb';
 import './assets/caterpillar';
@@ -8,6 +7,7 @@ import './assets/dragon';
 import './assets/explosion';
 import './assets/gate-yellow';
 import './assets/goal';
+import './assets/grim-reaper';
 import './assets/heart';
 import './assets/key-yellow';
 import './assets/magic-circle';
