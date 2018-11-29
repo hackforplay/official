@@ -1,6 +1,5 @@
 import './assets/beam';
 import './assets/bomb';
-import './assets/caterpillar';
 import './assets/coin';
 import './assets/diamond';
 import './assets/dragon';
@@ -10,6 +9,7 @@ import './assets/goal';
 import './assets/grim-reaper';
 import './assets/heart';
 import './assets/key-yellow';
+import './assets/lizardman';
 import './assets/magic-circle';
 import './assets/minotaur';
 import './assets/player';
