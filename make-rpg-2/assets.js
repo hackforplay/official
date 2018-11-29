@@ -16,6 +16,6 @@ import './assets/slime';
 import './assets/snake';
 import './assets/stair';
 import './assets/star';
-import './assets/summoner';
+import './assets/wizard';
 import './assets/treasure';
 import './assets/warp';
