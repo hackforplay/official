@@ -72,6 +72,34 @@
     code: |
       rule.つくる('ダイヤモンド', 7, 5, 'map1');
 
+  - label: ワープ_ブルー
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/warp-b.png'
+    filePath: assets/warp-blue.js
+    code: |
+      const item1 = rule.つくる('ワープ_ブルー', 4, 1, 'map1');
+      item1.warpTo(4, 12, 'map1'); // ここへワープする
+
+  - label: ワープ_グリーン
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/warp-g.png'
+    filePath: assets/warp-green.js
+    code: |
+      const item1 = rule.つくる('ワープ_グリーン', 5, 1, 'map1');
+      item1.warpTo(5, 12, 'map1'); // ここへワープする
+
+  - label: ワープ_レッド
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/warp-r.png'
+    filePath: assets/warp-red.js
+    code: |
+      const item1 = rule.つくる('ワープ_レッド', 6, 1, 'map1');
+      item1.warpTo(6, 12, 'map1'); // ここへワープする
+
+  - label: ワープ_イエロー
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/warp-y.png'
+    filePath: assets/warp-yellow.js
+    code: |
+      const item1 = rule.つくる('ワープ_イエロー', 7, 1, 'map1');
+      item1.warpTo(7, 12, 'map1'); // ここへワープする
+
   - label: ゲート_ブルー
     image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/gate_b_c.png'
     filePath: assets/gate-blue.js
