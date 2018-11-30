@@ -167,7 +167,7 @@
     filePath: assets/stair.js
     code: |
       const item1 = rule.つくる('かいだん', 12, 5, 'map1');
-      item1.warpTo(4, 5, 'map1'); // ここに でる
+      item1.warpTo(4, 5, 'map2'); // ここに でる
 
   - label: スター
     image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/star.png'
