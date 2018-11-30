@@ -202,8 +202,9 @@
   - label: ビーム
     image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/beam.png'
     filePath: assets/beam.js
+    description: プレイヤーが ビームを うてるように なる
     code: |
-      rule.つくる('ビーム', 7, 5, 'map1');
+      player.スキル = 'ビーム';
 
   - label: ばくはつ
     code: |
