@@ -4,14 +4,14 @@ rule.this = 'ゲート_ブルー';
 
 rule.つくられたとき(async function() {
 	this.mod(('▼ スキン', Skin.とじたゲート_ブルー)); // とじている
-	this.collisionFlag = true; // ふめないようにする
+	this.collisionFlag = true; // はいれないようにする
 	/*+ つくられたとき */
 });
 
 rule.item = 'かぎ_ブルー';
 rule.メッセージされたとき(async function() {
 	this.mod(('▼ スキン', Skin.ひらいたゲート_ブルー)); // ひらく！
-	this.collisionFlag = false; // ふめないようにする
+	this.collisionFlag = false; // はいれるようにする
 	/*+ メッセージされたとき */
 });
 
