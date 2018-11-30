@@ -54,11 +54,11 @@
     code: |
       rule.つくる('ゴールちてん', 7, 5, 'map1');
 
-  - label: ボム
+  - label: ばくだん
     image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/bomb.png'
     filePath: assets/bomb.js
     code: |
-      rule.つくる('ボム', 7, 5, 'map1');
+      rule.つくる('ばくだん', 7, 5, 'map1');
 
   - label: コイン
     image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/coin.png'

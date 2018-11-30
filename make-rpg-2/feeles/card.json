@@ -44,7 +44,7 @@
 					"tabs": [
 						{ "label": "ゴールちてん", "filePath": "assets/goal.js" },
 						{ "label": "ビーム", "filePath": "assets/beam.js" },
-						{ "label": "ボム", "filePath": "assets/bomb.js" },
+						{ "label": "ばくだん", "filePath": "assets/bomb.js" },
 						{ "label": "コイン", "filePath": "assets/coin.js" },
 						{ "label": "ダイヤモンド", "filePath": "assets/diamond.js" },
 						{ "label": "ゲート_ブルー", "filePath": "assets/gate-blue.js" },
