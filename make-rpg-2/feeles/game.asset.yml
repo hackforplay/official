@@ -214,6 +214,7 @@
     description: ばくはつ。ふれると１のダメージを受ける
 
   - label: まほうじん
+    image: https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/magic-circle-on.png
     filePath: assets/magic-circle.js
     description: ふむとビームが打てるようになるまほうじん
     code: |
