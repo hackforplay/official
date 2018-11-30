@@ -105,32 +105,32 @@
     filePath: assets/gate-blue.js
     description: つかうには かぎが ひつよう
     code: |
-      const item1 = rule.つくる('ゲート_ブルー', 4, 5, 'map1');
-      item1.warpTo(4, 2, 'map1'); // ここへワープする
+      const item1 = rule.つくる('ゲート_ブルー', 3, 5, 'map1');
+      item1.warpTo(3, 2, 'map3'); // ここへワープする
 
   - label: ゲート_グリーン
     image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/gate_g_c.png'
     filePath: assets/gate-green.js
     description: つかうには かぎが ひつよう
     code: |
-      const item1 = rule.つくる('ゲート_グリーン', 5, 5, 'map1');
-      item1.warpTo(5, 2, 'map1'); // ここへワープする
+      const item1 = rule.つくる('ゲート_グリーン', 4, 5, 'map1');
+      item1.warpTo(4, 2, 'map3'); // ここへワープする
 
   - label: ゲート_レッド
     image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/gate_r_c.png'
     filePath: assets/gate-red.js
     description: つかうには かぎが ひつよう
     code: |
-      const item1 = rule.つくる('ゲート_レッド', 6, 5, 'map1');
-      item1.warpTo(6, 2, 'map1'); // ここへワープする
+      const item1 = rule.つくる('ゲート_レッド', 5, 5, 'map1');
+      item1.warpTo(5, 2, 'map3'); // ここへワープする
 
   - label: ゲート_イエロー
     image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/gate_y_c.png'
     filePath: assets/gate-yellow.js
     description: つかうには かぎが ひつよう
     code: |
-      const item1 = rule.つくる('ゲート_イエロー', 7, 5, 'map1');
-      item1.warpTo(7, 2, 'map1'); // ここへワープする
+      const item1 = rule.つくる('ゲート_イエロー', 6, 5, 'map1');
+      item1.warpTo(6, 2, 'map3'); // ここへワープする
 
   - label: ハート
     image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/heart.png'
