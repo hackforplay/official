@@ -4,42 +4,42 @@
     filePath: assets/slime.js
     description: ムチのように からだをふりまわす、キケンなスライム
     code: |
-      rule.つくる('スライム', 8, 5, 'map1', ('▼ むき', Dir.ひだり));
+      rule.つくる('スライム', 8, 5, 'map1', ('▼ むき', Dir.した));
 
   - label: ドラゴン
     image: https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/dragon.png
     filePath: assets/dragon.js
     description: やつが この めいきゅうの あるじ 獄炎(ごくえん) の ドラゴン だ！
     code: |
-      rule.つくる('ドラゴン', 2, 8, 'map1', ('▼ むき', Dir.ひだり));
+      rule.つくる('ドラゴン', 2, 8, 'map1', ('▼ むき', Dir.した));
 
   - label: しにがみ
     image: https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/grim-reaper.png
     filePath: assets/grim-reaper.js
     description: プレイヤーを おってくる
     code: |
-      rule.つくる('しにがみ', 9, 2, 'map1', ('▼ むき', Dir.ひだり));
+      rule.つくる('しにがみ', 9, 2, 'map1', ('▼ むき', Dir.した));
 
   - label: リザードマン
     image: https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/lizardman.png
     filePath: assets/lizardman.js
     description: うろうろ する
     code: |
-      rule.つくる('リザードマン', 12, 5, 'map1', ('▼ むき', Dir.ひだり));
+      rule.つくる('リザードマン', 12, 5, 'map1', ('▼ むき', Dir.した));
 
   - label: プリンセス
     image: https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/princess.png
     filePath: assets/princess.js
     description: この人に はなしかければ ゲームクリア
     code: |
-      rule.つくる('プリンセス', 4, 8, 'map1', ('▼ むき', Dir.ひだり));
+      rule.つくる('プリンセス', 4, 8, 'map1', ('▼ むき', Dir.した));
 
   - label: ウィザード
     image: https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/wizard.png
     filePath: assets/wizard.js
     description: スライムを しょうかんする
     code: |
-      rule.つくる('ウィザード', 6, 8, 'map1', ('▼ むき', Dir.ひだり));
+      rule.つくる('ウィザード', 6, 8, 'map1', ('▼ むき', Dir.した));
 
   - label: プレイヤー
     image: https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/knight-male.png
