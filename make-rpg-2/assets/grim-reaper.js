@@ -1,9 +1,9 @@
 import '../game';
 
-rule.this = 'コウモリ';
+rule.this = 'しにがみ';
 
 rule.つくられたとき(async function() {
-	this.mod(('▼ スキン', Skin.コウモリ)); // 見た目をきめる
+	this.mod(('▼ スキン', Skin.しにがみ)); // 見た目をきめる
 	this.family = ('▼ ファミリー', Family.ドクリツ); // ファミリーを決める
 	this.hp = 3; // 体力を決める
 	this.atk = 1; // こうげき力を決める

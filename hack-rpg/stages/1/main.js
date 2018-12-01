@@ -1,8 +1,4 @@
-import {
-	enchant,
-	Hack,
-	register
-} from 'https://unpkg.com/@hackforplay/common@^0.9';
+import { enchant, Hack, register } from '__FEELES_COMMON_INDEX__';
 
 import extra from '../extra';
 import createMap from './maps';
@@ -92,23 +88,21 @@ function gameStart() {
 	player.once('becomeattack', () => {
 		attacked = true;
 	});
-	Hack.logFunc(
-		next =>
-			attacked
-				? next()
-				: `
+	Hack.logFunc(next =>
+		attacked
+			? next()
+			: `
 スペースキーを おして
 こうげき してみよう`
 	);
 
 	// そうさせつめい (3)
-	Hack.logFunc(
-		next =>
-			item1.hp >= 3
-				? `
+	Hack.logFunc(next =>
+		item1.hp >= 3
+			? `
 スライムに ちかづいて
 こうげき してみよう！`
-				: next()
+			: next()
 	);
 
 	// そうさせつめい (4)

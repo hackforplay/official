@@ -1,16 +1,16 @@
 import '../game';
 
-rule.this = 'かぎ_イエロー';
+rule.this = 'かぎ_ブルー';
 
 rule.つくられたとき(async function() {
-	this.mod(('▼ スキン', Skin.かぎ_イエロー)); // 見た目をかえる
+	this.mod(('▼ スキン', Skin.かぎ_ブルー)); // 見た目をかえる
 	/*+ つくられたとき */
 });
 
 rule.item = 'プレイヤー';
 rule.ふまれたとき(async function(item) {
-	this.message('ゲート_イエロー'); // ゲート_イエローをひらく
-	Hack.log('きいろの ゲートが ひらいた！');
+	this.message('ゲート_ブルー'); // ゲート_ブルーをひらく
+	Hack.log('あおい ゲートが ひらいた！');
 	this.destroy(); // このアイテムを消す
 	/*+ ふまれたとき */
 });

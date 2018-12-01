@@ -3,10 +3,7 @@
 		"visible": true,
 		"order": 1,
 		"frame": {
-			"size": [
-				480,
-				320
-			]
+			"size": [480, 320]
 		}
 	},
 	"ShotCard": {
@@ -24,11 +21,66 @@
 		"visible": true,
 		"order": 4,
 		"init": {
-			"fileName": "game.js"
+			"fileName": "game.js",
+			"tabs": [
+				{
+					"label": "ステージ",
+					"filePath": "game.js"
+				},
+				{
+					"label": "キャラクター",
+					"tabs": [
+						{ "label": "プレイヤー", "filePath": "assets/player.js" },
+						{ "label": "スライム", "filePath": "assets/slime.js" },
+						{ "label": "ドラゴン", "filePath": "assets/dragon.js" },
+						{ "label": "しにがみ", "filePath": "assets/grim-reaper.js" },
+						{ "label": "リザードマン", "filePath": "assets/lizardman.js" },
+						{ "label": "プリンセス", "filePath": "assets/princess.js" },
+						{ "label": "ウィザード", "filePath": "assets/wizard.js" }
+					]
+				},
+				{
+					"label": "アイテム",
+					"tabs": [
+						{ "label": "ゴールちてん", "filePath": "assets/goal.js" },
+						{ "label": "ビーム", "filePath": "assets/beam.js" },
+						{ "label": "ばくだん", "filePath": "assets/bomb.js" },
+						{ "label": "コイン", "filePath": "assets/coin.js" },
+						{ "label": "ダイヤモンド", "filePath": "assets/diamond.js" },
+						{ "label": "ゲート_ブルー", "filePath": "assets/gate-blue.js" },
+						{ "label": "ゲート_グリーン", "filePath": "assets/gate-green.js" },
+						{ "label": "ゲート_レッド", "filePath": "assets/gate-red.js" },
+						{ "label": "ゲート_イエロー", "filePath": "assets/gate-yellow.js" },
+						{ "label": "ハート", "filePath": "assets/heart.js" },
+						{ "label": "かぎ_ブルー", "filePath": "assets/key-blue.js" },
+						{ "label": "かぎ_グリーン", "filePath": "assets/key-green.js" },
+						{ "label": "かぎ_レッド", "filePath": "assets/key-red.js" },
+						{ "label": "かぎ_イエロー", "filePath": "assets/key-yellow.js" },
+						{ "label": "かいだん", "filePath": "assets/stair.js" },
+						{ "label": "スター", "filePath": "assets/star.js" },
+						{ "label": "たからばこ_ブルー", "filePath": "assets/tbox-blue.js" },
+						{
+							"label": "たからばこ_グリーン",
+							"filePath": "assets/tbox-green.js"
+						},
+						{ "label": "たからばこ_レッド", "filePath": "assets/tbox-red.js" },
+						{
+							"label": "たからばこ_イエロー",
+							"filePath": "assets/tbox-yellow.js"
+						},
+						{ "label": "ばくはつ", "filePath": "assets/explosion.js" },
+						{ "label": "まほうじん", "filePath": "assets/magic-circle.js" }
+					]
+				},
+				{
+					"label": "マップ",
+					"filePath": "maps.js"
+				}
+			]
 		}
 	},
 	"ReadmeCard": {
-		"visible": true,
+		"visible": false,
 		"order": 5,
 		"init": {
 			"fileName": "README.md"
@@ -47,7 +99,7 @@
 		"order": 8
 	},
 	"HierarchyCard": {
-		"visible": true,
+		"visible": false,
 		"order": 9
 	},
 	"CustomizeCard": {

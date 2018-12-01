@@ -8,6 +8,26 @@ const config = loadConfig();
 const port = process.env.PORT || config.port;
 const dist = 'public/';
 
+/**
+ * Feeles で使える環境変数. これらの文字を "文字列としてリプレイス" する (import のロード先にも使える)
+ * process.env.__FEELES_COMMON_REGISTER__: @hackforplay/common の register.js
+ * process.env.__FEELES_COMMON_INDEX__: @hackforplay/common の index.js
+ * process.env.__FEELES_NODE_ENV__: process.env.NODE_ENV
+ */
+if (!process.env.NODE_ENV) {
+	// 開発用
+	process.env.__FEELES_NODE_ENV__ = `'development'`;
+	process.env.__FEELES_COMMON_REGISTER__ = 'http://localhost:8080/register.js'
+	process.env.__FEELES_COMMON_INDEX__ = 'http://localhost:8080/main.js'
+} else {
+	// 本番デプロイ用
+	process.env.__FEELES_NODE_ENV__ = JSON.stringify(process.env.NODE_ENV);
+	if (!process.env.__FEELES_COMMON_REGISTER__)
+		throw new Error('process.env.__FEELES_COMMON_REGISTER__ is not set');
+	if (!process.env.__FEELES_COMMON_INDEX__)
+		throw new Error('process.env.__FEELES_COMMON_INDEX__ is not set');
+}
+
 
 module.exports = {
 	mode: process.env.NODE_ENV || 'development',

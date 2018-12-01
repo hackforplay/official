@@ -20,19 +20,19 @@
 
   - label: 上を向く
     description: 向きを上にする
-    code: this.forward = [0, -1]; // 自分の向きを上にする
+    code: this.dir = ('▼ むき', Dir.うえ); // 自分の向きを上にする
 
   - label: 右を向く
     description: 向きを右にする
-    code: this.forward = [1, 0]; // 自分の向きを右にする
+    code: this.dir = ('▼ むき', Dir.みぎ); // 自分の向きを右にする
 
   - label: 下を向く
     description: 向きを下にする
-    code: this.forward = [0, 1]; // 自分の向きを下にする
+    code: this.dir = ('▼ むき', Dir.した); // 自分の向きを下にする
 
   - label: 左を向く
     description: 向きを左にする
-    code: this.forward = [-1, 0]; // 自分の向きを左にする
+    code: this.dir = ('▼ むき', Dir.ひだり); // 自分の向きを左にする
 
   - label: 見た目
     description: 見た目をかえる
@@ -60,31 +60,31 @@
 
   - label: いち(相手)
     description: いちをかえる
-    code: item.locate(7, 5); 相手のいちをかえる
+    code: item.locate(7, 5); // 相手のいちをかえる
 
   - label: 上を向く(相手)
     description: 向きを上にする
-    code: item.forward = [0, -1]; 相手の向きを上にする
+    code: item.dir = ('▼ むき', Dir.うえ); // 相手の向きを上にする
 
   - label: 右を向く(相手)
     description: 向きを右にする
-    code: item.forward = [1, 0]; 相手の向きを右にする
+    code: item.dir = ('▼ むき', Dir.みぎ); // 相手の向きを右にする
 
   - label: 下を向く(相手)
     description: 向きを下にする
-    code: item.forward = [0, 1]; 相手の向きを下にする
+    code: item.dir = ('▼ むき', Dir.した); // 相手の向きを下にする
 
   - label: 左を向く(相手)
     description: 向きを左にする
-    code: item.forward = [-1, 0]; 相手の向きを左にする
+    code: item.dir = ('▼ むき', Dir.ひだり); // 相手の向きを左にする
 
   - label: 見た目(相手)
     description: 見た目をかえる
-    code: item.mod(('▼ スキン', Skin.ナイト)); 相手の見た目をかえる
+    code: item.mod(('▼ スキン', Skin.ナイト)); // 相手の見た目をかえる
 
   - label: 削除(相手)
     description: 削除する
-    code: item.destroy(); 相手を削除する
+    code: item.destroy(); // 相手を削除する
 
   - label: 攻撃(相手)
     description: 攻撃する

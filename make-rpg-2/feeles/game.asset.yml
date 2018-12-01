@@ -1,154 +1,221 @@
 キャラクター:
   - label: スライム
+    image: https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/slime.png
     filePath: assets/slime.js
-    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/slime.gif
     description: ムチのように からだをふりまわす、キケンなスライム
     code: |
-      const item1 = rule.つくる('スライム');
-      item1.locate(8, 5, 'map1'); // いる ばしょ
-
-  - label: イモムシ
-    filePath: assets/caterpillar.js
-    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/insect.gif
-    description: にげあしは おいらの とくぎなのさ。すばやく walk() して  turn() するのが ひけつさ
-    code: |
-      const item1 = rule.つくる('イモムシ');
-      item1.locate(12, 5, 'map1'); // いる ばしょ
-
-  - label: コウモリ
-    filePath: assets/bat.js
-    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/bat.gif
-    description: ねらいをつけて おそってくる おそろしいコウモリ。 ターゲットに、むかってくる らしい
-    code: |
-      const item1 = rule.つくる('コウモリ');
-      item1.locate(9, 2, 'map1'); // いる ばしょ
+      rule.つくる('スライム', 8, 5, 'map1', ('▼ むき', Dir.した));
 
   - label: ドラゴン
+    image: https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/dragon.png
     filePath: assets/dragon.js
-    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/dragon.gif
     description: やつが この めいきゅうの あるじ 獄炎(ごくえん) の ドラゴン だ！
     code: |
-      const item1 = rule.つくる('ドラゴン');
-      item1.locate(2, 8, 'map1'); // いる ばしょ
+      rule.つくる('ドラゴン', 2, 8, 'map1', ('▼ むき', Dir.した));
 
-  - label: ウロボロス
-    filePath: assets/snake.js
-    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/ouroboros.gif
-    description: ４秒おきに こうげきしてくる 大蛇ウロボロス。こうげきまでの秒数を かえることもできる
+  - label: しにがみ
+    image: https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/grim-reaper.png
+    filePath: assets/grim-reaper.js
+    description: プレイヤーを おってくる
     code: |
-      const item1 = rule.つくる('ウロボロス');
-      item1.locate(4, 8, 'map1'); // いる ばしょ
+      rule.つくる('しにがみ', 9, 2, 'map1', ('▼ むき', Dir.した));
 
-  - label: ミノタウルス
-    filePath: assets/minotaur.js
-    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/minotaur.gif
-    description: ずっと こうげきをくりかえす きょうぼうな ミノタウルス
+  - label: リザードマン
+    image: https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/lizardman.png
+    filePath: assets/lizardman.js
+    description: うろうろ する
     code: |
-      const item1 = rule.つくる('ミノタウルス');
-      item1.locate(6, 8, 'map1'); // いる ばしょ
+      rule.つくる('リザードマン', 12, 5, 'map1', ('▼ むき', Dir.した));
+
+  - label: プリンセス
+    image: https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/princess.png
+    filePath: assets/princess.js
+    description: この人に はなしかければ ゲームクリア
+    code: |
+      rule.つくる('プリンセス', 4, 8, 'map1', ('▼ むき', Dir.した));
+
+  - label: ウィザード
+    image: https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/wizard.png
+    filePath: assets/wizard.js
+    description: スライムを しょうかんする
+    code: |
+      rule.つくる('ウィザード', 6, 8, 'map1', ('▼ むき', Dir.した));
+
+  - label: プレイヤー
+    image: https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/knight-male.png
+    filePath: assets/player.js
+    description: プレイヤーのことを改造したいとき
+    code: |
 
 アイテム:
-  - label: ハート
-    filePath: assets/heart.js
-    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-28-3.png
-    description: ライフを かいふくする うれしいアイテム！
-    code: |
-      const item1 = rule.つくる('ハート');
-      item1.locate(8, 8, 'map1'); // いる ばしょ
-
-  - label: コイン
-    filePath: assets/coin.js
-    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-28-5.png
-    description: がめんを はねまわる コイン。
-    code: |
-      const item1 = rule.つくる('コイン');
-      item1.locate(12, 8, 'map1'); // いる ばしょ
-
-  - label: スター
-    filePath: assets/star.js
-    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-28-6.png
-    description: ひろってから ３びょうちょい むてきになれる アイテム。３びょうちょい＝１００フレーム？ こも、カイゾウできるらしい
-    code: |
-      const item1 = rule.つくる('スター');
-      item1.locate(14, 8, 'map1'); // いる ばしょ
-
   - label: ゴールちてん
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-25-0.png'
     filePath: assets/goal.js
-    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-25-0.png
-    description: あなたのかえりを まちわびている おしろ。ここへ たどりつくと ゲームクリアになる
     code: |
-      const item1 = rule.つくる('ゴールちてん');
-      item1.locate(10, 8, 'map1'); // いる ばしょ
-
-  - label: ワープ
-    filePath: assets/warp.js
-    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-16-4.png
-    description: ふむとワープできる すごいゆか
-    code: |
-      const item1 = rule.つくる('ワープ');
-      item1.locate(5, 5, 'map1'); // ここからワープ
-      item1.warpTo(11, 6, 'map1'); // ここへワープ
-
-  - label: かいだん
-    filePath: assets/stair.js
-    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-20-2.png
-    description: マップとマップをつなぐ かいだん
-    code: |
-      const item1 = rule.つくる('かいだん');
-      item1.locate(12, 5, 'map1'); // ここから のぼれる
-      item1.warpTo(2, 5, 'map2'); // ここへ つながる
-
-  - label: たからばこ
-    filePath: assets/treasure.js
-    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-21-0.png
-    description: コインが入っているたからばこ
-    code: |
-      const item1 = rule.つくる('たからばこ');
-      item1.locate(12, 2, 'map1'); // いる ばしょ
-
-  - label: かぎ（きいろ）
-    filePath: assets/key-yellow.js
-    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-28-7.png
-    description: ゲートを開けるためのかぎ（きいろ）
-    code: |
-      const item1 = rule.つくる('かぎ（きいろ）');
-      item1.locate(1, 2, 'map1'); // いる ばしょ
-
-  - label: ゲート（きいろ）
-    filePath: assets/gate-yellow.js
-    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-28-7.png
-    description: かぎ（きいろ）で開くゲート
-    code: |
-      const item1 = rule.つくる('ゲート（きいろ）');
-      item1.locate(1, 4, 'map1'); // ここから 入る
-      item1.warpTo(14, 4, 'map1'); // ここへ つながる
+      rule.つくる('ゴールちてん', 7, 5, 'map1');
 
   - label: ばくだん
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/bomb.png'
     filePath: assets/bomb.js
-    image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/map-29-0.png
-    description: じかんがたつと ばくはつする ばくだん
     code: |
-      const item1 = rule.つくる('ばくだん');
-      item1.locate(4, 5, 'map1'); // いる ばしょ
+      rule.つくる('ばくだん', 7, 5, 'map1');
+
+  - label: コイン
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/coin.png'
+    filePath: assets/coin.js
+    code: |
+      rule.つくる('コイン', 7, 5, 'map1');
+
+  - label: ダイヤモンド
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/diamond.png'
+    filePath: assets/diamond.js
+    code: |
+      rule.つくる('ダイヤモンド', 7, 5, 'map1');
+
+  - label: ワープ_ブルー
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/warp-b.png'
+    filePath: assets/warp-blue.js
+    code: |
+      const item1 = rule.つくる('ワープ_ブルー', 4, 1, 'map1');
+      item1.warpTo(4, 12, 'map1'); // ここへワープする
+
+  - label: ワープ_グリーン
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/warp-g.png'
+    filePath: assets/warp-green.js
+    code: |
+      const item1 = rule.つくる('ワープ_グリーン', 5, 1, 'map1');
+      item1.warpTo(5, 12, 'map1'); // ここへワープする
+
+  - label: ワープ_レッド
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/warp-r.png'
+    filePath: assets/warp-red.js
+    code: |
+      const item1 = rule.つくる('ワープ_レッド', 6, 1, 'map1');
+      item1.warpTo(6, 12, 'map1'); // ここへワープする
+
+  - label: ワープ_イエロー
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/warp-y.png'
+    filePath: assets/warp-yellow.js
+    code: |
+      const item1 = rule.つくる('ワープ_イエロー', 7, 1, 'map1');
+      item1.warpTo(7, 12, 'map1'); // ここへワープする
+
+  - label: ゲート_ブルー
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/gate_b_c.png'
+    filePath: assets/gate-blue.js
+    description: つかうには かぎが ひつよう
+    code: |
+      const item1 = rule.つくる('ゲート_ブルー', 3, 5, 'map1');
+      item1.warpTo(3, 2, 'map3'); // ここへワープする
+
+  - label: ゲート_グリーン
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/gate_g_c.png'
+    filePath: assets/gate-green.js
+    description: つかうには かぎが ひつよう
+    code: |
+      const item1 = rule.つくる('ゲート_グリーン', 4, 5, 'map1');
+      item1.warpTo(4, 2, 'map3'); // ここへワープする
+
+  - label: ゲート_レッド
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/gate_r_c.png'
+    filePath: assets/gate-red.js
+    description: つかうには かぎが ひつよう
+    code: |
+      const item1 = rule.つくる('ゲート_レッド', 5, 5, 'map1');
+      item1.warpTo(5, 2, 'map3'); // ここへワープする
+
+  - label: ゲート_イエロー
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/gate_y_c.png'
+    filePath: assets/gate-yellow.js
+    description: つかうには かぎが ひつよう
+    code: |
+      const item1 = rule.つくる('ゲート_イエロー', 6, 5, 'map1');
+      item1.warpTo(6, 2, 'map3'); // ここへワープする
+
+  - label: ハート
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/heart.png'
+    filePath: assets/heart.js
+    code: |
+      rule.つくる('ハート', 7, 5, 'map1');
+
+  - label: かぎ_ブルー
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/key_b.png'
+    filePath: assets/key-blue.js
+    code: |
+      rule.つくる('かぎ_ブルー', 4, 8, 'map1');
+
+  - label: かぎ_グリーン
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/key_g.png'
+    filePath: assets/key-green.js
+    code: |
+      rule.つくる('かぎ_グリーン', 5, 8, 'map1');
+
+  - label: かぎ_レッド
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/key_r.png'
+    filePath: assets/key-red.js
+    code: |
+      rule.つくる('かぎ_レッド', 6, 8, 'map1');
+
+  - label: かぎ_イエロー
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/key_y.png'
+    filePath: assets/key-yellow.js
+    code: |
+      rule.つくる('かぎ_イエロー', 7, 8, 'map1');
+
+  - label: かいだん
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/stairs.png'
+    filePath: assets/stair.js
+    code: |
+      const item1 = rule.つくる('かいだん', 12, 5, 'map1');
+      item1.warpTo(4, 5, 'map2'); // ここに でる
+
+  - label: スター
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/star.png'
+    filePath: assets/star.js
+    code: |
+      rule.つくる('スター', 7, 5, 'map1');
+
+  - label: たからばこ_ブルー
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/tbox_b_c.png'
+    filePath: assets/tbox-blue.js
+    code: |
+      rule.つくる('たからばこ_ブルー', 7, 5, 'map1');
+
+  - label: たからばこ_グリーン
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/tbox_g_c.png'
+    filePath: assets/tbox-green.js
+    code: |
+      rule.つくる('たからばこ_グリーン', 7, 5, 'map1');
+
+  - label: たからばこ_レッド
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/tbox_r_c.png'
+    filePath: assets/tbox-red.js
+    code: |
+      rule.つくる('たからばこ_レッド', 7, 5, 'map1');
+
+  - label: たからばこ_イエロー
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/tbox_y_c.png'
+    filePath: assets/tbox-yellow.js
+    code: |
+      rule.つくる('たからばこ_イエロー', 7, 5, 'map1');
+
+  - label: ビーム
+    image: 'https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/beam.png'
+    filePath: assets/beam.js
+    description: プレイヤーが ビームを うてるように なる
+    code: |
+      player.スキル = 'ビーム';
 
   - label: ばくはつ
-    filePath: assets/explosion.js
     code: |
-      const item1 = rule.つくる('ばくはつ');
-      item1.locate(7, 8, 'map1'); // いる ばしょ
+      rule.つくる('ばくはつ', 7, 8, 'map1');
     image: https://storage.googleapis.com/hackforplay-common/resources/trimmed/explosion.png
+    filePath: assets/explosion.js
     description: ばくはつ。ふれると１のダメージを受ける
 
-  - label: サモナー
-    filePath: assets/summoner.js
-    description: スライムを しょうかんする サモナー
-    code: |
-      const item1 = rule.つくる('サモナー');
-      item1.locate(14, 5, 'map1'); // いる ばしょ
-
   - label: まほうじん
+    image: https://storage.googleapis.com/hackforplay-common/resources/0.10.x/icons/magic-circle-on.png
     filePath: assets/magic-circle.js
     description: ふむとビームが打てるようになるまほうじん
     code: |
-      const item1 = rule.つくる('まほうじん');
-      item1.locate(9, 8, 'map1'); // いる ばしょ
+      rule.つくる('まほうじん', 9, 8, 'map1');

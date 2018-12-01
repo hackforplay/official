@@ -1,8 +1,4 @@
-import {
-	enchant,
-	Hack,
-	register
-} from 'https://unpkg.com/@hackforplay/common@^0.9';
+import { enchant, Hack, register } from '__FEELES_COMMON_INDEX__';
 
 import gameFunc from './game';
 import maps from './maps';
