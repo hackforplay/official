@@ -1,8 +1,4 @@
-import {
-	enchant,
-	Hack,
-	register
-} from 'https://unpkg.com/@hackforplay/common@^0.10';
+import { enchant, Hack, register } from '__FEELES_COMMON_INDEX__';
 import main2 from './main2';
 import main3 from './main3';
 import main4 from './main4';
@@ -100,11 +96,10 @@ function gameStart() {
 	// 魔道書にコウモリを登録する
 	feeles.setAlias('コウモリ', item1);
 
-	Hack.logFunc(
-		next =>
-			player.mapX >= item1.mapX
-				? next()
-				: '今なら あの コウモリを こえて\nかいだんに たどりつけるだろう'
+	Hack.logFunc(next =>
+		player.mapX >= item1.mapX
+			? next()
+			: '今なら あの コウモリを こえて\nかいだんに たどりつけるだろう'
 	);
 
 	// かいだん

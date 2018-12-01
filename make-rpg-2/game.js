@@ -1,4 +1,4 @@
-import 'https://unpkg.com/@hackforplay/common@^0.10/dist/register.js';
+import '__FEELES_COMMON_REGISTER__';
 
 // ここからゲームがはじまったときのルール
 rule.ゲームがはじまったとき(async function() {
