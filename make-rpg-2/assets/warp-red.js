@@ -7,7 +7,7 @@ rule.つくられたとき(async function() {
 	/*+ つくられたとき */
 });
 
-rule.item = Rule.Anyone;
+rule.item = ('▼ あいて', Rule.Anyone);
 rule.ふまれたとき(async function(item) {
 	item.warp(this); // ふんだキャラクターがワープする
 	/*+ ふまれたとき */

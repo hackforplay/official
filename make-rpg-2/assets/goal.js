@@ -8,7 +8,7 @@ rule.つくられたとき(function() {
 	/*+ つくられたとき */
 });
 
-rule.item = 'プレイヤー'; // ふむキャラクター
+rule.item = ('▼ あいて', 'プレイヤー'); // ふむキャラクター
 rule.ふまれたとき(async function(item) {
 	Hack.gameclear(); // ゲームクリア
 	item.destroy(); // ふんだキャラクターをけす

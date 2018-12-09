@@ -7,7 +7,7 @@ rule.つくられたとき(function() {
 	/*+ つくられたとき */
 });
 
-rule.item = 'プレイヤー'; // ぶつかるキャラクター
+rule.item = ('▼ あいて', 'プレイヤー'); // ぶつかるキャラクター
 rule.ぶつかったとき(async function(item) {
 	Hack.log('たすけてくれて ありがとう！'); // メッセージを出す
 	await this.wait(1); // ちょっと まつ

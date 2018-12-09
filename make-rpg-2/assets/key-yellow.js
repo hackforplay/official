@@ -7,7 +7,7 @@ rule.つくられたとき(async function() {
 	/*+ つくられたとき */
 });
 
-rule.item = 'プレイヤー';
+rule.item = ('▼ あいて', 'プレイヤー');
 rule.ふまれたとき(async function(item) {
 	this.message('ゲート_イエロー'); // ゲート_イエローをひらく
 	Hack.log('きいろの ゲートが ひらいた！');

@@ -14,7 +14,7 @@ rule.つくられたとき(async function() {
 	/*+ つくられたとき */
 });
 
-rule.item = Rule.Anyone;
+rule.item = ('▼ あいて', Rule.Anyone);
 rule.しょうかんされたとき(async function(item) {
 	this.atk = item.atk; // しょうかんした人と同じこうげき力にする
 	/*+ しょうかんされたとき */
