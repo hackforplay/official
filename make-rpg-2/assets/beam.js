@@ -2,13 +2,12 @@ import '../game';
 
 rule.this = 'ビーム';
 
-rule.item = Rule.Anyone;
-rule.つくられたとき(async function(item) {
+rule.つくられたとき(async function() {
 	this.mod(('▼ スキン', Skin.ビーム)); // 見た目をきめる
 	/*+ つくられたとき */
 });
 
-rule.item = Rule.Anyone;
+rule.item = ('▼ あいて', Rule.Anyone);
 rule.しょうかんされたとき(async function(item) {
 	this.mod(Hack.createDamageMod(item.atk, item)); // ダメージオブジェクトにする
 	item.shoot(this, item.forward, 10); // このスピードで打ち出される

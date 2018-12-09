@@ -7,7 +7,7 @@ rule.つくられたとき(async function() {
 	/*+ つくられたとき */
 });
 
-rule.item = 'プレイヤー';
+rule.item = ('▼ あいて', 'プレイヤー');
 rule.ぶつかったとき(async function(item) {
 	this.destroy(); // このアイテムを消す
 	Hack.score += 1; // スコアをアップする

@@ -8,7 +8,7 @@ rule.つくられたとき(async function() {
 	/*+ つくられたとき */
 });
 
-rule.item = 'プレイヤー';
+rule.item = ('▼ あいて', 'プレイヤー');
 rule.こうげきされたとき(async function(item) {
 	if (this.あいた === true) return; // もし、あいていたら、ここで終わる（変数）
 	this.mod(('▼ スキン', Skin.ひらいたたからばこ_グリーン)); // ひらいた！

@@ -7,7 +7,7 @@ rule.つくられたとき(async function() {
 	/*+ つくられたとき */
 });
 
-rule.item = 'プレイヤー';
+rule.item = ('▼ あいて', 'プレイヤー');
 rule.ふまれたとき(async function(item) {
 	this.mod(('▼ スキン', Skin.まほうじん_オン)); // 見た目をかえる
 	item.スキル = 'ビーム'; // プレイヤーがビームを打てるようにする

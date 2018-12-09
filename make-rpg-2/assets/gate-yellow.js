@@ -8,14 +8,14 @@ rule.つくられたとき(async function() {
 	/*+ つくられたとき */
 });
 
-rule.item = 'かぎ_イエロー';
+rule.item = ('▼ あいて', 'かぎ_イエロー');
 rule.メッセージされたとき(async function() {
 	this.mod(('▼ スキン', Skin.ひらいたゲート_イエロー)); // ひらく！
 	this.collisionFlag = false; // はいれるようにする
 	/*+ メッセージされたとき */
 });
 
-rule.item = 'プレイヤー'; // ふむ キャラクター
+rule.item = ('▼ あいて', 'プレイヤー'); // ふむ キャラクター
 rule.ふまれたとき(async function(item) {
 	item.warp(this); // ゲートのもう片方にワープ
 	/*+ ふまれたとき */
