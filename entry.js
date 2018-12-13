@@ -9,8 +9,13 @@ if (FEELES_OFFILE_MODE) {
 }
 
 function load() {
-	window.h4p({
-		jsonURL: './index.json',
-		rootElement: document.querySelector('.h4p__app')
-	});
+	fetch('https://storage.googleapis.com/hackforplay-assets/beta-1')
+		.then(response => response.text())
+		.then(text => {
+			window.h4p({
+				jsonURL: './index.json',
+				asset: JSON.parse(text),
+				rootElement: document.querySelector('.h4p__app')
+			});
+		});
 }
