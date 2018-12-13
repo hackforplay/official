@@ -1,5 +1,4 @@
 import './game'; // ルール定義をロードする
-import './assets'; // ルール定義をロードする
 import maps from './maps';
 import './autoload'; // モジュールのオートロード
 
