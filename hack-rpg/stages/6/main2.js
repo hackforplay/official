@@ -15,7 +15,7 @@ export default function gameStartLazy() {
 	const item1 = new RPGObject();
 	item1.mod(('▼ スキン', _dドラゴン));
 	// ドラゴンの体力
-	item1.hp = 16;
+	item1.hp = 14;
 	// ドラゴンの位置を調整する
 	item1.offset = {
 		x: -32,
