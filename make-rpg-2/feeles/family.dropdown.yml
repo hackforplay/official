@@ -11,3 +11,17 @@
     label: マップのなかま
   - body: Family.プレイヤー2
     label: プレイヤー2のなかま
+
+なかま:
+  - body: Family.ドクリツ
+    label: どのファミリーにも入らない
+  - body: Family.プレイヤー
+    label: プレイヤーのなかま
+  # - body: Family.エネミー
+  #   label: モンスターたちのなかま
+  - body: Family.モンスター
+    label: モンスターたちのなかま
+  - body: Family.マップ
+    label: マップのなかま
+  - body: Family.プレイヤー2
+    label: プレイヤー2のなかま
