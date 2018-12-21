@@ -3,7 +3,9 @@
     label: どのファミリーにも入らない
   - body: Family.プレイヤー
     label: プレイヤーのなかま
-  - body: Family.エネミー
+  # - body: Family.エネミー
+  #   label: モンスターたちのなかま
+  - body: Family.モンスター
     label: モンスターたちのなかま
   - body: Family.マップ
     label: マップのなかま
