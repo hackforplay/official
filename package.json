@@ -43,7 +43,7 @@
 		"compression": "^1.7.2",
 		"connect": "^3.6.6",
 		"cors": "^2.8.4",
-		"feeles-ide": "^1.8.6",
+		"feeles-ide": "^1.8.9",
 		"morgan": "^1.9.0",
 		"serve-static": "^1.13.2",
 		"unorm": "^1.4.1"
