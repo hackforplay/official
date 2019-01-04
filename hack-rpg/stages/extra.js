@@ -9,41 +9,41 @@
  *
  */
 
-export const じゅもん = ('▼ ふういん', 'する');
+export const じゅもん = ('▼ ふういん', 'する')
 
-export const flag = じゅもん !== 'する';
+export const flag = じゅもん !== 'する'
 
 export default function makeMagic(x, y, map, fileName) {
 	/* Remove the tutorial hacking */
-	return;
+	return
 
-	const magic = new RPGObject();
-	magic.locate(x, y, map);
-	magic.layer = RPGMap.Layer.Under;
-	magic.collisionFlag = false;
+	const magic = new RPGObject()
+	magic.locate(x, y, map)
+	magic.layer = RPGMap.Layer.Under
+	magic.collisionFlag = false
 	if (flag) {
-		magic.mod(('▼ スキン', _mまほうじんひかった));
+		magic.mod(('▼ スキン', _mまほうじんひかった))
 		magic.onふまれた = event => {
 			if (event.item === Hack.player) {
 				if (confirm('このステージを 改造(かいぞう) しますか？')) {
-					feeles.openEditor(fileName);
+					feeles.openEditor(fileName)
 				} else if (confirm('もどりますか？')) {
-					feeles.replace('stages/7/index.html');
+					feeles.replace('stages/7/index.html')
 				}
 			}
-		};
+		}
 	} else {
-		magic.mod(('▼ スキン', _mまほうじん));
+		magic.mod(('▼ スキン', _mまほうじん))
 		magic.onふまれた = event => {
 			if (event.item === Hack.player) {
-				Hack.log('ふういんのせいで つかえない');
-				const { text } = Hack.textarea;
+				Hack.log('ふういんのせいで つかえない')
+				const { text } = Hack.textarea
 				feeles.setTimeout(() => {
 					if (text === Hack.textarea.text) {
-						Hack.textarea.hide();
+						Hack.textarea.hide()
 					}
-				}, 3000);
+				}, 3000)
 			}
-		};
+		}
 	}
 }

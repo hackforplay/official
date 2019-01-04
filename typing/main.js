@@ -2,43 +2,43 @@ import {
 	enchant,
 	Hack,
 	register
-} from 'https://unpkg.com/@hackforplay/common@^0.8';
+} from 'https://unpkg.com/@hackforplay/common@^0.8'
 
-import gameFunc from './game';
-import maps from './maps';
-import update from './update';
-import installHackTime from './time';
+import gameFunc from './game'
+import maps from './maps'
+import update from './update'
+import installHackTime from './time'
 
-register(window);
-installHackTime({ enchant, Hack }); // Hack.time
+register(window)
+installHackTime({ enchant, Hack }) // Hack.time
 
-let gameOnLoad, hackOnLoad;
+let gameOnLoad, hackOnLoad
 
 if (gameFunc._bundled) {
 	// (後方互換性) hackforplay.xyz 移植バージョン
-	gameOnLoad = gameFunc.gameOnLoad;
-	hackOnLoad = gameFunc.hackOnLoad;
+	gameOnLoad = gameFunc.gameOnLoad
+	hackOnLoad = gameFunc.hackOnLoad
 } else {
 	// ふつうはこちら
-	gameOnLoad = gameFunc;
-	hackOnLoad = maps;
+	gameOnLoad = gameFunc
+	hackOnLoad = maps
 }
 
 // ゲームをつくる
 game.onload = async () => {
 	// gameOnLoad より先に実行するイベント
 	// lifelabel などが gameOnLoad 時に参照できない対策
-	game.dispatchEvent(new enchant.Event('awake'));
+	game.dispatchEvent(new enchant.Event('awake'))
 
-	await gameOnLoad();
+	await gameOnLoad()
 
 	// Hack.player がないとき window.player を代わりに入れる
 	if (window.player && !Hack.player) {
-		Hack.player = window.player;
+		Hack.player = window.player
 	}
 
 	// update 関数を開始
-	game.on('enterframe', update);
+	game.on('enterframe', update)
 
 	// ゲームクリアの測定（hackforplay.xyz の新仕様）
 	Hack.on('gameclear', () => {
@@ -46,17 +46,17 @@ game.onload = async () => {
 			feeles.dispatchOnMessage({
 				labelName: 'gameclear',
 				labelValue: 'gameclear'
-			});
+			})
 		}
-	});
-};
+	})
+}
 
 // マップをつくる
 Hack.onload = () => {
 	// Hack.maps を事前に作っておく
-	Hack.maps = Hack.maps || {};
-	hackOnLoad();
-};
+	Hack.maps = Hack.maps || {}
+	hackOnLoad()
+}
 
 // ゲームスタート
-Hack.start();
+Hack.start()

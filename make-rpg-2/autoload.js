@@ -1,1 +1,1 @@
-import './modules/プレイヤー';
+import './modules/プレイヤー'
