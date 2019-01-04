@@ -1,24 +1,20 @@
-import '../game';
+import '../game'
 
-rule.this = 'プレイヤー';
+rule.this = 'プレイヤー'
 
 rule.つくられたとき(async function() {
-	Player.set(this);
-	this.skin = Hack.skin('ゆうしゃ男'); // 見た目をきめる
-	this.family = ('▼ なかま', Family.プレイヤー); // だれと仲間か
-	this.hp = 3; // 体力を決める
-	this.atk = 1; // こうげき力を決める
-	this.スキル = ''; // 最初はスキルなし
+	Player.set(this)
+	this.skin = Hack.skin('ゆうしゃ男') // 見た目をきめる
+	this.family = ('▼ なかま', Family.プレイヤー) // だれと仲間か
+	this.n('たいりょく', ('▼ を', 'イコール'), 3)
+	this.n('こうげきりょく', ('▼ を', 'イコール'), 1)
+
 	/*+ つくられたとき */
-});
+})
 
 rule.たおされたとき(async function() {
-	Hack.gameover(); // ゲームオーバー
-	this.destroy(); // プレイヤーを消す
-	/*+ たおされたとき */
-});
+	Hack.gameover() // ゲームオーバー
+	this.destroy() // プレイヤーを消す
 
-rule.こうげきするとき(async function() {
-	if (this.スキル === '') return; // スキルがないときはここで終わり
-	this.しょうかんする(this.スキル);
-});
+	/*+ たおされたとき */
+})

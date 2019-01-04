@@ -7,4 +7,4 @@ module.exports = {
 	// node_modules のファイルを直接参照するので,
 	// 本番では false にする
 	offline: false
-};
+}

@@ -1,49 +1,49 @@
-import { gameclear } from '../../utils';
-import extra from '../extra';
+import { gameclear } from '../../utils'
+import extra from '../extra'
 
 export default function gameStartLazy() {
 	// サファイア
-	const item1 = new RPGObject();
-	item1.mod(('▼ スキン', _sサファイア));
+	const item1 = new RPGObject()
+	item1.mod(('▼ スキン', _sサファイア))
 	// サファイアを 13, 2 の位置に移動する ( map2 )
-	item1.locate(13, 2, 'map2');
+	item1.locate(13, 2, 'map2')
 	// サファイアにプレイヤーが乗ったら...
 	item1.onふまれた = event => {
 		if (event.item === Hack.player) {
 			// サファイアを削除する
-			item1.destroy();
+			item1.destroy()
 			// スコアを　１００ アップ！
-			Hack.score += 100;
+			Hack.score += 100
 			Hack.logFunc(`
 サファイアを 手に入れた！
-さっきのへやに もどろう`);
+さっきのへやに もどろう`)
 		}
-	};
+	}
 
 	// 魔道書にサファイアを登録
-	feeles.setAlias('サファイア', item1);
+	feeles.setAlias('サファイア', item1)
 
 	// かいだん
-	const item2 = new RPGObject();
-	item2.mod(('▼ スキン', _nのぼりかいだん));
+	const item2 = new RPGObject()
+	item2.mod(('▼ スキン', _nのぼりかいだん))
 	// 階段を 7, 8 の位置に移動する ( map2 )
-	item2.locate(7, 8, 'map2');
+	item2.locate(7, 8, 'map2')
 	// 階段は下の方に置く ( Under )
-	item2.layer = RPGMap.Layer.Under;
+	item2.layer = RPGMap.Layer.Under
 	// 階段にプレイヤーが乗ったら...
 	item2.onふまれた = event => {
 		if (event.item === Hack.player) {
 			// マップ map1 に移動する
-			Hack.changeMap('map1');
+			Hack.changeMap('map1')
 			// プレイヤーを 7, 2 の位置に移動する ( map1 )
-			Hack.player.locate(7, 2, 'map1');
+			Hack.player.locate(7, 2, 'map1')
 			// もしスコアが 100 以上なら...
 			if (Hack.score >= 100) {
 				// 次のステージに！
-				gameclear('stages/5/index.html');
+				gameclear('stages/5/index.html')
 			}
 		}
-	};
+	}
 
 	// スライム軍団をつくる
 
@@ -53,12 +53,12 @@ export default function gameStartLazy() {
 もっと こうげきりょくが ひつようだ
 
 こうげきりょく（atk）：${Hack.player.atk}`
-			: next();
+			: next()
 	// 0 ならスライムは出ないけど、
 	// 1 ならスライムが出る！
 	// ためしに数値を書き換えてみよう！
-	let count = 0;
-	[
+	let count = 0
+	;[
 		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1],
 		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1],
 		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 0, 1],
@@ -71,29 +71,29 @@ export default function gameStartLazy() {
 		[0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
 	].forEach((array, y) => {
 		array.forEach((flag, x) => {
-			if (!flag) return;
+			if (!flag) return
 
 			// スライム
-			const item3 = new RPGObject();
-			item3.mod(('▼ スキン', _sスライム));
+			const item3 = new RPGObject()
+			item3.mod(('▼ スキン', _sスライム))
 			// スライムの体力
-			item3.hp = 999;
+			item3.hp = 999
 			// スライムを　x, y の位置に配置する ( map2 )
-			item3.locate(x, y, 'map2');
+			item3.locate(x, y, 'map2')
 			// スライムが倒されたら...
 			item3.onたおれたとき = function() {
 				// スコアアップ！
-				Hack.score++;
-			};
+				Hack.score++
+			}
 			item3.on('attacked', function needAtk() {
-				Hack.logFunc(logもっと);
-			});
+				Hack.logFunc(logもっと)
+			})
 
 			// 魔道書にスライムを登録する
-			feeles.setAlias([`スライム${++count}`], item3);
-		});
-	});
+			feeles.setAlias([`スライム${++count}`], item3)
+		})
+	})
 
 	// このステージを改造
-	extra(9, 9, 'map2', 'stages/4/main2.js');
+	extra(9, 9, 'map2', 'stages/4/main2.js')
 }
