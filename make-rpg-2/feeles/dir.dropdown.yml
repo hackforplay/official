@@ -7,12 +7,12 @@
     body: Dir.した
   - label: がめんの ひだりを向く
     body: Dir.ひだり
-  - label: Dir.みぎて
-    body: キャラクターから見て みぎを向く
-  - label: Dir.ひだりて
-    body: キャラクターから見て ひだりを向く
-  - label: Dir.うしろ
-    body: キャラクターから見て うしろを向く
+  - label: キャラクターから見て みぎを向く
+    body: Dir.みぎて
+  - label: キャラクターから見て ひだりを向く
+    body: Dir.ひだりて
+  - label: キャラクターから見て うしろを向く
+    body: Dir.うしろ
   - label: ４方向のいずれかを向く
     body: Dir.ランダム
   # - label: ８方向のいずれかを向く
