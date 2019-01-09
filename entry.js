@@ -1,11 +1,11 @@
 if (FEELES_OFFILE_MODE) {
-	window.h4p = require('feeles-ide/umd/index').h4p;
-	load();
+	window.h4p = require('feeles-ide/umd/index').h4p
+	load()
 } else {
-	const script = document.createElement('script');
-	script.src = 'https://unpkg.com/feeles-ide@latest/umd/index.js';
-	document.body.appendChild(script);
-	script.addEventListener('load', load);
+	const script = document.createElement('script')
+	script.src = 'https://unpkg.com/feeles-ide@latest/umd/index.js'
+	document.body.appendChild(script)
+	script.addEventListener('load', load)
 }
 
 function load() {
@@ -16,6 +16,6 @@ function load() {
 				jsonURL: './index.json',
 				asset: JSON.parse(text),
 				rootElement: document.querySelector('.h4p__app')
-			});
-		});
+			})
+		})
 }
