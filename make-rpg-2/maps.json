@@ -1,5 +1,5 @@
 {
 	"files": {},
 	"fallback": "maps/fallback.json",
-	"templateApi": "/templateMaps"
+	"templateApi": "/api/templateMaps"
 }
