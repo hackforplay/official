@@ -1,0 +1,5 @@
+{
+	"files": {},
+	"fallback": "maps/fallback.json",
+	"templateApi": "http://localhost:5001/hackforplay-development/us-central1/templateMaps"
+}
