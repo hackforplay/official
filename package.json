@@ -4,7 +4,6 @@
 	"description": "Official stages of HackforPlay",
 	"main": "entry.js",
 	"scripts": {
-		"start": "webpack-dev-server",
 		"build": "node --experimental-modules build.mjs hack-rpg make-rpg make-rpg-2",
 		"test": "ava",
 		"prettier": "prettier --config ./.prettierrc --write '**/*.js'"
