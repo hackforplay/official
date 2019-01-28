@@ -5,9 +5,8 @@
 	"main": "entry.js",
 	"scripts": {
 		"start": "webpack-dev-server",
-		"build": "NODE_ENV=production webpack -p",
+		"build": "node --experimental-modules build.mjs hack-rpg make-rpg make-rpg-2",
 		"test": "ava",
-		"postinstall": "npm run build",
 		"prettier": "prettier --config ./.prettierrc --write '**/*.js'"
 	},
 	"repository": {
@@ -26,6 +25,7 @@
 	"devDependencies": {
 		"@babel/preset-env": "^7.0.0-beta.52",
 		"@babel/register": "^7.0.0-beta.52",
+		"@hackforplay/packager": "^1.0.2",
 		"ava": "^1.0.0-beta.6",
 		"canvas-prebuilt": "^1.6.5-prerelease.1",
 		"handlebars": "^4.0.11",
