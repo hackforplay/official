@@ -1,9 +1,4 @@
 # npm
 node_modules
 
-# production
-public
-
-config.dev.js
-
 /test/tmp

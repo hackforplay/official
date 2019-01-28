@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <title></title>
+    <style media="screen">
+    #h4p {
+        position: absolute;
+        padding: 0;
+        margin: 0;
+        left: 0;
+        top: 0;
+        width: 100vw;
+        height: 100vh;
+        line-height: 1.15;
+    }
+    </style>
+</head>
+<body>
+    <div id="h4p"></div>
+    <script src="https://unpkg.com/@hackforplay/ide@^1.2.4/umd/register.js"></script>
+    <script>
+        fetch('https://storage.googleapis.com/hackforplay-assets/beta-2')
+            .then(function(response) {
+                return response.json()
+            })
+            .then(function(asset) {
+                window.h4p({ rootElement: document.getElementById('h4p'), jsonURL: './index.json', asset: asset })
+            })
+    </script>
+</body>
+</html>
