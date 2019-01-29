@@ -5,6 +5,7 @@
 	"main": "entry.js",
 	"scripts": {
 		"build": "node --experimental-modules build.mjs hack-rpg make-rpg make-rpg-2",
+		"postinstall": "npm run build",
 		"test": "ava",
 		"prettier": "prettier --config ./.prettierrc --write '**/*.js'"
 	},
