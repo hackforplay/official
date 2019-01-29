@@ -2,3 +2,7 @@
 node_modules
 
 /test/tmp
+
+# artifacts
+/public/*/index.json
+
