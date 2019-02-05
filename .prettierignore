@@ -11,3 +11,5 @@ ui.enchant.js
 **/code.js
 **/update.js
 **/modules/*
+
+/env.mjs
