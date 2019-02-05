@@ -5,6 +5,10 @@
 	"main": "entry.js",
 	"scripts": {
 		"build": "node --experimental-modules build.mjs hack-rpg make-rpg make-rpg-2",
+		"hack": "node --experimental-modules build.mjs hack-rpg && npx serve -s public/hack-rpg",
+		"make": "node --experimental-modules build.mjs make-rpg && npx serve -s public/make-rpg",
+		"make2": "node --experimental-modules build.mjs make-rpg-2 && npx serve -s public/make-rpg-2",
+		"typing": "node --experimental-modules build.mjs typing && npx serve -s public/typing",
 		"postinstall": "npm run build",
 		"test": "ava",
 		"prettier": "prettier --config ./.prettierrc --write '**/*.js'"
@@ -34,6 +38,7 @@
 		"offline-plugin": "^5.0.5",
 		"open-browser-webpack-plugin": "0.0.5",
 		"prettier": "^1.12.1",
+		"serve": "^10.1.1",
 		"webpack": "^4.20.2",
 		"webpack-cli": "^3.1.2",
 		"webpack-dev-server": "^3.1.9",
