@@ -10,14 +10,17 @@ if (!process.env.CI) {
 	Object.assign(process.env, envs) // 開発用
 }
 
-if (!process.env.__FEELES_COMMON_REGISTER__)
-	throw new Error('process.env.__FEELES_COMMON_REGISTER__ is not set')
-if (!process.env.__FEELES_COMMON_INDEX__)
-	throw new Error('process.env.__FEELES_COMMON_INDEX__ is not set')
+const keys = [
+	'__FEELES_COMMON_REGISTER__',
+	'__FEELES_COMMON_INDEX__',
+	'__FEELES_MAP_TEMPLATE__'
+]
 
-const env = packager.parseReplaceVars(
-	'__FEELES_COMMON_REGISTER__,__FEELES_COMMON_INDEX__'
-)
+for (const key of keys) {
+	if (!process.env[key]) throw new Error(`process.env["${key}"] is not set`)
+}
+
+const env = packager.parseReplaceVars(keys.join(','))
 
 for (const dir of dirs) {
 	build(dir)

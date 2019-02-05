@@ -1,5 +1,5 @@
 {
 	"files": {},
 	"fallback": "maps/fallback.json",
-	"templateApi": "/api/templateMaps"
+	"templateApi": "__FEELES_MAP_TEMPLATE__"
 }
