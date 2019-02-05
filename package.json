@@ -32,26 +32,16 @@
 		"@hackforplay/packager": "^1.0.2",
 		"ava": "^1.0.0-beta.6",
 		"canvas-prebuilt": "^1.6.5-prerelease.1",
-		"handlebars": "^4.0.11",
-		"handlebars-loader": "^1.7.0",
-		"html-webpack-plugin": "^3.2.0",
-		"offline-plugin": "^5.0.5",
-		"open-browser-webpack-plugin": "0.0.5",
 		"prettier": "^1.12.1",
 		"serve": "^10.1.1",
-		"webpack": "^4.20.2",
-		"webpack-cli": "^3.1.2",
-		"webpack-dev-server": "^3.1.9",
 		"window": "^4.2.5"
 	},
 	"dependencies": {
 		"compression": "^1.7.2",
 		"connect": "^3.6.6",
 		"cors": "^2.8.4",
-		"feeles-ide": "^1.8.9",
 		"morgan": "^1.9.0",
-		"serve-static": "^1.13.2",
-		"unorm": "^1.4.1"
+		"serve-static": "^1.13.2"
 	},
 	"ava": {
 		"files": [
