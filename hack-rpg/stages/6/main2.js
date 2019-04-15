@@ -39,7 +39,7 @@ export default function gameStartLazy() {
 	})
 	Object.defineProperty(item1, 'atk', {
 		get: function() {
-			const damage = Hack.player.hp <= 3 ? 1 : 450
+			const damage = Hack.player.hp <= 3 ? 1 : 399
 			return damage
 		}
 	})
