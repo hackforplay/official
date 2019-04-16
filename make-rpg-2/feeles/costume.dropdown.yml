@@ -69,12 +69,17 @@
   - body: "'銀色のほうせき'"
   - body: "'金色のほうせき'"
   - body: "'ほのお'"
-  - body: "'緑色のまじょねこ'"
-  - body: "'黒色のまじょねこ'"
   - body: "'青色のまじょねこ'"
+  - body: "'緑色のまじょねこ'"
+    plan: paid
+  - body: "'黒色のまじょねこ'"
+    plan: paid
   - body: "'赤色のまじょねこ'"
+    plan: paid
   - body: "'白色のまじょねこ'"
+    plan: paid
   - body: "'黄色のまじょねこ'"
+    plan: paid
   - body: "'まどうしょ'"
   - body: "'まほうじん'"
   - body: "'光ったまほうじん'"
@@ -110,27 +115,42 @@
   - body: "'緑色のドラゴン'"
   - body: "'白色のドラゴン'"
   - body: "'黄色のドラゴン'"
-  - body: "'緑色のニンジャ'"
   - body: "'黒色のニンジャ'"
+  - body: "'緑色のニンジャ'"
+    plan: paid
   - body: "'青色のニンジャ'"
+    plan: paid
   - body: "'赤色のニンジャ'"
+    plan: paid
   - body: "'白色のニンジャ'"
+    plan: paid
   - body: "'黄色のニンジャ'"
+    plan: paid
   - body: "'ハート'"
   - body: "'ビーム'"
   - body: "'プリンセス'"
-  - body: "'緑色のペンギンきし'"
-  - body: "'黒色のペンギンきし'"
-  - body: "'青色のペンギンきし'"
   - body: "'赤色のペンギンきし'"
+  - body: "'緑色のペンギンきし'"
+    plan: paid
+  - body: "'黒色のペンギンきし'"
+    plan: paid
+  - body: "'青色のペンギンきし'"
+    plan: paid
   - body: "'白色のペンギンきし'"
+    plan: paid
   - body: "'黄色のペンギンきし'"
-  - body: "'赤色のボススライム'"
-  - body: "'黒色のボススライム'"
+    plan: paid
   - body: "'青色のボススライム'"
+  - body: "'赤色のボススライム'"
+    plan: paid
+  - body: "'黒色のボススライム'"
+    plan: paid
   - body: "'緑色のボススライム'"
+    plan: paid
   - body: "'白色のボススライム'"
+    plan: paid
   - body: "'黄色のボススライム'"
+    plan: paid
   - body: "'金色のボタン'"
   - body: "'おされた金色のボタン'"
   - body: "'黄色のボタン'"
@@ -145,18 +165,28 @@
   - body: "'おされた黒色のボタン'"
   - body: "'白色のボタン'"
   - body: "'おされた白色のボタン'"
-  - body: "'緑色のボミィ'"
-  - body: "'黒色のボミィ'"
   - body: "'青色のボミィ'"
+  - body: "'緑色のボミィ'"
+    plan: paid
+  - body: "'黒色のボミィ'"
+    plan: paid
   - body: "'赤色のボミィ'"
+    plan: paid
   - body: "'白色のボミィ'"
+    plan: paid
   - body: "'黄色のボミィ'"
-  - body: "'緑色のミミック'"
-  - body: "'黒色のミミック'"
-  - body: "'青色のミミック'"
+    plan: paid
   - body: "'赤色のミミック'"
+  - body: "'緑色のミミック'"
+    plan: paid
+  - body: "'黒色のミミック'"
+    plan: paid
+  - body: "'青色のミミック'"
+    plan: paid
   - body: "'白色のミミック'"
+    plan: paid
   - body: "'黄色のミミック'"
+    plan: paid
   - body: "'緑色のリザードマン'"
   - body: "'黒色のリザードマン'"
   - body: "'青色のリザードマン'"
