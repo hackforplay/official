@@ -1,0 +1,7 @@
+あいて:
+  - label: だれのときでも したのルールを じっこう
+    body: Rule.Anyone
+  - label: のときだけ したのルールを じっこう
+    body: Rule.Enemy
+  - label: のときだけ したのルールを じっこう
+    body: "'プレイヤー'"

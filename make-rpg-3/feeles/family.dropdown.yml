@@ -1,0 +1,40 @@
+ファミリー:
+  - body: Family.ドクリツ
+    label: どのファミリーにも入らない
+  - body: Family.プレイヤー
+    label: プレイヤーのなかま
+  # - body: Family.エネミー
+  #   label: モンスターたちのなかま
+  - body: Family.モンスター
+    label: モンスターたちのなかま
+  - body: Family.マップ
+    label: マップのなかま
+  - body: Family.プレイヤー2
+    label: プレイヤー2のなかま
+
+なかま:
+  - body: Family.ドクリツ
+    label: どのファミリーにも入らない
+  - body: Family.プレイヤー
+    label: プレイヤーのなかま
+  # - body: Family.エネミー
+  #   label: モンスターたちのなかま
+  - body: Family.モンスター
+    label: モンスターたちのなかま
+  - body: Family.マップ
+    label: マップのなかま
+  - body: Family.プレイヤー2
+    label: プレイヤー2のなかま
+
+# 従来の「なかま」と衝突しないように「なかま.」とする
+なかま.:
+  - body: なかま.ドクリツ
+    label: どのファミリーにも入らない
+  - body: なかま.プレイヤー
+    label: プレイヤーのなかま
+  - body: なかま.モンスター
+    label: モンスターたちのなかま
+  - body: なかま.マップ
+    label: マップのなかま
+  - body: なかま.プレイヤー2
+    label: プレイヤー2のなかま

@@ -1,0 +1,7 @@
+{
+	"members": {
+		"player.hp": "プレイヤーのたいりょく",
+		"player.atk": "プレイヤーのこうげきりょく",
+		"player.locate": "プレイヤーをうごかす"
+	}
+}
