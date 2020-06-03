@@ -12,6 +12,7 @@ if (!process.env.CI) {
 
 const keys = [
 	'__FEELES_COMMON_REGISTER__',
+	'__FEELES_COMMON_BETA__',
 	'__FEELES_COMMON_INDEX__',
 	'__FEELES_MAP_TEMPLATE__'
 ]

@@ -1,4 +1,4 @@
-import 'https://cdn.hackforplay.xyz/common/0.32/register.min.js';
+import '__FEELES_COMMON_BETA__';
 
 rule.ゲームがはじまったとき(async function() {
 	await Hack.changeMap('map1'); // map1 をロード
