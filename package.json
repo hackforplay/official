@@ -4,12 +4,12 @@
 	"description": "Official stages of HackforPlay",
 	"main": "entry.js",
 	"scripts": {
-		"build": "node --experimental-modules build.mjs hack-rpg make-rpg make-rpg-2 make-rpg-3",
-		"hack": "node --experimental-modules build.mjs hack-rpg && npx serve -s public/hack-rpg",
-		"make": "node --experimental-modules build.mjs make-rpg && npx serve -s public/make-rpg",
-		"make2": "node --experimental-modules build.mjs make-rpg-2 && npx serve -s public/make-rpg-2",
-		"make3": "node --experimental-modules build.mjs make-rpg-3 && npx serve -s public/make-rpg-3",
-		"typing": "node --experimental-modules build.mjs typing && npx serve -s public/typing",
+		"build": "node build.mjs hack-rpg make-rpg make-rpg-2 make-rpg-3",
+		"hack": "node build.mjs hack-rpg && npx serve -s public/hack-rpg",
+		"make": "node build.mjs make-rpg && npx serve -s public/make-rpg",
+		"make2": "node build.mjs make-rpg-2 && npx serve -s public/make-rpg-2",
+		"make3": "node build.mjs make-rpg-3 && npx serve -s public/make-rpg-3",
+		"typing": "node build.mjs typing && npx serve -s public/typing",
 		"postinstall": "npm run build",
 		"test": "ava",
 		"prettier": "prettier --config ./.prettierrc --write '**/*.js'"
